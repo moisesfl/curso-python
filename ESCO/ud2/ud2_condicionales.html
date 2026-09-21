@@ -1,0 +1,754 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UD02 - Condicionales</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud02-condicionales">UD02-Condicionales</h1>
+<div id="top"></div>
+
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#ud02-condicionales">UD02-Condicionales</a></li>
+<li><a href="#índice-de-contenidos">Índice de contenidos</a></li>
+<li><a href="#unidad-2---sentencias-condicionales-en-python">Unidad 2 - Sentencias condicionales en Python</a></li>
+<li><a href="#índice">Índice</a></li>
+<li><a href="#1-tipos-de-sentencias-condicionales-en-python">1) Tipos de sentencias condicionales en Python</a><ul>
+<li><a href="#11-estructura-condicional-simple-if">1.1. Estructura condicional simple: <code>if</code></a></li>
+<li><a href="#descripción">Descripción</a></li>
+<li><a href="#características">Características</a></li>
+<li><a href="#uso-adecuado">Uso adecuado</a></li>
+<li><a href="#ejemplos-de-uso-típico">Ejemplos de uso típico</a></li>
+<li><a href="#12-estructura-condicional-doble-if--else">1.2. Estructura condicional doble: <code>if – else</code></a></li>
+<li><a href="#descripción-1">Descripción</a></li>
+<li><a href="#características-1">Características</a></li>
+<li><a href="#uso-adecuado-1">Uso adecuado</a></li>
+<li><a href="#ejemplos-de-uso-típico-1">Ejemplos de uso típico</a></li>
+<li><a href="#13-estructura-condicional-múltiple-if--elif--else">1.3. Estructura condicional múltiple: <code>if – elif – else</code></a></li>
+<li><a href="#descripción-2">Descripción</a></li>
+<li><a href="#características-2">Características</a></li>
+<li><a href="#uso-adecuado-2">Uso adecuado</a></li>
+<li><a href="#ejemplos-de-uso-típico-2">Ejemplos de uso típico</a></li>
+<li><a href="#14-estructuras-condicionales-anidadas">1.4. Estructuras condicionales anidadas</a></li>
+<li><a href="#descripción-3">Descripción</a></li>
+<li><a href="#características-3">Características</a></li>
+<li><a href="#uso-adecuado-3">Uso adecuado</a></li>
+<li><a href="#recomendaciones">Recomendaciones</a></li>
+<li><a href="#15-expresiones-condicionales-operador-ternario">1.5. Expresiones condicionales (operador ternario)</a></li>
+<li><a href="#descripción-4">Descripción</a></li>
+<li><a href="#características-4">Características</a></li>
+<li><a href="#uso-adecuado-4">Uso adecuado</a></li>
+<li><a href="#uso-no-recomendado">Uso no recomendado</a></li>
+<li><a href="#16-estructura-de-selección-múltiple-match--case-python-310">1.6. Estructura de selección múltiple: <code>match – case</code> (Python 3.10+)</a></li>
+<li><a href="#descripción-5">Descripción</a></li>
+<li><a href="#características-5">Características</a></li>
+<li><a href="#uso-adecuado-5">Uso adecuado</a></li>
+<li><a href="#ventajas-frente-a-if--elif">Ventajas frente a <code>if – elif</code></a></li>
+<li><a href="#17-comparación-general-de-las-estructuras-condicionales">1.7. Comparación general de las estructuras condicionales</a></li>
+<li><a href="#18-buenas-prácticas-en-el-uso-de-condicionales">1.8. Buenas prácticas en el uso de condicionales</a></li>
+</ul>
+</li>
+<li><a href="#2-condiciones">2) Condiciones</a><ul>
+<li><a href="#21-lógica-en-tests">2.1. Lógica en tests</a></li>
+<li><a href="#tabla-resumen">Tabla resumen</a></li>
+<li><a href="#tabla-de-operadores-lógicos">Tabla de operadores lógicos</a></li>
+<li><a href="#22-pertenecia-e-identidad">2.2. Pertenecia e identidad</a></li>
+<li><a href="#pertenencia">Pertenencia</a></li>
+<li><a href="#identidad">Identidad</a></li>
+<li><a href="#23-comprobar-el-tipo-de-un-objeto">2.3. Comprobar el tipo de un objeto</a></li>
+<li><a href="#24-valores-truthyfalsy">2.4. Valores Truthy/Falsy</a></li>
+<li><a href="#25-evaluación-por-cortocircuito">2.5. Evaluación por cortocircuito</a></li>
+</ul>
+</li>
+<li><a href="#3-estructura-conidiconal-if-en-python">3) Estructura conidiconal <code>if</code> en Python</a><ul>
+<li><a href="#31-simple">3.1. Simple</a></li>
+<li><a href="#32-if-else">3.2. If-else</a></li>
+<li><a href="#33-if-elif-else">3.3. If-elif-else</a></li>
+<li><a href="#34-if-elif-elif">3.4. If-elif-elif</a></li>
+<li><a href="#35-operador-ternario">3.5. Operador ternario</a></li>
+<li><a href="#36-anidado">3.6. Anidado</a></li>
+<li><a href="#37-comparaciones-en-listas">3.7. Comparaciones en listas</a></li>
+</ul>
+</li>
+<li><a href="#4-estructura-de-selección-match-en-python">4) Estructura de selección <code>match</code> en Python</a><ul>
+<li><a href="#41--resumen-rápido-de-variantes">4.1.  Resumen rápido de variantes</a></li>
+<li><a href="#42-sintaxis-básica">4.2. Sintaxis básica</a></li>
+<li><a href="#43-tuplas">4.3. Tuplas</a></li>
+<li><a href="#44-listas">4.4. Listas</a></li>
+<li><a href="#45-diccionarios">4.5. Diccionarios</a></li>
+<li><a href="#46-objetos">4.6. Objetos</a></li>
+<li><a href="#47-condicionales">4.7. Condicionales</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="unidad-2-sentencias-condicionales-en-python">Unidad 2 - Sentencias condicionales en Python<a href="#unidad-2-sentencias-condicionales-en-python" title="Permanent link"></a></h1>
+<hr />
+<h2 id="indice">Índice<a href="#indice" title="Permanent link"></a></h2>
+<pre><code>1. Tipos de sentencias condicionales en Python.
+2. Condiciones.
+3. Estructura condicional `if`.
+4. Estructura de selección `match`.
+</code></pre>
+<hr />
+<h2 id="1-tipos-de-sentencias-condicionales-en-python">1) Tipos de sentencias condicionales en Python<a href="#1-tipos-de-sentencias-condicionales-en-python" title="Permanent link"></a></h2>
+<p>Las <strong>estructuras condicionales</strong> permiten que un programa tome decisiones y ejecute distintos bloques de instrucciones en función de si se cumple o no una condición. En Python, estas estructuras se basan en la evaluación de <strong>expresiones lógicas</strong> que devuelven valores booleanos (<code>True</code> o <code>False</code>).</p>
+<p>A continuación se describen <strong>todas las estructuras condicionales disponibles en Python</strong>, junto con sus <strong>usos adecuados</strong> y recomendaciones prácticas.</p>
+<h3 id="11-estructura-condicional-simple-if">1.1. Estructura condicional simple: <code>if</code><a href="#11-estructura-condicional-simple-if" title="Permanent link"></a></h3>
+<h4 id="descripcion">Descripción<a href="#descripcion" title="Permanent link"></a></h4>
+<p>La estructura <code>if</code> permite ejecutar un bloque de instrucciones <strong>únicamente cuando una condición es verdadera</strong>.</p>
+<h4 id="caracteristicas">Características<a href="#caracteristicas" title="Permanent link"></a></h4>
+<ul>
+<li>Evalúa una sola condición.</li>
+<li>Si la condición es falsa, no se ejecuta ninguna acción alternativa.</li>
+<li>Es la forma más básica de toma de decisiones.</li>
+</ul>
+<h4 id="uso-adecuado">Uso adecuado<a href="#uso-adecuado" title="Permanent link"></a></h4>
+<ul>
+<li>Validaciones simples.</li>
+<li>Comprobaciones puntuales (por ejemplo, verificar si un valor cumple una condición mínima).</li>
+<li>Casos en los que <strong>no es necesario actuar si la condición no se cumple</strong>.</li>
+</ul>
+<h4 id="ejemplos-de-uso-tipico">Ejemplos de uso típico<a href="#ejemplos-de-uso-tipico" title="Permanent link"></a></h4>
+<ul>
+<li>Comprobar si un número es positivo.</li>
+<li>Verificar si un usuario tiene permisos.</li>
+<li>Validar que un dato no sea nulo o vacío.</li>
+</ul>
+<h3 id="12-estructura-condicional-doble-if-else">1.2. Estructura condicional doble: <code>if – else</code><a href="#12-estructura-condicional-doble-if-else" title="Permanent link"></a></h3>
+<h4 id="descripcion_1">Descripción<a href="#descripcion_1" title="Permanent link"></a></h4>
+<p>La estructura <code>if – else</code> permite elegir entre <strong>dos caminos excluyentes</strong>:<br />
+uno cuando la condición es verdadera y otro cuando es falsa.</p>
+<h4 id="caracteristicas_1">Características<a href="#caracteristicas_1" title="Permanent link"></a></h4>
+<ul>
+<li>Siempre se ejecuta uno de los dos bloques.</li>
+<li>Aporta claridad cuando existen dos alternativas claras.</li>
+</ul>
+<h4 id="uso-adecuado_1">Uso adecuado<a href="#uso-adecuado_1" title="Permanent link"></a></h4>
+<ul>
+<li>Decisiones binarias (sí / no).</li>
+<li>Casos en los que <strong>siempre debe ejecutarse una acción</strong>, independientemente del resultado de la condición.</li>
+</ul>
+<h3 id="ejemplos-de-uso-tipico_1">Ejemplos de uso típico<a href="#ejemplos-de-uso-tipico_1" title="Permanent link"></a></h3>
+<ul>
+<li>Aprobado o suspenso.</li>
+<li>Mayor de edad o menor de edad.</li>
+<li>Acceso permitido o denegado.</li>
+</ul>
+<h3 id="13-estructura-condicional-multiple-if-elif-else">1.3. Estructura condicional múltiple: <code>if – elif – else</code><a href="#13-estructura-condicional-multiple-if-elif-else" title="Permanent link"></a></h3>
+<h4 id="descripcion_2">Descripción<a href="#descripcion_2" title="Permanent link"></a></h4>
+<p>Esta estructura permite evaluar <strong>varias condiciones de forma secuencial</strong>, ejecutando el bloque correspondiente a la <strong>primera condición que sea verdadera</strong>.</p>
+<h4 id="caracteristicas_2">Características<a href="#caracteristicas_2" title="Permanent link"></a></h4>
+<ul>
+<li>Las condiciones se evalúan en orden.</li>
+<li>Solo se ejecuta un bloque.</li>
+<li>El bloque <code>else</code> es opcional y actúa como caso por defecto.</li>
+</ul>
+<h4 id="uso-adecuado_2">Uso adecuado<a href="#uso-adecuado_2" title="Permanent link"></a></h4>
+<ul>
+<li>Clasificación de valores en rangos.</li>
+<li>Menús simples basados en opciones numéricas o textuales.</li>
+<li>Situaciones con <strong>pocas alternativas claramente diferenciadas</strong>.</li>
+</ul>
+<h4 id="ejemplos-de-uso-tipico_2">Ejemplos de uso típico<a href="#ejemplos-de-uso-tipico_2" title="Permanent link"></a></h4>
+<ul>
+<li>Calificaciones (suspenso, aprobado, notable, sobresaliente).</li>
+<li>Tarifas según edad.</li>
+<li>Estados de un proceso (iniciado, en curso, finalizado).</li>
+</ul>
+<h3 id="14-estructuras-condicionales-anidadas">1.4. Estructuras condicionales anidadas<a href="#14-estructuras-condicionales-anidadas" title="Permanent link"></a></h3>
+<h4 id="descripcion_3">Descripción<a href="#descripcion_3" title="Permanent link"></a></h4>
+<p>Consisten en <strong>colocar una estructura condicional dentro de otra</strong>, permitiendo decisiones más complejas y jerárquicas.</p>
+<h4 id="caracteristicas_3">Características<a href="#caracteristicas_3" title="Permanent link"></a></h4>
+<ul>
+<li>Permiten modelar lógica compleja.</li>
+<li>Pueden reducir la legibilidad si se abusa de ellas.</li>
+<li>Requieren especial cuidado con la indentación.</li>
+</ul>
+<h4 id="uso-adecuado_3">Uso adecuado<a href="#uso-adecuado_3" title="Permanent link"></a></h4>
+<ul>
+<li>Cuando una decisión depende del resultado de otra previa.</li>
+<li>Validaciones en varios niveles (por ejemplo, comprobar primero si un dato existe y después su valor).</li>
+</ul>
+<h4 id="recomendaciones">Recomendaciones<a href="#recomendaciones" title="Permanent link"></a></h4>
+<ul>
+<li>Evitar niveles de anidación excesivos.</li>
+<li>Considerar alternativas como <code>elif</code> o <code>match</code> si la lógica lo permite.</li>
+</ul>
+<h3 id="15-expresiones-condicionales-operador-ternario">1.5. Expresiones condicionales (operador ternario)<a href="#15-expresiones-condicionales-operador-ternario" title="Permanent link"></a></h3>
+<h4 id="descripcion_4">Descripción<a href="#descripcion_4" title="Permanent link"></a></h4>
+<p>Python permite escribir una condición en <strong>una sola línea</strong>, devolviendo un valor u otro según el resultado de la condición.</p>
+<h4 id="caracteristicas_4">Características<a href="#caracteristicas_4" title="Permanent link"></a></h4>
+<ul>
+<li>Sintaxis compacta.</li>
+<li>Devuelve un valor, no un bloque de instrucciones.</li>
+<li>Mejora la concisión, pero puede afectar a la legibilidad.</li>
+</ul>
+<h4 id="uso-adecuado_4">Uso adecuado<a href="#uso-adecuado_4" title="Permanent link"></a></h4>
+<ul>
+<li>Asignaciones simples basadas en una condición.</li>
+<li>Casos muy claros y cortos.</li>
+</ul>
+<h4 id="uso-no-recomendado">Uso no recomendado<a href="#uso-no-recomendado" title="Permanent link"></a></h4>
+<ul>
+<li>Condiciones complejas.</li>
+<li>Lógica difícil de interpretar en una sola línea.</li>
+</ul>
+<h3 id="16-estructura-de-seleccion-multiple-match-case-python-310">1.6. Estructura de selección múltiple: <code>match – case</code> (Python 3.10+)<a href="#16-estructura-de-seleccion-multiple-match-case-python-310" title="Permanent link"></a></h3>
+<h4 id="descripcion_5">Descripción<a href="#descripcion_5" title="Permanent link"></a></h4>
+<p>La estructura <code>match</code> permite comparar un valor con <strong>distintos patrones</strong>, ejecutando el bloque asociado al primer patrón que coincida.</p>
+<h4 id="caracteristicas_5">Características<a href="#caracteristicas_5" title="Permanent link"></a></h4>
+<ul>
+<li>Similar a <code>switch</code> en otros lenguajes.</li>
+<li>Más clara y legible que múltiples <code>elif</code> en ciertos casos.</li>
+<li>Soporta patrones avanzados, no solo valores simples.</li>
+</ul>
+<h4 id="uso-adecuado_5">Uso adecuado<a href="#uso-adecuado_5" title="Permanent link"></a></h4>
+<ul>
+<li>Menús de opciones.</li>
+<li>Evaluación de estados o códigos.</li>
+<li>Comparaciones claras contra valores constantes.</li>
+</ul>
+<h4 id="ventajas-frente-a-if-elif">Ventajas frente a <code>if – elif</code><a href="#ventajas-frente-a-if-elif" title="Permanent link"></a></h4>
+<ul>
+<li>Mayor legibilidad cuando hay muchas alternativas.</li>
+<li>Código más estructurado y mantenible.</li>
+<li>Especialmente útil en programas con múltiples casos bien definidos.</li>
+</ul>
+<h3 id="17-comparacion-general-de-las-estructuras-condicionales">1.7. Comparación general de las estructuras condicionales<a href="#17-comparacion-general-de-las-estructuras-condicionales" title="Permanent link"></a></h3>
+<table>
+<thead>
+<tr>
+<th>Estructura</th>
+<th>Nº de condiciones</th>
+<th>Uso principal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>if</code></td>
+<td>1</td>
+<td>Validación simple</td>
+</tr>
+<tr>
+<td><code>if – else</code></td>
+<td>1</td>
+<td>Decisión binaria</td>
+</tr>
+<tr>
+<td><code>if – elif – else</code></td>
+<td>Varias</td>
+<td>Clasificación o alternativas múltiples</td>
+</tr>
+<tr>
+<td>Condicional anidada</td>
+<td>Varias</td>
+<td>Decisiones jerárquicas complejas</td>
+</tr>
+<tr>
+<td>Ternario</td>
+<td>1</td>
+<td>Asignaciones simples</td>
+</tr>
+<tr>
+<td><code>match – case</code></td>
+<td>Muchas</td>
+<td>Selección múltiple clara y estructurada</td>
+</tr>
+</tbody>
+</table>
+<h3 id="18-buenas-practicas-en-el-uso-de-condicionales">1.8. Buenas prácticas en el uso de condicionales<a href="#18-buenas-practicas-en-el-uso-de-condicionales" title="Permanent link"></a></h3>
+<ul>
+<li>Priorizar <strong>claridad y legibilidad</strong> frente a código compacto.</li>
+<li>Evitar anidaciones profundas.</li>
+<li>Usar <code>match</code> cuando haya muchas alternativas basadas en un mismo valor.</li>
+<li>Mantener condiciones simples y expresivas.</li>
+<li>Documentar decisiones complejas mediante comentarios.</li>
+</ul>
+<hr />
+<h2 id="2-condiciones">2) Condiciones<a href="#2-condiciones" title="Permanent link"></a></h2>
+<p>Cuando se aplican a estructuras de control, los tests tienen como objetivo:</p>
+<pre><code>- Validar todas las ramas de decisión.
+- Comprobar condiciones verdaderas y falsas.
+- Verificar entradas normales y entradas límite.
+- Detectar bucles infinitos o ejecuciones incorrectas.
+</code></pre>
+<p>En esencia, los tests garantizan que el flujo del programa es correcto.</p>
+<h3 id="21-logica-en-tests">2.1. Lógica en tests<a href="#21-logica-en-tests" title="Permanent link"></a></h3>
+<h3 id="tabla-resumen">Tabla resumen<a href="#tabla-resumen" title="Permanent link"></a></h3>
+<table>
+<thead>
+<tr>
+<th>Tipo de test</th>
+<th>Operadores / Funciones</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Comparación</td>
+<td><code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code></td>
+<td><code>x &gt; 10</code></td>
+</tr>
+<tr>
+<td>Encadenada</td>
+<td><code>a &lt; b &lt; c</code></td>
+<td><code>0 &lt; x &lt; 5</code></td>
+</tr>
+<tr>
+<td>Lógicos</td>
+<td><code>and</code>, <code>or</code>, <code>not</code></td>
+<td><code>x &gt; 0 and par(x)</code></td>
+</tr>
+<tr>
+<td>Pertenencia</td>
+<td><code>in</code>, <code>not in</code></td>
+<td><code>"a" in texto</code></td>
+</tr>
+<tr>
+<td>Identidad</td>
+<td><code>is</code>, <code>is not</code></td>
+<td><code>x is None</code></td>
+</tr>
+<tr>
+<td>Truthiness / Falsiness</td>
+<td>valores <code>True</code> / <code>False</code></td>
+<td><code>if lista:</code></td>
+</tr>
+<tr>
+<td>Tipo</td>
+<td><code>isinstance()</code></td>
+<td><code>isinstance(x, str)</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="tabla-de-operadores-logicos">Tabla de operadores lógicos<a href="#tabla-de-operadores-logicos" title="Permanent link"></a></h3>
+<table>
+<thead>
+<tr>
+<th>Operador</th>
+<th>Descripción</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>and</code></td>
+<td>Devuelve verdadero si ambas expresiones son verdaderas</td>
+<td><code>x &lt; 5 and x &lt; 10</code></td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td>Devuelve verdadero si al menos una expresión es verdadera</td>
+<td><code>x &lt; 5 or x &lt; 4</code></td>
+</tr>
+<tr>
+<td><code>not</code></td>
+<td>Invierte el resultado de la expresión lógica</td>
+<td><code>not (x &lt; 5 and x &lt; 10)</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-pertenecia-e-identidad">2.2. Pertenecia e identidad<a href="#22-pertenecia-e-identidad" title="Permanent link"></a></h3>
+<h4 id="pertenencia">Pertenencia<a href="#pertenencia" title="Permanent link"></a></h4>
+<p>Se usan para comprobar si un elemento está dentro de una secuencia (cadena, lista, tupla, diccionario, etc.):</p>
+<pre><code>if &quot;a&quot; in &quot;hola&quot;:
+    print(&quot;La 'a' está&quot;)
+
+if item not in lista:
+    print(&quot;No encontrado&quot;)
+</code></pre>
+<h4 id="identidad">Identidad<a href="#identidad" title="Permanent link"></a></h4>
+<p>Comprueban si dos nombres se refieren al mismo objeto en memoria:</p>
+<pre><code># Ejemplo 1:
+if variable is None:
+    print(&quot;Está vacío&quot;)
+
+# Ejemplo 2:
+if x is not y:
+    print(&quot;Son objetos distintos&quot;)
+</code></pre>
+<h3 id="23-comprobar-el-tipo-de-un-objeto">2.3. Comprobar el tipo de un objeto<a href="#23-comprobar-el-tipo-de-un-objeto" title="Permanent link"></a></h3>
+<ul>
+<li>Comprobando el tipo de un valor:</li>
+</ul>
+<pre><code>if isinstance(valor, int):
+    print(&quot;Es un entero&quot;)
+</code></pre>
+<ul>
+<li>Comprobando vaarios tipos a la vez:</li>
+</ul>
+<pre><code>if isinstance(x, (int, float)):
+    print(&quot;Es numérico&quot;)
+</code></pre>
+<h3 id="24-valores-truthyfalsy">2.4. Valores Truthy/Falsy<a href="#24-valores-truthyfalsy" title="Permanent link"></a></h3>
+<p>Python considera algunos valores como <strong>falsos (<code>False</code>) de forma implícita</strong>:</p>
+<ul>
+<li><code>0</code>, <code>0.0</code></li>
+<li><code>""</code> (cadena vacía)</li>
+<li><code>[]</code> (lista vacía)</li>
+<li><code>{}</code> (diccionario vacío)</li>
+<li><code>set()</code> (conjunto vacío)</li>
+<li><code>None</code></li>
+<li><code>False</code></li>
+</ul>
+<p>Cualquier otro valor se considera <strong>truthy</strong> (verdadero).</p>
+<p>Ejemplo típico:</p>
+<pre><code>if lista:
+    print(&quot;La lista NO está vacía&quot;)
+else:
+    print(&quot;Lista vacía&quot;)
+</code></pre>
+<h3 id="25-evaluacion-por-cortocircuito">2.5. Evaluación por cortocircuito<a href="#25-evaluacion-por-cortocircuito" title="Permanent link"></a></h3>
+<p>Python no evalúa la segunda parte de una condición si la primera ya determina el resultado:</p>
+<pre><code>if lista and lista[0] == 5:
+    print(&quot;La lista empieza por 5&quot;)
+</code></pre>
+<p>Si lista está vacía, no se evalúa lista[0] y se evita un IndexError.</p>
+<hr />
+<h2 id="3-estructura-conidiconal-if-en-python">3) Estructura conidiconal <code>if</code> en Python<a href="#3-estructura-conidiconal-if-en-python" title="Permanent link"></a></h2>
+<h3 id="31-simple">3.1. Simple<a href="#31-simple" title="Permanent link"></a></h3>
+<p><strong>Estructura</strong>:</p>
+<pre><code>if valor1 == valor2:
+    acción
+````
+
+**Ejemplo**:
+
+```python
+# Definimos una variable numérica
+numero = 5
+
+# Estructura condicional simple
+# Solo se ejecuta el bloque si la condición es verdadera
+if numero &gt; 0:
+    print(&quot;El número es positivo&quot;)
+</code></pre>
+<h3 id="32-if-else">3.2. If-else<a href="#32-if-else" title="Permanent link"></a></h3>
+<p><strong>Estructura</strong>:</p>
+<pre><code>if valor1 == valor2:
+    acción1
+else:
+    acción2
+</code></pre>
+<p><strong>Ejemplo</strong>:</p>
+<pre><code># Definimos un número entero
+numero = 8
+
+# Estructura condicional doble
+# Se evalúa si el número es divisible entre 2
+if numero % 2 == 0:
+    print(&quot;El número es par&quot;)
+else:
+    print(&quot;El número es impar&quot;)
+</code></pre>
+<h3 id="33-if-elif-else">3.3. If-elif-else<a href="#33-if-elif-else" title="Permanent link"></a></h3>
+<p><strong>Sintaxis</strong>:</p>
+<pre><code>if valor1 == valor2:
+    acción1
+elif test:
+    acción2
+else:
+    acción3
+</code></pre>
+<h3 id="34-if-elif-elif">3.4. If-elif-elif<a href="#34-if-elif-elif" title="Permanent link"></a></h3>
+<pre><code>if valor1 == valor2:
+    acción1
+elif test:
+    acción2
+elif test:
+    acción3
+</code></pre>
+<h3 id="35-operador-ternario">3.5. Operador ternario<a href="#35-operador-ternario" title="Permanent link"></a></h3>
+<p><strong>Sintaxis</strong>:</p>
+<pre><code>acción1 if valor1 == valor2 else acción2
+</code></pre>
+<p><strong>Ejemplo 1</strong>: comprobando si un número es negativo.</p>
+<pre><code># Definimos un número entero
+numero = -3
+
+# Operador ternario:
+# Si numero es mayor o igual que 0, el resultado será &quot;Positivo&quot;
+# En caso contrario, el resultado será &quot;Negativo&quot;
+resultado = &quot;Positivo&quot; if numero &gt;= 0 else &quot;Negativo&quot;
+
+print(resultado)
+</code></pre>
+<p><strong>Ejemplo 2</strong>: Comprobar nota.</p>
+<pre><code># Definimos una nota que puede venir de una entrada externa
+nota = 8.5
+
+# Operador ternario avanzado con validación incluida:
+# 1. Primero se comprueba si la nota está fuera del rango válido (0 a 10)
+# 2. Si es válida, se clasifica como &quot;Aprobado&quot; o &quot;Suspenso&quot;
+# 3. Todo se resuelve en una única expresión condicional
+resultado = (
+    &quot;Nota no válida&quot; if nota &lt; 0 or nota &gt; 10
+    else &quot;Aprobado&quot; if nota &gt;= 5
+    else &quot;Suspenso&quot;
+)
+
+print(resultado)
+</code></pre>
+<h3 id="36-anidado">3.6. Anidado<a href="#36-anidado" title="Permanent link"></a></h3>
+<pre><code># Definimos la nota de un alumno
+nota = 6.5
+
+# Primer nivel de decisión:
+# Comprobamos si la nota está dentro del rango válido
+if 0 &lt;= nota &lt;= 10:
+
+    # Segundo nivel de decisión (if anidado):
+    # Solo se evalúa si la nota es válida
+    if nota &gt;= 5:
+        print(&quot;Asignatura aprobada&quot;)
+    else:
+        # Condición por defecto del if interno
+        # Se ejecuta si la nota es menor que 5
+        print(&quot;Asignatura suspendida&quot;)
+
+else:
+    # Condición por defecto del if externo
+    # Se ejecuta cuando la nota no está en el rango válido
+    print(&quot;Nota no válida&quot;)
+</code></pre>
+<h3 id="37-comparaciones-en-listas">3.7. Comparaciones en listas<a href="#37-comparaciones-en-listas" title="Permanent link"></a></h3>
+<ul>
+<li>Se distingue entre mayúsculas y minúsculas.</li>
+<li>Para ignorar mayúsculas → pasamos las cadenas a minúsculas en la comparación.</li>
+<li><strong>Múltiples condiciones:</strong></li>
+<li><code>and</code></li>
+<li>
+<p><code>or</code></p>
+</li>
+<li>
+<p><strong>Comprobar si un elemento está en una lista:</strong></p>
+</li>
+</ul>
+<pre><code>if valor in lista:
+    acción1
+else:
+    acción2
+````
+
+- **Comprobar si un elemento NO está en una lista:**
+
+```python
+if valor not in lista:
+    acción1
+else:
+    acción2
+</code></pre>
+<hr />
+<h2 id="4-estructura-de-seleccion-match-en-python">4) Estructura de selección <code>match</code> en Python<a href="#4-estructura-de-seleccion-match-en-python" title="Permanent link"></a></h2>
+<h3 id="41-resumen-rapido-de-variantes">4.1.  Resumen rápido de variantes<a href="#41-resumen-rapido-de-variantes" title="Permanent link"></a></h3>
+<table>
+<thead>
+<tr>
+<th>Variante</th>
+<th>Descripción</th>
+<th>Ejemplo breve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Valor literal</td>
+<td>Coincide con un valor exacto</td>
+<td><code>case 10:</code></td>
+</tr>
+<tr>
+<td>Alternativas</td>
+<td>Varios valores posibles</td>
+<td><code>case "a" \| "b":</code></td>
+</tr>
+<tr>
+<td>Variable de captura</td>
+<td>Asigna el valor a una variable</td>
+<td><code>case x:</code></td>
+</tr>
+<tr>
+<td>Estructura</td>
+<td>Coincidencia con listas, tuplas, dicts, objetos</td>
+<td><code>case [a, b, c]:</code></td>
+</tr>
+<tr>
+<td>Comodín</td>
+<td>Caso por defecto</td>
+<td><code>case _:</code></td>
+</tr>
+<tr>
+<td>Guarda</td>
+<td>Añade condición lógica</td>
+<td><code>case n if n &gt; 0:</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-sintaxis-basica">4.2. Sintaxis básica<a href="#42-sintaxis-basica" title="Permanent link"></a></h3>
+<p><strong>Estructura:</strong></p>
+<pre><code>match variable:
+    case patron1:
+        # acciones si coincide con patrón1
+        pass
+
+    case patron2:
+        # acciones si coincide con patrón2
+        pass
+
+    case _:
+        # caso por defecto (equivalente a 'default' en switch)
+        pass
+</code></pre>
+<p><strong>Ejemplo</strong>:</p>
+<pre><code>dia = 3
+
+match dia:
+    case 1:
+        print(&quot;Lunes&quot;)
+    case 2:
+        print(&quot;Martes&quot;)
+    case 3:
+        print(&quot;Miércoles&quot;)
+    case 4:
+        print(&quot;Jueves&quot;)
+    case 5:
+        print(&quot;Viernes&quot;)
+    case _:
+        print(&quot;Día no válido&quot;)
+</code></pre>
+<h3 id="43-tuplas">4.3. Tuplas<a href="#43-tuplas" title="Permanent link"></a></h3>
+<pre><code>coordenada = (0, 5)
+
+match coordenada:
+    case (0, y):
+        print(f&quot;Está sobre el eje Y en {y}&quot;)
+    case (x, 0):
+        print(f&quot;Está sobre el eje X en {x}&quot;)
+    case (x, y):
+        print(f&quot;Punto general ({x}, {y})&quot;)
+</code></pre>
+<h3 id="44-listas">4.4. Listas<a href="#44-listas" title="Permanent link"></a></h3>
+<p><strong>Ejemplo 1</strong>:</p>
+<pre><code>valores = [10, 20]
+
+match valores:
+    case [a, b]:
+        print(f&quot;La lista tiene dos elementos: {a} y {b}&quot;)
+    case [a]:
+        print(f&quot;La lista tiene un solo elemento: {a}&quot;)
+    case []:
+        print(&quot;La lista está vacía&quot;)
+    case _:
+        print(&quot;La lista tiene más de dos elementos&quot;)
+</code></pre>
+<p><strong>Ejemplo 2</strong>:</p>
+<pre><code>datos = [1, 2, 3]
+
+match datos:
+    case [a, b, c]:
+        print(f&quot;Tres elementos: {a}, {b}, {c}&quot;)
+    case [a, b]:
+        print(f&quot;Dos elementos: {a}, {b}&quot;)
+    case [a, *resto]:
+        print(f&quot;Empieza con {a} y el resto es {resto}&quot;)
+</code></pre>
+<p><strong>Atención</strong>:</p>
+<ul>
+<li>El operador * se utiliza para capturar el resto de los elementos de una secuencia.</li>
+<li>Su funcionamiento es equivalente al uso de *args en funciones.</li>
+<li>Este tipo de patrones es especialmente útil para trabajar con listas de longitud variable.</li>
+</ul>
+<h3 id="45-diccionarios">4.5. Diccionarios<a href="#45-diccionarios" title="Permanent link"></a></h3>
+<pre><code># Creamos un diccionario con información de una persona
+persona = {&quot;nombre&quot;: &quot;Luis&quot;, &quot;edad&quot;: 17}
+
+# Utilizamos match para analizar la estructura del diccionario
+match persona:
+    # Caso 1: el diccionario tiene las claves &quot;nombre&quot; y &quot;edad&quot;
+    case {&quot;nombre&quot;: nombre, &quot;edad&quot;: edad}:
+        print(f&quot;{nombre} tiene {edad} años&quot;)
+
+    # Caso 2: el diccionario solo tiene la clave &quot;nombre&quot;
+    case {&quot;nombre&quot;: nombre}:
+        print(f&quot;Persona llamada {nombre}&quot;)
+
+    # Caso 3: cualquier otro diccionario distinto
+    case _:
+        print(&quot;Información de persona no válida&quot;)
+</code></pre>
+<p><strong>Atención</strong>:</p>
+<ul>
+<li>No se compara el diccionario completo, sino su estructura y claves.</li>
+<li>El orden de las claves no importa.</li>
+<li>Cada case captura los valores y los guarda en variables.</li>
+<li>case _ garantiza que siempre habrá una salida.</li>
+</ul>
+<h3 id="46-objetos">4.6. Objetos<a href="#46-objetos" title="Permanent link"></a></h3>
+<pre><code># Definimos una clase llamada Punto
+# Representa un punto en un plano cartesiano (x, y)
+class Punto:
+    def __init__(self, x, y):
+        # Atributo que almacena la coordenada X
+        self.x = x
+        # Atributo que almacena la coordenada Y
+        self.y = y
+
+# Creamos un objeto de la clase Punto
+p = Punto(3, 4)
+
+# Utilizamos match para analizar la estructura del objeto
+match p:
+    # Caso 1: el punto está sobre el eje Y (x vale 0)
+    case Punto(x=0, y=y):
+        print(f&quot;Sobre eje Y en {y}&quot;)
+
+    # Caso 2: cualquier otro punto con coordenadas (x, y)
+    case Punto(x=x, y=y):
+        print(f&quot;Punto en ({x}, {y})&quot;)
+</code></pre>
+<h3 id="47-condicionales">4.7. Condicionales<a href="#47-condicionales" title="Permanent link"></a></h3>
+<pre><code># Definimos una variable numérica
+numero = 7
+
+# Utilizamos match para evaluar el valor del número
+match numero:
+    # Caso 1: el número es menor que 0
+    case n if n &lt; 0:
+        print(&quot;Negativo&quot;)
+
+    # Caso 2: el número es exactamente 0
+    case n if n == 0:
+        print(&quot;Cero&quot;)
+
+    # Caso 3: el número es mayor que 0
+    case n if n &gt; 0:
+        print(&quot;Positivo&quot;)
+</code></pre>
+<p><strong>Atención</strong>:</p>
+<ul>
+<li>En este ejemplo, match se combina con condiciones (if), llamadas guards.</li>
+<li>La variable n captura el valor de numero.</li>
+<li>Cada case solo se ejecuta si:<ul>
+<li>El patrón coincide, y</li>
+<li>La condición del if se cumple.</li>
+</ul>
+</li>
+<li>Este uso permite expresar decisiones de forma más clara que con múltiples if / elif.</li>
+</ul>
+<p><a href="#top">⬆ Ir arriba</a></p>
+</body>
+</html>

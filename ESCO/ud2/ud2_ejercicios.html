@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UD02 - Condicionales</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud02-boletin-ejercicios">UD02-Boletin-Ejercicios</h1>
+<div id="top"></div>
+
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#ud02-boletin-ejercicios">UD02-Boletin-Ejercicios</a></li>
+<li><a href="#índice-de-contenidos">Índice de contenidos</a></li>
+<li><a href="#boletín-de-ejercicios--ud02-estructuras-condicionales-en-python">Boletín de Ejercicios – UD02: Estructuras Condicionales en Python</a></li>
+<li><a href="#1-estructura-condicional-simple-if">1. Estructura condicional simple: <code>if</code></a><ul>
+<li><a href="#ejercicio-1-">Ejercicio 1 </a></li>
+<li><a href="#ejercicio-2-">Ejercicio 2 </a></li>
+<li><a href="#ejercicio-3-">Ejercicio 3 </a></li>
+<li><a href="#ejercicio-4-">Ejercicio 4 </a></li>
+<li><a href="#ejercicio-5-">Ejercicio 5 </a></li>
+</ul>
+</li>
+<li><a href="#2-estructura-condicional-doble-if--else">2. Estructura condicional doble: <code>if – else</code></a><ul>
+<li><a href="#ejercicio-1--1">Ejercicio 1 </a></li>
+<li><a href="#ejercicio-2--1">Ejercicio 2 </a></li>
+<li><a href="#ejercicio-3--1">Ejercicio 3 </a></li>
+<li><a href="#ejercicio-4--1">Ejercicio 4 </a></li>
+</ul>
+</li>
+<li><a href="#3-estructura-condicional-múltiple-if--elif--else">3. Estructura condicional múltiple: <code>if – elif – else</code></a><ul>
+<li><a href="#ejercicio-1--2">Ejercicio 1 </a></li>
+<li><a href="#ejercicio-2--2">Ejercicio 2 </a></li>
+<li><a href="#ejercicio-3--2">Ejercicio 3 </a></li>
+<li><a href="#ejercicio-4--2">Ejercicio 4 </a></li>
+</ul>
+</li>
+<li><a href="#4-condicionales-anidados">4. Condicionales anidados</a><ul>
+<li><a href="#ejercicio-1--3">Ejercicio 1 </a></li>
+<li><a href="#ejercicio-2--3">Ejercicio 2 </a></li>
+<li><a href="#ejercicio-3--3">Ejercicio 3 </a></li>
+<li><a href="#ejercicio-4--3">Ejercicio 4 </a></li>
+</ul>
+</li>
+<li><a href="#5-operador-ternario">5. Operador ternario</a><ul>
+<li><a href="#ejercicio-1--4">Ejercicio 1 </a></li>
+<li><a href="#ejercicio-2--4">Ejercicio 2 </a></li>
+<li><a href="#ejercicio-3--4">Ejercicio 3 </a></li>
+<li><a href="#ejercicio-4--4">Ejercicio 4 </a></li>
+</ul>
+</li>
+<li><a href="#6-estructura-match--case">6. Estructura <code>match – case</code></a><ul>
+<li><a href="#ejercicio-1--5">Ejercicio 1 </a></li>
+<li><a href="#ejercicio-2--5">Ejercicio 2 </a></li>
+<li><a href="#ejercicio-3--5">Ejercicio 3 </a></li>
+<li><a href="#ejercicio-4--5">Ejercicio 4 </a></li>
+</ul>
+</li>
+<li><a href="#7-mixto">7. Mixto</a><ul>
+<li><a href="#ejercicio-1--6">Ejercicio 1 </a></li>
+<li><a href="#ejercicio-2--6">Ejercicio 2 </a></li>
+</ul>
+</li>
+</ul>
+<h1 id="boletin-de-ejercicios-ud02-estructuras-condicionales-en-python">Boletín de Ejercicios – UD02: Estructuras Condicionales en Python<a href="#boletin-de-ejercicios-ud02-estructuras-condicionales-en-python" title="Permanent link"></a></h1>
+<hr />
+<h2 id="1-estructura-condicional-simple-if">1. Estructura condicional simple: <code>if</code><a href="#1-estructura-condicional-simple-if" title="Permanent link"></a></h2>
+<h3 id="ejercicio-1">Ejercicio 1 <a href="#ejercicio-1" title="Permanent link"></a></h3>
+<p>Comprueba si un número instroducido por el usuario es mayor que 0.</p>
+<h3 id="ejercicio-2">Ejercicio 2 <a href="#ejercicio-2" title="Permanent link"></a></h3>
+<p>Muestra un mensaje si una cadena introducida por el usuario no está vacía.</p>
+<h3 id="ejercicio-3">Ejercicio 3 <a href="#ejercicio-3" title="Permanent link"></a></h3>
+<p>Comprueba si una variable es <code>None</code>.</p>
+<h3 id="ejercicio-4">Ejercicio 4 <a href="#ejercicio-4" title="Permanent link"></a></h3>
+<p>Muestra un mensaje si un número introducido por el usuario está dentro del rango 1–100.</p>
+<h3 id="ejercicio-5">Ejercicio 5 <a href="#ejercicio-5" title="Permanent link"></a></h3>
+<p>Muestra un mensaje si un número introducido por el usuario es mayor que 0 y es par utilizando operadores lógicos.</p>
+<hr />
+<h2 id="2-estructura-condicional-doble-if-else">2. Estructura condicional doble: <code>if – else</code><a href="#2-estructura-condicional-doble-if-else" title="Permanent link"></a></h2>
+<h3 id="ejercicio-1_1">Ejercicio 1 <a href="#ejercicio-1_1" title="Permanent link"></a></h3>
+<p>Determina si un número introducido por el usuario es positivo o negativo, mostrando el resultado al usuario.</p>
+<h3 id="ejercicio-2_1">Ejercicio 2 <a href="#ejercicio-2_1" title="Permanent link"></a></h3>
+<p>Comprueba si una persona es mayor de edad (pedir al usuario la edad), mostrando el resultado al usuario.</p>
+<h3 id="ejercicio-3_1">Ejercicio 3 <a href="#ejercicio-3_1" title="Permanent link"></a></h3>
+<p>Indica si una contraseña introducida por el usuario es correcta, mostrando el resultado al usuario.</p>
+<h3 id="ejercicio-4_1">Ejercicio 4 <a href="#ejercicio-4_1" title="Permanent link"></a></h3>
+<p>Comprueba si un número introducido por el usuario es par o impar, mostrando el resultado al usuario.</p>
+<hr />
+<h2 id="3-estructura-condicional-multiple-if-elif-else">3. Estructura condicional múltiple: <code>if – elif – else</code><a href="#3-estructura-condicional-multiple-if-elif-else" title="Permanent link"></a></h2>
+<h3 id="ejercicio-1_2">Ejercicio 1 <a href="#ejercicio-1_2" title="Permanent link"></a></h3>
+<p>Clasifica una nota, sobre 10, introducida por el profesor como aprobada o suspensa.</p>
+<h3 id="ejercicio-2_2">Ejercicio 2 <a href="#ejercicio-2_2" title="Permanent link"></a></h3>
+<p>Clasifica una nota, sobre 10, introducida por el profesor en suspenso, aprobado o notable.</p>
+<h3 id="ejercicio-3_2">Ejercicio 3 <a href="#ejercicio-3_2" title="Permanent link"></a></h3>
+<p>Muestra el día de la semana según un número del 1 al 7 (teniendo en cuenta que la semana empieza el lunes). Si el usuario introduce un número entre el 1 y el 7, se le muestra el día. En caso de introducir otro número, se muestra "valor incorrecto".</p>
+<h3 id="ejercicio-4_2">Ejercicio 4 <a href="#ejercicio-4_2" title="Permanent link"></a></h3>
+<p>Clasifica una edad introducida por el usuario en varios rangos: bebé (hasta un año), niño (1-11), adolescente (12-17), adulto (18-67), anciano (más de 67).</p>
+<hr />
+<h2 id="4-condicionales-anidados">4. Condicionales anidados<a href="#4-condicionales-anidados" title="Permanent link"></a></h2>
+<h3 id="ejercicio-1_3">Ejercicio 1 <a href="#ejercicio-1_3" title="Permanent link"></a></h3>
+<p>Valida una nota sobre 10 introducida por el usuario. Es decir, si la nota es válida (está entre 0 y 10, incluidos) o no.</p>
+<h3 id="ejercicio-2_3">Ejercicio 2 <a href="#ejercicio-2_3" title="Permanent link"></a></h3>
+<p>Comprueba si un número introducido por el usuario es distinto de cero y positivo.</p>
+<h3 id="ejercicio-3_3">Ejercicio 3 <a href="#ejercicio-3_3" title="Permanent link"></a></h3>
+<p>Comprueba si una lista no está vacía y muestra si el primer elemento es igual a 1.</p>
+<h3 id="ejercicio-4_3">Ejercicio 4 <a href="#ejercicio-4_3" title="Permanent link"></a></h3>
+<p>Valida si una edad introducida por el usuario es un valor mayor o igual que cero, y muestra si está en edad de poder votar.</p>
+<hr />
+<h2 id="5-operador-ternario">5. Operador ternario<a href="#5-operador-ternario" title="Permanent link"></a></h2>
+<h3 id="ejercicio-1_4">Ejercicio 1 <a href="#ejercicio-1_4" title="Permanent link"></a></h3>
+<p>Determina si un número introducido por el usuario es positivo.</p>
+<h3 id="ejercicio-2_4">Ejercicio 2 <a href="#ejercicio-2_4" title="Permanent link"></a></h3>
+<p>Indica si la edad introducida por el usuario se corresponde con un mayor de edad.</p>
+<h3 id="ejercicio-3_4">Ejercicio 3 <a href="#ejercicio-3_4" title="Permanent link"></a></h3>
+<p>Determina si un número introducido por el usuario es par.</p>
+<h3 id="ejercicio-4_4">Ejercicio 4 <a href="#ejercicio-4_4" title="Permanent link"></a></h3>
+<p>Valida si una nota introducida por el usuario es válida, es decir, está entre 0 y 10, incluidos.</p>
+<hr />
+<h2 id="6-estructura-match-case">6. Estructura <code>match – case</code><a href="#6-estructura-match-case" title="Permanent link"></a></h2>
+<h3 id="ejercicio-1_5">Ejercicio 1 <a href="#ejercicio-1_5" title="Permanent link"></a></h3>
+<p>Pedir un número al usuario e indicar con qué día de la semana se corresponde. En caso de introducir un valor que no se corresponda con los válidos se deberá indicar que es un valor no válido.</p>
+<h3 id="ejercicio-2_5">Ejercicio 2 <a href="#ejercicio-2_5" title="Permanent link"></a></h3>
+<p>Clasificar un número introducido por usuario como "cero", "negativo", "positivo". Utilizar match-case con condicionales.</p>
+<h3 id="ejercicio-3_5">Ejercicio 3 <a href="#ejercicio-3_5" title="Permanent link"></a></h3>
+<p>Crea un programa en Python que utilice la estructura match – case para analizar una lista de números enteros.</p>
+<p>El programa debe:</p>
+<ul>
+<li>Tener una lista llamada datos.</li>
+<li>Comprobar si la lista contiene exactamente dos elementos.</li>
+<li>Si la lista tiene dos elementos, mostrar por pantalla el mensaje: "Dos elementos".</li>
+<li>Utiliza match para comparar la estructura de la lista, no su contenido concreto.</li>
+</ul>
+<h3 id="ejercicio-4_5">Ejercicio 4 <a href="#ejercicio-4_5" title="Permanent link"></a></h3>
+<p>Crea un programa que gestione la información de una persona utilizando un diccionario.</p>
+<p>El programa debe:</p>
+<ul>
+<li>Tener un diccionario llamado persona que contenga la clave "edad".</li>
+<li>Utilizar la estructura match – case para analizar el diccionario.</li>
+<li>Comprobar si la persona es mayor de edad (18 años o más).</li>
+<li>Mostrar el mensaje "Mayor de edad" solo si se cumple esa condición.</li>
+<li>Debes usar match junto con una condición adicional (if) dentro del case.</li>
+</ul>
+<hr />
+<h2 id="7-mixto">7. Mixto<a href="#7-mixto" title="Permanent link"></a></h2>
+<h3 id="ejercicio-1_6">Ejercicio 1 <a href="#ejercicio-1_6" title="Permanent link"></a></h3>
+<p>Escribe un programa en Python que haga lo siguiente:</p>
+<ol>
+<li>Pide al usuario que ingrese sus calificaciones en 3 asignaturas (por ejemplo, Matemáticas, Ciencias, Historia).</li>
+<li>Almacena estas calificaciones en un diccionario donde las claves son los nombres de las asignaturas y los valores son las calificaciones.</li>
+<li>Calcula la calificación promedio.</li>
+<li>
+<p>Usa el operador ternario para proporcionar retroalimentación:</p>
+<ul>
+<li>Si el promedio es 90 o más, imprime "¡Excelente trabajo!".</li>
+<li>Si el promedio está entre 70 y 89, imprime "¡Buen trabajo!".</li>
+<li>Si el promedio es menor a 70, imprime "Necesitas mejorar".</li>
+<li>
+<p>Usa anidamiento y el operador ternario para asignar una letra basada en el promedio:</p>
+</li>
+<li>
+<p>Si el promedio es 90 o más, asigna 'A'.</p>
+</li>
+<li>Si el promedio está entre 80 y 89, asigna 'B'.</li>
+<li>Si el promedio está entre 70 y 79, asigna 'C'.</li>
+<li>Si el promedio es menor a 70, asigna 'D'.</li>
+</ul>
+</li>
+</ol>
+<h3 id="ejercicio-2_6">Ejercicio 2 <a href="#ejercicio-2_6" title="Permanent link"></a></h3>
+<p>Escribe un programa en Python que haga lo siguiente:</p>
+<ol>
+<li>Inicializa un diccionario vacío para almacenar la lista de compras, donde las claves son categorías de artículos (por ejemplo, 'Frutas', 'Lácteos') y los valores son listas de artículos.</li>
+<li>Pide al usuario que ingrese una acción: 'agregar', 'eliminar' o 'ver'.</li>
+<li>
+<p>Usa el operador ternario y anidamiento para manejar cada acción:</p>
+<ul>
+<li>Si es 'agregar', pide la categoría y el artículo, luego agrega el artículo a la lista correspondiente en el diccionario.</li>
+<li>Si es 'eliminar', pide la categoría y el artículo, luego elimina el artículo de la lista.</li>
+<li>Si es 'ver', muestra toda la lista de compras.</li>
+<li>Usa anidamiento para manejar las acciones sin bucles.</li>
+</ul>
+</li>
+</ol>
+<p><a href="#top">⬆ Ir arriba</a></p>
+</body>
+</html>

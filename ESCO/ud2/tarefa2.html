@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UD02 - Condicionales</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud02-tarea-entregable">UD02-Tarea entregable</h1>
+<div id="top"></div>
+
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li>
+<ul>
+<li><a href="#gestion-de-acceso-y-evaluacion-de-usuarios-en-un-sistema">Gestión de acceso y evaluación de usuarios en un sistema</a><ul>
+<li><a href="#contexto-general"> Contexto general</a></li>
+</ul>
+</li>
+<li><a href="#datos-de-partida"> Datos de partida</a></li>
+<li><a href="#requisitos-funcionales-que-debe-hacer-el-programa"> Requisitos funcionales (QUÉ debe hacer el programa)</a><ul>
+<li><a href="#1-validacion-general-del-usuario-condicional-simple">1. Validación general del usuario (condicional simple)</a></li>
+<li><a href="#2-identificacion-del-tipo-de-usuario-match-case">2. Identificación del tipo de usuario (match – case)</a></li>
+<li><a href="#3-evaluacion-academica-del-alumno-condicionales-anidados">3. Evaluación académica del alumno (condicionales anidados)</a></li>
+<li><a href="#4-control-de-edad-del-alumno-anidacion-ejecucion-condicional">4. Control de edad del alumno (anidación + ejecución condicional)</a></li>
+<li><a href="#5-uso-de-estructura-compacta-operador-ternario">5.Uso de estructura compacta (operador ternario)</a></li>
+</ul>
+</li>
+<li><a href="#requisitos-tecnicos-como-debe-hacerse"> Requisitos técnicos (CÓMO debe hacerse)</a></li>
+<li><a href="#representacion-diagrama-de-flujo"> Representación mediante diagrama de flujo</a></li>
+<li><a href="#entrega">Entrega</a></li>
+</ul>
+</li>
+</ul>
+<hr />
+<hr />
+<h2 id="gestion-de-acceso-y-evaluacion-de-usuarios-en-un-sistema">Gestión de acceso y evaluación de usuarios en un sistema<a href="#gestion-de-acceso-y-evaluacion-de-usuarios-en-un-sistema" title="Permanent link"></a></h2>
+<h3 id="contexto-general">Contexto general<a href="#contexto-general" title="Permanent link"></a></h3>
+<p>Vas a desarrollar un <strong>programa en Python</strong> que simule el comportamiento de un <strong>sistema de acceso y evaluación de usuarios</strong> en una aplicación educativa.</p>
+<p>El sistema deberá tomar decisiones en función de:</p>
+<ul>
+<li>El tipo de usuario</li>
+<li>La edad</li>
+<li>La nota obtenida</li>
+<li>El estado del usuario</li>
+</ul>
+<p>Para ello, deberás utilizar <strong>todas las estructuras condicionales estudiadas en el tema</strong>, aplicando correctamente la sintaxis, el sangrado y la lógica de control.</p>
+<hr />
+<h2 id="datos-de-partida">Datos de partida<a href="#datos-de-partida" title="Permanent link"></a></h2>
+<p>El programa debe trabajar con el siguiente diccionario, cuyos valores serán modificado para realizar las pruebas:</p>
+<pre><code>usuario = {
+    &quot;nombre&quot;: &quot;Ana&quot;,
+    &quot;edad&quot;: 17,
+    &quot;rol&quot;: &quot;alumno&quot;,      # Puede ser: &quot;alumno&quot;, &quot;profesor&quot;, &quot;invitado&quot;
+    &quot;nota&quot;: 6.5,          # Número entre 0 y 10 (puede ser inválido). Indiferente para profesor.
+    &quot;activo&quot;: True        # Indica si el usuario está activo en el sistema
+}
+</code></pre>
+<hr />
+<h2 id="requisitos-funcionales-que-debe-hacer-el-programa">Requisitos funcionales (QUÉ debe hacer el programa)<a href="#requisitos-funcionales-que-debe-hacer-el-programa" title="Permanent link"></a></h2>
+<p>El programa arranccará, analizará el diccionario "usuario" y llevará a cabo los siguientes pasos:</p>
+<hr />
+<h3 id="1-validacion-general-del-usuario-condicional-simple">1. Validación general del usuario (condicional simple)<a href="#1-validacion-general-del-usuario-condicional-simple" title="Permanent link"></a></h3>
+<ul>
+<li>Comprueba si el usuario está <strong>activo</strong>.</li>
+<li>Si el usuario <strong>NO está activo</strong>, muestra el mensaje:</li>
+</ul>
+<blockquote>
+<p><code>"Usuario inactivo. Acceso denegado."</code> * En ese caso, <strong>no se debe ejecutar ninguna otra parte del programa</strong>.</p>
+</blockquote>
+<hr />
+<h3 id="2-identificacion-del-tipo-de-usuario-match-case">2. Identificación del tipo de usuario (<code>match – case</code>)<a href="#2-identificacion-del-tipo-de-usuario-match-case" title="Permanent link"></a></h3>
+<p>Si el usuario está activo:</p>
+<ul>
+<li>Utiliza una estructura <code>match – case</code> para analizar el valor de la clave <code>"rol"</code>.</li>
+<li>
+<p>El comportamiento debe ser el siguiente:</p>
+</li>
+<li>
+<p><code>"alumno"</code> → continuar con la evaluación académica.</p>
+</li>
+<li>
+<p><code>"profesor"</code> → mostrar: <code>"Acceso como profesor. No se requiere evaluación."</code></p>
+</li>
+<li>
+<p>* <code>"invitado"</code> → mostrar: <code>"Acceso limitado como invitado."</code></p>
+</li>
+<li>
+<p>* Cualquier otro valor → mostrar: <code>"Rol no reconocido."</code></p>
+</li>
+</ul>
+<hr />
+<h3 id="3-evaluacion-academica-del-alumno-condicionales-anidados">3. Evaluación académica del alumno (condicionales anidados)<a href="#3-evaluacion-academica-del-alumno-condicionales-anidados" title="Permanent link"></a></h3>
+<p><strong>Este apartado solo se ejecuta si el rol es <code>"alumno"</code></strong>.</p>
+<p>Debes realizar las siguientes comprobaciones, utilizando <strong>estructuras condicionales anidadas</strong>:</p>
+<h4 id="a-validacion-de-la-nota">a) Validación de la nota<a href="#a-validacion-de-la-nota" title="Permanent link"></a></h4>
+<ul>
+<li>Comprueba si la nota está entre 0 y 10.</li>
+<li>Si la nota <strong>no es válida</strong>, muestra:</li>
+</ul>
+<blockquote>
+<p><code>"Nota no válida."</code></p>
+</blockquote>
+<h4 id="b-clasificacion-de-la-nota-if-elif-else">b) Clasificación de la nota (if – elif – else)<a href="#b-clasificacion-de-la-nota-if-elif-else" title="Permanent link"></a></h4>
+<p>Si la nota es válida:</p>
+<ul>
+<li>Menor que 5 → <code>"Suspenso"</code></li>
+<li>Entre 5 y 6.9 → <code>"Aprobado"</code></li>
+<li>Entre 7 y 8.9 → <code>"Notable"</code></li>
+<li>9 o más → <code>"Sobresaliente"</code></li>
+</ul>
+<hr />
+<h3 id="4-control-de-edad-del-alumno-anidacion-ejecucion-condicional">4. Control de edad del alumno (anidación + ejecución condicional)<a href="#4-control-de-edad-del-alumno-anidacion-ejecucion-condicional" title="Permanent link"></a></h3>
+<ul>
+<li>Comprueba la edad del alumno.</li>
+<li>Si es <strong>menor de 18</strong>, muestra:</li>
+</ul>
+<blockquote>
+<p><code>"Alumno menor de edad."</code> * Si es <strong>mayor o igual que 18</strong>, muestra:</p>
+<p><code>"Alumno mayor de edad."</code></p>
+</blockquote>
+<p>Esta comprobación debe estar <strong>correctamente anidada</strong> dentro del bloque del alumno.</p>
+<hr />
+<h3 id="5-uso-de-estructura-compacta-operador-ternario">5. Uso de estructura compacta (operador ternario)<a href="#5-uso-de-estructura-compacta-operador-ternario" title="Permanent link"></a></h3>
+<ul>
+<li>
+<p>Utiliza un <strong>operador ternario</strong> para asignar una variable llamada <code>estado_academico</code>:</p>
+</li>
+<li>
+<p><code>"Promociona"</code> si la nota es mayor o igual que 5.</p>
+</li>
+<li>
+<p><code>"No promociona"</code> en caso contrario.</p>
+</li>
+</ul>
+<p>Después, muestra el valor de esa variable.</p>
+<hr />
+<h2 id="requisitos-tecnicos-como-debe-hacerse">Requisitos técnicos (CÓMO debe hacerse)<a href="#requisitos-tecnicos-como-debe-hacerse" title="Permanent link"></a></h2>
+<p>El programa <strong>debe cumplir obligatoriamente</strong> lo siguiente:</p>
+<ul>
+<li>
+<p>Usar:</p>
+</li>
+<li>
+<p><code>if</code></p>
+</li>
+<li>
+<p><code>if – else</code></p>
+</li>
+<li><code>if – elif – else</code></li>
+<li>condicionales <strong>anidados</strong></li>
+<li>operador <strong>ternario</strong></li>
+<li>estructura <code>match – case</code></li>
+<li>
+<p>Aplicar correctamente:</p>
+</li>
+<li>
+<p>El <strong>sangrado</strong></p>
+</li>
+<li>
+<p>El <strong>control del flujo de ejecución</strong></p>
+</li>
+<li>La <strong>gestión de variables</strong></li>
+<li>No usar funciones (todo en un único bloque principal).</li>
+<li>El código debe ser <strong>legible, ordenado y comentado</strong>.</li>
+</ul>
+<hr />
+<h2 id="representacion-mediante-diagrama-de-flujo">Representación mediante diagrama de flujo<a href="#representacion-diagrama-de-flujo" title="Permanent link"></a></h2>
+<p>Para finalizar, deberás representar gráficamente el funcionamiento del programa mediante un diagrama de flujo.</p>
+<p>El diagrama debe mostrar de forma clara todas las decisiones y caminos posibles que puede seguir el programa dependiendo de los datos del usuario.</p>
+<p>El diagrama deberá utilizar correctamente los símbolos habituales (vistos en la UD1).</p>
+<hr />
+<h2 id="entrega">Entrega<a href="#entrega" title="Permanent link"></a></h2>
+<ul>
+<li>La entrega de esta tarea consistirá en un fichero .py (<code>apellido1_apellido2_nombre_EC_T02.py</code>) con el código del programa, qué deberá llevar comentarios explicativos de cada bloque. </li>
+<li>La entrega del diagrama de flujo será un un fichero .png o .pdf con el nombre <code>apellido1_apellido2_nombre_EC_T02</code>. Se podrá utilizar cualquie herramienta, incluso hacerlo a mano y fotografiarlo, siempre que se lea.</li>
+</ul>
+<p><a href="#top">⬆ Ir arriba</a></p>
+</body>
+</html>
