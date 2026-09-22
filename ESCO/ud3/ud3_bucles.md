@@ -4,22 +4,31 @@
 
 ## Índice de contenidos
 
-*   [UD03 – Estructuras iterativas (bucles) en Python](#ud03-estructuras-iterativas-bucles-en-python)
-    *   [1\. Introducción a las estructuras iterativas](#1-introduccion-a-las-estructuras-iterativas)
-    *   [2\. Bucle for](#2-bucle-for)
-        *   [Sintaxis general](#sintaxis-general)
-        *   [2.1. Iteraciones genéricas](#21-iteraciones-genericas)
-        *   [2.2. Iteraciones por listas y tuplas](#22-iteraciones-por-listas-y-tuplas)
-        *   [2.3. Iteraciones por secuencias (range())](#23-iteraciones-por-secuencias-range)
-        *   [2.4. Iteraciones por diccionarios](#24-iteraciones-por-diccionarios)
-        *   [2.5. Bucles anidados](#25-bucles-anidados)
-        *   [2.6. Uso de break y continue](#26-uso-de-break-y-continue)
-    *   [3\. Bucle while](#3-bucle-while)
-        *   [Sintaxis general](#sintaxis-general_1)
-        *   [3.1. Bucle while](#31-bucle-while)
-        *   [3.2. Bucles anidados mixtos de while y for](#32-bucles-anidados-mixtos-de-while-y-for)
-        *   [3.3. Uso de break y continue](#33-uso-de-break-y-continue)
-        *   [3.4. Uso de while(true)](#34-uso-de-whiletrue)
+- [UD03-Bucles](#ud03-bucles)
+  - [Índice de contenidos](#índice-de-contenidos)
+- [UD03 – Estructuras iterativas (bucles) en Python](#ud03--estructuras-iterativas-bucles-en-python)
+  - [1. Introducción a las estructuras iterativas](#1-introducción-a-las-estructuras-iterativas)
+  - [2. Bucle `for`](#2-bucle-for)
+    - [Sintaxis general](#sintaxis-general)
+    - [2.1. Iteraciones genéricas](#21-iteraciones-genéricas)
+    - [2.2. Iteraciones por listas y tuplas](#22-iteraciones-por-listas-y-tuplas)
+    - [2.3. Iteraciones por secuencias (`range()`)](#23-iteraciones-por-secuencias-range)
+    - [2.4. Iteraciones por diccionarios](#24-iteraciones-por-diccionarios)
+    - [2.5. Bucles anidados](#25-bucles-anidados)
+    - [2.6. Uso de `break` y `continue`](#26-uso-de-break-y-continue)
+  - [3. Bucle `while`](#3-bucle-while)
+    - [Sintaxis general](#sintaxis-general-1)
+    - [3.1. Bucle `while`](#31-bucle-while)
+    - [3.2. Bucles anidados mixtos de `while` y `for`](#32-bucles-anidados-mixtos-de-while-y-for)
+    - [3.3. Uso de `break` y `continue`](#33-uso-de-break-y-continue)
+    - [3.4. Uso de `while(true)`](#34-uso-de-whiletrue)
+      - [Sintaxis](#sintaxis)
+      - [Ejemplo de `while True`](#ejemplo-de-while-true)
+      - [¿Por qué `while True` no es una buena práctica?](#por-qué-while-true-no-es-una-buena-práctica)
+  - [4. Iterar con zip](#4-iterar-con-zip)
+  - [5. Iterar con enumerate](#5-iterar-con-enumerate)
+
+
 
 # UD03 – Estructuras iterativas (bucles) en Python[](#ud03-estructuras-iterativas-bucles-en-python "Permanent link")
 
@@ -385,5 +394,13 @@ Si se olvida incluir un `break` o este no se alcanza por un error lógico, el pr
 **3\. Dificulta la depuración**
 
 Los bucles infinitos hacen más compleja la detección de errores, especialmente para programadores en formación, ya que el flujo del programa no está claramente definido.
+
+
+
+## 4\. Iterar con zip[](#4-iterar-con-zip "Permanent link")
+
+
+## 5\. Iterar con enumerate[](#5-iterar-con-enumerate "Permanent link")
+
 
 [⬆ Ir arriba](#top)
