@@ -402,5 +402,45 @@ Los bucles infinitos hacen más compleja la detección de errores, especialmente
 
 ## 5\. Iterar con enumerate[](#5-iterar-con-enumerate "Permanent link")
 
+Existen situaciones en las que no solo queremos acceder al elemento *i-ésimo* de la colección, sino que **además queremos el índice**. Una forma de hacerlo sería la siguiente.
+
+```python
+lista = ["A", "B", "C"]
+
+indice = 0
+for l in lista:
+    print(indice, l)
+    indice += 1
+
+# Salida:
+# 0 A
+# 1 B
+# 2 C
+```
+
+Aunque se trata de una forma perfectamente válida, el uso de **enumerate()** nos permite ahorrar alguna que otra línea de código, obteniendo un resultado mucho más limpio y claro.
+
+```
+lista = ["A", "B", "C"]
+
+for indice, l in enumerate(lista):
+    print(indice, l)
+
+# Salida:
+# 0 A
+# 1 B
+# 2 C
+```
+
+Por último, es importante notar que su uso no se limita únicamente a bucles for. Podemos convertir el tipo enumerate en una lista de tuplas, donde cada una contiene un elemento de la colección inicial y el índice asociado.
+```
+lista = ["A", "B", "C"]
+
+en = list(enumerate(lista))
+print(en)
+
+# Salida:
+# [(0, 'A'), (1, 'B'), (2, 'C')]
+```
 
 [⬆ Ir arriba](#top)
