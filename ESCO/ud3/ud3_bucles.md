@@ -25,8 +25,7 @@
       - [Sintaxis](#sintaxis)
       - [Ejemplo de `while True`](#ejemplo-de-while-true)
       - [¿Por qué `while True` no es una buena práctica?](#por-qué-while-true-no-es-una-buena-práctica)
-  - [4. Iterar con zip](#4-iterar-con-zip)
-  - [5. Iterar con enumerate](#5-iterar-con-enumerate)
+  - [4. Iterar con enumerate()](#4-iterar-con-enumerate())
 
 
 
@@ -397,10 +396,8 @@ Los bucles infinitos hacen más compleja la detección de errores, especialmente
 
 
 
-## 4\. Iterar con zip[](#4-iterar-con-zip "Permanent link")
 
-
-## 5\. Iterar con enumerate[](#5-iterar-con-enumerate "Permanent link")
+## 4\. Iterar con enumerate()[](#-iterar-con-enumerate() "Permanent link")
 
 Existen situaciones en las que no solo queremos acceder al elemento *i-ésimo* de la colección, sino que **además queremos el índice**. Una forma de hacerlo sería la siguiente.
 
