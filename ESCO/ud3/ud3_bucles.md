@@ -4,22 +4,30 @@
 
 ## Índice de contenidos
 
-*   [UD03 – Estructuras iterativas (bucles) en Python](#ud03-estructuras-iterativas-bucles-en-python)
-    *   [1\. Introducción a las estructuras iterativas](#1-introduccion-a-las-estructuras-iterativas)
-    *   [2\. Bucle for](#2-bucle-for)
-        *   [Sintaxis general](#sintaxis-general)
-        *   [2.1. Iteraciones genéricas](#21-iteraciones-genericas)
-        *   [2.2. Iteraciones por listas y tuplas](#22-iteraciones-por-listas-y-tuplas)
-        *   [2.3. Iteraciones por secuencias (range())](#23-iteraciones-por-secuencias-range)
-        *   [2.4. Iteraciones por diccionarios](#24-iteraciones-por-diccionarios)
-        *   [2.5. Bucles anidados](#25-bucles-anidados)
-        *   [2.6. Uso de break y continue](#26-uso-de-break-y-continue)
-    *   [3\. Bucle while](#3-bucle-while)
-        *   [Sintaxis general](#sintaxis-general_1)
-        *   [3.1. Bucle while](#31-bucle-while)
-        *   [3.2. Bucles anidados mixtos de while y for](#32-bucles-anidados-mixtos-de-while-y-for)
-        *   [3.3. Uso de break y continue](#33-uso-de-break-y-continue)
-        *   [3.4. Uso de while(true)](#34-uso-de-whiletrue)
+- [UD03-Bucles](#ud03-bucles)
+  - [Índice de contenidos](#índice-de-contenidos)
+- [UD03 – Estructuras iterativas (bucles) en Python](#ud03--estructuras-iterativas-bucles-en-python)
+  - [1. Introducción a las estructuras iterativas](#1-introducción-a-las-estructuras-iterativas)
+  - [2. Bucle `for`](#2-bucle-for)
+    - [Sintaxis general](#sintaxis-general)
+    - [2.1. Iteraciones genéricas](#21-iteraciones-genéricas)
+    - [2.2. Iteraciones por listas y tuplas](#22-iteraciones-por-listas-y-tuplas)
+    - [2.3. Iteraciones por secuencias (`range()`)](#23-iteraciones-por-secuencias-range)
+    - [2.4. Iteraciones por diccionarios](#24-iteraciones-por-diccionarios)
+    - [2.5. Bucles anidados](#25-bucles-anidados)
+    - [2.6. Uso de `break` y `continue`](#26-uso-de-break-y-continue)
+  - [3. Bucle `while`](#3-bucle-while)
+    - [Sintaxis general](#sintaxis-general-1)
+    - [3.1. Bucle `while`](#31-bucle-while)
+    - [3.2. Bucles anidados mixtos de `while` y `for`](#32-bucles-anidados-mixtos-de-while-y-for)
+    - [3.3. Uso de `break` y `continue`](#33-uso-de-break-y-continue)
+    - [3.4. Uso de `while(true)`](#34-uso-de-whiletrue)
+      - [Sintaxis](#sintaxis)
+      - [Ejemplo de `while True`](#ejemplo-de-while-true)
+      - [¿Por qué `while True` no es una buena práctica?](#por-qué-while-true-no-es-una-buena-práctica)
+  - [4. Iterar con enumerate()](#4-iterar-con-enumerate())
+
+
 
 # UD03 – Estructuras iterativas (bucles) en Python[](#ud03-estructuras-iterativas-bucles-en-python "Permanent link")
 
@@ -385,5 +393,51 @@ Si se olvida incluir un `break` o este no se alcanza por un error lógico, el pr
 **3\. Dificulta la depuración**
 
 Los bucles infinitos hacen más compleja la detección de errores, especialmente para programadores en formación, ya que el flujo del programa no está claramente definido.
+
+
+
+
+## 4\. Iterar con enumerate()[](#-iterar-con-enumerate() "Permanent link")
+
+Existen situaciones en las que no solo queremos acceder al elemento *i-ésimo* de la colección, sino que **además queremos el índice**. Una forma de hacerlo sería la siguiente.
+
+```python
+lista = ["A", "B", "C"]
+
+indice = 0
+for l in lista:
+    print(indice, l)
+    indice += 1
+
+# Salida:
+# 0 A
+# 1 B
+# 2 C
+```
+
+Aunque se trata de una forma perfectamente válida, el uso de **enumerate()** nos permite ahorrar alguna que otra línea de código, obteniendo un resultado mucho más limpio y claro.
+
+```
+lista = ["A", "B", "C"]
+
+for indice, l in enumerate(lista):
+    print(indice, l)
+
+# Salida:
+# 0 A
+# 1 B
+# 2 C
+```
+
+Por último, es importante notar que su uso no se limita únicamente a bucles for. Podemos convertir el tipo enumerate en una lista de tuplas, donde cada una contiene un elemento de la colección inicial y el índice asociado.
+```
+lista = ["A", "B", "C"]
+
+en = list(enumerate(lista))
+print(en)
+
+# Salida:
+# [(0, 'A'), (1, 'B'), (2, 'C')]
+```
 
 [⬆ Ir arriba](#top)
