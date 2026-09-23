@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UD02 - Condicionales</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="tarea-entregable-ud03">Tarea entregable – UD03</h1>
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#ejercicio-final--ud03">Tarea entregable – UD03</a></li>
+<li><a href="#índice-de-contenidos">Índice de contenidos</a></li>
+<li><a href="#contexto-general">Contexto general</a></li>
+<li><a href="#datos-de-partida">Datos de partida</a></li>
+<li><a href="#requisitos-funcionales-qué-debe-hacer-el-programa">Requisitos funcionales (QUÉ debe hacer el programa)</a><ul>
+<li><a href="#1-menú-principal-de-gestión-while">1. Menú Principal de Gestión (<code>while</code>)</a></li>
+<li><a href="#2-eliminación-segura-búsqueda-manual--remove">2. Eliminación Segura (Búsqueda manual + <code>remove</code>)</a></li>
+<li><a href="#3-adición-de-nuevos-elementos-append">3. Adición de nuevos elementos (<code>append</code>)</a></li>
+<li><a href="#4-ejecución-auditoría">4. Ejecución Auditoría</a></li>
+<li><a href="#41-filtrado-y-control-de-flujo-continue--break">4.1. Filtrado y Control de Flujo (<code>continue</code> / <code>break</code>)</a></li>
+<li><a href="#42-procesamiento-de-precios-históricos-enumerate">4.2. Procesamiento de Precios Históricos (<code>enumerate</code>)</a></li>
+<li><a href="#43-validación-de-stock-bucle-while">4.3. Validación de Stock (Bucle <code>while</code>)</a></li>
+<li><a href="#44-clasificación-y-alertas-operador-ternario">4.4. Clasificación y Alertas (Operador Ternario)</a></li>
+<li><a href="#5-resumen-final">5. Resumen Final</a></li>
+</ul>
+</li>
+<li><a href="#requisitos-técnicos-cómo-debe-hacerse">Requisitos técnicos (CÓMO debe hacerse)</a></li>
+<li><a href="#entrega">Entrega</a></li>
+</ul>
+<h2 id="contexto-general">Contexto general</h2>
+<p>A lo largo de esta tarea vas a desarrollar un programa que simule el proceso de auditoría de una tienda. Para ello te propongo que te imagines que estás creando una pequeña aplicación de gestión de inventario como las que se utilizan para controlar el stock de los productos.</p>
+<p>El programa comenzará con un menú principal, desde donde el usuario interactúa con el sistema. Este menú ofrecerá cuatro opciones diferentes: añadir un artículo al inventario, lo que permitirá añadir un producto nuevo al inventario o aumentar su stock, eliminar un artículo existente, de modo que deje de existir en el inventario si, por ejemplo, caduca todo el stock y deja de venderse, ejecutar el proceso de auditoría del inventario, donde comprobará el estado en general de todo el inventario, y la opción salir de la aplicación, donde el programa terminará de ejecutarse mostrando por pantalla el listado de productos en stock y el valor total de los mismos.</p>
+<p>Dentro del proceso de ejecución de auditoría, el sistema deberá analizar el inventario, procesando el listado de productos almacenado, comprobando si cada uno de ellos dispone de suficiente stock y detectando posibles registros incorrectos o corruptos que serán filtrados.</p>
+<h2 id="datos-de-partida">Datos de partida</h2>
+<p>Copia este bloque al inicio:</p>
+<pre><code class="language-python">inventario = [
+    {&quot;nombre&quot;: &quot;Teclado&quot;, &quot;precios&quot;: [20.5, 25.0, 18.0], &quot;stock&quot;: 15},
+    {&quot;nombre&quot;: &quot;Ratón&quot;, &quot;precios&quot;: [10.0, 12.5], &quot;stock&quot;: 0},
+    {&quot;nombre&quot;: &quot;ERROR_LOG&quot;, &quot;precios&quot;: [], &quot;stock&quot;: -1},
+    {&quot;nombre&quot;: &quot;Monitor&quot;, &quot;precios&quot;: [150.0, 145.0, 160.0], &quot;stock&quot;: 8},
+    {&quot;nombre&quot;: &quot;Alfombrilla&quot;, &quot;precios&quot;: [5.0], &quot;stock&quot;: 20}
+]
+
+umbral_stock_bajo = 5
+</code></pre>
+<ul>
+<li>Puedes añadir y eliminar los elementos que quieras al inventario para hacer pruebas sobre el programa.</li>
+</ul>
+<h2 id="requisitos-funcionales-que-debe-hacer-el-programa">Requisitos funcionales (QUÉ debe hacer el programa)</h2>
+<h3 id="1-menu-principal-de-gestion-while">1. Menú Principal de Gestión (<code>while</code>)</h3>
+<p>El programa debe empezar mostrando un menú con 4 opciones:</p>
+<ol>
+<li>Añadir producto (pide nombre, stock y un precio inicial).</li>
+<li>Eliminar producto (pide el nombre y lo borra de la lista).</li>
+<li>Ejecutar Auditoría (ejecuta todo el proceso de cálculo).</li>
+<li>Salir.</li>
+</ol>
+<h3 id="2-eliminacion-segura-busqueda-manual-remove">2. Eliminación Segura (Búsqueda manual + <code>remove</code>)</h3>
+<p>Cuando el usuario quiera eliminar un producto (por ejemplo, porque está caducado):</p>
+<ul>
+<li>Primero debes buscarlo en la lista.</li>
+<li>Si lo encuentras, lo eliminas y muestras:</li>
+</ul>
+<blockquote>
+<p>"Producto [nombre] eliminado correctamente."</p>
+</blockquote>
+<ul>
+<li>Si no lo encuentras tras recorrer la lista, muestra:</li>
+</ul>
+<blockquote>
+<p>"Error: El producto no existe."</p>
+</blockquote>
+<h3 id="3-adicion-de-nuevos-elementos-append">3. Adición de nuevos elementos (<code>append</code>)</h3>
+<p>Al añadir un producto, debes crear un diccionario nuevo con la estructura correcta:</p>
+<pre><code class="language-python">{&quot;nombre&quot;: n, &quot;precios&quot;: [p], &quot;stock&quot;: s}
+</code></pre>
+<p>y añadirlo a la lista <code>inventario</code>.</p>
+<p>Para los pasos 1, 2 y 3 recuerda los ejercicios hechos en el segundo y tercer tema, por ejemplo, el ejercicio de la lista de la compra.</p>
+<h3 id="4-ejecucion-auditoria">4. Ejecución Auditoría</h3>
+<h4 id="41-filtrado-y-control-de-flujo-continue-break">4.1. Filtrado y Control de Flujo (<code>continue</code> / <code>break</code>)</h4>
+<ul>
+<li>Recorre la lista <code>inventario</code> con un bucle <code>for</code>.</li>
+<li>Si el nombre del producto es <code>"ERROR_LOG"</code>, muestra:</li>
+</ul>
+<blockquote>
+<p>"Saltando registro corrupto..."</p>
+</blockquote>
+<p>y usa <code>continue</code>.</p>
+<ul>
+<li>Si el nombre es <code>"STOP"</code>, usa <code>break</code> (puedes añadir un artículo con este nombre al final de la lista para probar la parada).</li>
+</ul>
+<h4 id="42-procesamiento-de-precios-historicos-enumerate">4.2. Procesamiento de Precios Históricos (<code>enumerate</code>)</h4>
+<ul>
+<li>Para cada producto válido, recorre su lista de precios.</li>
+<li>Usa <code>enumerate</code> para mostrar:</li>
+</ul>
+<blockquote>
+<p>"Analizando precio [índice] del producto [nombre]: [valor]€".</p>
+</blockquote>
+<ul>
+<li>Calcula el precio medio de cada producto sumando sus precios y dividiendo por la cantidad de elementos.</li>
+</ul>
+<h4 id="43-validacion-de-stock-bucle-while">4.3. Validación de Stock (Bucle <code>while</code>)</h4>
+<p>Durante la auditoría el stock debe ser comprobado para cada producto de modo que:</p>
+<ul>
+<li>Si el stock es exactamente <code>0</code>, usa un bucle <code>while</code> para preguntar al usuario:</li>
+</ul>
+<blockquote>
+<p>"¿Se han recibido unidades de [nombre]? (si/no)"</p>
+</blockquote>
+<ul>
+<li>Si dice <code>"si"</code>, pide la cantidad (un número entero) y actualiza el stock.</li>
+<li>Si dice <code>"no"</code>, el stock se queda en <code>0</code> y el bucle termina.</li>
+<li>En caso contrario continúa con el siguiente elemento del inventario.</li>
+</ul>
+<h4 id="44-clasificacion-y-alertas-operador-ternario">4.4. Clasificación y Alertas (Operador Ternario)</h4>
+<p>Después de validar el stock, el programa debe clasificar el estado de cada producto. Para ello:</p>
+<ul>
+<li>Crea una variable <code>estado_stock</code>.</li>
+<li>Usa un operador ternario para que valga <code>"Crítico"</code> si el stock es menor que <code>umbral_stock_bajo</code>, o <code>"Normal"</code> en caso contrario.</li>
+</ul>
+<h3 id="5-resumen-final">5. Resumen Final</h3>
+<p>Al final del programa, muestra por pantalla:</p>
+<ul>
+<li>El valor total del inventario (suma de: <code>precio_medio * stock</code> de cada producto).</li>
+<li>Una lista simple con los nombres de los productos que han quedado en estado <code>"Crítico"</code>.</li>
+</ul>
+<h2 id="requisitos-tecnicos-como-debe-hacerse">Requisitos técnicos (CÓMO debe hacerse)</h2>
+<ul>
+<li>Uso obligatorio de los bucles y comprehensions vistos a lo largo del tema 3, así como las estructuras vistas en temas anteriores. (No hay que forzar que haya un ejemplo de cada comprehension, simplemente es utilizarlas y mostrar que se saben utilizar).</li>
+<li>Aplicar correctamente:</li>
+<li>El sangrado.</li>
+<li>El control del flujo de ejecución.</li>
+<li>La gestión de variables.</li>
+<li>No usar funciones (todo en un único bloque principal).</li>
+<li>El código debe ser legible, ordenado y comentado.</li>
+</ul>
+<h2 id="entrega">Entrega<a href="#entrega" title="Permanent link"></a></h2>
+<ul>
+<li>La entrega de esta tarea consistirá en un fichero .py (<code>apellido1_apellido2_nombre_EC_T03.py</code>) con el código del programa, qué deberá llevar comentarios explicativos de cada bloque. </li>
+</ul>
+</body>
+</html>

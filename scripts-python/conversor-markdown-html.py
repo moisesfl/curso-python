@@ -21,7 +21,7 @@ if edad >= 18:
     print("Mayor de edad")
 ```
 """
-file_path = "Z:/Workspace/curso-python/ESCO/ud2/ud2_condicionales"
+file_path = "Z:/Workspace/curso-python/ESCO/ud3/tarefa3"
 file_name = Path(file_path).stem  # Extrae el nombre del archivo sin extensión
 
 # Lee tu archivo Markdown
@@ -39,7 +39,7 @@ html_con_estilos = f"""
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>UD02 - Condicionales</title>
+    <title>{file_name}</title>
     <style>
         body {{ font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }}
         

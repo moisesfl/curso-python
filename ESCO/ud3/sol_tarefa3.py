@@ -1,8 +1,5 @@
 #SOLUCION TAREFA 3
 
-from time import perf_counter
-
-
 inventario = [
  {"nombre": "Teclado", "precios": [20.5, 25.0, 18.0], "stock": 15},
  {"nombre": "Ratón", "precios": [10.0, 12.5], "stock": 0},
