@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UD02 - Condicionales</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud03_boletin_ejercicios_2">UD03_boletin_ejercicios_2</h1>
+<div id="top"></div>
+
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#boletin-de-ejercicios-ud03-estructuras-iterativas-bucles-en-python">Boletín de Ejercicios – UD03: Estructuras iterativas (bucles) en Python</a><ul>
+<li><a href="#ejercicio-1-busqueda-secuencial-lineal-con-early-exit">Ejercicio 1 — Búsqueda secuencial (lineal) con “early exit”</a><ul>
+<li><a href="#enunciado">Enunciado</a></li>
+</ul>
+</li>
+<li><a href="#ejercicio-2-busqueda-binaria-lista-ordenada-sin-funciones">Ejercicio 2 — Búsqueda binaria (lista ordenada, sin funciones)</a><ul>
+<li><a href="#enunciado_1">Enunciado</a></li>
+</ul>
+</li>
+<li><a href="#ejercicio-3-two-sum-dos-numeros-que-suman-un-objetivo-sin-funciones">Ejercicio 3 — Two Sum (dos números que suman un objetivo, sin funciones)</a><ul>
+<li><a href="#enunciado_2">Enunciado</a></li>
+</ul>
+</li>
+<li><a href="#ejercicio-4-validacion-de-parentesis-corchetes-y-llaves-sin-funciones">Ejercicio 4 — Validación de paréntesis, corchetes y llaves (sin funciones)</a><ul>
+<li><a href="#enunciado_3">Enunciado</a></li>
+</ul>
+</li>
+<li><a href="#ejercicio-5-busqueda-de-subcadena-patron-sin-find-sin-in-sin-funciones">Ejercicio 5 — Búsqueda de subcadena (patrón) sin find, sin in, sin funciones</a><ul>
+<li><a href="#enunciado_4">Enunciado</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="boletin-de-ejercicios-ud03-estructuras-iterativas-bucles-en-python">Boletín de Ejercicios – UD03: Estructuras iterativas (bucles) en Python<a href="#boletin-de-ejercicios-ud03-estructuras-iterativas-bucles-en-python" title="Permanent link"></a></h1>
+<hr />
+<h2 id="ejercicio-1-busqueda-secuencial-lineal-con-early-exit">Ejercicio 1 — Búsqueda secuencial (lineal) con “early exit”<a href="#ejercicio-1-busqueda-secuencial-lineal-con-early-exit" title="Permanent link"></a></h2>
+<h3 id="enunciado">Enunciado<a href="#enunciado" title="Permanent link"></a></h3>
+<p>Dada una lista de números enteros y un número objetivo, recorre la lista <strong>de izquierda a derecha</strong> para localizar el objetivo.</p>
+<ul>
+<li>Si lo encuentras, muestra: <code>Número encontrado en la posición X</code>.</li>
+<li>Si no lo encuentras, muestra: <code>Número no encontrado</code>.</li>
+<li>Debes <strong>parar</strong> el bucle cuando lo encuentres (usa <code>break</code>).</li>
+</ul>
+<hr />
+<h2 id="ejercicio-2-busqueda-binaria-lista-ordenada-sin-funciones">Ejercicio 2 — Búsqueda binaria (lista ordenada, sin funciones)<a href="#ejercicio-2-busqueda-binaria-lista-ordenada-sin-funciones" title="Permanent link"></a></h2>
+<h3 id="enunciado_1">Enunciado<a href="#enunciado_1" title="Permanent link"></a></h3>
+<p>Dada una lista de números <strong>ordenada ascendentemente</strong> y un número objetivo:</p>
+<ul>
+<li>Implementa una <strong>búsqueda binaria</strong> usando <code>while</code>.</li>
+<li>Si el objetivo está, muestra: <code>Número encontrado en la posición X</code>.</li>
+<li>Si no está, muestra: <code>Número no encontrado</code>.</li>
+</ul>
+<blockquote>
+<p><strong>Nota:</strong> la búsqueda binaria solo es válida si la lista está ordenada.</p>
+</blockquote>
+<hr />
+<h2 id="ejercicio-3-two-sum-dos-numeros-que-suman-un-objetivo-sin-funciones">Ejercicio 3 — Two Sum (dos números que suman un objetivo, sin funciones)<a href="#ejercicio-3-two-sum-dos-numeros-que-suman-un-objetivo-sin-funciones" title="Permanent link"></a></h2>
+<h3 id="enunciado_2">Enunciado<a href="#enunciado_2" title="Permanent link"></a></h3>
+<p>Dada una lista de enteros y un valor objetivo, determina si existen <strong>dos posiciones distintas</strong> <code>i</code> y <code>j</code> tal que: <code>numeros[i] + numeros[j] == objetivo</code></p>
+<ul>
+<li>Si existe, muestra: <code>Índices: i y j</code> y termina el programa (usa <code>break</code>).</li>
+<li>Si no existe, muestra: <code>No existen dos números que sumen el objetivo</code>.</li>
+</ul>
+<blockquote>
+<p><strong>Restricción:</strong> resuélvelo con bucles (sin diccionarios y sin funciones).</p>
+</blockquote>
+<hr />
+<h2 id="ejercicio-4-validacion-de-parentesis-corchetes-y-llaves-sin-funciones">Ejercicio 4 — Validación de paréntesis, corchetes y llaves (sin funciones)<a href="#ejercicio-4-validacion-de-parentesis-corchetes-y-llaves-sin-funciones" title="Permanent link"></a></h2>
+<h3 id="enunciado_3">Enunciado<a href="#enunciado_3" title="Permanent link"></a></h3>
+<p>Dada una cadena que contiene solo los caracteres <code>()[]{}</code>, comprueba si está <strong>balanceada</strong>:</p>
+<ul>
+<li>Cada apertura debe cerrarse con el mismo tipo.</li>
+<li>El orden de cierre debe ser correcto.</li>
+</ul>
+<p>Muestra:</p>
+<ul>
+<li><code>Paréntesis balanceados</code> si es correcta.</li>
+<li><code>Paréntesis no balanceados</code> si no lo es.</li>
+</ul>
+<blockquote>
+<p><strong>Pista:</strong> usa una <strong>pila</strong> (lista) y <code>append()</code>/<code>pop()</code>.</p>
+</blockquote>
+<hr />
+<h2 id="ejercicio-5-busqueda-de-subcadena-patron-sin-find-sin-in-sin-funciones">Ejercicio 5 — Búsqueda de subcadena (patrón) sin <code>find</code>, sin <code>in</code>, sin funciones<a href="#ejercicio-5-busqueda-de-subcadena-patron-sin-find-sin-in-sin-funciones" title="Permanent link"></a></h2>
+<h3 id="enunciado_4">Enunciado<a href="#enunciado_4" title="Permanent link"></a></h3>
+<p>Dado un <code>texto</code> y un <code>patron</code>, busca manualmente (carácter a carácter) la <strong>primera posición</strong> donde aparece <code>patron</code> dentro de <code>texto</code>.</p>
+<ul>
+<li>Si aparece, muestra: <code>Patrón encontrado en la posición X</code>.</li>
+<li>Si no aparece, muestra: <code>Patrón no encontrado</code>.</li>
+</ul>
+<blockquote>
+<p><strong>Restricción:</strong> no uses <code>find()</code>, <code>in</code> ni expresiones regulares.</p>
+</blockquote>
+<hr />
+<p><a href="#top">⬆ Ir arriba</a></p>
+</body>
+</html>

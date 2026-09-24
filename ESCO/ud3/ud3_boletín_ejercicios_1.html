@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UD02 - Condicionales</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud03_boletin_ejercicios_1">UD03_boletin_ejercicios_1</h1>
+<div id="top"></div>
+
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#boletin-ud03-bucles-y-comprensiones">Boletín UD03 - Bucles y Comprensiones</a><ul>
+<li><a href="#ejercicio-1-validador-de-edad">Ejercicio 1 — Validador de edad</a></li>
+<li><a href="#ejercicio-2-analizador-de-frase">Ejercicio 2 — Analizador de frase</a></li>
+<li><a href="#ejercicio-3-limpieza-y-normalizacion-de-lista-de-textos-list-comprehension">Ejercicio 3 — Limpieza y normalización de lista de textos (list comprehension)</a></li>
+<li><a href="#ejercicio-4-filtrado-numerico-con-condicion-doble-if-else-dentro-de-comprehension">Ejercicio 4 — Filtrado numérico con condición doble (if-else dentro de comprehension)</a><ul>
+<li><a href="#ejercicio-5-eliminacion-de-duplicados-y-clasificacion-set-comprehension-bucles">Ejercicio 5 — Eliminación de duplicados y clasificación (set comprehension + bucles)</a></li>
+</ul>
+</li>
+<li><a href="#ejercicio-6-diccionario-de-cuadrados-filtrados-dict-comprehension">Ejercicio 6 — Diccionario de cuadrados filtrados (dict comprehension)</a></li>
+<li><a href="#ejercicio-7-inventario-y-actualizacion-diccionarios-bucles">Ejercicio 7 — Inventario y actualización (diccionarios + bucles)</a></li>
+<li><a href="#ejercicio-8-busqueda-secuencial-en-lista-sin-funciones">Ejercicio 8 — Búsqueda secuencial en lista (sin funciones)</a></li>
+<li><a href="#ejercicio-9-control-de-saltos-continue-en-procesamiento-de-cadenas">Ejercicio 9 — Control de saltos (continue) en procesamiento de cadenas</a></li>
+<li><a href="#ejercicio-10-tabla-de-multiplicar-selectiva-bucles-anidados-continue">Ejercicio 10 — Tabla de multiplicar “selectiva” (bucles anidados + continue)</a></li>
+<li><a href="#ejercicio-11-generador-de-cuadrados-bajo-demanda-generator-comprehension">Ejercicio 11 — Generador de cuadrados bajo demanda (generator comprehension)</a></li>
+<li><a href="#ejercicio-12-parseo-de-numeros-sucios-strings-casting-control">Ejercicio 12 — Parseo de números “sucios” (strings + casting + control)</a></li>
+<li><a href="#ejercicio-13-estadistica-basica-de-lista-for-acumuladores">Ejercicio 13 — Estadística básica de lista (for + acumuladores)</a></li>
+<li><a href="#ejercicio-14-mini-etl-transformar-diccionario-de-alumnos-dict-comprehension">Ejercicio 14 — “Mini ETL”: transformar diccionario de alumnos (dict + comprehension)</a></li>
+<li><a href="#ejercicio-15-reto-integrador-clasificacion-y-resumen-de-compras-listas-dict-bucles-comprehensions">Ejercicio 15 — Reto integrador: clasificación y resumen de compras 🧾 (listas + dict + bucles + comprehensions)</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="boletin-ud03-bucles-y-comprensiones">Boletín UD03 - Bucles y Comprensiones<a href="#boletin-ud03-bucles-y-comprensiones" title="Permanent link"></a></h1>
+<h2 id="ejercicio-1-validador-de-edad">Ejercicio 1 — Validador de edad<a href="#ejercicio-1-validador-de-edad" title="Permanent link"></a></h2>
+<p>Crea un programa que pida al usuario una edad.</p>
+<ul>
+<li>Debe repetir la petición <strong>hasta que</strong> el usuario introduzca un número entero válido.</li>
+<li>Se considera una edad no válida si introduce texto o un número decimal (ej. <code>"12.5"</code>).</li>
+<li>
+<p>Cuando sea válido:</p>
+</li>
+<li>
+<p>Muestra si es <strong>menor de edad</strong> (&lt;18) o <strong>mayor de edad</strong> (≥18).</p>
+</li>
+<li>
+<p>Muestra también cuántos intentos inválidos hubo.</p>
+</li>
+</ul>
+<blockquote>
+<p>Pistas: <code>while</code>, <code>try/except</code> (si ya lo habéis visto), <code>isdigit()</code> o control manual, <code>int()</code>.</p>
+</blockquote>
+<hr />
+<h2 id="ejercicio-2-analizador-de-frase">Ejercicio 2 — Analizador de frase<a href="#ejercicio-2-analizador-de-frase" title="Permanent link"></a></h2>
+<p>Pide al usuario una frase y:</p>
+<ul>
+<li>Cuenta cuántas veces aparece cada vocal (<strong>a,e,i,o,u</strong>) ignorando mayúsculas/minúsculas.</li>
+<li>Guarda el resultado en un diccionario.</li>
+<li>
+<p>Muestra:</p>
+</li>
+<li>
+<p>El diccionario final</p>
+</li>
+<li>
+<p>La vocal más frecuente (si hay empate, muestra todas).</p>
+</li>
+</ul>
+<hr />
+<h2 id="ejercicio-3-limpieza-y-normalizacion-de-lista-de-textos-list-comprehension">Ejercicio 3 — Limpieza y normalización de lista de textos (list comprehension)<a href="#ejercicio-3-limpieza-y-normalizacion-de-lista-de-textos-list-comprehension" title="Permanent link"></a></h2>
+<p>Dada una lista:</p>
+<pre><code>datos = [&quot;  Ana &quot;, &quot;luis&quot;, &quot;MARIA&quot;, &quot;   PeDro&quot;, &quot;&quot; , &quot;  &quot;]
+</code></pre>
+<p>Genera una nueva lista <code>nombres</code> que:</p>
+<ul>
+<li>Elimine espacios laterales.</li>
+<li>Descarte entradas vacías tras limpiar.</li>
+<li>Ponga cada nombre en formato “Capitalizado” (primera mayúscula, resto minúsculas).</li>
+</ul>
+<p><strong>Obligatorio:</strong> usar <strong>list comprehension</strong>.</p>
+<hr />
+<h2 id="ejercicio-4-filtrado-numerico-con-condicion-doble-if-else-dentro-de-comprehension">Ejercicio 4 — Filtrado numérico con condición doble (if-else dentro de comprehension)<a href="#ejercicio-4-filtrado-numerico-con-condicion-doble-if-else-dentro-de-comprehension" title="Permanent link"></a></h2>
+<p>Dada una lista de notas:</p>
+<pre><code>notas = [2, 10, 5, 4, 7, 3, 9]
+</code></pre>
+<p>Crea una lista nueva <code>estado</code> con:</p>
+<ul>
+<li><code>"apto"</code> si la nota ≥ 5</li>
+<li><code>"no apto"</code> si la nota &lt; 5</li>
+</ul>
+<p><strong>Obligatorio:</strong> usar comprehension con <code>if-else</code> en la expresión.</p>
+<hr />
+<h3 id="ejercicio-5-eliminacion-de-duplicados-y-clasificacion-set-comprehension-bucles">Ejercicio 5 — Eliminación de duplicados y clasificación (set comprehension + bucles)<a href="#ejercicio-5-eliminacion-de-duplicados-y-clasificacion-set-comprehension-bucles" title="Permanent link"></a></h3>
+<p>Dada la lista:</p>
+<pre><code>valores = [3, 3, 5, 2, 2, 9, 1, 5, 7]
+</code></pre>
+<ul>
+<li>Crea un conjunto <code>unicos</code> usando <strong>set comprehension</strong>.</li>
+<li>Convierte el conjunto a lista y ordénala de menor a mayor.</li>
+<li>
+<p>Recorre la lista ordenada y muestra:</p>
+</li>
+<li>
+<p>cada número</p>
+</li>
+<li>
+<p>su cuadrado</p>
+</li>
+</ul>
+<hr />
+<h2 id="ejercicio-6-diccionario-de-cuadrados-filtrados-dict-comprehension">Ejercicio 6 — Diccionario de cuadrados filtrados (dict comprehension)<a href="#ejercicio-6-diccionario-de-cuadrados-filtrados-dict-comprehension" title="Permanent link"></a></h2>
+<p>Genera un diccionario con <code>range(1, 21)</code> donde:</p>
+<ul>
+<li>La clave sea el número.</li>
+<li>El valor sea su cuadrado.</li>
+<li><strong>Solo</strong> deben incluirse númerosñ los números que sean múltiplos de 3.</li>
+</ul>
+<p><strong>Obligatorio:</strong> dict comprehension con condición.</p>
+<hr />
+<h2 id="ejercicio-7-inventario-y-actualizacion-diccionarios-bucles">Ejercicio 7 — Inventario y actualización (diccionarios + bucles)<a href="#ejercicio-7-inventario-y-actualizacion-diccionarios-bucles" title="Permanent link"></a></h2>
+<p>Tienes este inventario:</p>
+<pre><code>inventario = {&quot;pan&quot;: 10, &quot;leche&quot;: 5, &quot;huevos&quot;: 12}
+</code></pre>
+<p>El programa debe permitir en bucle:</p>
+<ol>
+<li>pedir un producto</li>
+<li>
+<p>pedir una cantidad (entera)</p>
+</li>
+<li>
+<p>Si el producto no existe, debe añadirlo.</p>
+</li>
+<li>
+<p>Si existe, debe sumar la cantidad.</p>
+</li>
+<li>Si el usuario escribe <code>"salir"</code>, termina. Al final muestra:</li>
+<li>inventario final</li>
+<li>total de unidades (suma de valores)</li>
+<li>producto con más unidades</li>
+</ol>
+<hr />
+<h2 id="ejercicio-8-busqueda-secuencial-en-lista-sin-funciones">Ejercicio 8 — Búsqueda secuencial en lista (sin funciones)<a href="#ejercicio-8-busqueda-secuencial-en-lista-sin-funciones" title="Permanent link"></a></h2>
+<p>Dada una lista de nombres y un nombre objetivo introducido por teclado:</p>
+<ul>
+<li>Recorre la lista con <code>for</code> e indica si está o no.</li>
+<li>Si está, muestra su índice (posición).</li>
+<li>Debe dejar de buscar en cuanto lo encuentre (<strong>usa <code>break</code></strong>).</li>
+</ul>
+<hr />
+<h2 id="ejercicio-9-control-de-saltos-continue-en-procesamiento-de-cadenas">Ejercicio 9 — Control de saltos (continue) en procesamiento de cadenas<a href="#ejercicio-9-control-de-saltos-continue-en-procesamiento-de-cadenas" title="Permanent link"></a></h2>
+<p>Pide 10 palabras al usuario (una por una) y:</p>
+<ul>
+<li>Ignora (no guardes) las que tengan longitud menor que 3.</li>
+<li>Para el resto, guárdalas en una lista en minúsculas.</li>
+<li>
+<p>Al final muestra:</p>
+</li>
+<li>
+<p>lista final</p>
+</li>
+<li>
+<p>cantidad de palabras descartadas</p>
+</li>
+</ul>
+<blockquote>
+<p>Usa <code>continue</code> para saltarte lo que no interesa.</p>
+</blockquote>
+<hr />
+<h2 id="ejercicio-10-tabla-de-multiplicar-selectiva-bucles-anidados-continue">Ejercicio 10 — Tabla de multiplicar “selectiva” (bucles anidados + continue)<a href="#ejercicio-10-tabla-de-multiplicar-selectiva-bucles-anidados-continue" title="Permanent link"></a></h2>
+<p>Muestra por pantalla la tabla de multiplicar del 1 al 10 (formato <code>i x j = resultado</code>)</p>
+<ul>
+<li>Pero <strong>no imprimas</strong> las filas donde <code>i</code> sea par.</li>
+<li>Y dentro de las filas impares, <strong>no imprimas</strong> los productos donde <code>j</code> sea múltiplo de 3.</li>
+</ul>
+<blockquote>
+<p>Obligatorio: bucles anidados + <code>continue</code>.</p>
+</blockquote>
+<hr />
+<h2 id="ejercicio-11-generador-de-cuadrados-bajo-demanda-generator-comprehension">Ejercicio 11 — Generador de cuadrados bajo demanda (generator comprehension)<a href="#ejercicio-11-generador-de-cuadrados-bajo-demanda-generator-comprehension" title="Permanent link"></a></h2>
+<p>Crea un generador que produzca los cuadrados de <code>1..100</code>.</p>
+<ul>
+<li>Recorre el generador e imprime solo los primeros 10 valores.</li>
+<li>Sin convertirlo a lista.</li>
+</ul>
+<blockquote>
+<p>Usa <code>break</code> cuando ya hayas impreso 10.</p>
+</blockquote>
+<hr />
+<h2 id="ejercicio-12-parseo-de-numeros-sucios-strings-casting-control">Ejercicio 12 — Parseo de números “sucios” (strings + casting + control)<a href="#ejercicio-12-parseo-de-numeros-sucios-strings-casting-control" title="Permanent link"></a></h2>
+<p>Dada esta lista:</p>
+<pre><code>entradas = [&quot;10&quot;, &quot; 20&quot;, &quot;30 &quot;, &quot;x&quot;, &quot;40.5&quot;, &quot;50&quot;, &quot;-7&quot;, &quot;  &quot;]
+</code></pre>
+<p>Construye una lista de enteros válidos:</p>
+<ul>
+<li>Acepta enteros con espacios (ej. <code>" 20"</code> → <code>20</code>)</li>
+<li>Rechaza vacíos, letras y decimales (<code>"40.5"</code> no vale)</li>
+<li>Acepta negativos (<code>"-7"</code> sí vale)</li>
+</ul>
+<p>Muestra:</p>
+<ul>
+<li>lista final</li>
+<li>suma total</li>
+<li>cuántos elementos fueron descartados</li>
+</ul>
+<hr />
+<h2 id="ejercicio-13-estadistica-basica-de-lista-for-acumuladores">Ejercicio 13 — Estadística básica de lista (for + acumuladores)<a href="#ejercicio-13-estadistica-basica-de-lista-for-acumuladores" title="Permanent link"></a></h2>
+<p>Pide al usuario 8 números enteros y guarda en una lista. Calcula y muestra:</p>
+<ul>
+<li>mínimo</li>
+<li>máximo</li>
+<li>media (float con 2 decimales)</li>
+<li>cuántos son pares y cuántos impares</li>
+</ul>
+<hr />
+<h2 id="ejercicio-14-mini-etl-transformar-diccionario-de-alumnos-dict-comprehension">Ejercicio 14 — “Mini ETL”: transformar diccionario de alumnos (dict + comprehension)<a href="#ejercicio-14-mini-etl-transformar-diccionario-de-alumnos-dict-comprehension" title="Permanent link"></a></h2>
+<p>Dado:</p>
+<pre><code>notas = {&quot;Ana&quot;: &quot;7&quot;, &quot;Luis&quot;: &quot;4&quot;, &quot;Maria&quot;: &quot;10&quot;, &quot;Pepe&quot;: &quot;5&quot;}
+</code></pre>
+<p>Crea un nuevo diccionario donde:</p>
+<ul>
+<li>La clave sea el nombre en mayúsculas.</li>
+<li>El valor sea la nota como entero. Después crea otro diccionario <code>aprobados</code> con solo los de nota ≥ 5.</li>
+</ul>
+<p><strong>Obligatorio:</strong> usar dict comprehensions (al menos en una de las transformaciones).</p>
+<hr />
+<h2 id="ejercicio-15-reto-integrador-clasificacion-y-resumen-de-compras-listas-dict-bucles-comprehensions">Ejercicio 15 — Reto integrador: clasificación y resumen de compras (listas + dict + bucles + comprehensions)<a href="#ejercicio-15-reto-integrador-clasificacion-y-resumen-de-compras-listas-dict-bucles-comprehensions" title="Permanent link"></a></h2>
+<p>Vas a simular un “carrito de compra” a partir de entradas del usuario.</p>
+<p>El programa debe:</p>
+<ol>
+<li>Pedir productos hasta que se escriba <code>"fin"</code>. Cada entrada tendrá formato: <code>producto,cantidad,precio_unitario</code> Ejemplo: <code>manzanas,2,0.75</code></li>
+<li>
+<p>Validar:</p>
+</li>
+<li>
+<p>cantidad debe ser entero &gt; 0</p>
+</li>
+<li>
+<p>precio debe ser float &gt; 0</p>
+</li>
+<li>producto no vacío</li>
+<li>si no es válido, descarta esa línea y cuenta errores</li>
+<li>Guardar la compra en una estructura adecuada (a tu elección, pero debe permitir luego resumir por producto).</li>
+<li>
+<p>Al final mostrar:</p>
+</li>
+<li>
+<p>Total gastado</p>
+</li>
+<li>
+<p>Diccionario con <strong>total por producto</strong> (sumando cantidades y coste)</p>
+</li>
+<li>Lista de productos ordenados por coste total (de mayor a menor)</li>
+<li>Número de líneas inválidas descartadas</li>
+</ol>
+<blockquote>
+<p>Recomendación: combinar bucles + diccionarios + casting + ordenación + (opcional) comprehensions.</p>
+</blockquote>
+<p><a href="#top">⬆ Ir arriba</a></p>
+</body>
+</html>

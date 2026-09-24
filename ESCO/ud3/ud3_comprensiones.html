@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UD02 - Condicionales</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud03_2-comprensiones">UD03_2-Comprensiones</h1>
+<div id="top"></div>
+
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#ud03_2-comprensiones">UD03_2-Comprensiones</a></li>
+<li><a href="#índice-de-contenidos">Índice de contenidos</a></li>
+<li><a href="#unidad-3--comprehensions-en-python">Unidad 3 – Comprehensions en Python</a></li>
+<li><a href="#1-concepto-de-comprehension">1. Concepto de comprehension</a></li>
+<li><a href="#2-list-comprehensions">2. List Comprehensions</a><ul>
+<li><a href="#21-sintaxis-general">2.1 Sintaxis general</a></li>
+<li><a href="#22-list-comprehension-con-condición">2.2 List comprehension con condición</a></li>
+<li><a href="#23-transformación-de-datos-con-list-comprehensions">2.3 Transformación de datos con list comprehensions</a></li>
+</ul>
+</li>
+<li><a href="#3-comprehensions-con-estructuras-condicionales">3. Comprehensions con estructuras condicionales</a><ul>
+<li><a href="#31-condición-simple-if-al-final">3.1 Condición simple (<code>if</code> al final)</a></li>
+<li><a href="#32-condición-doble-if--else-dentro-de-la-expresión">3.2 Condición doble (<code>if – else</code> dentro de la expresión)</a></li>
+</ul>
+</li>
+<li><a href="#4-set-comprehensions">4. Set Comprehensions</a><ul>
+<li><a href="#41-sintaxis">4.1 Sintaxis</a></li>
+</ul>
+</li>
+<li><a href="#5-dict-comprehensions">5. Dict Comprehensions</a><ul>
+<li><a href="#51-sintaxis">5.1 Sintaxis</a></li>
+<li><a href="#52-dict-comprehension-con-condición">5.2 Dict comprehension con condición</a></li>
+</ul>
+</li>
+<li><a href="#6-generator-comprehensions">6. Generator Comprehensions</a><ul>
+<li><a href="#61-sintaxis">6.1 Sintaxis</a></li>
+</ul>
+</li>
+<li><a href="#7-comprehensions-con-funciones-existentes">7. Comprehensions con funciones existentes</a></li>
+<li><a href="#8-cuándo-usar-comprehensions-y-cuándo-no">8. Cuándo usar comprehensions y cuándo no</a><ul>
+<li><a href="#ventajas">Ventajas🔗</a></li>
+<li><a href="#no-recomendable-cuando">No recomendable cuando:</a></li>
+</ul>
+</li>
+<li><a href="#9-buenas-prácticas">9. Buenas prácticas</a></li>
+<li><a href="#10-comparación-bucle-tradicional-vs-comprehension">10. Comparación: bucle tradicional vs comprehension</a></li>
+</ul>
+<h1 id="unidad-3-comprehensions-en-python">Unidad 3 – Comprehensions en Python<a href="#unidad-3-comprehensions-en-python" title="Permanent link"></a></h1>
+<p>Las <strong>comprehensions</strong> (comprensiones) son una característica avanzada del lenguaje Python que permiten <strong>crear nuevas colecciones de datos de forma concisa, legible y eficiente</strong>, a partir de otras colecciones existentes. Su uso está estrechamente relacionado con la programación funcional y con el tratamiento de estructuras iterables.</p>
+<p>Python dispone de cuatro tipos principales de comprehensions:</p>
+<ul>
+<li>List comprehensions</li>
+<li>Set comprehensions</li>
+<li>Dict comprehensions</li>
+<li>Generator comprehensions</li>
+</ul>
+<p>En este tema se estudian en profundidad, con ejemplos claros y progresivos.</p>
+<hr />
+<h2 id="1-concepto-de-comprehension">1. Concepto de comprehension<a href="#1-concepto-de-comprehension" title="Permanent link"></a></h2>
+<p>Una comprehension es una <strong>forma compacta de escribir bucles y condiciones</strong> para construir colecciones como listas, conjuntos o diccionarios en <strong>una sola expresión</strong>.</p>
+<p>Desde un punto de vista conceptual, una comprehension:</p>
+<ul>
+<li>Itera sobre una secuencia (lista, tupla, rango, etc.).</li>
+<li>Aplica opcionalmente una condición.</li>
+<li>Genera un nuevo conjunto de datos.</li>
+</ul>
+<p>Su objetivo principal es:</p>
+<ul>
+<li>Reducir código repetitivo.</li>
+<li>Mejorar la legibilidad cuando la lógica es sencilla.</li>
+<li>Facilitar operaciones de filtrado y transformación de datos.</li>
+</ul>
+<hr />
+<h2 id="2-list-comprehensions">2. List Comprehensions<a href="#2-list-comprehensions" title="Permanent link"></a></h2>
+<h3 id="21-sintaxis-general">2.1 Sintaxis general<a href="#21-sintaxis-general" title="Permanent link"></a></h3>
+<pre><code>[expresion for elemento in iterable]
+</code></pre>
+<p>Ejemplo equivalente sin comprehension:</p>
+<pre><code>cuadrados = []
+for i in range(5):
+    cuadrados.append(i * i)
+</code></pre>
+<p>Con list comprehension:</p>
+<pre><code>cuadrados = [i * i for i in range(5)]
+</code></pre>
+<hr />
+<h3 id="22-list-comprehension-con-condicion">2.2 List comprehension con condición<a href="#22-list-comprehension-con-condicion" title="Permanent link"></a></h3>
+<p>Se puede añadir una condición para filtrar los elementos.</p>
+<pre><code>pares = [i for i in range(10) if i % 2 == 0]
+</code></pre>
+<p>Equivalente tradicional:</p>
+<pre><code>pares = []
+for i in range(10):
+    if i % 2 == 0:
+        pares.append(i)
+</code></pre>
+<hr />
+<h3 id="23-transformacion-de-datos-con-list-comprehensions">2.3 Transformación de datos con list comprehensions<a href="#23-transformacion-de-datos-con-list-comprehensions" title="Permanent link"></a></h3>
+<pre><code>nombres = [&quot;ana&quot;, &quot;luis&quot;, &quot;maria&quot;]
+nombres_mayus = [nombre.upper() for nombre in nombres]
+</code></pre>
+<p>Uso típico:</p>
+<ul>
+<li>Conversión de tipos</li>
+<li>Normalización de datos</li>
+<li>Procesamiento previo de listas</li>
+</ul>
+<hr />
+<h2 id="3-comprehensions-con-estructuras-condicionales">3. Comprehensions con estructuras condicionales<a href="#3-comprehensions-con-estructuras-condicionales" title="Permanent link"></a></h2>
+<h3 id="31-condicion-simple-if-al-final">3.1 Condición simple (<code>if</code> al final)<a href="#31-condicion-simple-if-al-final" title="Permanent link"></a></h3>
+<pre><code>mayores = [n for n in edades if n &gt;= 18]
+</code></pre>
+<h3 id="32-condicion-doble-if-else-dentro-de-la-expresion">3.2 Condición doble (<code>if – else</code> dentro de la expresión)<a href="#32-condicion-doble-if-else-dentro-de-la-expresion" title="Permanent link"></a></h3>
+<pre><code>resultado = [&quot;apto&quot; if nota &gt;= 5 else &quot;no apto&quot; for nota in notas]
+</code></pre>
+<p>Observación importante:</p>
+<ul>
+<li>El <code>if-else</code> va <strong>antes del <code>for</code></strong> cuando forma parte de la expresión.</li>
+<li>El <code>if</code> filtrado va <strong>después del <code>for</code></strong>.</li>
+</ul>
+<hr />
+<h2 id="4-set-comprehensions">4. Set Comprehensions<a href="#4-set-comprehensions" title="Permanent link"></a></h2>
+<p>Las <strong>set comprehensions</strong> crean conjuntos (<code>set</code>), eliminando automáticamente duplicados.</p>
+<h3 id="41-sintaxis">4.1 Sintaxis<a href="#41-sintaxis" title="Permanent link"></a></h3>
+<pre><code>{expresion for elemento in iterable}
+</code></pre>
+<p>Ejemplo:</p>
+<pre><code>numeros = [1, 2, 2, 3, 4, 4, 5]
+unicos = {n for n in numeros}
+</code></pre>
+<p>Resultado:</p>
+<pre><code>{1, 2, 3, 4, 5}
+</code></pre>
+<p>Uso típico:</p>
+<ul>
+<li>Eliminación de duplicados</li>
+<li>Obtención de valores únicos</li>
+<li>Operaciones de conjuntos</li>
+</ul>
+<hr />
+<h2 id="5-dict-comprehensions">5. Dict Comprehensions<a href="#5-dict-comprehensions" title="Permanent link"></a></h2>
+<p>Las <strong>dict comprehensions</strong> permiten crear diccionarios de forma compacta.</p>
+<h3 id="51-sintaxis">5.1 Sintaxis<a href="#51-sintaxis" title="Permanent link"></a></h3>
+<pre><code>{clave: valor for elemento in iterable}
+</code></pre>
+<p>Ejemplo:</p>
+<pre><code>numeros = [1, 2, 3, 4]
+cuadrados = {n: n * n for n in numeros}
+</code></pre>
+<p>Resultado:</p>
+<pre><code>{1: 1, 2: 4, 3: 9, 4: 16}
+</code></pre>
+<hr />
+<h3 id="52-dict-comprehension-con-condicion">5.2 Dict comprehension con condición<a href="#52-dict-comprehension-con-condicion" title="Permanent link"></a></h3>
+<pre><code>aprobados = {alumno: nota for alumno, nota in notas.items() if nota &gt;= 5}
+</code></pre>
+<p>Uso habitual:</p>
+<ul>
+<li>Filtrar diccionarios</li>
+<li>Transformar claves o valores</li>
+<li>Crear estructuras de acceso rápido</li>
+</ul>
+<hr />
+<h2 id="6-generator-comprehensions">6. Generator Comprehensions<a href="#6-generator-comprehensions" title="Permanent link"></a></h2>
+<p>Las <strong>generator comprehensions</strong> son similares a las list comprehensions, pero <strong>no generan la colección completa</strong>, sino que producen los valores bajo demanda.</p>
+<h3 id="61-sintaxis">6.1 Sintaxis<a href="#61-sintaxis" title="Permanent link"></a></h3>
+<pre><code>(expresion for elemento in iterable)
+</code></pre>
+<p>Ejemplo:</p>
+<pre><code>generador = (i * i for i in range(5))
+</code></pre>
+<p>Uso:</p>
+<pre><code>for valor in generador:
+    print(valor)
+</code></pre>
+<p>Características:</p>
+<ul>
+<li>Menor consumo de memoria.</li>
+<li>Ideales para grandes volúmenes de datos.</li>
+<li>Se recorren una sola vez.</li>
+</ul>
+<hr />
+<h2 id="7-comprehensions-con-funciones-existentes">7. Comprehensions con funciones existentes<a href="#7-comprehensions-con-funciones-existentes" title="Permanent link"></a></h2>
+<p>Las comprehensions se integran perfectamente con funciones y estructuras ya conocidas.</p>
+<pre><code>valores = [&quot;10&quot;, &quot;20&quot;, &quot;30&quot;]
+enteros = [int(v) for v in valores]
+</code></pre>
+<pre><code>longitudes = [len(palabra) for palabra in palabras]
+</code></pre>
+<hr />
+<h2 id="8-cuando-usar-comprehensions-y-cuando-no">8. Cuándo usar comprehensions y cuándo no<a href="#8-cuando-usar-comprehensions-y-cuando-no" title="Permanent link"></a></h2>
+<h3 id="ventajas">Ventajas<a href="#ventajas" title="Permanent link"></a></h3>
+<ul>
+<li>Código más compacto.</li>
+<li>Mayor expresividad.</li>
+<li>Menos líneas para operaciones simples.</li>
+<li>Muy utilizadas en Python profesional.</li>
+</ul>
+<h3 id="no-recomendable-cuando">No recomendable cuando:<a href="#no-recomendable-cuando" title="Permanent link"></a></h3>
+<ul>
+<li>La lógica es compleja o muy anidada.</li>
+<li>Se requieren múltiples condiciones difíciles de leer.</li>
+<li>Se sacrifica claridad por brevedad.</li>
+</ul>
+<p>Ejemplo poco legible (a evitar):</p>
+<pre><code>resultado = [x for x in datos if x &gt; 0 if x % 2 == 0 if x &lt; 100]
+</code></pre>
+<hr />
+<h2 id="9-buenas-practicas">9. Buenas prácticas<a href="#9-buenas-practicas" title="Permanent link"></a></h2>
+<ul>
+<li>Priorizar la <strong>legibilidad</strong> frente a la concisión extrema.</li>
+<li>No abusar de comprehensions anidadas.</li>
+<li>Usar nombres de variables claros.</li>
+<li>Limitar la complejidad de la expresión.</li>
+</ul>
+<p>Ejemplo correcto y legible:</p>
+<pre><code>pares_positivos = [n for n in numeros if n &gt; 0 and n % 2 == 0]
+</code></pre>
+<hr />
+<h2 id="10-comparacion-bucle-tradicional-vs-comprehension">10. Comparación: bucle tradicional vs comprehension<a href="#10-comparacion-bucle-tradicional-vs-comprehension" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Bucle tradicional</th>
+<th>Comprehension</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Más líneas de código</td>
+<td>Código compacto</td>
+</tr>
+<tr>
+<td>Muy explícito</td>
+<td>Más expresivo</td>
+</tr>
+<tr>
+<td>Fácil para principiantes</td>
+<td>Requiere práctica</td>
+</tr>
+<tr>
+<td>Flexible para lógica compleja</td>
+<td>Ideal para lógica simple</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a href="#top">⬆ Ir arriba</a></p>
+</body>
+</html>

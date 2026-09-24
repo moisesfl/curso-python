@@ -1,8 +1,8 @@
-# Ejercicio Final – UD03
+# Tarea entregable – UD03
 
 ## Índice de contenidos
 
-- [Ejercicio Final – UD03](#ejercicio-final--ud03)
+- [Tarea entregable – UD03](#ejercicio-final--ud03)
   - [Índice de contenidos](#índice-de-contenidos)
   - [Contexto general](#contexto-general)
   - [Datos de partida](#datos-de-partida)
@@ -90,6 +90,7 @@ Para los pasos 1, 2 y 3 recuerda los ejercicios hechos en el segundo y tercer te
   > "Saltando registro corrupto..."
 
   y usa `continue`.
+  
 - Si el nombre es `"STOP"`, usa `break` (puedes añadir un artículo con este nombre al final de la lista para probar la parada).
 
 #### 4.2. Procesamiento de Precios Históricos (`enumerate`)

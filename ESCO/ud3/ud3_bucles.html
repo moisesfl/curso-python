@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UD02 - Condicionales</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud03-bucles">UD03-Bucles</h1>
+<div id="top"></div>
+
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#ud03-bucles">UD03-Bucles</a></li>
+<li><a href="#índice-de-contenidos">Índice de contenidos</a></li>
+<li><a href="#ud03--estructuras-iterativas-bucles-en-python">UD03 – Estructuras iterativas (bucles) en Python</a></li>
+<li><a href="#1-introducción-a-las-estructuras-iterativas">1. Introducción a las estructuras iterativas</a></li>
+<li><a href="#2-bucle-for">2. Bucle <code>for</code></a><ul>
+<li><a href="#sintaxis-general">Sintaxis general</a></li>
+<li><a href="#21-iteraciones-genéricas">2.1. Iteraciones genéricas</a></li>
+<li><a href="#22-iteraciones-por-listas-y-tuplas">2.2. Iteraciones por listas y tuplas</a></li>
+<li><a href="#23-iteraciones-por-secuencias-range">2.3. Iteraciones por secuencias (<code>range()</code>)</a></li>
+<li><a href="#24-iteraciones-por-diccionarios">2.4. Iteraciones por diccionarios</a></li>
+<li><a href="#25-bucles-anidados">2.5. Bucles anidados</a></li>
+<li><a href="#26-uso-de-break-y-continue">2.6. Uso de <code>break</code> y <code>continue</code></a></li>
+</ul>
+</li>
+<li><a href="#3-bucle-while">3. Bucle <code>while</code></a><ul>
+<li><a href="#sintaxis-general-1">Sintaxis general</a></li>
+<li><a href="#31-bucle-while">3.1. Bucle <code>while</code></a></li>
+<li><a href="#32-bucles-anidados-mixtos-de-while-y-for">3.2. Bucles anidados mixtos de <code>while</code> y <code>for</code></a></li>
+<li><a href="#33-uso-de-break-y-continue">3.3. Uso de <code>break</code> y <code>continue</code></a></li>
+<li><a href="#34-uso-de-whiletrue">3.4. Uso de <code>while(true)</code></a></li>
+<li><a href="#sintaxis">Sintaxis</a></li>
+<li><a href="#ejemplo-de-while-true">Ejemplo de <code>while True</code></a></li>
+<li><a href="#por-qué-while-true-no-es-una-buena-práctica">¿Por qué <code>while True</code> no es una buena práctica?</a></li>
+</ul>
+</li>
+<li><a href="#4-iterar-con-enumerate()">4. Iterar con enumerate()</a></li>
+</ul>
+<h1 id="ud03-estructuras-iterativas-bucles-en-python">UD03 – Estructuras iterativas (bucles) en Python<a href="#ud03-estructuras-iterativas-bucles-en-python" title="Permanent link"></a></h1>
+<hr />
+<h2 id="1-introduccion-a-las-estructuras-iterativas">1. Introducción a las estructuras iterativas<a href="#1-introduccion-a-las-estructuras-iterativas" title="Permanent link"></a></h2>
+<p>Las <strong>estructuras iterativas</strong>, también conocidas como <strong>bucles</strong>, permiten ejecutar un mismo bloque de instrucciones <strong>de forma repetida</strong> mientras se cumpla una determinada condición o mientras existan elementos que recorrer.</p>
+<p>El uso de bucles es fundamental en programación, ya que permite:</p>
+<ul>
+<li>Evitar la repetición innecesaria de código.</li>
+<li>Automatizar tareas repetitivas.</li>
+<li>Recorrer estructuras de datos como listas, tuplas o diccionarios.</li>
+<li>Implementar algoritmos de búsqueda, validación y procesamiento de datos.</li>
+</ul>
+<p>En Python existen <strong>dos tipos principales de estructuras iterativas</strong>:</p>
+<ul>
+<li><strong>Bucle <code>for</code></strong>: se utiliza cuando se conoce de antemano el número de iteraciones o cuando se desea recorrer una colección de elementos.</li>
+<li><strong>Bucle <code>while</code></strong>: se utiliza cuando la repetición depende de una condición lógica que puede variar durante la ejecución del programa.</li>
+</ul>
+<hr />
+<h2 id="2-bucle-for">2. Bucle <code>for</code><a href="#2-bucle-for" title="Permanent link"></a></h2>
+<p>El bucle <code>for</code> en Python se utiliza para <strong>recorrer secuencias</strong> (listas, tuplas, rangos, diccionarios, cadenas de texto, etc.) y ejecutar un bloque de instrucciones para cada elemento.</p>
+<h3 id="sintaxis-general">Sintaxis general<a href="#sintaxis-general" title="Permanent link"></a></h3>
+<pre><code>for variable in secuencia:
+    instrucciones
+</code></pre>
+<hr />
+<h3 id="21-iteraciones-genericas">2.1. Iteraciones genéricas<a href="#21-iteraciones-genericas" title="Permanent link"></a></h3>
+<p>En ocasiones no es necesario utilizar la variable de control del bucle. Para estos casos se emplea el guion bajo (<code>_</code>) como convención.</p>
+<pre><code>for _ in range(5):
+    print(&quot;Hola&quot;)
+</code></pre>
+<p>Este bucle imprime la palabra <em>Hola</em> cinco veces.</p>
+<hr />
+<h3 id="22-iteraciones-por-listas-y-tuplas">2.2. Iteraciones por listas y tuplas<a href="#22-iteraciones-por-listas-y-tuplas" title="Permanent link"></a></h3>
+<p>El bucle <code>for</code> permite recorrer directamente los elementos de una lista o tupla.</p>
+<pre><code>lista = [10, 20, 30]
+
+for elemento in lista:
+    print(elemento)
+</code></pre>
+<pre><code>tupla = (&quot;rojo&quot;, &quot;verde&quot;, &quot;azul&quot;)
+
+for color in tupla:
+    print(color)
+</code></pre>
+<hr />
+<h3 id="23-iteraciones-por-secuencias-range">2.3. Iteraciones por secuencias (<code>range()</code>)<a href="#23-iteraciones-por-secuencias-range" title="Permanent link"></a></h3>
+<p>La función <code>range()</code> genera una secuencia de números y es muy utilizada con el bucle <code>for</code>.</p>
+<pre><code>for i in range(5):
+    print(i)
+</code></pre>
+<p>También puede especificarse inicio, fin y salto:</p>
+<pre><code>for i in range(2, 10, 2):
+    print(i)
+</code></pre>
+<hr />
+<h3 id="24-iteraciones-por-diccionarios">2.4. Iteraciones por diccionarios<a href="#24-iteraciones-por-diccionarios" title="Permanent link"></a></h3>
+<p>En los diccionarios se puede iterar sobre:</p>
+<ul>
+<li>Claves</li>
+<li>Valores</li>
+<li>Pares clave–valor</li>
+</ul>
+<pre><code>diccionario = {&quot;a&quot;: 1, &quot;b&quot;: 2, &quot;c&quot;: 3}
+
+for clave in diccionario:
+    print(clave)
+</code></pre>
+<pre><code>for valor in diccionario.values():
+    print(valor)
+</code></pre>
+<pre><code>for clave, valor in diccionario.items():
+    print(clave, valor)
+</code></pre>
+<hr />
+<h3 id="25-bucles-anidados">2.5. Bucles anidados<a href="#25-bucles-anidados" title="Permanent link"></a></h3>
+<p>Un <strong>bucle anidado</strong> es un bucle dentro de otro bucle. Se utilizan cuando es necesario trabajar con estructuras bidimensionales o combinaciones de elementos.</p>
+<pre><code>for i in range(3):
+    for j in range(2):
+        print(i, j)
+</code></pre>
+<p>En este caso, el bucle interno se ejecuta completamente por cada iteración del bucle externo.</p>
+<p><strong>Output</strong>:</p>
+<pre><code>0 0
+0 1
+1 0
+1 1
+2 0
+2 1
+</code></pre>
+<p><strong>Ejemplo 1</strong>: Crear una figura de 6*6 asteriscos.</p>
+<pre><code>for i in range(6):              # filas
+    for j in range(6):              # columnas
+        print(&quot;* &quot;, end=&quot;&quot;)             # end=&quot;&quot; evita el salto de linea.
+    print()                 # Salto de línea
+</code></pre>
+<p><strong>Ejemplo 2</strong>: Crear una figura triángulo rectángulo.</p>
+<pre><code>for i in range(1, 7):
+    for j in range(i):
+        print(&quot;*&quot;, end=&quot;&quot;)
+    print()
+</code></pre>
+<p><strong>Ejemplo 3</strong>: Crear una figura triángulo equilátero.</p>
+<pre><code># Definimos la altura del triángulo equilátero
+altura = 6
+
+# Bucle exterior: controla el número de filas del triángulo
+for i in range(altura):
+
+    # Imprime los espacios en blanco necesarios para centrar el triángulo
+    # En la primera fila imprime más espacios, y va disminuyendo en cada iteración
+    for j in range(altura - i - 1):
+        print(&quot; &quot;, end=&quot;&quot;)
+
+    # Imprime los asteriscos de la fila actual
+    # El número de asteriscos sigue la fórmula: 2 * i + 1
+    for k in range(2 * i + 1):
+        print(&quot;*&quot;, end=&quot;&quot;)
+
+    # Salto de línea al finalizar cada fila del triángulo
+    print()
+</code></pre>
+<hr />
+<h3 id="26-uso-de-break-y-continue">2.6. Uso de <code>break</code> y <code>continue</code><a href="#26-uso-de-break-y-continue" title="Permanent link"></a></h3>
+<ul>
+<li><strong><code>break</code></strong>: finaliza el bucle de forma inmediata.</li>
+<li><strong><code>continue</code></strong>: salta a la siguiente iteración del bucle.</li>
+</ul>
+<p>Ejemplo con <code>break</code>:</p>
+<pre><code>for i in range(10):
+    if i == 5:
+        break
+    print(i)
+</code></pre>
+<p>Output:</p>
+<pre><code>0
+1
+2
+3
+4
+</code></pre>
+<p>Ejemplo con <code>continue</code>:</p>
+<pre><code>for i in range(5):
+    if i == 2:
+        continue
+    print(i)
+</code></pre>
+<p>Output:</p>
+<pre><code>0
+1
+3
+4
+</code></pre>
+<hr />
+<h2 id="3-bucle-while">3. Bucle <code>while</code><a href="#3-bucle-while" title="Permanent link"></a></h2>
+<p>El bucle <code>while</code> se ejecuta <strong>mientras una condición sea verdadera</strong>. Es adecuado cuando no se conoce previamente el número de iteraciones.</p>
+<h3 id="sintaxis-general_1">Sintaxis general<a href="#sintaxis-general_1" title="Permanent link"></a></h3>
+<pre><code>while condicion:
+    instrucciones
+</code></pre>
+<hr />
+<h3 id="31-bucle-while">3.1. Bucle <code>while</code><a href="#31-bucle-while" title="Permanent link"></a></h3>
+<p>Ejemplo básico:</p>
+<pre><code>contador = 0
+
+while contador &lt; 5:
+    print(contador)
+    contador += 1
+</code></pre>
+<p>Es fundamental que la condición del bucle llegue a ser falsa para evitar <strong>bucles infinitos</strong>.</p>
+<hr />
+<h3 id="32-bucles-anidados-mixtos-de-while-y-for">3.2. Bucles anidados mixtos de <code>while</code> y <code>for</code><a href="#32-bucles-anidados-mixtos-de-while-y-for" title="Permanent link"></a></h3>
+<p>Es posible combinar ambos tipos de bucles dentro de un mismo programa.</p>
+<p>Ejemplo:</p>
+<pre><code>i = 1
+
+while i &lt;= 3:
+    for j in range(2):
+        print(i, j)
+    i += 1
+</code></pre>
+<p>Output:</p>
+<pre><code>1 0
+1 1
+2 0
+2 1
+3 0
+3 1
+</code></pre>
+<hr />
+<h3 id="33-uso-de-break-y-continue">3.3. Uso de <code>break</code> y <code>continue</code><a href="#33-uso-de-break-y-continue" title="Permanent link"></a></h3>
+<p>Al igual que en el bucle <code>for</code>, el bucle <code>while</code> admite las sentencias <code>break</code> y <code>continue</code>.</p>
+<p>Ejemplo:</p>
+<pre><code>numero = 0
+
+while True:
+    numero += 1
+    if numero == 3:
+        continue
+    if numero == 6:
+        break
+    print(numero)
+</code></pre>
+<p>Output:</p>
+<pre><code>1
+2
+4
+5
+</code></pre>
+<h3 id="34-uso-de-whiletrue">3.4. Uso de <code>while(true)</code><a href="#34-uso-de-whiletrue" title="Permanent link"></a></h3>
+<p>En Python, la expresión <code>True</code> representa un valor booleano siempre verdadero. Cuando se utiliza en un bucle <code>while</code>, provoca que el bucle se ejecute <strong>de forma indefinida</strong>, es decir, se convierte en un <strong>bucle infinito</strong>.</p>
+<h4 id="sintaxis">Sintaxis<a href="#sintaxis" title="Permanent link"></a></h4>
+<pre><code>while True:
+    instrucciones
+</code></pre>
+<p>Este tipo de bucle solo finaliza si se produce:</p>
+<ul>
+<li>Un <code>break</code></li>
+<li>Una excepción</li>
+<li>La finalización forzada del programa</li>
+</ul>
+<h4 id="ejemplo-de-while-true">Ejemplo de <code>while True</code><a href="#ejemplo-de-while-true" title="Permanent link"></a></h4>
+<pre><code>while True:
+    numero = int(input(&quot;Introduce un número positivo: &quot;))
+
+    if numero &gt; 0:
+        print(&quot;Número válido&quot;)
+        break
+    else:
+        print(&quot;El número debe ser positivo&quot;)
+</code></pre>
+<p><strong>¿Qué hace este código?</strong></p>
+<ul>
+<li>El programa solicita un número al usuario de forma repetida.</li>
+<li>Mientras el número no sea positivo, el bucle continúa ejecutándose.</li>
+<li>Cuando se introduce un valor correcto, se ejecuta <code>break</code> y el bucle finaliza.</li>
+</ul>
+<h4 id="por-que-while-true-no-es-una-buena-practica">¿Por qué <code>while True</code> no es una buena práctica?<a href="#por-que-while-true-no-es-una-buena-practica" title="Permanent link"></a></h4>
+<p>Aunque <code>while True</code> <strong>funciona correctamente</strong>, su uso presenta varios inconvenientes desde el punto de vista del diseño y la legibilidad del código:</p>
+<p><strong>1. Menor claridad semántica</strong></p>
+<p>La condición real de salida del bucle <strong>no es visible en la cabecera</strong>, sino oculta dentro del cuerpo del bucle mediante uno o varios <code>break</code>.</p>
+<p>Esto dificulta:</p>
+<ul>
+<li>La lectura del código.</li>
+<li>El mantenimiento.</li>
+<li>La comprensión rápida de cuándo termina el bucle.</li>
+</ul>
+<p><strong>2. Mayor riesgo de errores</strong></p>
+<p>Si se olvida incluir un <code>break</code> o este no se alcanza por un error lógico, el programa quedará atrapado en un <strong>bucle infinito real</strong>, consumiendo recursos y bloqueando la ejecución.</p>
+<p><strong>3. Dificulta la depuración</strong></p>
+<p>Los bucles infinitos hacen más compleja la detección de errores, especialmente para programadores en formación, ya que el flujo del programa no está claramente definido.</p>
+<h2 id="4-iterar-con-enumerate">4. Iterar con enumerate()<a href="#-iterar-con-enumerate()" title="Permanent link"></a></h2>
+<p>Existen situaciones en las que no solo queremos acceder al elemento <em>i-ésimo</em> de la colección, sino que <strong>además queremos el índice</strong>. Una forma de hacerlo sería la siguiente.</p>
+<pre><code class="language-python">lista = [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]
+
+indice = 0
+for l in lista:
+    print(indice, l)
+    indice += 1
+
+# Salida:
+# 0 A
+# 1 B
+# 2 C
+</code></pre>
+<p>Aunque se trata de una forma perfectamente válida, el uso de <strong>enumerate()</strong> nos permite ahorrar alguna que otra línea de código, obteniendo un resultado mucho más limpio y claro.</p>
+<pre><code>lista = [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]
+
+for indice, l in enumerate(lista):
+    print(indice, l)
+
+# Salida:
+# 0 A
+# 1 B
+# 2 C
+</code></pre>
+<p>Por último, es importante notar que su uso no se limita únicamente a bucles for. Podemos convertir el tipo enumerate en una lista de tuplas, donde cada una contiene un elemento de la colección inicial y el índice asociado.</p>
+<pre><code>lista = [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]
+
+en = list(enumerate(lista))
+print(en)
+
+# Salida:
+# [(0, 'A'), (1, 'B'), (2, 'C')]
+</code></pre>
+<p><a href="#top">⬆ Ir arriba</a></p>
+</body>
+</html>
