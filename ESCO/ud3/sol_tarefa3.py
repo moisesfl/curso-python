@@ -136,16 +136,16 @@ while True:
 
                 print(f"Estado del stock: {estado_stock}")
 
-                # Si es crítico, lo añadimos a la lista
-                if estado_stock == "Crítico":
-                    productos_criticos.append(producto["nombre"])
+                # # Si es crítico, lo añadimos a la lista
+                # if estado_stock == "Crítico":
+                #     productos_criticos.append(producto["nombre"])
 
-                # Calculamos el valor del producto
-                valor_producto = precio_medio * producto["stock"]
+                # # Calculamos el valor del producto
+                # valor_producto = precio_medio * producto["stock"]
 
-                valor_total += valor_producto
+                # valor_total += valor_producto
 
-                print(f"Valor del stock de {producto["nombre"]}: {valor_producto:.2f}€")
+                # print(f"Valor del stock de {producto["nombre"]}: {valor_producto:.2f}€")
 
         # SALIR
 
@@ -168,14 +168,10 @@ while True:
 
                     valor_salida += precio_medio * producto["stock"]
 
-            # Comprensión de listas:
-            # obtenemos solamente los nombres de los productos
-            nombres_productos = [
-                producto["nombre"] for producto in inventario
-            ]
 
             print(f"\nValor total del inventario: {valor_salida:.2f}€")
 
+            # Comprensión de listas:
 
             nombres_estado_critico = [producto["nombre"] 
                                       for producto in inventario
