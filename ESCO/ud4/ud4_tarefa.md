@@ -1,34 +1,28 @@
-## Tarea entregable – UD04
+# Tarea entregable – UD04
 
-## Sistema Inteligente de Gestión “Streamify Pro”
-
-[Tarea entregable – UD04](#page-0)
-
-[Sistema Inteligente de Gestión “Streamify Pro”](#page-0)
-
-[ Contexto general](#page-0)
+[ Contexto general: Sistema Inteligente de Gestión “Streamify Pro”](#page-0)
 
 [ Datos de partida](#page-0)
 
 [ Requisitos funcionales (QUÉ debe hacer el programa)](#page-0)
 
-[1. Menú de Control (while + match-case)](#page-0)
+&nbsp;&nbsp;[1. Menú de Control (while + match-case)](#page-0)
 
-[2. Saneamiento de datos (filter + lambda)](#page-0)
+&nbsp;&nbsp;[2. Saneamiento de datos (filter + lambda)](#page-0)
 
-[3. Auditoría de Ingresos y Servicios (reduce + recursividad)](#page-0)
+&nbsp;&nbsp;[3. Auditoría de Ingresos y Servicios (reduce + recursividad)](#page-0)
 
-[4. Clasificación (sorted + tuplas)](#page-0)
+&nbsp;&nbsp;[4. Clasificación (sorted + tuplas)](#page-0)
 
-[5. Enviar facturas (recursividad)](#page-0)
+&nbsp;&nbsp;[5. Enviar facturas (recursividad)](#page-0)
 
-[6. Salir](#page-0)
+&nbsp;&nbsp;[6. Salir](#page-0)
 
 [ Requisitos técnicos (CÓMO debe hacerse)](#page-0)
 
 [ Criterios de evaluación cubiertos](#page-0)
 
-##  Contexto general
+##  Contexto general: Sistema Inteligente de Gestión “Streamify Pro”
 
 La empresa "Streamify" te ha pedido un sistema para procesar las facturas mensuales. El programa debe limpiar los datos corruptos, calcular los precios finales con descuentos, ordenar a los clientes por prioridad y, finalmente, enviar las notificaciones de cobro de forma recursiva. El objetivo es hacer uso de lo aprendido en esta unidad sobre funciones (map, filter, reduce,..), lambdas y recursividad.
 
@@ -51,7 +45,7 @@ servicios_adicionales = ["Cloud", ["Juegos", "Música"], "4K", ["Soporte 24/7"]]
 
 ##  Requisitos funcionales (QUÉ debe hacer el programa)
 
-## 1. Menú de Control (while + match-case)
+### 1. Menú de Control (while + match-case)
 
 El programa debe tener un menú que permita:
 
@@ -65,7 +59,7 @@ El programa debe tener un menú que permita:
 
 - 5. Salir.
 
-## 2. Saneamiento de datos (filter + lambda)
+### 2. Saneamiento de datos (filter + lambda)
 
 En esta opción deben analizarse los usuarios almacenados y limpiar aquellos que tengan datos inválidos. Para ello debes crear una función que devuelva únicamente los usuarios con un email válido (que contenga "@"), mostrando por pantalla como resultado el número de usuarios eliminados y la lista de emails de los que quedan.
 
@@ -85,7 +79,7 @@ Lista de emails listos:
 4. info@empresa.com
 ```
 
-## 3. Auditoría de Ingresos y Servicios (reduce + recursividad)
+### 3. Auditoría de Ingresos y Servicios (reduce + recursividad)
 
 Para esta opción, el programa debe calcular el total de ingresos, teniendo en cuenta que cada usuario tiene un plan con un precio distinto, y que si el usuario lleva más de 10 meses como socio, se le aplica el descuento de fidelidad (20%).
 
@@ -109,7 +103,7 @@ Estado de la auditoría: COMPLETA
 ```
 
 
-## 4. Clasificación (sorted + tuplas)
+### 4. Clasificación (sorted + tuplas)
 
 Al seleccionar esta opción, el programa deberá mostrar la lista de usuarios ordenada, de modo que pueda conocerse quiénes son los clientes con más antigüedad y sus tipos de plan, por medio de los criterios de prioridad:
 
@@ -131,7 +125,7 @@ LISTA DE CLIENTES ORDENADA:
 Lista clasificada por Plan y Antigüedad (Descendente).
 ```
 
-## 5. Enviar facturas (recursividad)
+### 5. Enviar facturas (recursividad)
 
 Para esta opción, debes implementar una función recursiva llamada:
 
@@ -152,7 +146,7 @@ Donde como resultado el usuario obtendrá una lista de facturas enviadas a cada 
 Proceso de envío finalizado con éxito. ------------------------------------------
 ```
 
-## 6. Salir
+### 6. Salir
 
 El programa se cerrará al seleccionar esta opción, mostrando por pantalla un mensaje similar a:
 
