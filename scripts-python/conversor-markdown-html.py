@@ -21,7 +21,7 @@ if edad >= 18:
     print("Mayor de edad")
 ```
 """
-file_path = "Z:/Workspace/curso-python/ESCO/ud3/tarefa3"
+file_path = "Z:/Workspace/curso-python/ESCO/ud4/ud4_tarefa"
 file_name = Path(file_path).stem  # Extrae el nombre del archivo sin extensión
 
 # Lee tu archivo Markdown
@@ -65,5 +65,5 @@ html_con_estilos = f"""
 with open(f"{file_name}.html", "w", encoding="utf-8") as f:
     f.write(html_con_estilos)
 
-print("¡Archivo 'unidad2.html' generado con éxito!")
+print(f"¡Archivo {file_name} generado con éxito!")
 

@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud4_lambda</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud04_2-python-lambda">UD04_2-Python-lambda</h1>
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#unidad-4-funciones-lambda-en-python">Unidad 4: Funciones lambda en Python</a><ul>
+<li><a href="#recursos">Recursos</a></li>
+<li><a href="#que-es-una-funcion-lambda">¿Qué es una función lambda?</a></li>
+<li><a href="#sintaxis-y-reglas">Sintaxis y reglas</a></li>
+<li><a href="#cuando-usar-lambda-y-cuando-no">Cuándo usar lambda (y cuándo no)</a></li>
+<li><a href="#ejemplos-basicos">Ejemplos básicos</a></li>
+<li><a href="#lambdas-con-map-filter-sorted-y-reduce">Lambdas con map, filter, sorted y reduce</a><ul>
+<li><a href="#mapfunction-iterable-transforma-elementos">map(function, iterable) → transforma elementos</a></li>
+<li><a href="#filterfunction-iterable-selecciona-elementos">filter(function, iterable) → selecciona elementos</a></li>
+<li><a href="#sortediterable-keyfunction-reversefalse-ordena-con-una-clave">sorted(iterable, key=function, reverse=False) → ordena con una clave</a></li>
+<li><a href="#acumulador-functoolsreducefunction-iterable-initializer">Acumulador: functools.reduce(function, iterable[, initializer])</a></li>
+</ul>
+</li>
+<li><a href="#rendimiento-y-legibilidad">Rendimiento y legibilidad</a></li>
+<li><a href="#ejercicios-propuestos">Ejercicios propuestos</a><ul>
+<li><a href="#enunciados">Enunciados</a></li>
+<li><a href="#soluciones">Soluciones</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="unidad-4-funciones-lambda-en-python">Unidad 4: Funciones <code>lambda</code> en Python<a href="#unidad-4-funciones-lambda-en-python" title="Permanent link"></a></h1>
+<hr />
+<h2 id="recursos">Recursos<a href="#recursos" title="Permanent link"></a></h2>
+<ul>
+<li>Documentación oficial: <code>help(lambda)</code> y módulo <code>functools</code></li>
+</ul>
+<h2 id="que-es-una-funcion-lambda">¿Qué es una función <code>lambda</code>?<a href="#que-es-una-funcion-lambda" title="Permanent link"></a></h2>
+<p>Una <strong>función <code>lambda</code></strong> es una función <strong>anónima y pequeña</strong> que se define en una sola expresión. Sirve para crear funciones rápidas <strong>en línea</strong>, normalmente como argumento de otras funciones.</p>
+<ul>
+<li>Equivalente a una función <code>def</code>, pero <strong>sin nombre</strong> y <strong>de una sola expresión</strong>.</li>
+<li>Ideal para <strong>operaciones simples</strong> y de <strong>vida corta</strong>.</li>
+</ul>
+<hr />
+<h2 id="sintaxis-y-reglas">Sintaxis y reglas<a href="#sintaxis-y-reglas" title="Permanent link"></a></h2>
+<pre><code>lambda argumentos: expresión
+</code></pre>
+<ul>
+<li>La <strong>expresión</strong> debe devolver un valor (implícitamente).</li>
+<li>No admite <strong>múltiples sentencias</strong> (no <code>return</code>, no <code>for</code>/<code>while</code> explícitos, no <code>try</code> completo, etc.).</li>
+<li>Puede usar <strong>operadores ternarios</strong>, llamadas a funciones, comprensiones y expresiones cortas.</li>
+</ul>
+<p><strong>Ejemplos de firmas válidas:</strong></p>
+<pre><code>lambda x: x * 2
+lambda a, b: (a + b) / 2
+lambda x, y=0: x**2 + y  # con valor por defecto
+lambda *args: sum(args)
+lambda **kwargs: kwargs.get(&quot;clave&quot;, None)
+</code></pre>
+<hr />
+<h2 id="cuando-usar-lambda-y-cuando-no">Cuándo usar <code>lambda</code> (y cuándo no)<a href="#cuando-usar-lambda-y-cuando-no" title="Permanent link"></a></h2>
+<p>Úsalo cuando: - La lógica es <strong>simple</strong> y mejora la <strong>fluidez</strong> del código. - Necesitas una función <strong>rápida y local</strong> (ej. <code>key=</code> en <code>sorted</code>).</p>
+<p>Evítalo cuando: - La lógica es <strong>compleja</strong> o necesita <strong>documentación</strong> → mejor <code>def</code>. - Debes <strong>reutilizar</strong> la función en varios lugares → nómbrala con <code>def</code>.</p>
+<hr />
+<h2 id="ejemplos-basicos">Ejemplos básicos<a href="#ejemplos-basicos" title="Permanent link"></a></h2>
+<pre><code># Duplicar un número
+doble = lambda x: x * 2
+print(doble(5))  # 10
+
+# Media de dos valores
+media = lambda a, b: (a + b) / 2
+print(media(4, 8))  # 6.0
+
+# Valor absoluto “manual” con condicional
+absoluto = lambda x: x if x &gt;= 0 else -x
+print(absoluto(-3))  # 3
+</code></pre>
+<hr />
+<h2 id="lambdas-con-map-filter-sorted-y-reduce">Lambdas con <code>map</code>, <code>filter</code>, <code>sorted</code> y <code>reduce</code><a href="#lambdas-con-map-filter-sorted-y-reduce" title="Permanent link"></a></h2>
+<h3 id="mapfunction-iterable-transforma-elementos"><code>map(function, iterable)</code> → transforma elementos<a href="#mapfunction-iterable-transforma-elementos" title="Permanent link"></a></h3>
+<p>Toma una lista de números enteros y genera una nueva lista que contiene el cuadrado de cada uno de esos números, utilizando una función lambda junto con la función map. Finalmente, muestra el resultado por pantalla.</p>
+<pre><code># Se define una lista de números enteros
+nums = [1, 2, 3, 4]
+
+# Se utiliza map para aplicar una función lambda a cada elemento de la lista 'nums'
+# La función lambda recibe un valor 'x' y devuelve su cuadrado (x * x)
+# map genera un iterable con los resultados, que se convierte en lista con list()
+cuadrados = list(map(lambda x: x * x, nums))
+
+# Se imprime la lista resultante, que contiene el cuadrado de cada número original
+print(cuadrados)  # [1, 4, 9, 16]
+</code></pre>
+<h3 id="filterfunction-iterable-selecciona-elementos"><code>filter(function, iterable)</code> → selecciona elementos<a href="#filterfunction-iterable-selecciona-elementos" title="Permanent link"></a></h3>
+<p>Filtra una lista de números enteros y genera una nueva lista que contiene únicamente los números pares, utilizando una función lambda junto con la función filter.</p>
+<pre><code># Se define una lista de números enteros
+nums = [1, 2, 3, 4, 5, 6]
+
+# Se utiliza filter para evaluar cada elemento de la lista 'nums'
+# La función lambda recibe un valor 'x' y comprueba si es par
+# La condición x % 2 == 0 devuelve True para números pares y False para impares
+# filter conserva únicamente los elementos para los que la condición es True
+# El resultado es un iterable que se convierte en lista con list()
+pares = list(filter(lambda x: x % 2 == 0, nums))
+
+# Se imprime la lista resultante, que contiene solo los números pares
+print(pares)  # [2, 4, 6]
+</code></pre>
+<h3 id="sortediterable-keyfunction-reversefalse-ordena-con-una-clave"><code>sorted(iterable, key=function, reverse=False)</code> → ordena con una clave<a href="#sortediterable-keyfunction-reversefalse-ordena-con-una-clave" title="Permanent link"></a></h3>
+<p>Ordena una lista de cadenas de texto según la longitud de cada palabra, de menor a mayor, utilizando una función lambda como criterio de ordenación en la función sorted.</p>
+<pre><code># Se define una lista de cadenas de texto
+palabras = [&quot;Python&quot;, &quot;es&quot;, &quot;maravilloso&quot;]
+
+# Se utiliza la función sorted para ordenar la lista 'palabras'
+# El parámetro key permite indicar el criterio de ordenación
+# La función lambda recibe una cadena 's' y devuelve su longitud con len(s)
+# sorted utiliza ese valor numérico para ordenar las palabras de menor a mayor longitud
+ordenadas = sorted(palabras, key=lambda s: len(s))
+
+# Se imprime la lista resultante, ordenada según la longitud de cada palabra
+print(ordenadas)  # ['es', 'Python', 'maravilloso']
+</code></pre>
+<h3 id="acumulador-functoolsreducefunction-iterable-initializer">Acumulador: <code>functools.reduce(function, iterable[, initializer])</code><a href="#acumulador-functoolsreducefunction-iterable-initializer" title="Permanent link"></a></h3>
+<p>Calcula el producto de todos los números contenidos en una lista, utilizando la función reduce del módulo functools junto con una función lambda. La operación va acumulando el resultado multiplicando cada elemento de la lista, y finalmente muestra el valor total por pantalla.</p>
+<pre><code># Se importa la función reduce desde el módulo functools
+from functools import reduce
+
+# Se define una lista de números enteros
+nums = [1, 2, 3, 4]
+
+# Se utiliza reduce para aplicar una operación acumulativa sobre la lista 'nums'
+# La función lambda recibe dos parámetros:
+#   - acc: el acumulador, que almacena el resultado parcial
+#   - x: el valor actual de la lista que se está procesando
+# En cada iteración se multiplica el acumulador por el valor actual
+# El valor inicial del acumulador se establece en 1 (initializer), ya que para no modifica la multiplicación (en suma sería un 0)
+producto = reduce(lambda acc, x: acc * x, nums, 1)
+
+# Se imprime el resultado final, que corresponde al producto de todos los elementos
+print(producto)  # 24
+</code></pre>
+<blockquote>
+<p>Consejo: En Python idiomático, muchas veces <code>sum</code>, comprensiones o bucles son más claros que <code>map/filter/reduce</code>.</p>
+</blockquote>
+<hr />
+<h2 id="rendimiento-y-legibilidad">Rendimiento y legibilidad<a href="#rendimiento-y-legibilidad" title="Permanent link"></a></h2>
+<ul>
+<li><strong>Rendimiento:</strong> similar a una función <code>def</code> pequeña; evita usarlas en <strong>caminos críticos</strong> si complican la lectura.</li>
+<li><strong>Legibilidad:</strong> si la expresión supera ~1 línea o encadena demasiadas operaciones, <strong>usa <code>def</code> con nombre</strong>.</li>
+<li><strong>Depuración:</strong> lambdas no tienen nombre → logs/tracebacks menos informativos.</li>
+</ul>
+<hr />
+<h2 id="ejercicios-propuestos">Ejercicios propuestos<a href="#ejercicios-propuestos" title="Permanent link"></a></h2>
+<h3 id="enunciados">Enunciados<a href="#enunciados" title="Permanent link"></a></h3>
+<ol>
+<li>
+<p><strong>Dobles pares:</strong> Dada una lista de enteros, usa <code>filter</code> + <code>map</code> con lambdas para quedarte con pares y multiplicarlos por 2.</p>
+</li>
+<li>
+<p><strong>Calculadora funcional:</strong> Implementa un diccionario de operaciones (<code>+, -, *, /</code>) que seleccione la operación por clave y la aplique.</p>
+</li>
+</ol>
+<h3 id="soluciones">Soluciones<a href="#soluciones" title="Permanent link"></a></h3>
+<h4 id="1-dobles-pares">1) Dobles pares<a href="#1-dobles-pares" title="Permanent link"></a></h4>
+<pre><code>nums = [1, 2, 3, 4, 5, 6]
+res = list(map(lambda x: x * 2, filter(lambda x: x % 2 == 0, nums)))
+print(res)  # [4, 8, 12]
+</code></pre>
+<h4 id="2-calculadora-funcional">2) Calculadora funcional<a href="#2-calculadora-funcional" title="Permanent link"></a></h4>
+<pre><code>ops = {
+    &quot;+&quot;: lambda a, b: a + b,
+    &quot;-&quot;: lambda a, b: a - b,
+    &quot;*&quot;: lambda a, b: a * b,
+    &quot;/&quot;: lambda a, b: a / b if b != 0 else float(&quot;inf&quot;),
+}
+operacion = ops[&quot;+&quot;]
+print (operacion (10,5))
+
+#Forma abreviada
+print(ops[&quot;+&quot;](10, 5))  # 15
+print(ops[&quot;/&quot;](10, 0))  # inf
+</code></pre>
+<hr />
+<p><a href="#top">⬆ Ir arriba</a></p>
+</body>
+</html>

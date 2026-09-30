@@ -1,0 +1,772 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud4_recursividad</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud04_3-recursividad">UD04_3-Recursividad</h1>
+<p>Generado a partir de Markdown · Conversor Python</p>
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#ud04-recursividad-en-python">UD04 — Recursividad en Python </a><ul>
+<li><a href="#1-que-es-la-recursividad">1. ¿Qué es la recursividad?</a></li>
+<li><a href="#2-estructura-tipica-de-una-funcion-recursiva">2. Estructura típica de una función recursiva</a></li>
+<li><a href="#3-ventajas-y-desventajas">3. Ventajas y desventajas</a><ul>
+<li><a href="#ventajas">Ventajas</a></li>
+<li><a href="#desventajas">Desventajas</a></li>
+</ul>
+</li>
+<li><a href="#4-ejemplos-tipicos-con-comentarios-dentro-del-codigo">4. Ejemplos típicos (con comentarios dentro del código)</a><ul>
+<li><a href="#41-factorial-n">4.1 Factorial (n!) </a></li>
+<li><a href="#42-fibonacci-sin-y-con-memoizacion">4.2 Fibonacci (sin y con memoización) </a></li>
+<li><a href="#43-suma-de-los-primeros-n-numeros-1-2-n">4.3 Suma de los primeros n números (1 + 2 + ... + n) ➕</a></li>
+<li><a href="#44-suma-de-una-lista-sin-usar-sum">4.4 Suma de una lista (sin usar sum) </a></li>
+<li><a href="#45-contar-elementos-de-una-lista-sin-len">4.5 Contar elementos de una lista (sin len) </a></li>
+<li><a href="#46-potencia-ab-sin-usar">4.6 Potencia (a^b) sin usar ** </a></li>
+<li><a href="#47-maximo-comun-divisor-mcd-algoritmo-de-euclides">4.7 Máximo común divisor (MCD) — algoritmo de Euclides </a></li>
+<li><a href="#48-invertir-una-cadena-recursivamente">4.8 Invertir una cadena recursivamente </a></li>
+<li><a href="#49-comprobar-palindromo-recursivo">4.9 Comprobar palíndromo (recursivo) </a></li>
+<li><a href="#410-busqueda-binaria-recursiva-en-lista-ordenada">4.10 Búsqueda binaria recursiva (en lista ordenada) </a></li>
+<li><a href="#411-aplanar-flatten-una-lista-anidada">4.11 Aplanar (flatten) una lista anidada </a></li>
+<li><a href="#412-torres-de-hanoi-clasico-de-recursividad">4.12 Torres de Hanoi (clásico de recursividad) </a></li>
+<li><a href="#413-ordenacion-recursiva-merge-sort">4.13 Ordenación recursiva (Merge Sort) </a></li>
+<li><a href="#414-backtracking-generar-permutaciones">4.14 Backtracking: generar permutaciones </a></li>
+</ul>
+</li>
+<li><a href="#5-errores-tipicos-en-recursividad-y-como-evitarlos">5. Errores típicos en recursividad (y cómo evitarlos)</a></li>
+<li><a href="#6-profundidad-de-recursion-y-recursionerror">6. Profundidad de recursión y RecursionError</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="ud04-recursividad-en-python">UD04 — Recursividad en Python <a href="#ud04-recursividad-en-python" title="Permanent link"></a></h1>
+<h2 id="1-que-es-la-recursividad">1. ¿Qué es la recursividad?<a href="#1-que-es-la-recursividad" title="Permanent link"></a></h2>
+<p>La <strong>recursividad</strong> es una técnica de programación en la que una <strong>función se llama a sí misma</strong> para resolver un problema dividiéndolo en <strong>subproblemas más pequeños</strong> del mismo tipo.</p>
+<p>En una función recursiva siempre deben existir:</p>
+<ul>
+<li><strong>Caso base</strong>: condición que <strong>detiene</strong> la recursión.</li>
+<li><strong>Caso recursivo</strong>: parte que <strong>reduce</strong> el problema y llama de nuevo a la función.</li>
+<li><strong>Progreso</strong>: en cada llamada recursiva el problema debe hacerse <strong>más pequeño</strong> (o más cercano al caso base).</li>
+</ul>
+<p>Si no existe caso base (o no se alcanza), se produce un <strong>bucle recursivo infinito</strong> y Python terminará con un error (normalmente <code>RecursionError</code>).</p>
+<pre><code>función(n)
+│
+└─ ¿CASO BASE?
+    ├─ Sí → devolver resultado y terminar
+    │
+    └─ No
+       └─ llamar a función(n-1)
+           │
+           ├─ ¿CASO BASE?
+           │    └─ Sí → devolver resultado
+           │
+           └─ No
+               └─ llamar a función(n-2)
+                    ...
+</code></pre>
+<hr />
+<h2 id="2-estructura-tipica-de-una-funcion-recursiva">2. Estructura típica de una función recursiva<a href="#2-estructura-tipica-de-una-funcion-recursiva" title="Permanent link"></a></h2>
+<pre><code>def funcion_recursiva(entrada):
+    # 1) CASO BASE: condición de parada
+    if condicion_base(entrada):
+        return resultado_base
+
+    # 2) PASO RECURSIVO: reducir el problema
+    subproblema = reducir(entrada)
+
+    # 3) LLAMADA RECURSIVA: resolver el subproblema
+    return combinar(entrada, funcion_recursiva(subproblema))
+</code></pre>
+<hr />
+<h2 id="3-ventajas-y-desventajas">3. Ventajas y desventajas<a href="#3-ventajas-y-desventajas" title="Permanent link"></a></h2>
+<h3 id="ventajas">Ventajas<a href="#ventajas" title="Permanent link"></a></h3>
+<ul>
+<li>Permite soluciones <strong>elegantes</strong> y <strong>cortas</strong> en problemas naturalmente recursivos (árboles, backtracking, divide y vencerás).</li>
+<li>Facilita el razonamiento en problemas que se definen en términos de sí mismos.</li>
+</ul>
+<h3 id="desventajas">Desventajas<a href="#desventajas" title="Permanent link"></a></h3>
+<ul>
+<li>Puede ser <strong>menos eficiente</strong> que una solución iterativa (coste extra de llamadas).</li>
+<li>Riesgo de <strong>desbordar la profundidad de recursión</strong> (stack).</li>
+<li>Si no se diseña bien, puede repetir cálculos (ej. Fibonacci sin memoización).</li>
+</ul>
+<hr />
+<h2 id="4-ejemplos-tipicos-con-comentarios-dentro-del-codigo">4. Ejemplos típicos (con comentarios dentro del código)<a href="#4-ejemplos-tipicos-con-comentarios-dentro-del-codigo" title="Permanent link"></a></h2>
+<h3 id="41-factorial-n">4.1 Factorial (n!) <a href="#41-factorial-n" title="Permanent link"></a></h3>
+<p><strong>Definición</strong>:</p>
+<ul>
+<li><code>n! = n * (n-1)!</code></li>
+<li>Caso base: <code>0! = 1</code></li>
+</ul>
+<pre><code>def factorial(n: int) -&gt; int:
+    # Validamos que el factorial tenga sentido para n no negativo
+    if n &lt; 0:
+        raise ValueError(&quot;El factorial no está definido para números negativos.&quot;)
+
+    # CASO BASE: factorial de 0 o 1 es 1
+    if n in (0, 1):
+        return 1
+
+    # PASO RECURSIVO: reducimos el problema calculando factorial(n-1)
+    # y lo combinamos multiplicando por n
+    return n * factorial(n - 1)
+</code></pre>
+<p><strong>Traza de llamadas</strong>:</p>
+<p>A continuación veremos que una función recursiva es como una cadena de llamadas que se apilan y luego se resuelven hacia atrás.</p>
+<ol>
+<li>Fase 1: llamadas recursivas</li>
+</ol>
+<pre><code>factorial(5)
+→ 5 * factorial(4)
+
+factorial(4)
+→ 4 * factorial(3)
+
+factorial(3)
+→ 3 * factorial(2)
+
+factorial(2)
+→ 2 * factorial(1)
+
+factorial(1)
+→ 1   ← CASO BASE
+</code></pre>
+<ol>
+<li>Fase 2: retornos</li>
+</ol>
+<pre><code>factorial(1) devuelve 1
+
+factorial(2) devuelve 2 * 1 = 2
+
+factorial(3) devuelve 3 * 2 = 6
+
+factorial(4) devuelve 4 * 6 = 24
+
+factorial(5) devuelve 5 * 24 = 120
+</code></pre>
+<hr />
+<h3 id="42-fibonacci-sin-y-con-memoizacion">4.2 Fibonacci (sin y con memoización) <a href="#42-fibonacci-sin-y-con-memoizacion" title="Permanent link"></a></h3>
+<p><strong>Definición</strong>:</p>
+<p>La serie de Fibonacci es una sucesión de números en la que cada término se obtiene sumando los dos anteriores.</p>
+<ul>
+<li><code>F(0)=0</code>, <code>F(1)=1</code></li>
+<li><code>F(n) = F(n-1) + F(n-2)</code></li>
+</ul>
+<p><strong>Esquema visual</strong>:</p>
+<pre><code># Primeros términos de la serie
+n:      0   1   2   3   4   5   6   7
+F(n):   0   1   1   2   3   5   8  13
+</code></pre>
+<pre><code># Sucesión de Fibonacci
+0, 1,
+   └── 0 + 1 = 1
+        └── 1 + 1 = 2
+             └── 1 + 2 = 3
+                  └── 2 + 3 = 5
+                       └── 3 + 5 = 8
+</code></pre>
+<h4 id="a-version-recursiva-simple">a) Versión recursiva simple<a href="#a-version-recursiva-simple" title="Permanent link"></a></h4>
+<pre><code>def fibonacci_lento(n: int) -&gt; int:
+    # Validamos entrada
+    if n &lt; 0:
+        raise ValueError(&quot;Fibonacci no está definido para n negativo.&quot;)
+
+    # CASOS BASE
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+
+    # PASO RECURSIVO: se recalculan muchas veces los mismos valores
+    return fibonacci_lento(n - 1) + fibonacci_lento(n - 2)
+</code></pre>
+<h4 id="b-version-con-memoizacion-mas-eficiente">b) Versión con memoización (más eficiente)<a href="#b-version-con-memoizacion-mas-eficiente" title="Permanent link"></a></h4>
+<blockquote>
+<p><strong>¿Qué es la <a href="https://es.wikipedia.org/wiki/Memoización">memoización</a>?</strong>: es una técnica de optimización utilizada en programación (especialmente en recursividad y programación dinámica) que consiste en guardar los resultados de cálculos ya realizados para no volver a repetirlos.</p>
+</blockquote>
+<p>Comparación conceptual:</p>
+<pre><code>#Sin memoización 
+
+fibonacci(4)
+├─ fibonacci(3)
+│  ├─ fibonacci(2)
+│  │  ├─ fibonacci(1)
+│  │  └─ fibonacci(0)
+│  └─ fibonacci(1)
+└─ fibonacci(2)
+   ├─ fibonacci(1)
+   └─ fibonacci(0)
+
+# Con memoización
+
+fibonacci(4)
+├─ fibonacci(3)  ← se calcula una vez
+├─ fibonacci(2)  ← se calcula una vez
+├─ fibonacci(1)  ← se reutiliza
+└─ fibonacci(0)  ← se reutiliza
+</code></pre>
+<p>Código:</p>
+<pre><code>def fibonacci_memo(n: int, memo: dict[int, int] | None = None) -&gt; int:
+    # Inicializamos el diccionario de memoización si no existe
+    if memo is None:
+        memo = {}
+
+    # Validamos entrada
+    if n &lt; 0:
+        raise ValueError(&quot;Fibonacci no está definido para n negativo.&quot;)
+
+    # Si ya hemos calculado F(n), lo devolvemos sin recalcular
+    if n in memo:
+        return memo[n]
+
+    # CASOS BASE
+    if n == 0:
+        memo[0] = 0
+        return 0
+    if n == 1:
+        memo[1] = 1
+        return 1
+
+    # PASO RECURSIVO: calculamos y guardamos el resultado
+    memo[n] = fibonacci_memo(n - 1, memo) + fibonacci_memo(n - 2, memo)
+
+    # Devolvemos el valor ya memorizado
+    return memo[n]
+</code></pre>
+<hr />
+<h3 id="43-suma-de-los-primeros-n-numeros-1-2-n">4.3 Suma de los primeros n números (1 + 2 + ... + n) ➕<a href="#43-suma-de-los-primeros-n-numeros-1-2-n" title="Permanent link"></a></h3>
+<p>Traza de llamadas:</p>
+<pre><code># Fase de descenso (llamadas recursivas)
+
+suma_1_a_n(4)
+→ 4 + suma_1_a_n(3)
+
+suma_1_a_n(3)
+→ 3 + suma_1_a_n(2)
+
+suma_1_a_n(2)
+→ 2 + suma_1_a_n(1)
+
+suma_1_a_n(1)
+→ 1 + suma_1_a_n(0)
+
+suma_1_a_n(0)
+→ 0   ← CASO BASE
+
+
+# Fase de ascenso (retornos)
+
+suma_1_a_n(0) devuelve 0
+
+suma_1_a_n(1) devuelve 1 + 0 = 1
+
+suma_1_a_n(2) devuelve 2 + 1 = 3
+
+suma_1_a_n(3) devuelve 3 + 3 = 6
+
+suma_1_a_n(4) devuelve 4 + 6 = 10
+</code></pre>
+<p>Código:</p>
+<pre><code>def suma_1_a_n(n: int) -&gt; int:
+    # Validamos que n sea natural (&gt;= 0)
+    if n &lt; 0:
+        raise ValueError(&quot;n debe ser &gt;= 0.&quot;)
+
+    # CASO BASE: si n es 0, la suma es 0
+    if n == 0:
+        return 0
+
+    # PASO RECURSIVO: sumamos n + suma_1_a_n(n-1)
+    return n + suma_1_a_n(n - 1)
+</code></pre>
+<hr />
+<h3 id="44-suma-de-una-lista-sin-usar-sum">4.4 Suma de una lista (sin usar sum) <a href="#44-suma-de-una-lista-sin-usar-sum" title="Permanent link"></a></h3>
+<p>Traza de llamadas:</p>
+<pre><code># Fase de llamadas recursivas
+
+suma_lista([1, 2, 3])
+→ 1 + suma_lista([2, 3])
+
+suma_lista([2, 3])
+→ 2 + suma_lista([3])
+
+suma_lista([3])
+→ 3 + suma_lista([])
+
+suma_lista([])
+→ 0   ← CASO BASE
+
+# Fase de retornos
+suma_lista([]) devuelve 0
+
+suma_lista([3]) devuelve 3 + 0 = 3
+
+suma_lista([2, 3]) devuelve 2 + 3 = 5
+
+suma_lista([1, 2, 3]) devuelve 1 + 5 = 6
+</code></pre>
+<p>Código:</p>
+<pre><code>def suma_lista(nums: list[int]) -&gt; int:
+    # CASO BASE: si la lista está vacía, su suma es 0
+    if len(nums) == 0:
+        return 0
+
+    # PASO RECURSIVO:
+    # - Tomamos el primer elemento (nums[0])
+    # - Sumamos la suma del resto de la lista (nums[1:])
+    return nums[0] + suma_lista(nums[1:])
+</code></pre>
+<hr />
+<h3 id="45-contar-elementos-de-una-lista-sin-len">4.5 Contar elementos de una lista (sin len) <a href="#45-contar-elementos-de-una-lista-sin-len" title="Permanent link"></a></h3>
+<p>Traza de llamadas:</p>
+<pre><code># Fase de llamadas recursivas
+contar_lista([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;])
+→ 1 + contar_lista([&quot;b&quot;, &quot;c&quot;])
+
+contar_lista([&quot;b&quot;, &quot;c&quot;])
+→ 1 + contar_lista([&quot;c&quot;])
+
+contar_lista([&quot;c&quot;])
+→ 1 + contar_lista([])
+
+contar_lista([])
+→ 0   ← CASO BASE
+
+
+# Fase de retornos
+contar_lista([]) devuelve 0
+
+contar_lista([&quot;c&quot;]) devuelve 1 + 0 = 1
+
+contar_lista([&quot;b&quot;, &quot;c&quot;]) devuelve 1 + 1 = 2
+
+contar_lista([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]) devuelve 1 + 2 = 3
+</code></pre>
+<p>Código:</p>
+<pre><code>def contar_lista(nums: list[object]) -&gt; int:
+    # CASO BASE: lista vacía -&gt; 0 elementos
+    if nums == []:
+        return 0
+
+    # PASO RECURSIVO: 1 (por el primer elemento) + contar el resto
+    return 1 + contar_lista(nums[1:])
+</code></pre>
+<hr />
+<h3 id="46-potencia-ab-sin-usar">4.6 Potencia (a^b) sin usar ** <a href="#46-potencia-ab-sin-usar" title="Permanent link"></a></h3>
+<p>Traza de llamadas:</p>
+<pre><code># Fase de llamadas recursivas
+
+potencia(2, 3)
+→ 2 * potencia(2, 2)
+
+potencia(2, 2)
+→ 2 * potencia(2, 1)
+
+potencia(2, 1)
+→ 2 * potencia(2, 0)
+
+potencia(2, 0)
+→ 1   ← CASO BASE
+
+# Fase de retornos
+
+potencia(2, 0) devuelve 1
+
+potencia(2, 1) devuelve 2 * 1 = 2
+
+potencia(2, 2) devuelve 2 * 2 = 4
+
+potencia(2, 3) devuelve 2 * 4 = 8
+</code></pre>
+<p>Código:</p>
+<ul>
+<li>Caso base: <code>a^0 = 1</code></li>
+</ul>
+<pre><code>def potencia(a: int, b: int) -&gt; int:
+    # Validamos exponente no negativo para simplificar el ejemplo
+    if b &lt; 0:
+        raise ValueError(&quot;Este ejemplo asume b &gt;= 0.&quot;)
+
+    # CASO BASE: cualquier número elevado a 0 es 1
+    if b == 0:
+        return 1
+
+    # PASO RECURSIVO: a^b = a * a^(b-1)
+    return a * potencia(a, b - 1)
+</code></pre>
+<hr />
+<h3 id="47-maximo-comun-divisor-mcd-algoritmo-de-euclides">4.7 Máximo común divisor (MCD) — algoritmo de Euclides <a href="#47-maximo-comun-divisor-mcd-algoritmo-de-euclides" title="Permanent link"></a></h3>
+<p>Traza de llamadas:</p>
+<pre><code># Fase de llamadas recursivas
+
+mcd(48, 18)
+→ mcd(18, 48 % 18)
+→ mcd(18, 12)
+
+mcd(18, 12)
+→ mcd(12, 18 % 12)
+→ mcd(12, 6)
+
+mcd(12, 6)
+→ mcd(6, 12 % 6)
+→ mcd(6, 0)
+
+mcd(6, 0)
+→ 6   ← CASO BASE
+
+# Fase de retornos
+mcd(6, 0) devuelve 6
+mcd(12, 6) devuelve 6
+mcd(18, 12) devuelve 6
+mcd(48, 18) devuelve 6
+</code></pre>
+<p>Código:</p>
+<ul>
+<li><code>mcd(a, b) = mcd(b, a % b)</code></li>
+<li>Caso base: cuando <code>b == 0</code>, <code>mcd(a, 0) = a</code></li>
+</ul>
+<pre><code>def mcd(a: int, b: int) -&gt; int:
+    # Normalizamos a valores no negativos
+    a, b = abs(a), abs(b)
+
+    # CASO BASE: si b es 0, el MCD es a
+    if b == 0:
+        return a
+
+    # PASO RECURSIVO: reducimos usando el resto
+    return mcd(b, a % b)
+</code></pre>
+<hr />
+<h3 id="48-invertir-una-cadena-recursivamente">4.8 Invertir una cadena recursivamente <a href="#48-invertir-una-cadena-recursivamente" title="Permanent link"></a></h3>
+<p>Traza de llamadas:</p>
+<pre><code># Fase de llamadas recursivas
+invertir_cadena(&quot;hola&quot;)
+→ &quot;a&quot; + invertir_cadena(&quot;hol&quot;)
+
+invertir_cadena(&quot;hol&quot;)
+→ &quot;l&quot; + invertir_cadena(&quot;ho&quot;)
+
+invertir_cadena(&quot;ho&quot;)
+→ &quot;o&quot; + invertir_cadena(&quot;h&quot;)
+
+invertir_cadena(&quot;h&quot;)
+→ &quot;h&quot;   ← CASO BASE
+
+
+# Fase de retornos
+invertir_cadena(&quot;h&quot;) devuelve &quot;h&quot;
+
+invertir_cadena(&quot;ho&quot;) devuelve &quot;o&quot; + &quot;h&quot; = &quot;oh&quot;
+
+invertir_cadena(&quot;hol&quot;) devuelve &quot;l&quot; + &quot;oh&quot; = &quot;loh&quot;
+
+invertir_cadena(&quot;hola&quot;) devuelve &quot;a&quot; + &quot;loh&quot; = &quot;aloh&quot;
+</code></pre>
+<p>Código:</p>
+<pre><code>def invertir_cadena(s: str) -&gt; str:
+    # CASO BASE: una cadena vacía o de 1 carácter ya está &quot;invertida&quot;
+    if len(s) &lt;= 1:
+        return s
+
+    # PASO RECURSIVO:
+    # - Tomamos el último carácter (s[-1])
+    # - Lo concatenamos con la inversión del resto (s[:-1])
+    return s[-1] + invertir_cadena(s[:-1])
+</code></pre>
+<hr />
+<h3 id="49-comprobar-palindromo-recursivo">4.9 Comprobar palíndromo (recursivo) <a href="#49-comprobar-palindromo-recursivo" title="Permanent link"></a></h3>
+<p>Un palíndromo se lee igual de izquierda a derecha que de derecha a izquierda.</p>
+<p>Traza de llamadas:</p>
+<pre><code># Llamadas recursivas
+
+es_palindromo(&quot;anitalavalatina&quot;)
+→ extremos: a == a ✔
+→ llama a es_palindromo(&quot;nitalavalatin&quot;)
+
+es_palindromo(&quot;nitalavalatin&quot;)
+→ extremos: n == n ✔
+→ llama a es_palindromo(&quot;italavalati&quot;)
+
+es_palindromo(&quot;italavalati&quot;)
+→ extremos: i == i ✔
+→ llama a es_palindromo(&quot;talavalat&quot;)
+
+es_palindromo(&quot;talavalat&quot;)
+→ extremos: t == t ✔
+→ llama a es_palindromo(&quot;alavala&quot;)
+
+es_palindromo(&quot;alavala&quot;)
+→ extremos: a == a ✔
+→ llama a es_palindromo(&quot;laval&quot;)
+
+es_palindromo(&quot;laval&quot;)
+→ extremos: l == l ✔
+→ llama a es_palindromo(&quot;ava&quot;)
+
+es_palindromo(&quot;ava&quot;)
+→ extremos: a == a ✔
+→ llama a es_palindromo(&quot;v&quot;)
+
+es_palindromo(&quot;v&quot;)
+→ True   ← CASO BASE
+
+
+# Retornos
+#   - No se construye un valor nuevo
+#   - El True del caso base se propaga hacia arriba
+
+es_palindromo(&quot;v&quot;) devuelve True
+es_palindromo(&quot;ava&quot;) devuelve True
+es_palindromo(&quot;laval&quot;) devuelve True
+es_palindromo(&quot;alavala&quot;) devuelve True
+es_palindromo(&quot;talavalat&quot;) devuelve True
+es_palindromo(&quot;italavalati&quot;) devuelve True
+es_palindromo(&quot;nitalavalatin&quot;) devuelve True
+es_palindromo(&quot;anitalavalatina&quot;) devuelve True
+</code></pre>
+<p>Código:</p>
+<pre><code>def es_palindromo(s: str) -&gt; bool:
+    # Normalizamos: quitamos espacios y pasamos a minúsculas
+    s = &quot;&quot;.join(ch.lower() for ch in s if ch.isalnum())
+
+    # CASO BASE: 0 o 1 caracteres siempre forman un palíndromo
+    if len(s) &lt;= 1:
+        return True
+
+    # Si los extremos no coinciden, ya no es palíndromo
+    if s[0] != s[-1]:
+        return False
+
+    # PASO RECURSIVO: comprobamos el interior de la cadena
+    return es_palindromo(s[1:-1])
+</code></pre>
+<hr />
+<h3 id="410-busqueda-binaria-recursiva-en-lista-ordenada">4.10 Búsqueda binaria recursiva (en lista ordenada) <a href="#410-busqueda-binaria-recursiva-en-lista-ordenada" title="Permanent link"></a></h3>
+<p>Requisitos: - La lista debe estar <strong>ordenada</strong>.</p>
+<p>Código:</p>
+<pre><code># nums = [1, 3, 5, 7, 9, 11, 13]
+
+def busqueda_binaria(nums: list[int], objetivo: int, izquierda: int = 0, derecha: int | None = None) -&gt; int:
+    # Si derecha no se especifica, la ponemos al último índice válido
+    if derecha is None:
+        derecha = len(nums) - 1
+
+    # CASO BASE: si el rango es inválido, no encontramos el objetivo
+    if izquierda &gt; derecha:
+        return -1
+
+    # Calculamos el punto medio del rango actual
+    medio = (izquierda + derecha) // 2
+
+    # Si el medio es el objetivo, devolvemos su índice
+    if nums[medio] == objetivo:
+        return medio
+
+    # Si el objetivo es menor, buscamos en la mitad izquierda
+    if objetivo &lt; nums[medio]:
+        return busqueda_binaria(nums, objetivo, izquierda, medio - 1)
+
+    # Si el objetivo es mayor, buscamos en la mitad derecha
+    return busqueda_binaria(nums, objetivo, medio + 1, derecha)
+</code></pre>
+<p>Traza de llamadas:</p>
+<pre><code># Fase de llamadas recursivas
+
+busqueda_binaria(nums, 7, 0, 6)
+→ medio = (0 + 6) // 2 = 3
+→ nums[3] = 7 ✔
+
+# fase de retornos
+busqueda_binaria(...) devuelve 3
+</code></pre>
+<hr />
+<h3 id="411-aplanar-flatten-una-lista-anidada">4.11 Aplanar (flatten) una lista anidada <a href="#411-aplanar-flatten-una-lista-anidada" title="Permanent link"></a></h3>
+<p>Ejemplo: - Entrada: <code>[1, [2, 3], [4, [5, 6]]]</code> - Salida: <code>[1, 2, 3, 4, 5, 6]</code></p>
+<pre><code>def aplanar(lista: list) -&gt; list:
+    # CASO BASE: si la lista está vacía, devolvemos lista vacía
+    if lista == []:
+        return []
+
+    # Tomamos el primer elemento y el resto
+    primero = lista[0]
+    resto = lista[1:]
+
+    # Si el primero es una lista, aplanamos primero y resto, y concatenamos
+    if isinstance(primero, list):
+        return aplanar(primero) + aplanar(resto)
+
+    # Si no es lista, lo metemos como elemento y aplanamos el resto
+    return [primero] + aplanar(resto)
+</code></pre>
+<p>🔍 Consulta en un LLM la traza de llamadas para tener un esqueama visual.</p>
+<hr />
+<h3 id="412-torres-de-hanoi-clasico-de-recursividad">4.12 Torres de Hanoi (clásico de recursividad) <a href="#412-torres-de-hanoi-clasico-de-recursividad" title="Permanent link"></a></h3>
+<ol>
+<li>
+<p>Información sobre el problema: <a href="https://es.wikipedia.org/wiki/Torres_de_Hanói">Wikipedia: Torres de Hanoi</a></p>
+</li>
+<li>
+<p>Traza de llamadas:</p>
+</li>
+</ol>
+<pre><code># Llamadas recursivas
+hanoi(3, A, B, C)
+├── hanoi(2, A, C, B)
+│   ├── hanoi(1, A, B, C)
+│   │   → Mover disco 1 desde A hasta C
+│   ├── Mover disco 2 desde A hasta B
+│   └── hanoi(1, C, A, B)
+│       → Mover disco 1 desde C hasta B
+├── Mover disco 3 desde A hasta C
+└── hanoi(2, B, A, C)
+    ├── hanoi(1, B, C, A)
+    │   → Mover disco 1 desde B hasta A
+    ├── Mover disco 2 desde B hasta C
+    └── hanoi(1, A, B, C)
+        → Mover disco 1 desde A hasta C
+
+# Secuencia de movimientos de los discos (aquí no hay retornos)
+1. Mover disco 1 desde A hasta C
+2. Mover disco 2 desde A hasta B
+3. Mover disco 1 desde C hasta B
+4. Mover disco 3 desde A hasta C
+5. Mover disco 1 desde B hasta A
+6. Mover disco 2 desde B hasta C
+7. Mover disco 1 desde A hasta C
+</code></pre>
+<p>Problema: - Mover <code>n</code> discos desde <strong>Origen</strong> a <strong>Destino</strong> usando <strong>Auxiliar</strong> - Sin poner un disco grande encima de uno pequeño.</p>
+<pre><code>def hanoi(n: int, origen: str, auxiliar: str, destino: str) -&gt; None:
+    # CASO BASE: si solo hay 1 disco, se mueve directamente
+    if n == 1:
+        print(f&quot;Mover disco 1 desde {origen} hasta {destino}&quot;)
+        return
+
+    # PASO 1: mover n-1 discos de origen a auxiliar usando destino como apoyo
+    hanoi(n - 1, origen, destino, auxiliar)
+
+    # PASO 2: mover el disco grande (n) de origen a destino
+    print(f&quot;Mover disco {n} desde {origen} hasta {destino}&quot;)
+
+    # PASO 3: mover n-1 discos de auxiliar a destino usando origen como apoyo
+    hanoi(n - 1, auxiliar, origen, destino)
+</code></pre>
+<hr />
+<h3 id="413-ordenacion-recursiva-merge-sort">4.13 Ordenación recursiva (Merge Sort) <a href="#413-ordenacion-recursiva-merge-sort" title="Permanent link"></a></h3>
+<p>Idea: - Divide la lista en mitades, ordena cada mitad recursivamente y luego <strong>fusiona</strong>.</p>
+<pre><code>def merge_sort(nums: list[int]) -&gt; list[int]:
+    # CASO BASE: una lista de 0 o 1 elemento ya está ordenada
+    if len(nums) &lt;= 1:
+        return nums
+
+    # Dividimos la lista en dos mitades
+    mitad = len(nums) // 2
+    izquierda = nums[:mitad]
+    derecha = nums[mitad:]
+
+    # Ordenamos recursivamente cada mitad
+    izquierda_ordenada = merge_sort(izquierda)
+    derecha_ordenada = merge_sort(derecha)
+
+    # Fusionamos las dos mitades ordenadas
+    return fusionar(izquierda_ordenada, derecha_ordenada)
+
+
+def fusionar(a: list[int], b: list[int]) -&gt; list[int]:
+    # i y j son punteros para recorrer a y b
+    i = 0
+    j = 0
+    resultado = []
+
+    # Mientras queden elementos en ambos, tomamos el menor
+    while i &lt; len(a) and j &lt; len(b):
+        if a[i] &lt;= b[j]:
+            resultado.append(a[i])
+            i += 1
+        else:
+            resultado.append(b[j])
+            j += 1
+
+    # Añadimos lo que quede en a (si queda)
+    resultado.extend(a[i:])
+
+    # Añadimos lo que quede en b (si queda)
+    resultado.extend(b[j:])
+
+    return resultado
+</code></pre>
+<p>🔍 Consulta en un LLM la traza de llamadas para tener un esqueama visual.</p>
+<hr />
+<h3 id="414-backtracking-generar-permutaciones">4.14 Backtracking: generar permutaciones <a href="#414-backtracking-generar-permutaciones" title="Permanent link"></a></h3>
+<p>Backtracking = explorar posibilidades, y “deshacer” (backtrack) para probar otras.</p>
+<blockquote>
+<p><strong>¿Qué es el Backtracking?</strong> El backtracking es una técnica de programación recursiva que consiste en: explorar todas las soluciones posibles de un problema, avanzando paso a paso y “volviendo atrás” cuando una opción ya no sirve. La idea clave es: Elegir una opción Probarla (llamada recursiva) Deshacer la elección implícitamente al volver de la recursión Probar la siguiente opción Se usa cuando: No sabemos cuál es la solución correcta a priori Hay que generar o comprobar todas las combinaciones posibles</p>
+</blockquote>
+<p>Código:</p>
+<pre><code>def permutaciones(nums: list[int]) -&gt; list[list[int]]:
+    # Lista donde guardaremos todas las permutaciones encontradas
+    resultado: list[list[int]] = []
+
+    def backtrack(actual: list[int], restantes: list[int]) -&gt; None:
+        # CASO BASE: si no quedan elementos, actual es una permutación completa
+        if restantes == []:
+            resultado.append(actual[:])  # copiamos la lista actual
+            return
+
+        # Para cada posible elección, elegimos un elemento y seguimos
+        for i in range(len(restantes)):
+            elegido = restantes[i]  # elemento que vamos a usar ahora
+
+            # Construimos el nuevo estado:
+            # - actual + [elegido]
+            # - restantes sin el elegido
+            nuevo_actual = actual + [elegido]
+            nuevo_restantes = restantes[:i] + restantes[i + 1:]
+
+            # Llamada recursiva para continuar
+            backtrack(nuevo_actual, nuevo_restantes)
+
+    # Iniciamos el backtracking con permutación vacía y todos los elementos disponibles
+    backtrack([], nums)
+
+    return resultado
+</code></pre>
+<p>🔍 Consulta en un LLM la traza de llamadas para tener un esqueama visual.</p>
+<hr />
+<h2 id="5-errores-tipicos-en-recursividad-y-como-evitarlos">5. Errores típicos en recursividad (y cómo evitarlos)<a href="#5-errores-tipicos-en-recursividad-y-como-evitarlos" title="Permanent link"></a></h2>
+<ol>
+<li><strong>Olvidar el caso base</strong></li>
+<li>La función se llama infinitamente hasta <code>RecursionError</code>.</li>
+<li><strong>No reducir el problema</strong></li>
+<li>Aunque exista caso base, nunca se alcanza.</li>
+<li><strong>Modificar listas compartidas sin cuidado</strong></li>
+<li>En backtracking, si reutilizas la misma lista, recuerda copiar o “deshacer” cambios.</li>
+<li><strong>Fibonacci sin memoización</strong></li>
+<li>Repite cálculos y se vuelve muy lento para n medianos.</li>
+</ol>
+<hr />
+<h2 id="6-profundidad-de-recursion-y-recursionerror">6. Profundidad de recursión y RecursionError<a href="#6-profundidad-de-recursion-y-recursionerror" title="Permanent link"></a></h2>
+<p>Python limita el número de llamadas recursivas anidadas. Si el problema requiere mucha profundidad, se suele preferir:</p>
+<ul>
+<li>Un enfoque <strong>iterativo</strong></li>
+<li>Estructuras de datos (pila/stack) para simular recursión</li>
+<li>Rediseñar la solución (divide y vencerás, memoización, etc.)</li>
+</ul>
+<hr />
+<p><a href="#top">⬆ Ir arriba</a></p>
+</body>
+</html>
