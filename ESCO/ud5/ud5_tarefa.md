@@ -5,7 +5,7 @@
 - [ Contexto general](#-contexto-general)
 - [ Datos de partida](#-datos-de-partida)
 - [ Requisitos funcionales (QUÉ debe hacer el programa](#-requisitos-funcionales-qué-debe-hacer-el-programa)
-  - [1. Función `procesar_transferencia(cuenta_origen, monto)`](#1-función-procesar_transferenciacuenta_origen-monto)
+  - [1. Función `procesar_transferencia(cuenta_origen, montante)`](#1-función-procesar_transferenciacuenta_origen-montante)
   - [2. El Bloque de Control (Menú Interactivo)](#2-el-bloque-de-control-menú-interactivo)
 - [ Requisitos técnicos (CÓMO debe hacerse)](#-requisitos-técnicos-cómo-debe-hacerse)
 - [ Criterios de evaluación cubiertos](#-criterios-de-evaluación-cubiertos)
@@ -38,18 +38,18 @@ class CuentaInvalidaError(BancoError):
 
 ##  Requisitos funcionales (QUÉ debe hacer el programa)
 
-### 1. Función `procesar_transferencia(cuenta_origen, monto)`
+### 1. Función `procesar_transferencia(cuenta_origen, montante)`
 
 Esta función debe orquestar la seguridad del proceso:
 
-1. **Validación de Tipo:** Usa un `assert` para comprobar que el monto es un número (`int` o `float`). Si falla, significa que hay un bug en el código que llamó a la función.
+1. **Validación de Tipo:** Usa un `assert` para comprobar que el montante es un número (`int` o `float`). Si falla, significa que hay un bug en el código que llamó a la función.
 
 2. **Validación de Negocio:**
-   - Si el monto es menor o igual a 0, lanza un `ValueError` con un mensaje descriptivo.
-   - Si el monto es mayor a 1000€ (límite del banco), lanza una `CuentaInvalidaError` con el mensaje `"Límite de transferencia diaria excedido"`.
+   - Si el montante es menor o igual a 0, lanza un `ValueError` con un mensaje descriptivo.
+   - Si el montante es mayor a 1000€ (límite del banco), lanza una `CuentaInvalidaError` con el mensaje `"Límite de transferencia diaria excedido"`.
 
 3. **Encadenamiento de Excepciones:**
-   - Simula un saldo fijo de 500€ (con una constante). Si el monto supera los 500€, lanza un `SaldoInsuficienteError`.
+   - Simula un saldo fijo de 500€ (con una constante). Si el montante supera los 500€, lanza un `SaldoInsuficienteError`.
    - Dentro de un bloque `try-except`, intenta convertir el nombre de la `cuenta_origen` a mayúsculas. Si te pasan un valor `None` o un número en lugar de un `string`, captura el `AttributeError` o `TypeError` y lanza un `CuentaInvalidaError` `from` el error original (encadenamiento).
 
 ### 2. El Bloque de Control (Menú Interactivo)

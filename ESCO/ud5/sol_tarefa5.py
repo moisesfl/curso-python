@@ -28,27 +28,27 @@ SALDO_DISPONIBLE = 500
 # FUNCIÓN PRINCIPAL
 # ==========================================
 
-def procesar_transferencia(cuenta_origen, monto):
+def procesar_transferencia(cuenta_origen, montante):
     """
     Valida y procesa una transferencia bancaria.
     """
 
     # 1. Validación de tipo
-    assert isinstance(monto, (int, float)), \
-        "El monto debe ser un número"
+    assert isinstance(montante, (int, float)), \
+        "El montante debe ser un número"
 
-    # 2. Validación del monto
-    if monto <= 0:
-        raise ValueError("El monto debe ser mayor que 0")
+    # 2. Validación del montante
+    if montante <= 0:
+        raise ValueError("El montante debe ser mayor que 0")
 
     # Límite diario del banco
-    if monto > 1000:
+    if montante > 1000:
         raise CuentaInvalidaError(
             "Límite de transferencia diaria excedido"
         )
 
     # 3. Comprobación del saldo
-    if monto > SALDO_DISPONIBLE:
+    if montante > SALDO_DISPONIBLE:
         raise SaldoInsuficienteError(
             "Saldo insuficiente para realizar la transferencia"
         )
@@ -65,7 +65,7 @@ def procesar_transferencia(cuenta_origen, monto):
         ) from error
 
     # Si todo es correcto
-    return f"Transferencia de {monto:.2f} € realizada correctamente desde {cuenta}"
+    return f"Transferencia de {montante:.2f} € realizada correctamente desde {cuenta}"
     
 
 # ==========================================
@@ -81,10 +81,10 @@ while True:
         cantidad = input("Cantidad a enviar: ")
 
         # Convertimos el texto a número
-        monto = float(cantidad)
+        montante = float(cantidad)
 
         # Procesamos la transferencia
-        resultado = procesar_transferencia(cuenta, monto)
+        resultado = procesar_transferencia(cuenta, montante)
 
     except SaldoInsuficienteError as error:
 
