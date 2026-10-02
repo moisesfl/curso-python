@@ -3,7 +3,6 @@
 ## Índice de contenidos
 
 *   [ UD05 Gestión de excepciones en Python](#ud05-gesetion-de-excepciones-en-python)
-    *   [ Índice](#indice)
     *   [1\. ¿Qué es una excepción?](#1-que-es-una-excepcion)
         *   [Excepciones comunes](#excepciones-comunes)
     *   [2\. Bloques try, except, else, finally](#2-bloques-try-except-else-finally)
@@ -20,20 +19,8 @@
         *   [Sintaxis](#sintaxis)
         *   [Ejemplo](#ejemplo)
 
-#  UD05 Gesetión de excepciones en Python[](#ud05-gesetion-de-excepciones-en-python "Permanent link")
+#  UD05 Gestión de excepciones en Python[](#ud05-gesetion-de-excepciones-en-python "Permanent link")
 
-- - -
-
-##  Índice[](#indice "Permanent link")
-
-```
-1. ¿Qué es una excepción?.
-2. Bloques `try`, `except`, `else`, `finally` .
-3. Captura múltiple y jerárquica.
-4. `raise` lanzar excepciones manualmente.
-5. `assert`: comprobaciones para desarrollo.
-6. Excepciones personalizadas.
-```
 
 - - -
 
