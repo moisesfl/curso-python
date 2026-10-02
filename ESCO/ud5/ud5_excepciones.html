@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud5_excepciones</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud05-excepciones-python">UD05-excepciones-python</h1>
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#ud05-gesetion-de-excepciones-en-python"> UD05 Gestión de excepciones en Python</a><ul>
+<li><a href="#1-que-es-una-excepcion">1. ¿Qué es una excepción?</a><ul>
+<li><a href="#excepciones-comunes">Excepciones comunes</a></li>
+</ul>
+</li>
+<li><a href="#2-bloques-try-except-else-finally">2. Bloques try, except, else, finally</a></li>
+<li><a href="#3-captura-multiple-y-jerarquica">3. Captura múltiple y jerárquica</a></li>
+<li><a href="#4-raise-lanzar-excepciones-manualmente">4. raise lanzar excepciones manualmente</a><ul>
+<li><a href="#que-aporta-raise-que-no-se-pueda-hacer-con-try-except">¿Qué aporta raise que no se pueda hacer con try-except?</a></li>
+<li><a href="#raise-from-encadenamiento-de-excepciones">raise ... from ... Encadenamiento de excepciones</a></li>
+</ul>
+</li>
+<li><a href="#5-assert-comprobaciones-para-desarrollo">5. assert: comprobaciones para desarrollo</a><ul>
+<li><a href="#que-es-assert-y-para-que-sirve">¿Qué es assert y para qué sirve?</a></li>
+<li><a href="#sintaxis-generica">Sintaxis genérica</a></li>
+<li><a href="#ejemplo-de-uso">Ejemplo de uso</a></li>
+</ul>
+</li>
+<li><a href="#6-excepciones-personalizadas">6. Excepciones personalizadas</a><ul>
+<li><a href="#que-son-y-que-utilidad-tienen">¿Qué son y qué utilidad tienen?</a></li>
+<li><a href="#sintaxis">Sintaxis</a></li>
+<li><a href="#ejemplo">Ejemplo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="ud05-gestion-de-excepciones-en-python">UD05 Gestión de excepciones en Python<a href="#ud05-gesetion-de-excepciones-en-python" title="Permanent link"></a></h1>
+<hr />
+<h2 id="1-que-es-una-excepcion">1. ¿Qué es una excepción?<a href="#1-que-es-una-excepcion" title="Permanent link"></a></h2>
+<p>Una <strong>excepción</strong> es un evento que <strong>interrumpe</strong> el flujo normal del programa cuando ocurre un <strong>error</strong> (p. ej., dividir entre cero, acceder a un índice inexistente).<br />
+Python <strong>lanza</strong> una excepción y, si no se <strong>maneja</strong>, el programa se detiene mostrando un <em>traceback</em>.</p>
+<pre><code># Ejemplo simple: provoca ZeroDivisionError
+def dividir(a, b):
+    return a / b  # Si b == 0 -&gt; ZeroDivisionError
+
+print(dividir(10, 2))  # 5.0
+print(dividir(10, 0))  # Lanza excepción si no se maneja
+</code></pre>
+<h3 id="excepciones-comunes">Excepciones comunes<a href="#excepciones-comunes" title="Permanent link"></a></h3>
+<table>
+<thead>
+<tr>
+<th>Excepción</th>
+<th>¿Cuándo ocurre?</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ValueError</code></td>
+<td>Valor con formato incorrecto</td>
+<td><code>int("abc")</code></td>
+</tr>
+<tr>
+<td><code>TypeError</code></td>
+<td>Tipo no compatible</td>
+<td><code>len(10)</code></td>
+</tr>
+<tr>
+<td><code>KeyError</code></td>
+<td>Clave inexistente en dict</td>
+<td><code>d["x"]</code> sin <code>"x"</code></td>
+</tr>
+<tr>
+<td><code>IndexError</code></td>
+<td>Índice fuera de rango</td>
+<td><code>[1,2][5]</code></td>
+</tr>
+<tr>
+<td><code>ZeroDivisionError</code></td>
+<td>División por cero</td>
+<td><code>1/0</code></td>
+</tr>
+<tr>
+<td><code>FileNotFoundError</code></td>
+<td>Archivo no existe</td>
+<td><code>open("no.txt")</code></td>
+</tr>
+<tr>
+<td><code>PermissionError</code></td>
+<td>Permisos insuficientes</td>
+<td><code>open("/root/x", "w")</code></td>
+</tr>
+<tr>
+<td><code>TimeoutError</code></td>
+<td>Operación tardó demasiado</td>
+<td>sockets/procesos</td>
+</tr>
+<tr>
+<td><code>OSError</code></td>
+<td>Errores del sistema/IO</td>
+<td>rutas, E/S, etc.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-bloques-try-except-else-finally">2. Bloques <code>try</code>, <code>except</code>, <code>else</code>, <code>finally</code><a href="#2-bloques-try-except-else-finally" title="Permanent link"></a></h2>
+<p>Estructura básica para <strong>intentar</strong> una operación que tenga el riesgo de terminar en error de ejecución, <strong>manejar</strong> el error, ejecutar código si <strong>no hubo errores</strong>, y ejecutar código <strong>siempre</strong> independientemente de que haya habido un error de ejecución.</p>
+<ul>
+<li>
+<p><strong>try</strong>: dentro del bloque <code>try</code> introducimos el código que puede dar lugar al error de ejecución.</p>
+</li>
+<li>
+<p><strong>except</strong>: bloque que captura la excepción y que edevuelve al usuario el error que se ha producido.</p>
+</li>
+<li>
+<p><strong>else</strong>: bloque con el código que se ejecutará solamente si no se produce el error.</p>
+</li>
+<li>
+<p><strong>finally</strong>: bloque con código que se ejecuta siempre haya o no error de ejecución.</p>
+</li>
+</ul>
+<p><strong>Ejemplo para una calculadora de divisiones</strong>:</p>
+<p>A continuación se muestra el código para una calculadora sencilla que realiza divisiones:</p>
+<pre><code>    try:
+        # 1️ Entrada de datos (pueden provocar ValueError)
+        a = float(input(&quot;Introduce el numerador: &quot;))
+        b = float(input(&quot;Introduce el denominador: &quot;))
+
+        # 2️ Operación peligrosa (puede provocar ZeroDivisionError)
+        resultado = a / b
+
+    except ValueError:
+        #  Error si el usuario introduce algo que no es un número
+        print(&quot; Error: Debes introducir valores numéricos.&quot;)
+
+    except ZeroDivisionError:
+        #  Error específico al dividir entre cero
+        print(&quot; Error: No se puede dividir entre cero.&quot;)
+
+    else:
+        #  Solo se ejecuta si NO ha ocurrido ninguna excepción
+        print(f&quot; Resultado de la división: {resultado}&quot;)
+
+    finally:
+        #  Se ejecuta siempre, haya error o no
+        print(&quot; Operación finalizada.\n&quot;)
+</code></pre>
+<hr />
+<h2 id="3-captura-multiple-y-jerarquica">3. Captura múltiple y jerárquica<a href="#3-captura-multiple-y-jerarquica" title="Permanent link"></a></h2>
+<p>Puedes capturar <strong>varios tipos</strong> de excepciones a la vez y respetar la <strong>jerarquía</strong> (<em>de más específica a más general</em>).</p>
+<pre><code>def convertir_a_int(x):
+    try:
+        return int(x)
+    except (ValueError, TypeError) as e:
+        #  Captura múltiple: datos inválidos o tipo incorrecto
+        print(f&quot;No se pudo convertir a int: {e}&quot;)
+        return None
+    except Exception as e:
+        #  Último recurso (muy general). Úsalo con moderación.
+        print(f&quot;Error inesperado: {e}&quot;)
+        return None
+</code></pre>
+<blockquote>
+<p><strong>Orden correcto:</strong> primero las excepciones <strong>específicas</strong>, luego las <strong>generales</strong>. Si pones <code>except Exception</code> antes, “tapará” las específicas.</p>
+</blockquote>
+<hr />
+<h2 id="4-raise-lanzar-excepciones-manualmente">4. <code>raise</code> lanzar excepciones manualmente<a href="#4-raise-lanzar-excepciones-manualmente" title="Permanent link"></a></h2>
+<p><code>raise</code> se utiliza para lanzar excepciones manualmente en tu código. Es decir, cuando detectas una condición de error que Python no detectaría por sí mismo, puedes crear y lanzar una excepción para indicar que algo ha salido mal.</p>
+<p><strong>Sintaxis</strong>:</p>
+<pre><code>raise ValueError(&quot;Mensaje descriptivo del error&quot;)
+</code></pre>
+<p><strong>Ejemplo</strong> de uso para la división por cero:</p>
+<pre><code>def dividir(a, b):
+    if b == 0:
+        raise ValueError(&quot;No se puede dividir por cero&quot;)
+    return a / b
+</code></pre>
+<blockquote>
+<p><strong>Mensaje útil:</strong> Incluye datos que ayuden a <strong>diagnosticar</strong> (no pongas información sensible).</p>
+</blockquote>
+<h3 id="que-aporta-raise-que-no-se-pueda-hacer-con-try-except">¿Qué aporta raise que no se pueda hacer con try-except?<a href="#que-aporta-raise-que-no-se-pueda-hacer-con-try-except" title="Permanent link"></a></h3>
+<ul>
+<li><strong>Control proactivo</strong>: Con raise puedes crear excepciones personalizadas en situaciones que Python no detecta automáticamente (ej: validación de datos, reglas de negocio).</li>
+<li><strong>Comunicación clara</strong>: Permite indicar errores específicos con mensajes descriptivos, mejorando la depuración y el mantenimiento del código.</li>
+<li><strong>Jerarquía de excepciones</strong>: Puedes definir tus propias excepciones (heredando de Exception) y lanzarlas cuando sea necesario.</li>
+</ul>
+<p><strong>Ejemplo</strong>:</p>
+<pre><code>def procesar_edad(valor):
+    &quot;&quot;&quot;
+    Convierte 'valor' a entero y valida que sea una edad razonable (0..120).
+    Demuestra:
+    - Captura múltiple: (TypeError, ValueError)
+    - Captura jerárquica: ValueError específico vs Exception general
+    &quot;&quot;&quot;
+    try:
+        # 1) Puede lanzar TypeError si valor es None u objeto no convertible,
+        #    o ValueError si es una cadena no numérica (&quot;hola&quot;).
+        edad = int(valor)
+
+        # 2) Validación lógica: decidimos lanzar *nuestra propia* excepción.
+        #    Ojo: aquí lanzamos ValueError a propósito para reutilizar la misma rama específica.
+        if edad &lt; 0 or edad &gt; 120:
+            raise ValueError(f&quot;edad fuera de rango: {edad} (debe estar entre 0 y 120)&quot;)
+
+        return edad
+
+    except (TypeError, ValueError) as e:
+        #  CAPTURA MÚLTIPLE (y además específica)
+        # - TypeError: int(None), int(objeto_raro)...
+        # - ValueError: int(&quot;hola&quot;), o nuestro raise ValueError(...) de arriba
+        print(f&quot; Entrada inválida para edad → {valor!r}. Detalle: {type(e).__name__}: {e}&quot;)
+        return None
+
+    except Exception as e:
+        #  CAPTURA GENERAL (último recurso)
+        # Aquí caerían errores inesperados que no sean TypeError/ValueError.
+        print(f&quot; Error inesperado → {type(e).__name__}: {e}&quot;)
+        return None
+
+
+# ---------------------------
+# Casos de prueba (muy didácticos)
+# ---------------------------
+pruebas = [
+    &quot;25&quot;,        #  OK
+    &quot;hola&quot;,      #  ValueError (int(&quot;hola&quot;))
+    None,        #  TypeError (int(None))
+    &quot;-3&quot;,        #  ValueError (por validación: fuera de rango)
+    &quot;200&quot;,       #  ValueError (por validación: fuera de rango)
+]
+
+for p in pruebas:
+    resultado = procesar_edad(p)
+    print(f&quot;Resultado final para {p!r}: {resultado}&quot;)
+    print(&quot;-&quot; * 45)
+</code></pre>
+<h3 id="raise-from-encadenamiento-de-excepciones"><code>raise ... from ...</code> Encadenamiento de excepciones<a href="#raise-from-encadenamiento-de-excepciones" title="Permanent link">🔗</a></h3>
+<p>Conserva el <strong>contexto</strong> cuando conviertes excepciones de bajo nivel en una de <strong>dominio</strong>.</p>
+<ul>
+<li><strong>Mantiene la trazabilidad</strong>: ves la excepción final (la que te interesa para tu programa) y también la causa real (lo que ocurrió por debajo).</li>
+<li><strong>Mejora el diagnóstico</strong>: el traceback mostrará algo del estilo: “The above exception was the direct cause of the following exception” (la excepción anterior fue la causa directa…)</li>
+<li><strong>Evita perder contexto</strong>: si lanzas una excepción nueva sin from, el motivo original puede quedar oculto o menos claro.</li>
+</ul>
+<pre><code>class EdadInvalidaError(Exception):
+    &quot;&quot;&quot;Error del dominio: la edad recibida no es válida.&quot;&quot;&quot;
+    pass
+
+
+def leer_edad(texto):
+    &quot;&quot;&quot;
+    Intenta convertir 'texto' a int.
+    Si falla la conversión, lanza EdadInvalidaError conservando la causa original
+    mediante 'raise ... from ...'.
+    &quot;&quot;&quot;
+    try:
+        return int(texto)
+    except (ValueError, TypeError) as e:
+        #  Aquí traducimos un error &quot;técnico&quot; (ValueError/TypeError)
+        #  a un error &quot;de dominio&quot; (EdadInvalidaError), SIN perder la causa.
+        raise EdadInvalidaError(f&quot;No se pudo interpretar la edad a partir de {texto!r}&quot;) from e
+
+
+# ---------------------------
+# Pruebas didácticas
+# ---------------------------
+entradas = [&quot;25&quot;, &quot;hola&quot;, None]
+
+for x in entradas:
+    try:
+        edad = leer_edad(x)
+        print(f&quot;Entrada {x!r} → edad = {edad}&quot;)
+    except EdadInvalidaError as err:
+        print(f&quot; Entrada {x!r} → {type(err).__name__}: {err}&quot;)
+
+        # La excepción original queda accesible en __cause__
+        causa = err.__cause__
+        print(f&quot;   ↳ Causa original: {type(causa).__name__}: {causa}&quot;)
+    print(&quot;-&quot; * 50)
+</code></pre>
+<p><strong>ATENCIÓN</strong>:</p>
+<p><code>{x!r}</code> en un f-string significa: “formatea este valor x usando repr()” (representación “literal/de depuración”), en lugar de usar str().</p>
+<p>Diferencia rápida: str() vs repr() - str(x) → pensado para usuarios (más “bonito”). - repr(x) → pensado para depurar (más “exacto” y normalmente muestra comillas, escapes, etc.).</p>
+<p>Ejemplo:</p>
+<pre><code>x = &quot;hola&quot;
+print(f&quot;{x}&quot;)    # hola
+print(f&quot;{x!r}&quot;)  # 'hola'   ← aparecen comillas
+</code></pre>
+<hr />
+<h2 id="5-assert-comprobaciones-para-desarrollo">5. <code>assert</code>: comprobaciones para desarrollo<a href="#5-assert-comprobaciones-para-desarrollo" title="Permanent link"></a></h2>
+<h3 id="que-es-assert-y-para-que-sirve">¿Qué es assert y para qué sirve?<a href="#que-es-assert-y-para-que-sirve" title="Permanent link"></a></h3>
+<p><code>assert</code> es una sentencia de comprobación (“afirmación”) que verifica que una condición sea verdadera durante la ejecución.</p>
+<ul>
+<li>Si la condición es True → el programa continúa normal.</li>
+<li>Si la condición es False → Python lanza una excepción AssertionError (con un mensaje opcional).</li>
+</ul>
+<p><strong>Uso típico</strong> (muy importante):</p>
+<ul>
+<li>Se usa como herramienta de depuración para detectar errores de lógica y violaciones de invariantes (condiciones que “deberían cumplirse siempre” si el programa está bien).</li>
+<li>No está pensada para validar entradas de usuario “normales”. Para eso suele ser mejor if ...: raise ValueError(...), etc.</li>
+</ul>
+<p><strong>Relación con la gestión de excepciones</strong>:</p>
+<ul>
+<li>
+<p>assert lanza una excepción (concretamente AssertionError), así que se puede:</p>
+<ul>
+<li>dejar que “explote” (útil en desarrollo/depuración),</li>
+<li>o capturarla con try/except si se desea gestionar.</li>
+<li>En producción, es frecuente no capturar AssertionError, porque suele indicar un bug del programador, no un error recuperable.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Nota práctica</strong>: si Python se ejecuta con optimización (python -O), las aserciones pueden desactivarse. Por eso no deben usarse para validaciones críticas de negocio o seguridad.</p>
+<h3 id="sintaxis-generica">Sintaxis genérica<a href="#sintaxis-generica" title="Permanent link"></a></h3>
+<p>La estructura básica es:</p>
+<pre><code>assert condicion
+assert condicion, &quot;mensaje explicativo&quot;
+</code></pre>
+<h3 id="ejemplo-de-uso">Ejemplo de uso<a href="#ejemplo-de-uso" title="Permanent link"></a></h3>
+<p>Este ejemplo integra: - <code>assert</code> para comprobar un invariante interno (algo que “debe ser cierto” tras convertir). - <code>raise ... from ...</code> para transformar errores “técnicos” en un error “de dominio” manteniendo la causa.</p>
+<pre><code>class EdadInvalidaError(Exception):
+    &quot;&quot;&quot;Error del dominio: la edad recibida no es válida.&quot;&quot;&quot;
+    pass
+
+
+def leer_edad(texto):
+    &quot;&quot;&quot;
+    Convierte 'texto' a int y devuelve la edad.
+    - Usa 'assert' para comprobar un supuesto interno (invariante) durante depuración.
+    - Usa 'raise ... from ...' para encadenar la excepción original si la conversión falla.
+    &quot;&quot;&quot;
+    try:
+        edad = int(texto)  # Puede lanzar ValueError (cadena no numérica) o TypeError (None, etc.)
+
+        # ASSERT (depuración): tras int(...), 'edad' *debe* ser un entero.
+        # Esto NO valida al usuario: es un &quot;chequeo de coherencia&quot; del programa.
+        # Si fallara, sería indicio de un bug o de un cambio inesperado en el código.
+        assert isinstance(edad, int), &quot;Invariante roto: 'edad' debería ser int tras int(texto)&quot;
+
+        # (Aquí podrías seguir con validaciones de negocio usando if/raise, si procede)
+        return edad
+
+    except (ValueError, TypeError) as e:
+        # Traducimos el error técnico a un error de dominio y ENCADENAMOS la causa.
+        raise EdadInvalidaError(f&quot;No se pudo interpretar la edad a partir de {texto!r}&quot;) from e
+
+
+# ---------------------------
+# Pruebas didácticas
+# ---------------------------
+entradas = [&quot;25&quot;, &quot;hola&quot;, None]
+
+for x in entradas:
+    try:
+        resultado = leer_edad(x)
+        print(f&quot;Entrada {x!r} → edad = {resultado}&quot;)
+
+    except EdadInvalidaError as err:
+        print(f&quot;Entrada {x!r} → {type(err).__name__}: {err}&quot;)
+
+        # La excepción original se conserva en __cause__ gracias a &quot;raise ... from ...&quot;
+        print(f&quot;   ↳ Causa original: {type(err.__cause__).__name__}: {err.__cause__}&quot;)
+
+    except AssertionError as aerr:
+        # En la práctica, este bloque suele indicar un bug interno, no una entrada inválida.
+        print(f&quot;Fallo de aserción (bug probable) → {aerr}&quot;)
+
+    print(&quot;-&quot; * 55)
+</code></pre>
+<hr />
+<h2 id="6-excepciones-personalizadas">6. Excepciones personalizadas<a href="#6-excepciones-personalizadas" title="Permanent link"></a></h2>
+<h3 id="que-son-y-que-utilidad-tienen">¿Qué son y qué utilidad tienen?<a href="#que-son-y-que-utilidad-tienen" title="Permanent link"></a></h3>
+<p>Las excepciones personalizadas son <strong>clases propias</strong> (normalmente <em><strong>heredadas de</strong></em> <code>Exception</code>) que te permiten representar errores de tu dominio (tu programa, tu aplicación) con nombres claros y tratarlos de forma específica.</p>
+<p><strong>¿Por qué usarlas?</strong></p>
+<ul>
+<li><strong>Claridad semántica</strong>: no es lo mismo “ValueError genérico” que "EdadInvalidaError". El nombre ya explica el problema.</li>
+<li><strong>Manejo más fino</strong>: puedes capturar solo tus errores de negocio sin atrapar errores técnicos.</li>
+<li><strong>Arquitectura por capas</strong>: en capas externas (UI/API) puedes exponer un error “amigable” y por dentro encadenar la causa real con raise ... from ....</li>
+<li><strong>Extensibilidad</strong>: puedes crear una jerarquía de errores para categorías (validación, acceso a datos, permisos, etc.).</li>
+</ul>
+<h3 id="sintaxis">Sintaxis<a href="#sintaxis" title="Permanent link"></a></h3>
+<p>La estructura típica es:</p>
+<ol>
+<li>Excepción mínima (la más común)</li>
+</ol>
+<pre><code>class MiError(Exception):
+    pass
+</code></pre>
+<ol>
+<li>Con mensaje y/o datos extra (opcional)</li>
+</ol>
+<pre><code>class MiError(Exception):
+    def __init__(self, mensaje, codigo=None):
+        super().__init__(mensaje)
+        self.codigo = codigo
+</code></pre>
+<h3 id="ejemplo">Ejemplo<a href="#ejemplo" title="Permanent link"></a></h3>
+<pre><code># 1) Jerarquía de excepciones del dominio
+class AppError(Exception):
+    &quot;&quot;&quot;Base para todos los errores de la aplicación.&quot;&quot;&quot;
+    pass
+
+class ValidacionError(AppError):
+    &quot;&quot;&quot;Errores de validación de datos de entrada.&quot;&quot;&quot;
+    pass
+
+class EdadInvalidaError(ValidacionError):
+    &quot;&quot;&quot;La edad no se pudo interpretar o no cumple el formato esperado.&quot;&quot;&quot;
+    pass
+
+
+def leer_edad(texto):
+    &quot;&quot;&quot;
+    Convierte 'texto' a int.
+    - Si falla la conversión, lanzamos un error de dominio (EdadInvalidaError)
+      encadenando la causa original (ValueError/TypeError).
+    &quot;&quot;&quot;
+    try:
+        edad = int(texto)
+        return edad
+    except (ValueError, TypeError) as e:
+        # Traducimos el error técnico → error del dominio, conservando la causa.
+        raise EdadInvalidaError(f&quot;No se pudo interpretar la edad a partir de {texto!r}&quot;) from e
+
+
+# ---------------------------
+# Pruebas didácticas
+# ---------------------------
+entradas = [&quot;30&quot;, &quot;hola&quot;, None]
+
+for x in entradas:
+    try:
+        print(f&quot;{x!r} → {leer_edad(x)}&quot;)
+
+    except EdadInvalidaError as err:
+        # Captura específica: solo el caso &quot;edad inválida&quot;
+        print(f&quot;EdadInvalidaError: {err}&quot;)
+        print(f&quot;   ↳ Causa: {type(err.__cause__).__name__}: {err.__cause__}&quot;)
+
+    except ValidacionError as err:
+        # Captura más general dentro del dominio de validación
+        print(f&quot;ValidacionError: {err}&quot;)
+
+    except AppError as err:
+        # Captura aún más general: cualquier error propio de la app
+        print(f&quot;AppError: {err}&quot;)
+
+    except Exception as e:
+        # Último recurso: errores no contemplados (bugs, fallos del sistema, etc.)
+        print(f&quot;Error inesperado: {type(e).__name__}: {e}&quot;)
+</code></pre>
+<blockquote>
+<p><strong>Ventaja:</strong> Al capturar <code>AppError</code> atrapas <strong>toda tu familia</strong> de errores.</p>
+</blockquote>
+<p><a href="#top">⬆ Ir arriba</a></p>
+</body>
+</html>

@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud5_tarefa</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="tarea-entregable-ud05-sistema-de-validacion-bancaria-safebank">Tarea entregable UD05: Sistema de Validación Bancaria "SafeBank"</h1>
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#-contexto-general"> Contexto general</a></li>
+<li><a href="#-datos-de-partida"> Datos de partida</a></li>
+<li><a href="#-requisitos-funcionales-qué-debe-hacer-el-programa"> Requisitos funcionales (QUÉ debe hacer el programa</a></li>
+<li><a href="#1-función-procesar_transferenciacuenta_origen-montante">1. Función <code>procesar_transferencia(cuenta_origen, montante)</code></a></li>
+<li><a href="#2-el-bloque-de-control-menú-interactivo">2. El Bloque de Control (Menú Interactivo)</a></li>
+<li><a href="#-requisitos-técnicos-cómo-debe-hacerse"> Requisitos técnicos (CÓMO debe hacerse)</a></li>
+</ul>
+<hr />
+<h2 id="contexto-general">Contexto general</h2>
+<p>Vas a desarrollar el módulo de seguridad de una aplicación bancaria. El sistema debe procesar transferencias entre cuentas, validando que los datos sean correctos, que haya saldo suficiente y que el sistema no sufra errores de coherencia interna.</p>
+<h2 id="datos-de-partida">Datos de partida</h2>
+<p>Copia estas excepciones personalizadas al inicio de tu código (puedes cambiar el mensaje de error):</p>
+<pre><code class="language-python">class BancoError(Exception):
+    &quot;&quot;&quot;Base para todas las excepciones del banco.&quot;&quot;&quot;
+    pass
+
+
+class SaldoInsuficienteError(BancoError):
+    &quot;&quot;&quot;Lanzada cuando la cuenta origen no tiene fondos suficientes.&quot;&quot;&quot;
+    pass
+
+
+class CuentaInvalidaError(BancoError):
+    &quot;&quot;&quot;Lanzada cuando el formato de la cuenta o el titular no es correcto.&quot;&quot;&quot;
+    pass
+</code></pre>
+<h2 id="requisitos-funcionales-que-debe-hacer-el-programa">Requisitos funcionales (QUÉ debe hacer el programa)</h2>
+<h3 id="1-funcion-procesar_transferenciacuenta_origen-montante">1. Función <code>procesar_transferencia(cuenta_origen, montante)</code></h3>
+<p>Esta función debe orquestar la seguridad del proceso:</p>
+<ol>
+<li>
+<p><strong>Validación de Tipo:</strong> Usa un <code>assert</code> para comprobar que el montante es un número (<code>int</code> o <code>float</code>). Si falla, significa que hay un bug en el código que llamó a la función.</p>
+</li>
+<li>
+<p><strong>Validación de Negocio:</strong></p>
+</li>
+<li>Si el montante es menor o igual a 0, lanza un <code>ValueError</code> con un mensaje descriptivo.</li>
+<li>
+<p>Si el montante es mayor a 1000€ (límite del banco), lanza una <code>CuentaInvalidaError</code> con el mensaje <code>"Límite de transferencia diaria excedido"</code>.</p>
+</li>
+<li>
+<p><strong>Encadenamiento de Excepciones:</strong></p>
+</li>
+<li>Simula un saldo fijo de 500€ (con una constante). Si el montante supera los 500€, lanza un <code>SaldoInsuficienteError</code>.</li>
+<li>Dentro de un bloque <code>try-except</code>, intenta convertir el nombre de la <code>cuenta_origen</code> a mayúsculas. Si te pasan un valor <code>None</code> o un número en lugar de un <code>string</code>, captura el <code>AttributeError</code> o <code>TypeError</code> y lanza un <code>CuentaInvalidaError</code> <code>from</code> el error original (encadenamiento).</li>
+</ol>
+<h3 id="2-el-bloque-de-control-menu-interactivo">2. El Bloque de Control (Menú Interactivo)</h3>
+<p>Crea un bucle <code>while</code> que pida al usuario el nombre del titular y la cantidad a enviar.</p>
+<ul>
+<li><strong>Captura Específica:</strong> Maneja <code>SaldoInsuficienteError</code> y <code>CuentaInvalidaError</code> mostrando mensajes amigables al cliente.</li>
+<li><strong>Captura de Datos:</strong> Maneja el <code>ValueError</code> si el usuario introduce letras en la cantidad de dinero.</li>
+<li><strong>Bloque Finally:</strong> Independientemente de si la transferencia se hizo o falló, debe imprimir: <code>"Cierre de sesión seguro en la pasarela de pagos"</code>.</li>
+</ul>
+<h2 id="requisitos-tecnicos-como-debe-hacerse">Requisitos técnicos (CÓMO debe hacerse)</h2>
+<ul>
+<li><strong>Excepciones:</strong> Debes utilizar correctamente las excepciones, tanto su lanzamiento como su captura de los modos vistos en la unidad 5 (<code>raise</code>, captura múltiple, bloques <code>try - except - else - finally</code>,...).</li>
+<li><strong>Aplicar correctamente:</strong></li>
+<li>El sangrado</li>
+<li>El control del flujo de ejecución</li>
+<li>La gestión de variables</li>
+<li>El código debe ser legible, ordenado y comentado.</li>
+</ul>
+</body>
+</html>
