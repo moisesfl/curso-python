@@ -8,7 +8,6 @@
   - [1. Función `procesar_transferencia(cuenta_origen, montante)`](#1-función-procesar_transferenciacuenta_origen-montante)
   - [2. El Bloque de Control (Menú Interactivo)](#2-el-bloque-de-control-menú-interactivo)
 - [ Requisitos técnicos (CÓMO debe hacerse)](#-requisitos-técnicos-cómo-debe-hacerse)
-- [ Criterios de evaluación cubiertos](#-criterios-de-evaluación-cubiertos)
 
 ---
 
