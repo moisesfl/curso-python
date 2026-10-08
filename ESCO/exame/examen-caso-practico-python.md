@@ -1,6 +1,5 @@
-# Examen de Evaluación Sumativa: Caso Práctico Integrador "EcoCharge Networks"
-**Módulo Profesional:** Estructuras de Control en Python (Código BOE: 5099)  
-**Curso Especialización:** Desarrollo de Aplicaciones en Python / FP Grado Superior  
+# Examen de estructuras de control (22/10/2026)
+**Curso Especialización:** Desarrollo de Aplicaciones en Python  
 **Duración Máxima:** 3 Horas (180 Minutos)  
 **Puntuación Total:** 10.0 Puntos  
 
@@ -42,7 +41,6 @@ REGISTROS_TELEMETRIA = [
 ## 3. Enunciado del Examen (5 Apartados Progresivos)
 
 ### Apartado 1: Validación de Datos, Diagrama de Flujo y Tarificación Dinámica (1.5 Puntos)
-*Tiempo estimado: 25 minutos | Evaluación UD1 y UD2*
 
 Para garantizar la correcta tarificación de las recargas, el sistema debe evaluar el coste base por kWh consumido utilizando un algoritmo de **tarificación dinámica**.
 
@@ -59,7 +57,6 @@ Para garantizar la correcta tarificación de las recargas, el sistema debe evalu
 ---
 
 ### Apartado 2: Limpieza y Filtrado Masivo mediante Comprensiones e Iteración Segura (2.0 Puntos)
-*Tiempo estimado: 35 minutos | Evaluación UD3*
 
 Antes de procesar la facturación global, el lote de datos debe ser auditado para eliminar registros corruptos y extraer listas estructuradas para el departamento analítico.
 
@@ -86,7 +83,6 @@ Antes de procesar la facturación global, el lote de datos debe ser auditado par
 ---
 
 ### Apartado 3: Arquitectura Funcional Modular y Transformaciones Avanzadas (2.0 Puntos)
-*Tiempo estimado: 40 minutos | Evaluación UD4 (Funciones y Lambdas)*
 
 El sistema requiere funciones puras para agregar métricas de rendimiento y ordenar el flujo de trabajo sin alterar las estructuras de datos originales de la aplicación.
 
@@ -104,7 +100,6 @@ El sistema requiere funciones puras para agregar métricas de rendimiento y orde
 ---
 
 ### Apartado 4: Análisis Jerárquico/Anidado Mediante Algoritmo Recursivo (2.0 Puntos)
-*Tiempo estimado: 40 minutos | Evaluación UD4 (Recursividad)*
 
 La red de EcoCharge se organiza en una **estructura jerárquica de subredes y puntos de carga**. Una subred puede contener estaciones de carga individuales o, a su vez, contener otras subredes anidadas a diferentes niveles de profundidad.
 
@@ -132,7 +127,6 @@ RED_DISTRIBUCION = [
 ---
 
 ### Apartado 5: Pipeline Robusto y Gestión Jerárquica de Excepciones (2.5 Puntos)
-*Tiempo estimado: 40 minutos | Evaluación UD5*
 
 Para evitar que un dato malformado detenga la ejecución del servidor central en producción, debe implementar una arquitectura de código robusta mediante captura de excepciones y clases personalizadas.
 
