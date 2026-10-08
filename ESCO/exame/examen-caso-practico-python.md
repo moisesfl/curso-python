@@ -1,19 +1,16 @@
-# Examen de estructuras de control (22/10/2026)
+# Examen de estructuras de control (22/10/2026 16:50 h)
 **Curso Especialización:** Desarrollo de Aplicaciones en Python  
 **Duración Máxima:** 3 Horas (180 Minutos)  
 **Puntuación Total:** 10.0 Puntos  
 
 ---
 
-## 1. Ficha Técnica e Instrucciones Generales
+## 1. Instrucciones para el Alumnado
 
-El presente examen evalúa de forma integrada todas las competencias del módulo profesional **Estructuras de Control en Python**. A diferencia de las evaluaciones organizadas en preguntas teóricas o ejercicios aislados, esta prueba se articula sobre un **único proyecto de desarrollo de software real**, emulando el trabajo diario de un desarrollador de backend/data en un entorno profesional.
-
-### Instrucciones para el Alumnado
 1. **Entorno de Trabajo:** Debe desarrollar el código en Python utilizando VSCode.
 2. **Estructura del Proyecto:** El examen consta de **5 apartados acumulativos**. Cada apartado construye sobre los datos y estructuras procesados en la fase previa.
-3. **Criterios de Estilo y Sangrado:** El sangrado (indentación) en Python es una regla sintáctica estricta (4 espacios por nivel, según PEP 8). El uso inapropiado de tabuladores o sangrados incorrectos provocará errores de ejecución (`IndentationError`, `TabError`) que penalizarán la nota final.
-4. **Entrega:** Se entregará un único fichero de script Python llamado `apellido_apellido_nombre_examen.py` debidamente documentado con docstrings e inline comments.
+3. **Criterios de Estilo y Sangrado:** El sangrado (indentación) en Python es una regla sintáctica estricta. El uso inapropiado de tabuladores o sangrados incorrectos provocará errores de ejecución (`IndentationError`, `TabError`) que penalizarán la nota final.
+4. **Entrega:** Se entregará un único fichero de script Python llamado `apellido_apellido_nombre_examen.py` debidamente documentado con docstrings e comentarios.
 
 ---
 
@@ -40,23 +37,23 @@ REGISTROS_TELEMETRIA = [
 
 ## 3. Enunciado del Examen (5 Apartados Progresivos)
 
-### Apartado 1: Validación de Datos, Diagrama de Flujo y Tarificación Dinámica (1.5 Puntos)
+### Apartado 1: Validación de Datos y Tarificación Dinámica (1.5 Puntos)
 
 Para garantizar la correcta tarificación de las recargas, el sistema debe evaluar el coste base por kWh consumido utilizando un algoritmo de **tarificación dinámica**.
 
 #### Requerimientos:
-1. **Diagrama de Flujo:** Dibuje o especifique mediante pseudocódigo de bloques el flujo de decisión de la función de tarificación. Indique explícitamente los símbolos utilizados (óvalo para inicio/fin, rombo para decisiones con sus dos salidas 'Sí'/'No', paralelogramo para I/O y rectángulo para procesos).
-2. **Función de Tarificación (`calcular_tarifa_kwh`):** Implemente una función que reciba el `conector` (cadena) y la `hora` del día (entero de 0 a 23).
+1. **Función de Tarificación (`calcular_tarifa_kwh`):** Implemente una función que reciba el `conector` (cadena) y la `hora` del día (entero de 0 a 23).
    - Debe utilizar la estructura de selección múltiple **`match-case`** para clasificar según el conector:
      - Si el conector es `"CCS2"` o `"CHADEMO"` (carga ultra-rápida): tarifa base de $0.45\text{ \$/kWh}$. Si la hora está entre las 17 y las 21 (hora punta), aplique un recargo de $0.15\text{ \$/kWh}$ adicional mediante una guarda (`if`).
      - Si el conector es `"MENNEKES"` (carga semi-rápida): tarifa base de $0.25\text{ \$/kWh}$.
      - Si el conector es `"SCHUKO"` (carga lenta): tarifa base de $0.15\text{ \$/kWh}$. Si la hora está entre las 0 y las 6 (hora valle), aplique un descuento de $0.05\text{ \$/kWh}$ mediante una guarda (`if`).
      - Para cualquier otro conector no reconocido (caso por defecto `_`), devuelva `None`.
-3. **Aplicación de Descuento por Cliente (Operador Ternario):** Utilice un **operador ternario** para calcular el precio final aplicable: si el tipo de cliente es `"VIP"` o `"FLOTA"`, el precio por kWh calculado tendrá un descuento del $10\%$; en caso contrario, se mantendrá el precio base.
+2. **Aplicación de Descuento por Cliente (Operador Ternario):** Utilice un **operador ternario** para calcular el precio final aplicable: si el tipo de cliente es `"VIP"` o `"FLOTA"`, el precio por kWh calculado tendrá un descuento del $10\%$; en caso contrario, se mantendrá el precio base.
 
+REVISAR Ver se engadir o de que usen outr función máis!!!!!!!!!!!!!!!!!!!!!!!!!
 ---
 
-### Apartado 2: Limpieza y Filtrado Masivo mediante Comprensiones e Iteración Segura (2.0 Puntos)
+### Apartado 2: Limpieza y Filtrado Masivo (2.0 Puntos)
 
 Antes de procesar la facturación global, el lote de datos debe ser auditado para eliminar registros corruptos y extraer listas estructuradas para el departamento analítico.
 
@@ -71,15 +68,15 @@ Antes de procesar la facturación global, el lote de datos debe ser auditado par
            print("Válido")
        idx += 1
    ```
-   Explique **tres razones técnicas** por las cuales el uso de `while True` en este contexto representa una mala práctica y genera errores críticos en tiempo de ejecución. Reescriba el bucle utilizando un bucle `for` junto con la función **`enumerate()`** para mostrar el índice de cada registro y controlar de forma segura el límite de la lista sin provocar un `IndexError`.
-2. **Filtrado con List Comprehension:** Cree una nueva lista llamada `sesiones_validas` mediante una **List Comprehension** con condición simple (`if` al final) que conserve únicamente los diccionarios que cumplan todas estas condiciones:
+   Reescriba el bucle utilizando un bucle `for` junto con la función **`enumerate()`** para mostrar el índice de cada registro y controlar de forma segura el límite de la lista sin provocar un `IndexError`.
+2. **Filtrado con List Comprehension:** Cree una nueva lista llamada `sesiones_validas` mediante una **List Comprehension** con condición simple que conserve únicamente los diccionarios que cumplan todas estas condiciones:
    - Que contengan las claves `"kw_h"` y `"activa"`.
    - Que `"kw_h"` sea un valor mayor que cero (`kw_h > 0`).
    - Que la sesión esté marcada como activa (`activa == True`).
 3. **Extracción con Set y Dict Comprehensions:**
    - Genere un conjunto mediante **Set Comprehension** denominado `conectores_unicos` que contenga todos los tipos de conectores presentes en las sesiones válidas, eliminando duplicados implícitamente.
    - Genere un diccionario mediante **Dict Comprehension** denominado `resumen_kw` cuyas claves sean el `id_sesion` y cuyos valores sean los `kw_h` consumidos, incluyendo únicamente las sesiones cuyo consumo sea superior a 20 kWh.
-
+4. Todo lo pedido en este apartado debe estar dentro de una función llamada `auditar_y_filtar_datos` que devuelva la lista, el conjunto y el diccionario creados.
 ---
 
 ### Apartado 3: Arquitectura Funcional Modular y Transformaciones Avanzadas (2.0 Puntos)
@@ -97,6 +94,7 @@ El sistema requiere funciones puras para agregar métricas de rendimiento y orde
    - **Ordenación Multicriterio con `sorted`:** Ordene la lista de sesiones válidas en orden descendente por energía consumida (`kw_h`) y, en caso de empate, en orden ascendente por duración (`duracion_min`), utilizando `sorted()` con una función `lambda` en el parámetro `key`.
    - **Acumulación con `reduce`:** Importe `reduce` del módulo `functools` y calcule la energía total consumida por toda la red mediante una función `lambda` acumuladora sobre la lista de consumos.
 
+REVISAR=> quitar o de reduce?!!!!!!!!!!!!!!!!!!
 ---
 
 ### Apartado 4: Análisis Jerárquico/Anidado Mediante Algoritmo Recursivo (2.0 Puntos)
@@ -122,6 +120,8 @@ RED_DISTRIBUCION = [
    - El **Progreso hacia el caso base:** Cómo se reduce la estructura en cada llamada recursiva.
 3. **Traza de Ejecución y Control de Desbordamiento:**
    - Escriba en un comentario del código la **traza manual de llamadas** para la sublista `[10.5, 60.0]`.
+   
+REVISA!!!!!!!!!!!!!!!!!!!! igual quitar o paso anterior
    - Explique qué ocurre en la pila de llamadas de Python (*call stack*) si una estructura anidada carece de caso base o supera el límite de profundidad por defecto, indicando el nombre exacto de la excepción que lanza el intérprete.
 
 ---
@@ -260,11 +260,11 @@ def ejecutar_transformaciones_lambda(sesiones_validas: list[dict]):
     # 3. Sorted: Ordenación multicriterio (-kw_h, +duracion_min)
     ordenadas = sorted(sesiones_validas, key=lambda s: (-s["kw_h"], s["duracion_min"]))
 
-    # 4. Reduce: Suma acumulada de kWh consumidos
-    consumos = [s["kw_h"] for s in sesiones_validas]
-    total_acumulado = reduce(lambda acc, x: acc + x, consumos, 0.0)
+    # # 4. Reduce: Suma acumulada de kWh consumidos
+    # consumos = [s["kw_h"] for s in sesiones_validas]
+    # total_acumulado = reduce(lambda acc, x: acc + x, consumos, 0.0)
 
-    return altas_cargas, costos, ordenadas, total_acumulado
+    return altas_cargas, costos, ordenadas#, total_acumulado
 
 # ==============================================================================
 # APARTADO 4: ALGORITMO RECURSIVO DE POTENCIA
