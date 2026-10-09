@@ -48,9 +48,8 @@ Para garantizar la correcta tarificación de las recargas, el sistema debe evalu
      - Si el conector es `"MENNEKES"` (carga semi-rápida): tarifa base de $0.25\text{ \$/kWh}$.
      - Si el conector es `"SCHUKO"` (carga lenta): tarifa base de $0.15\text{ \$/kWh}$. Si la hora está entre las 0 y las 6 (hora valle), aplique un descuento de $0.05\text{ \$/kWh}$ mediante una guarda (`if`).
      - Para cualquier otro conector no reconocido (caso por defecto `_`), devuelva `None`.
-2. **Aplicación de Descuento por Cliente (Operador Ternario):** Utilice un **operador ternario** para calcular el precio final aplicable: si el tipo de cliente es `"VIP"` o `"FLOTA"`, el precio por kWh calculado tendrá un descuento del $10\%$; en caso contrario, se mantendrá el precio base.
+2. **Aplicación de Descuento por Cliente** (`calcular_precio_final`): Implemente una nueva función que llame a la anterior y utilice un **operador ternario** para calcular el precio final aplicable: si el tipo de cliente es `"VIP"` o `"FLOTA"`, el precio por kWh calculado tendrá un descuento del $10\%$; en caso contrario, se mantendrá el precio base.
 
-REVISAR Ver se engadir o de que usen outr función máis!!!!!!!!!!!!!!!!!!!!!!!!!
 ---
 
 ### Apartado 2: Limpieza y Filtrado Masivo (2.0 Puntos)
@@ -97,7 +96,7 @@ El sistema requiere funciones puras para agregar métricas de rendimiento y orde
 REVISAR=> quitar o de reduce?!!!!!!!!!!!!!!!!!!
 ---
 
-### Apartado 4: Análisis Jerárquico/Anidado Mediante Algoritmo Recursivo (2.0 Puntos)
+### Apartado 4: Análisis Jerárquico/Anidado Mediante Recursividad (2.0 Puntos)
 
 La red de EcoCharge se organiza en una **estructura jerárquica de subredes y puntos de carga**. Una subred puede contener estaciones de carga individuales o, a su vez, contener otras subredes anidadas a diferentes niveles de profundidad.
 
@@ -118,15 +117,12 @@ RED_DISTRIBUCION = [
    - El **Caso Base:** Cuando la lista esté vacía o se evalúe un valor numérico directo.
    - El **Paso Recursivo:** Cuando un elemento sea una lista anidada (utilizando `isinstance(elemento, list)`).
    - El **Progreso hacia el caso base:** Cómo se reduce la estructura en cada llamada recursiva.
-3. **Traza de Ejecución y Control de Desbordamiento:**
-   - Escriba en un comentario del código la **traza manual de llamadas** para la sublista `[10.5, 60.0]`.
-   
-REVISA!!!!!!!!!!!!!!!!!!!! igual quitar o paso anterior
-   - Explique qué ocurre en la pila de llamadas de Python (*call stack*) si una estructura anidada carece de caso base o supera el límite de profundidad por defecto, indicando el nombre exacto de la excepción que lanza el intérprete.
+3. **Cuestión recursividad:**
+   - Explique en un comentario del código qué ocurre en la pila de llamadas de Python (*call stack*) si una estructura anidada carece de caso base o supera el límite de profundidad por defecto, indicando el nombre exacto de la excepción que lanza el intérprete.
 
 ---
 
-### Apartado 5: Pipeline Robusto y Gestión Jerárquica de Excepciones (2.5 Puntos)
+### Apartado 5: Gestión Jerárquica de Excepciones y código robusto (2.5 Puntos)
 
 Para evitar que un dato malformado detenga la ejecución del servidor central en producción, debe implementar una arquitectura de código robusta mediante captura de excepciones y clases personalizadas.
 
