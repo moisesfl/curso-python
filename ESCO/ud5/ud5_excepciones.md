@@ -201,7 +201,7 @@ for p in pruebas:
     print("-" * 45)
 ```
 
-### `raise ... from ...` Encadenamiento de excepciones[🔗](#raise-from-encadenamiento-de-excepciones "Permanent link")
+### `raise ... from ...` Encadenamiento de excepciones[](#raise-from-encadenamiento-de-excepciones "Permanent link")
 
 Conserva el **contexto** cuando conviertes excepciones de bajo nivel en una de **dominio**.
 
