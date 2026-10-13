@@ -78,16 +78,16 @@ Antes de procesar la facturación global, el lote de datos debe ser auditado par
 4. Todo lo pedido en este apartado debe estar dentro de una función llamada `auditar_y_filtar_datos` que devuelva la lista, el conjunto y el diccionario creados.
 ---
 
-### Apartado 3: Arquitectura Funcional Modular y Transformaciones Avanzadas (2.0 Puntos)
+### Apartado 3: Función con número variable de argumentos y Transformaciones Avanzadas (2.0 Puntos)
 
 El sistema requiere funciones puras para agregar métricas de rendimiento y ordenar el flujo de trabajo sin alterar las estructuras de datos originales de la aplicación.
 
 #### Requerimientos:
-1. **Firma Flexible y Regla de Inmutabilidad:** Diseñe la función `generar_informe_sesiones(titulo, *sesiones, **configuraciones)`.
-   - La función debe aceptar un título posicional obligatorio, un número indeterminado de sesiones de carga mediante `*args`, y parámetros de configuración opcionales mediante `**kwargs` (por ejemplo, `moneda="EUR"`, `mostrar_detalles=True`).
-   - **Regla de Inmutabilidad:** La función no debe modificar la lista original recibida. Si necesita realizar ordenaciones o modificaciones, debe trabajar sobre una copia explícita de los datos.
-   - La función debe devolver una cadena formateada (utilizando **f-strings**) con el total acumulado de kWh y la duración media de las sesiones recibidas.
-2. **Transformaciones con Funciones Lambda (`map`, `filter`, `sorted`, `reduce`):**
+1. **Diseñe la función `generar_informe_sesiones(titulo, *sesiones, **configuraciones)`.**
+   - La función debe aceptar un título posicional obligatorio, un número indeterminado de sesiones de carga mediante `*args`, y parámetros de configuración opcionales mediante `**kwargs` (por ejemplo, `moneda="EUR"`, `pais="España"`).
+   - **Regla de Inmutabilidad:** La función no debe modificar la lista original recibida
+   - La función debe devolver una cadena formateada (utilizando **f-strings**) con el número de sesiones procesadas, el total acumulado de kWh, la duración media de las sesiones recibidas y los parámetros de configuración opcionales.
+2. **Cree una función que utilice funciones Lambda** (`map`, `filter`, `sorted`, `reduce`), tenga como parámetro `sesiones_validas` y haga lo siguiente:
    - **Filtrado con `filter`:** Obtenga una lista de sesiones correspondientes a recargas de alta potencia ($\text{kWh} \ge 30.0$) utilizando `filter()` y una expresión `lambda`.
    - **Transformación con `map`:** Convierta la lista de sesiones filtradas en una lista de valores monetarios (costo total en euros) aplicando la función de tarificación del Apartado 1 mediante `map()` y `lambda`.
    - **Ordenación Multicriterio con `sorted`:** Ordene la lista de sesiones válidas en orden descendente por energía consumida (`kw_h`) y, en caso de empate, en orden ascendente por duración (`duracion_min`), utilizando `sorted()` con una función `lambda` en el parámetro `key`.
