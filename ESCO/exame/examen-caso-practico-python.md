@@ -8,9 +8,9 @@
 ## 1. Instrucciones para el Alumnado
 
 1. **Entorno de Trabajo:** Debe desarrollar el código en Python utilizando VSCode.
-2. **Estructura del Proyecto:** El examen consta de **5 apartados acumulativos**. Cada apartado construye sobre los datos y estructuras procesados en la fase previa.
+2. **Estructura del Proyecto:** El examen consta de **5 apartados**. Cada apartado se construye sobre los datos y estructuras procesados en la fase previa.
 3. **Criterios de Estilo y Sangrado:** El sangrado (indentación) en Python es una regla sintáctica estricta. El uso inapropiado de tabuladores o sangrados incorrectos provocará errores de ejecución (`IndentationError`, `TabError`) que penalizarán la nota final.
-4. **Entrega:** Se entregará un único fichero de script Python llamado `apellido_apellido_nombre_examen.py` debidamente documentado con docstrings e comentarios.
+4. **Entrega:** Se entregará un único fichero de Python llamado `apellido_apellido_nombre_examen.py` debidamente documentado con docstrings e comentarios.
 
 ---
 
@@ -35,7 +35,7 @@ REGISTROS_TELEMETRIA = [
 
 ---
 
-## 3. Enunciado del Examen (5 Apartados Progresivos)
+## 3. Enunciado del Examen (5 Apartados)
 
 ### Apartado 1: Validación de Datos y Tarificación Dinámica (1.5 Puntos)
 
@@ -93,7 +93,6 @@ El sistema requiere funciones puras para agregar métricas de rendimiento y orde
    - **Ordenación Multicriterio con `sorted`:** Ordene la lista de sesiones válidas en orden descendente por energía consumida (`kw_h`) y, en caso de empate, en orden ascendente por duración (`duracion_min`), utilizando `sorted()` con una función `lambda` en el parámetro `key`.
    - **Acumulación con `reduce`:** Importe `reduce` del módulo `functools` y calcule la energía total consumida por toda la red mediante una función `lambda` acumuladora sobre la lista de consumos.
 
-REVISAR=> quitar o de reduce?!!!!!!!!!!!!!!!!!!
 ---
 
 ### Apartado 4: Análisis Jerárquico/Anidado Mediante Recursividad (2.0 Puntos)
@@ -117,6 +116,9 @@ RED_DISTRIBUCION = [
    - El **Caso Base:** Cuando la lista esté vacía o se evalúe un valor numérico directo.
    - El **Paso Recursivo:** Cuando un elemento sea una lista anidada (utilizando `isinstance(elemento, list)`).
    - El **Progreso hacia el caso base:** Cómo se reduce la estructura en cada llamada recursiva.
+
+### TODO: REVISAR ESTOOO!!!!!!!!!!!!!!!!!!!!!!!
+
 3. **Cuestión recursividad:**
    - Explique en un comentario del código qué ocurre en la pila de llamadas de Python (*call stack*) si una estructura anidada carece de caso base o supera el límite de profundidad por defecto, indicando el nombre exacto de la excepción que lanza el intérprete.
 
