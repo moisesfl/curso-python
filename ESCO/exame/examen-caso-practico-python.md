@@ -114,10 +114,7 @@ RED_DISTRIBUCION = [
 1. **Implementación Recursiva de Aplanamiento y Suma (`calcular_potencia_recursiva`):** Escriba una función recursiva que reciba la estructura anidada y devuelva la **potencia total acumulada** en toda la jerarquía de la red sin utilizar la función built-in `sum()` ni bucles `for`/`while` para recorrer la profundidad.
 2. **Análisis de los Componentes Recursivos:** Identifique y comente en el código:
    - El **Caso Base:** Cuando la lista esté vacía o se evalúe un valor numérico directo.
-   - El **Paso Recursivo:** Cuando un elemento sea una lista anidada (utilizando `isinstance(elemento, list)`).
-   - El **Progreso hacia el caso base:** Cómo se reduce la estructura en cada llamada recursiva.
-
-### TODO: REVISAR ESTOOO!!!!!!!!!!!!!!!!!!!!!!!
+   - El **Paso Recursivo:** Cuando un elemento sea una lista anidada.
 
 3. **Cuestión recursividad:**
    - Explique en un comentario del código qué ocurre en la pila de llamadas de Python (*call stack*) si una estructura anidada carece de caso base o supera el límite de profundidad por defecto, indicando el nombre exacto de la excepción que lanza el intérprete.
