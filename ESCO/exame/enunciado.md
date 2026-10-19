@@ -8,7 +8,7 @@
 ## 1. Instrucciones para el Alumnado
 
 1. **Entorno de Trabajo:** Debe desarrollar el código en Python utilizando VSCode.
-2. **Estructura del Proyecto:** El examen consta de **5 apartados**. Cada apartado se construye sobre los datos y estructuras procesados en la fase previa.
+2. **Estructura del Proyecto:** El examen consta de **5 apartados**.
 3. **Criterios de Estilo y Sangrado:** El sangrado (indentación) en Python es una regla sintáctica estricta. El uso inapropiado de tabuladores o sangrados incorrectos provocará errores de ejecución (`IndentationError`, `TabError`) que penalizarán la nota final.
 4. **Entrega:** Se entregará un único fichero de Python llamado `apellido_apellido_nombre_examen.py` debidamente documentado con docstrings e comentarios.
 
@@ -84,7 +84,7 @@ El sistema requiere funciones puras para agregar métricas de rendimiento y orde
 
 #### Requerimientos:
 1. **Diseñe la función `generar_informe_sesiones(titulo, *sesiones, **configuraciones)`.**
-   - La función debe aceptar un título posicional obligatorio, un número indeterminado de sesiones de carga mediante `*args`, y parámetros de configuración opcionales mediante `**kwargs` (por ejemplo, `moneda="EUR"`, `pais="España"`).
+   - La función debe aceptar un título posicional obligatorio, un número indeterminado de sesiones de carga (válidas) mediante `*args` y parámetros de configuración opcionales mediante `**kwargs` (por ejemplo, `moneda="EUR"`, `pais="España"`).
    - **Regla de Inmutabilidad:** La función no debe modificar la lista original recibida
    - La función debe devolver una cadena formateada (utilizando **f-strings**) con el número de sesiones procesadas, el total acumulado de kWh, la duración media de las sesiones recibidas y los parámetros de configuración opcionales.
 2. **Cree una función que utilice funciones Lambda** (`map`, `filter`, `sorted`, `reduce`), tenga como parámetro `sesiones_validas` y haga lo siguiente:
