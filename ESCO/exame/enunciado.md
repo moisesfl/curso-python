@@ -86,13 +86,13 @@ El sistema requiere funciones puras para agregar métricas de rendimiento y orde
 
 #### Requerimientos:
 1. **Diseñe la función `generar_informe_sesiones(titulo, *sesiones, **configuraciones)`.**
-   - La función debe aceptar un título posicional obligatorio, un número indeterminado de sesiones de carga (válidas) mediante `*args` y parámetros de configuración opcionales mediante `**kwargs` (por ejemplo, `moneda="EUR"`, `pais="España"`).
+   - La función debe aceptar un título posicional obligatorio, un número indeterminado de sesiones de carga (válidas) mediante `*args` y parámetros de configuración opcionales mediante `**kwargs` (por ejemplo, `moneda="Dolares"`, `pais="USA"`).
    - **Regla de Inmutabilidad:** La función no debe modificar la lista original recibida
    - La función debe devolver una cadena formateada (utilizando **f-strings**) con el número de sesiones procesadas, el total acumulado de kWh, la duración media de las sesiones recibidas y los parámetros de configuración opcionales.
 2. **Cree una función que utilice funciones Lambda** (`map`, `filter`, `sorted`, `reduce`), tenga como parámetro `sesiones_validas` y haga lo siguiente:
-   - **Filtrado con `filter`:** Obtenga una lista de sesiones correspondientes a recargas de alta potencia ($\text{kWh} \ge 30.0$) utilizando `filter()` y una expresión `lambda`.
-   - **Transformación con `map`:** Convierta la lista de sesiones filtradas en una lista de valores monetarios (costo total en euros) aplicando la función de tarificación del Apartado 1 mediante `map()` y `lambda`.
-   - **Ordenación Multicriterio con `sorted`:** Ordene la lista de sesiones válidas en orden descendente por energía consumida (`kw_h`) y, en caso de empate, en orden ascendente por duración (`duracion_min`), utilizando `sorted()` con una función `lambda` en el parámetro `key`.
+   - **Filtrado con `filter`:** Obtenga una lista de sesiones correspondientes a recargas de alta potencia ($\text{kWh} \ge 30.0$).
+   - **Transformación con `map`:** Convierta la lista de sesiones filtradas en una lista de valores monetarios (coste total) aplicando la función de tarificación del Apartado 1.
+   - **Ordenación Multicriterio con `sorted`:** Ordene la lista de sesiones válidas en orden descendente por energía consumida (`kw_h`) y, en caso de empate, en orden ascendente por duración (`duracion_min`).
    - **Acumulación con `reduce`:** Importe `reduce` del módulo `functools` y calcule la energía total consumida por toda la red mediante una función `lambda` acumuladora sobre la lista de consumos.
 
 ---
