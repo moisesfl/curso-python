@@ -76,6 +76,8 @@ Antes de procesar la facturación global, el lote de datos debe ser auditado par
    - Genere un conjunto mediante **Set Comprehension** denominado `conectores_unicos` que contenga todos los tipos de conectores presentes en las sesiones válidas, eliminando duplicados implícitamente.
    - Genere un diccionario mediante **Dict Comprehension** denominado `resumen_kw` cuyas claves sean el `id_sesion` y cuyos valores sean los `kw_h` consumidos, incluyendo únicamente las sesiones cuyo consumo sea superior a 20 kWh.
 4. Todo lo pedido en este apartado debe estar dentro de una función llamada `auditar_y_filtar_datos` que devuelva la lista, el conjunto y el diccionario creados.
+
+
 ---
 
 ### Apartado 3: Función con número variable de argumentos y Transformaciones Avanzadas (2.0 Puntos)
