@@ -1,20 +1,8 @@
-# Examen de estructuras de control (22/10/2026 16:50 h)
-**Curso Especialización:** Desarrollo de Aplicaciones en Python  
-**Duración Máxima:** 3 Horas (180 Minutos)  
-**Puntuación Total:** 10.0 Puntos  
+# Examen de estructuras de control (22/10/2026)
 
----
 
-## 1. Instrucciones para el Alumnado
 
-1. **Entorno de Trabajo:** Debe desarrollar el código en Python utilizando VSCode.
-2. **Estructura del Proyecto:** El examen consta de **5 apartados**.
-3. **Criterios de Estilo y Sangrado:** El sangrado (indentación) en Python es una regla sintáctica estricta. El uso inapropiado de tabuladores o sangrados incorrectos provocará errores de ejecución (`IndentationError`, `TabError`) que penalizarán la nota final.
-4. **Entrega:** Se entregará un único fichero de Python llamado `apellido_apellido_nombre_examen.py` debidamente documentado con docstrings e comentarios.
-
----
-
-## 2. Contexto del Proyecto Real: "EcoCharge Networks"
+## 1. Contexto del Proyecto Real: "EcoCharge Networks"
 
 **EcoCharge Networks** es una compañía que gestiona una red distribuida de puntos de carga rápida para vehículos eléctricos (EV). Cada punto de carga envía periódicamente paquetes de telemetría a un servidor central. Debido a la inestabilidad de las redes IoT y a la heterogeneidad de los cargadores, los datos recibidos contienen errores de formato, lecturas corruptas y registros fuera de rango.
 
@@ -35,7 +23,7 @@ REGISTROS_TELEMETRIA = [
 
 ---
 
-## 3. Enunciado del Examen (5 Apartados)
+## 2. Enunciado del Examen (5 Apartados)
 
 ### Apartado 1: Validación de Datos y Tarificación Dinámica (1.5 Puntos)
 
@@ -44,7 +32,7 @@ Para garantizar la correcta tarificación de las recargas, el sistema debe evalu
 #### Requerimientos:
 1. **Función de Tarificación (`calcular_tarifa_kwh`):** Implemente una función que reciba el `conector` (cadena) y la `hora` del día (entero de 0 a 23).
    - Debe utilizar la estructura de selección múltiple **`match-case`** para clasificar según el conector:
-     - Si el conector es `"CCS2"` o `"CHADEMO"` (carga ultra-rápida): tarifa base de $0.45\text{ \$/kWh}$. Si la hora está entre las 17 y las 21 (hora punta), aplique un recargo de $0.15\text{ \$/kWh}$ adicional mediante una guarda (`if`).
+     - Si el conector es `"CCS2"` o `"CHADEMO"` (carga ultra-rápida): tarifa base de $0.45\text{ \$/kWh}$.
      - Si el conector es `"MENNEKES"` (carga semi-rápida): tarifa base de $0.25\text{ \$/kWh}$.
      - Si el conector es `"SCHUKO"` (carga lenta): tarifa base de $0.15\text{ \$/kWh}$. Si la hora está entre las 0 y las 6 (hora valle), aplique un descuento de $0.05\text{ \$/kWh}$ mediante una guarda (`if`).
      - Para cualquier otro conector no reconocido (caso por defecto `_`), devuelva `None`.
@@ -67,7 +55,7 @@ Antes de procesar la facturación global, el lote de datos debe ser auditado par
            print("Válido")
        idx += 1
    ```
-   Reescriba el bucle utilizando un bucle `for` junto con la función **`enumerate()`** para mostrar el índice de cada registro y controlar de forma segura el límite de la lista sin provocar un `IndexError`.
+   Reescriba el bucle utilizando un bucle `for` junto con la función **`enumerate()`** para mostrar el índice de cada registro.
 2. **Filtrado con List Comprehension:** Cree una nueva lista llamada `sesiones_validas` mediante una **List Comprehension** con condición simple que conserve únicamente los diccionarios que cumplan todas estas condiciones:
    - Que contengan las claves `"kw_h"` y `"activa"`.
    - Que `"kw_h"` sea un valor mayor que cero (`kw_h > 0`).
@@ -89,11 +77,11 @@ El sistema requiere funciones puras para agregar métricas de rendimiento y orde
    - La función debe aceptar un título posicional obligatorio, un número indeterminado de sesiones de carga (válidas) mediante `*args` y parámetros de configuración opcionales mediante `**kwargs` (por ejemplo, `moneda="Dolares"`, `pais="USA"`).
    - **Regla de Inmutabilidad:** La función no debe modificar la lista original recibida
    - La función debe devolver una cadena formateada (utilizando **f-strings**) con el número de sesiones procesadas, el total acumulado de kWh, la duración media de las sesiones recibidas y los parámetros de configuración opcionales.
-2. **Cree una función que utilice funciones Lambda** (`map`, `filter`, `sorted`, `reduce`), tenga como parámetro `sesiones_validas` y haga lo siguiente:
+2. **Cree una función que utilice funciones Lambda** (`map`, `filter`, `sorted`), tenga como parámetro `sesiones_validas` y haga lo siguiente:
    - **Filtrado con `filter`:** Obtenga una lista de sesiones correspondientes a recargas de alta potencia ($\text{kWh} \ge 30.0$).
    - **Transformación con `map`:** Convierta la lista de sesiones filtradas en una lista de valores monetarios (coste total) aplicando la función de tarificación del Apartado 1.
    - **Ordenación Multicriterio con `sorted`:** Ordene la lista de sesiones válidas en orden descendente por energía consumida (`kw_h`) y, en caso de empate, en orden ascendente por duración (`duracion_min`).
-   - **Acumulación con `reduce`:** Importe `reduce` del módulo `functools` y calcule la energía total consumida por toda la red mediante una función `lambda` acumuladora sobre la lista de consumos.
+
 
 ---
 
@@ -139,6 +127,6 @@ Para evitar que un dato malformado detenga la ejecución del servidor central en
    - Si los valores numéricos son negativos, lance un **`LecturaInvalidaError`** con un mensaje explicativo.
 3. **Bloque Completo `try-except-else-finally`:** Implemente la función `procesar_lote_telemetria(lote_registros)` que recorra todos los registros y contenga la estructura completa de gestión:
    - **`try`:** Llama a `procesar_registro_individual`.
-   - **`except`:** Captura de forma jerárquica las excepciones específicas (`DatosCorruptosError`, `LecturaInvalidaError`) mostrando el detalle y la causa original (`__cause__`), seguida de un bloque `except EcoChargeError` como último recurso de la aplicación.
+   - **`except`:** Captura de forma jerárquica las excepciones específicas (`DatosCorruptosError`, `LecturaInvalidaError`) mostrando el error, seguida de un bloque `except EcoChargeError` como último recurso de la aplicación.
    - **`else`:** Se ejecuta cuando el registro es completamente válido e incrementa el contador de registros procesados con éxito.
    - **`finally`:** Se ejecuta en cada iteración garantizando la escritura de un mensaje de log o cierre de auditoría.
