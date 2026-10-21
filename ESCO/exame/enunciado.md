@@ -32,11 +32,11 @@ Para garantizar la correcta tarificación de las recargas, el sistema debe evalu
 #### Se pide:
 1. **Función de Tarificación (`calcular_tarifa_kwh`):** Implemente una función que reciba el `conector` (cadena) y la `hora` del día (entero de 0 a 23).
    - Debe utilizar la estructura de selección múltiple **`match-case`** para clasificar según el conector:
-     - Si el conector es `"CCS2"` o `"CHADEMO"` (carga ultra-rápida): tarifa base de 0.45 \$/kWh.
-     - Si el conector es `"MENNEKES"` (carga semi-rápida): tarifa base de 0.25 \$/kWh.
-     - Si el conector es `"SCHUKO"` (carga lenta): tarifa base de 0.15 \$/kWh. Si la hora está entre las 0 y las 6 (hora valle), aplique un descuento de 0.05 \$/kWh mediante una guarda (`if`).
+     - Si el conector es `"CCS2"` o `"CHADEMO"` (carga ultra-rápida): tarifa base de 0.45 $/kWh.
+     - Si el conector es `"MENNEKES"` (carga semi-rápida): tarifa base de 0.25 $/kWh.
+     - Si el conector es `"SCHUKO"` (carga lenta): tarifa base de 0.15$/kWh. Si la hora está entre las 0 y las 6 (hora valle), aplique un descuento de 0.05 $/kWh mediante un (`if`).
      - Para cualquier otro conector no reconocido, devuelva `None`.
-2. **Aplicación de Descuento por Cliente** (`calcular_precio_final`): Implemente una nueva función que llame a la anterior y utilice un **operador ternario** para calcular el precio final aplicable: si el tipo de cliente es `"VIP"` o `"FLOTA"`, el precio por kWh calculado tendrá un descuento del 10\%; en caso contrario, se mantendrá el precio base.
+2. **Aplicación de Descuento por Cliente** (`calcular_precio_final`): Implemente una nueva función que llame a la anterior y utilice un **operador ternario** para calcular el precio final aplicable: si el tipo de cliente es `"VIP"` o `"FLOTA"`, el precio por kWh calculado tendrá un descuento del 10%; en caso contrario, se mantendrá el precio base.
 
 ---
 
