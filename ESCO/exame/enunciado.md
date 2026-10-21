@@ -45,24 +45,13 @@ Para garantizar la correcta tarificación de las recargas, el sistema debe evalu
 Antes de procesar la facturación global, el lote de datos debe ser auditado para eliminar registros corruptos y extraer listas estructuradas para el departamento analítico.
 
 #### Se pide:
-1. **Sustitución de Bucle Ineficiente:** Un desarrollador júnior intentó validar los datos utilizando la siguiente estructura:
-   ```python
-   # Código defectuoso a corregir
-   idx = 0
-   while True:
-       reg = REGISTROS_TELEMETRIA[idx]
-       if reg["kw_h"] > 0:
-           print("Válido")
-       idx += 1
-   ```
-   Reescriba el bucle utilizando un bucle `for` junto con la función **`enumerate()`** para mostrar el índice de cada registro.
-2. **Filtrado con List Comprehension:** Cree una nueva lista llamada `sesiones_validas` mediante una **List Comprehension** con condición simple que conserve únicamente los diccionarios que cumplan todas estas condiciones:
+1. **Filtrado con List Comprehension:** Cree una nueva lista llamada `sesiones_validas` mediante una **List Comprehension** con condición simple que conserve únicamente los diccionarios que cumplan todas estas condiciones:
    - Que contengan las claves `"kw_h"` y `"activa"`.
    - Que `"kw_h"` sea un valor mayor que cero (`kw_h > 0`).
-3. **Extracción con Set y Dict Comprehensions:**
-   - Genere un conjunto mediante **Set Comprehension** denominado `conectores_unicos` que contenga todos los tipos de conectores presentes en las sesiones válidas, eliminando duplicados implícitamente.
+2. **Extracción con Set y Dict Comprehensions:**
+   - Genere un conjunto mediante **Set Comprehension** denominado `conectores_unicos` que contenga todos los tipos de conectores presentes en las sesiones válidas.
    - Genere un diccionario mediante **Dict Comprehension** denominado `resumen_kw` cuyas claves sean el `id_sesion` y cuyos valores sean los `kw_h` consumidos, incluyendo únicamente las sesiones cuyo consumo sea superior a 20 kWh.
-4. Todo lo pedido en este apartado debe estar dentro de una función llamada `auditar_y_filtar_datos` que devuelva la lista, el conjunto y el diccionario creados.
+3. Todo lo pedido en este apartado debe estar dentro de una función llamada `auditar_y_filtar_datos` que devuelva la lista, el conjunto y el diccionario creados.
 
 
 ---
@@ -74,11 +63,10 @@ El sistema requiere funciones puras para agregar métricas de rendimiento y orde
 #### Se pide:
 1. **Diseñe la función `generar_informe_sesiones(titulo, *sesiones, **configuraciones)`.**
    - La función debe aceptar un título posicional obligatorio, un número indeterminado de sesiones de carga (válidas) mediante `*args` y parámetros de configuración opcionales mediante `**kwargs` (por ejemplo, `moneda="Dolares"`).
-   - **Regla de Inmutabilidad:** La función no debe modificar la lista original recibida
+   - La función no debe modificar la lista original recibida.
    - La función debe devolver una cadena formateada (utilizando **f-strings**) con el número de sesiones procesadas, el total acumulado de kWh, la duración media de las sesiones recibidas y los parámetros de configuración opcionales.
-2. **Cree una función que utilice funciones Lambda** (`map`, `filter`, `sorted`), tenga como parámetro `sesiones_validas` y haga lo siguiente:
+2. **Cree una función que utilice funciones Lambda**, tenga como parámetro `sesiones_validas` y haga lo siguiente:
    - **Filtrado con `filter`:** Obtenga una lista de sesiones correspondientes a recargas de alta potencia (kWh >= 30).
-   - **Transformación con `map`:** Convierta la lista de sesiones filtradas en una lista de valores monetarios (coste total) aplicando la función de tarificación del Apartado 1.
    - **Ordenación Multicriterio con `sorted`:** Ordene la lista de sesiones válidas en orden descendente por energía consumida (`kw_h`) y, en caso de empate, en orden ascendente por duración (`duracion_min`).
 
 
