@@ -2,7 +2,7 @@
 
 
 
-## 1. Contexto del Proyecto Real: "EcoCharge Networks"
+## 1. Contexto del proyecto real: "EcoCharge Networks"
 
 **EcoCharge Networks** es una compañía que gestiona una red distribuida de puntos de carga rápida para vehículos eléctricos (EV). Cada punto de carga envía periódicamente paquetes de telemetría a un servidor central. Debido a la inestabilidad de las redes IoT y a la heterogeneidad de los cargadores, los datos recibidos contienen errores de formato, lecturas corruptas y registros fuera de rango.
 
@@ -25,26 +25,26 @@ REGISTROS_TELEMETRIA = [
 
 ## 2. Enunciado del Examen (5 Apartados)
 
-### Apartado 1: Validación de Datos y Tarificación Dinámica (1.5 Puntos)
+### Apartado 1: Validación de Datos y Tarificación Dinámica (1.75 Puntos)
 
 Para garantizar la correcta tarificación de las recargas, el sistema debe evaluar el coste base por kWh consumido utilizando un algoritmo de **tarificación dinámica**.
 
-#### Requerimientos:
+#### Se pide:
 1. **Función de Tarificación (`calcular_tarifa_kwh`):** Implemente una función que reciba el `conector` (cadena) y la `hora` del día (entero de 0 a 23).
    - Debe utilizar la estructura de selección múltiple **`match-case`** para clasificar según el conector:
      - Si el conector es `"CCS2"` o `"CHADEMO"` (carga ultra-rápida): tarifa base de $0.45\text{ \$/kWh}$.
      - Si el conector es `"MENNEKES"` (carga semi-rápida): tarifa base de $0.25\text{ \$/kWh}$.
      - Si el conector es `"SCHUKO"` (carga lenta): tarifa base de $0.15\text{ \$/kWh}$. Si la hora está entre las 0 y las 6 (hora valle), aplique un descuento de $0.05\text{ \$/kWh}$ mediante una guarda (`if`).
-     - Para cualquier otro conector no reconocido (caso por defecto `_`), devuelva `None`.
+     - Para cualquier otro conector no reconocido, devuelva `None`.
 2. **Aplicación de Descuento por Cliente** (`calcular_precio_final`): Implemente una nueva función que llame a la anterior y utilice un **operador ternario** para calcular el precio final aplicable: si el tipo de cliente es `"VIP"` o `"FLOTA"`, el precio por kWh calculado tendrá un descuento del $10\%$; en caso contrario, se mantendrá el precio base.
 
 ---
 
-### Apartado 2: Limpieza y Filtrado Masivo (2.0 Puntos)
+### Apartado 2: Limpieza y Filtrado Masivo (2.25 Puntos)
 
 Antes de procesar la facturación global, el lote de datos debe ser auditado para eliminar registros corruptos y extraer listas estructuradas para el departamento analítico.
 
-#### Requerimientos:
+#### Se pide:
 1. **Sustitución de Bucle Ineficiente:** Un desarrollador júnior intentó validar los datos utilizando la siguiente estructura:
    ```python
    # Código defectuoso a corregir
@@ -59,7 +59,6 @@ Antes de procesar la facturación global, el lote de datos debe ser auditado par
 2. **Filtrado con List Comprehension:** Cree una nueva lista llamada `sesiones_validas` mediante una **List Comprehension** con condición simple que conserve únicamente los diccionarios que cumplan todas estas condiciones:
    - Que contengan las claves `"kw_h"` y `"activa"`.
    - Que `"kw_h"` sea un valor mayor que cero (`kw_h > 0`).
-   - Que la sesión esté marcada como activa (`activa == True`).
 3. **Extracción con Set y Dict Comprehensions:**
    - Genere un conjunto mediante **Set Comprehension** denominado `conectores_unicos` que contenga todos los tipos de conectores presentes en las sesiones válidas, eliminando duplicados implícitamente.
    - Genere un diccionario mediante **Dict Comprehension** denominado `resumen_kw` cuyas claves sean el `id_sesion` y cuyos valores sean los `kw_h` consumidos, incluyendo únicamente las sesiones cuyo consumo sea superior a 20 kWh.
@@ -72,9 +71,9 @@ Antes de procesar la facturación global, el lote de datos debe ser auditado par
 
 El sistema requiere funciones puras para agregar métricas de rendimiento y ordenar el flujo de trabajo sin alterar las estructuras de datos originales de la aplicación.
 
-#### Requerimientos:
+#### Se pide:
 1. **Diseñe la función `generar_informe_sesiones(titulo, *sesiones, **configuraciones)`.**
-   - La función debe aceptar un título posicional obligatorio, un número indeterminado de sesiones de carga (válidas) mediante `*args` y parámetros de configuración opcionales mediante `**kwargs` (por ejemplo, `moneda="Dolares"`, `pais="USA"`).
+   - La función debe aceptar un título posicional obligatorio, un número indeterminado de sesiones de carga (válidas) mediante `*args` y parámetros de configuración opcionales mediante `**kwargs` (por ejemplo, `moneda="Dolares"`).
    - **Regla de Inmutabilidad:** La función no debe modificar la lista original recibida
    - La función debe devolver una cadena formateada (utilizando **f-strings**) con el número de sesiones procesadas, el total acumulado de kWh, la duración media de las sesiones recibidas y los parámetros de configuración opcionales.
 2. **Cree una función que utilice funciones Lambda** (`map`, `filter`, `sorted`), tenga como parámetro `sesiones_validas` y haga lo siguiente:
@@ -100,7 +99,7 @@ RED_DISTRIBUCION = [
 ]
 ```
 
-#### Requerimientos:
+#### Se pide:
 1. **Implementación Recursiva de Aplanamiento y Suma (`calcular_potencia_recursiva`):** Escriba una función recursiva que reciba la estructura anidada y devuelva la **potencia total acumulada** en toda la jerarquía de la red sin utilizar la función built-in `sum()` ni bucles `for`/`while` para recorrer la profundidad.
 2. **Análisis de los Componentes Recursivos:** Identifique y comente en el código:
    - El **Caso Base:** Cuando la lista esté vacía o se evalúe un valor numérico directo.
@@ -111,18 +110,18 @@ RED_DISTRIBUCION = [
 
 ---
 
-### Apartado 5: Gestión Jerárquica de Excepciones y código robusto (2.5 Puntos)
+### Apartado 5: Gestión Jerárquica de Excepciones y código robusto (2 Puntos)
 
 Para evitar que un dato malformado detenga la ejecución del servidor central en producción, debe implementar una arquitectura de código robusta mediante captura de excepciones y clases personalizadas.
 
-#### Requerimientos:
+#### Se pide:
 1. **Jerarquía de Excepciones Personalizadas:** Defina la siguiente estructura de clases de excepción heredando de la clase base `Exception`:
    - `EcoChargeError(Exception)`: Excepción base para todos los errores de la plataforma.
    - `DatosCorruptosError(EcoChargeError)`: Se lanza cuando un registro carece de campos obligatorios.
    - `LecturaInvalidaError(EcoChargeError)`: Se lanza cuando los valores numéricos violan las reglas de negocio (ej. `kw_h < 0` o `duracion_min <= 0`).
 2. **Procesamiento de Registros con `raise ... from ...` y `assert`:**
    - Escriba la función `procesar_registro_individual(registro)`.
-   - Dentro de la función, utilice **`assert isinstance(registro, dict)`** para verificar como invariante de desarrollo que la entrada es un diccionario.
+   - Dentro de la función, utilice **`assert isinstance(registro, dict)`** para verificar que el dato de entrada es un diccionario.
    - Si faltan claves obligatorias (`"id_sesion"`, `"kw_h"`, `"duracion_min"`), capture el `KeyError` técnico y lance un `DatosCorruptosError` utilizando la sintaxis de encadenamiento de excepciones: **`raise DatosCorruptosError(...) from err`**.
    - Si los valores numéricos son negativos, lance un **`LecturaInvalidaError`** con un mensaje explicativo.
 3. **Bloque Completo `try-except-else-finally`:** Implemente la función `procesar_lote_telemetria(lote_registros)` que recorra todos los registros y contenga la estructura completa de gestión:
