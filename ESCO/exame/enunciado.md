@@ -32,11 +32,11 @@ Para garantizar la correcta tarificación de las recargas, el sistema debe evalu
 #### Se pide:
 1. **Función de Tarificación (`calcular_tarifa_kwh`):** Implemente una función que reciba el `conector` (cadena) y la `hora` del día (entero de 0 a 23).
    - Debe utilizar la estructura de selección múltiple **`match-case`** para clasificar según el conector:
-     - Si el conector es `"CCS2"` o `"CHADEMO"` (carga ultra-rápida): tarifa base de $0.45\text{ \$/kWh}$.
-     - Si el conector es `"MENNEKES"` (carga semi-rápida): tarifa base de $0.25\text{ \$/kWh}$.
-     - Si el conector es `"SCHUKO"` (carga lenta): tarifa base de $0.15\text{ \$/kWh}$. Si la hora está entre las 0 y las 6 (hora valle), aplique un descuento de $0.05\text{ \$/kWh}$ mediante una guarda (`if`).
+     - Si el conector es `"CCS2"` o `"CHADEMO"` (carga ultra-rápida): tarifa base de 0.45 \$/kWh.
+     - Si el conector es `"MENNEKES"` (carga semi-rápida): tarifa base de 0.25 \$/kWh.
+     - Si el conector es `"SCHUKO"` (carga lenta): tarifa base de 0.15 \$/kWh. Si la hora está entre las 0 y las 6 (hora valle), aplique un descuento de 0.05 \$/kWh mediante una guarda (`if`).
      - Para cualquier otro conector no reconocido, devuelva `None`.
-2. **Aplicación de Descuento por Cliente** (`calcular_precio_final`): Implemente una nueva función que llame a la anterior y utilice un **operador ternario** para calcular el precio final aplicable: si el tipo de cliente es `"VIP"` o `"FLOTA"`, el precio por kWh calculado tendrá un descuento del $10\%$; en caso contrario, se mantendrá el precio base.
+2. **Aplicación de Descuento por Cliente** (`calcular_precio_final`): Implemente una nueva función que llame a la anterior y utilice un **operador ternario** para calcular el precio final aplicable: si el tipo de cliente es `"VIP"` o `"FLOTA"`, el precio por kWh calculado tendrá un descuento del 10\%; en caso contrario, se mantendrá el precio base.
 
 ---
 
@@ -77,7 +77,7 @@ El sistema requiere funciones puras para agregar métricas de rendimiento y orde
    - **Regla de Inmutabilidad:** La función no debe modificar la lista original recibida
    - La función debe devolver una cadena formateada (utilizando **f-strings**) con el número de sesiones procesadas, el total acumulado de kWh, la duración media de las sesiones recibidas y los parámetros de configuración opcionales.
 2. **Cree una función que utilice funciones Lambda** (`map`, `filter`, `sorted`), tenga como parámetro `sesiones_validas` y haga lo siguiente:
-   - **Filtrado con `filter`:** Obtenga una lista de sesiones correspondientes a recargas de alta potencia ($\text{kWh} \ge 30.0$).
+   - **Filtrado con `filter`:** Obtenga una lista de sesiones correspondientes a recargas de alta potencia (kWh >= 30).
    - **Transformación con `map`:** Convierta la lista de sesiones filtradas en una lista de valores monetarios (coste total) aplicando la función de tarificación del Apartado 1.
    - **Ordenación Multicriterio con `sorted`:** Ordene la lista de sesiones válidas en orden descendente por energía consumida (`kw_h`) y, en caso de empate, en orden ascendente por duración (`duracion_min`).
 
