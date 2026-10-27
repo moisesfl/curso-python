@@ -1,8 +1,5 @@
 # Unidad 1: Fundamentos de la Programación Orientada a Objetos (POO) en Python
-
-> **Resultado de aprendizaje (RA1):**  
-> Caracteriza la programación orientada a objetos organizándolos y relacionándolos con el código para manejarlos.
-> 
+ 
 >  _Unidad teórica orientada a la comprensión de los fundamentos de la POO mediante ejemplos del mundo real y analogías con Python._
 
 - - -

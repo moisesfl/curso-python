@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud1_fundamentos_poo</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="unidad-1-fundamentos-de-la-programacion-orientada-a-objetos-poo-en-python">Unidad 1: Fundamentos de la Programación Orientada a Objetos (POO) en Python</h1>
+<blockquote>
+<p><em>Unidad teórica orientada a la comprensión de los fundamentos de la POO mediante ejemplos del mundo real y analogías con Python.</em></p>
+</blockquote>
+<hr />
+<h2 id="1-introduccion-a-la-programacion-orientada-a-objetos">1. Introducción a la Programación Orientada a Objetos</h2>
+<p>La <strong>Programación Orientada a Objetos (POO)</strong> surge como respuesta a la necesidad de <strong>modelar sistemas complejos</strong> de una forma más intuitiva.<br />
+A diferencia de la programación estructurada (centrada en funciones y datos), la POO organiza el código en <strong>entidades llamadas objetos</strong>, que combinan <strong>datos (atributos)</strong> y <strong>comportamientos (métodos)</strong>.</p>
+<h3 id="ejemplo-comparativo-del-mundo-real">Ejemplo comparativo del mundo real</h3>
+<p><strong>Ejemplo 1: Una receta de cocina</strong></p>
+<ul>
+<li>En programación estructurada, tendríamos funciones como <code>mezclar()</code>, <code>hornear()</code>, <code>servir()</code>, y variables sueltas con los ingredientes.</li>
+<li>En POO, el objeto sería una <strong>Receta</strong>, con atributos (<code>ingredientes</code>, <code>tiempo</code>, <code>temperatura</code>) y métodos (<code>preparar()</code>, <code>hornear()</code>, <code>servir()</code>).</li>
+</ul>
+<p><strong>Ejemplo 2: Fábrica de coches</strong></p>
+<ul>
+<li>Cada coche es un objeto que tiene atributos (<code>color</code>, <code>modelo</code>, <code>potencia</code>) y métodos (<code>acelerar()</code>, <code>frenar()</code>, <code>girar()</code>).</li>
+<li>La <strong>clase Coche</strong> es el molde general del que se fabrican todos los coches.</li>
+</ul>
+<h3 id="ventajas-de-la-poo">Ventajas de la POO</h3>
+<ul>
+<li>
+<p><strong>Organización:</strong> El código se agrupa en clases y objetos, facilitando su comprensión.</p>
+<blockquote>
+<p>Ejemplo: En un videojuego, todos los personajes heredan de una clase base <code>Personaje</code>, lo que evita duplicar código.</p>
+</blockquote>
+</li>
+<li>
+<p><strong>Claridad:</strong> Cada clase tiene responsabilidades claras y separadas.</p>
+<blockquote>
+<p>Ejemplo: La clase <code>Inventario</code> gestiona los objetos del jugador, y la clase <code>Mapa</code> gestiona el entorno.</p>
+</blockquote>
+</li>
+<li>
+<p><strong>Reutilización:</strong> Las clases pueden heredarse, extenderse y usarse en nuevos proyectos.</p>
+<blockquote>
+<p>Ejemplo: una clase <code>Vehículo</code> puede reutilizarse para crear <code>Coche</code>, <code>Moto</code>, o <code>Camión</code>.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="esquema-basico-uml-ascii">Esquema básico UML (ASCII)</h3>
+<pre><code>+--------------------------+
+|        Clase             |
++--------------------------+
+| - atributos              |
+| - propiedades            |
++--------------------------+
+| + métodos                |
+| + comportamientos        |
++--------------------------+
+            │
+            ▼
++--------------------------+
+|       Objeto             |
++--------------------------+
+| instancia de la clase    |
++--------------------------+
+</code></pre>
+<hr />
+<h2 id="2-concepto-de-objeto">2. Concepto de Objeto</h2>
+<p>Un <strong>objeto</strong> es una entidad que tiene:</p>
+<ul>
+<li><strong>Identidad:</strong> lo diferencia de otros objetos.</li>
+<li><strong>Estado</strong> → describe el objeto y su estado mediante los atributos.</li>
+<li><strong>Comportamiento</strong> → lo que puede hacer, que se implementa mediante métodos.</li>
+</ul>
+<h3 id="ejemplos-con-uml">Ejemplos con UML</h3>
+<p><strong>Ejemplo 1: Usuario de red social</strong></p>
+<pre><code>+----------------------------+
+| Usuario                   |
++----------------------------+
+| - nombre                   |
+| - foto                     |
+| - lista_amigos             |
++----------------------------+
+| + publicar()               |
+| + enviar_mensaje()         |
++----------------------------+
+</code></pre>
+<p><strong>Ejemplo 2: Archivo del sistema</strong></p>
+<pre><code>+----------------------------+
+| Archivo                   |
++----------------------------+
+| - nombre                   |
+| - tamaño                   |
+| - fecha_creación           |
++----------------------------+
+| + abrir()                  |
+| + borrar()                 |
++----------------------------+
+</code></pre>
+<p><strong>Ejemplo 3: Personaje de videojuego</strong></p>
+<pre><code>+----------------------------+
+| Personaje                 |
++----------------------------+
+| - vida                     |
+| - energía                  |
+| - nivel                    |
++----------------------------+
+| + atacar()                 |
+| + defender()               |
++----------------------------+
+</code></pre>
+<p><strong>Ejemplo 4: Cuenta Bancaria</strong></p>
+<pre><code>+----------------------------+
+| CuentaBancaria            |
++----------------------------+
+| - titular                  |
+| - saldo                    |
++----------------------------+
+| + ingresar()               |
+| + retirar()                |
++----------------------------+
+</code></pre>
+<hr />
+<h2 id="3-atributos-y-encapsulacion">3. Atributos y Encapsulación</h2>
+<p>Los <strong>atributos</strong> representan los datos que describen el estado de un objeto.</p>
+<h3 id="tipos-de-atributos">Tipos de atributos</h3>
+<ul>
+<li><strong>Públicos:</strong> accesibles desde cualquier parte.</li>
+<li><strong>Privados:</strong> solo accesibles dentro de la clase.</li>
+<li><strong>Protegidos:</strong> accesibles desde la clase y sus subclases.</li>
+</ul>
+<h3 id="ejemplos">Ejemplos</h3>
+<ol>
+<li><strong>Juego de rol:</strong> un personaje tiene <code>nombre</code>, <code>nivel</code>, <code>puntos_de_vida</code> y <code>experiencia</code>.</li>
+<li><strong>Empresa:</strong> un empleado tiene <code>nombre</code>, <code>sueldo</code>, <code>puesto</code>.</li>
+<li><strong>Tienda online:</strong> un producto tiene <code>nombre</code>, <code>precio</code>, <code>stock</code>.</li>
+<li><strong>Red social:</strong> un usuario tiene <code>nombre</code>, <code>email</code>, <code>número_de_amigos</code>.</li>
+</ol>
+<h3 id="encapsulacion">Encapsulación</h3>
+<p>La <strong>encapsulación</strong> protege los datos internos del objeto, impidiendo su modificación directa desde fuera.<br />
+Se accede a ellos mediante <strong>métodos getters y setters</strong>.</p>
+<p><strong>Ejemplo UML:</strong></p>
+<pre><code>+----------------------------+
+| CuentaBancaria            |
++----------------------------+
+| - titular                  |
+| - saldo                  |
++----------------------------+
+| + depositar()              |
+| + retirar()                |
+| + consultar_saldo()        |
++----------------------------+
+</code></pre>
+<hr />
+<h2 id="4-metodos">4. Métodos</h2>
+<p>Los <strong>métodos</strong> son las acciones que puede realizar un objeto.</p>
+<p><strong>Ejemplos:</strong></p>
+<ul>
+<li>En una <strong>bombilla</strong>, los métodos son <code>encender()</code> y <code>apagar()</code>.</li>
+<li>En una <strong>cuenta bancaria</strong>, <code>ingresar()</code> y <code>retirar()</code>.</li>
+<li>En un <strong>personaje de videojuego</strong>, <code>saltar()</code>, <code>atacar()</code>, <code>recuperar_vida()</code>.</li>
+<li>En un <strong>archivo</strong>, <code>abrir()</code>, <code>leer()</code>, <code>guardar()</code>, <code>cerrar()</code>.</li>
+</ul>
+<p>Los métodos permiten <strong>interactuar con los datos internos</strong> de un objeto de manera controlada.</p>
+<hr />
+<h2 id="5-clases-e-instancias">5. Clases e Instancias</h2>
+<p>Una <strong>clase</strong> es la plantilla general que define las características y comportamientos comunes de un conjunto de objetos.<br />
+Una <strong>instancia</strong> es un objeto concreto creado a partir de esa clase.</p>
+<p><strong>Ejemplo:</strong></p>
+<pre><code>Clase Coche
+ ├── Atributos: color, marca, modelo
+ └── Métodos: arrancar(), frenar()
+
+Objeto mi_coche
+ ├── color = rojo
+ ├── marca = Toyota
+ └── modelo = Corolla
+</code></pre>
+<h3 id="conceptos-avanzados">Conceptos avanzados</h3>
+<ul>
+<li><strong>Clases anidadas:</strong> clases definidas dentro de otras, útiles para estructuras lógicas.</li>
+<li><strong>Herencia:</strong> una clase puede heredar atributos y métodos de otra.</li>
+<li><strong>Sobreescritura de métodos:</strong> redefinir un método heredado para adaptarlo.</li>
+<li><strong>Sobrecarga de métodos:</strong> permitir varios métodos con el mismo nombre pero diferentes parámetros.</li>
+<li><strong>Polimorfismo:</strong> capacidad de un objeto para comportarse de diferentes maneras según el contexto.</li>
+<li><strong>Importación de clases:</strong> posibilidad de reutilizar clases definidas en otros módulos.</li>
+</ul>
+<h3 id="herencia-uml">Herencia UML</h3>
+<pre><code>+-------------------+
+| Animal            |
++-------------------+
+| + comer()         |
+| + dormir()        |
++-------------------+
+       ▲
+       │
++--------------+      +--------------+
+| Perro        |      | Gato         |
++--------------+      +--------------+
+| + ladrar()   |      | + maullar()  |
+| + comer()    |      | + comer()    |
++--------------+      +--------------+
+</code></pre>
+<h3 id="ejemplo-de-sobrescritura">Ejemplo de sobrescritura</h3>
+<pre><code class="language-python">class Animal:
+    def sonido(self):
+        print(&quot;Sonido genérico&quot;)
+
+class Perro(Animal):
+    def sonido(self):
+        print(&quot;Guau guau&quot;)
+</code></pre>
+<h3 id="ejemplo-de-sobrecarga-simulada">Ejemplo de sobrecarga (simulada)</h3>
+<pre><code class="language-python">class Calculadora:
+    def sumar(self, a, b, c=None):
+        return a + b if c is None else a + b + c
+</code></pre>
+<h3 id="ejemplo-de-polimorfismo">Ejemplo de polimorfismo</h3>
+<pre><code class="language-python">class Ave:
+    def volar(self): print(&quot;El ave vuela&quot;)
+
+class Pinguino(Ave):
+    def volar(self): print(&quot;El pingüino no vuela&quot;)
+
+for animal in [Ave(), Pinguino()]:
+    animal.volar()
+</code></pre>
+<hr />
+<h2 id="6-constructores">6. Constructores</h2>
+<p>El <strong>constructor</strong> es un tipo especial de método que <strong>se ejecuta automáticamente al crear un objeto</strong>.</p>
+<h3 id="ejemplo">Ejemplo</h3>
+<p>Cuando creamos un nuevo usuario en una aplicación, el constructor define su nombre, correo y estado inicial.</p>
+<h3 id="otros-ejemplos">Otros ejemplos</h3>
+<ul>
+<li>Crear una <strong>cuenta bancaria</strong> con saldo inicial.</li>
+<li>Crear un <strong>producto</strong> con su nombre y precio definidos.</li>
+<li>Crear un <strong>pedido</strong> con fecha y cliente asignados.</li>
+</ul>
+<hr />
+<h2 id="7-destructores">7. Destructores</h2>
+<p>El <strong>destructor</strong> (<code>__del__()</code>) se ejecuta cuando un objeto deja de existir.<br />
+Python incluye un <strong>recolector de basura (Garbage Collector)</strong> que destruye automáticamente los objetos no referenciados.</p>
+<pre><code class="language-python">class Archivo:
+    def __init__(self, nombre):
+        self.archivo = open(nombre, &quot;w&quot;)
+    def __del__(self):
+        self.archivo.close()
+        print(&quot;Archivo cerrado correctamente.&quot;)
+</code></pre>
+<hr />
+<h2 id="8-ortogonalidad-de-los-metodos">8. Ortogonalidad de los Métodos</h2>
+<p>La <strong>ortogonalidad</strong> implica que cada método cumpla una sola función y no dependa innecesariamente de otros.</p>
+<h3 id="buen-diseno">Buen diseño</h3>
+<pre><code>Clase Calculadora
+ ├── sumar()
+ ├── restar()
+ ├── multiplicar()
+ └── dividir()
+</code></pre>
+<h3 id="mal-diseno">Mal diseño</h3>
+<pre><code>Clase Calculadora
+ └── operar()  # hace todo, difícil de mantener
+</code></pre>
+<p><strong>Ejemplo adicional (web):</strong><br />
+<code>GestorUsuarios</code> con métodos separados <code>registrar()</code>, <code>autenticar()</code>, <code>cambiar_contraseña()</code>.</p>
+<p><strong>Ejemplo adicional (científico):</strong><br />
+<code>Simulacion</code> con <code>inicializar()</code>, <code>ejecutar()</code>, <code>guardar_resultados()</code>.</p>
+<h3 id="relacion-con-los-patrones-de-diseno">Relación con los patrones de diseño</h3>
+<p>Los <strong>patrones de diseño</strong> se basan en la ortogonalidad y la reutilización.<br />
+Se clasifican en:</p>
+<ul>
+<li><strong>Creacionales:</strong> Estos patrones proporcionan mecanismos de creación de objetos que incrementan la flexibilidad y la reutilización del código existente.<ul>
+<li><em><a href="https://refactoring.guru/es/design-patterns/singleton">Singleton</a></em></li>
+<li><em><a href="https://refactoring.guru/es/design-patterns/factory-method">Factory</a></em></li>
+</ul>
+</li>
+<li><strong>Estructurales:</strong> Estos patrones explican cómo ensamblar objetos y clases en estructuras más grandes, mientras se mantiene la flexibilidad y eficiencia de la estructura.<ul>
+<li><em><a href="https://refactoring.guru/es/design-patterns/adapter">Adapter</a></em></li>
+<li><em><a href="https://refactoring.guru/es/design-patterns/decorator">Decorator</a></em>.</li>
+</ul>
+</li>
+<li><strong>De comportamiento:</strong> cómo colaboran los objetos.<ul>
+<li><em><a href="https://refactoring.guru/es/design-patterns/observer">Observer</a></em></li>
+<li><em><a href="https://refactoring.guru/es/design-patterns/strategy">Strategy</a></em></li>
+</ul>
+</li>
+</ul>
+<p>Para consultar más información: <a href="url">https://refactoring.guru/es/design-patterns</a></p>
+<h4 id="patrones-de-diseno-en-python">Patrones de diseño en Python</h4>
+<h5 id="mas-utilizados-en-python">Más utilizados en Python</h5>
+<ul>
+<li><strong>Strategy</strong> — “muy común” en Python; usado para cambiar el comportamiento sin herencia * <strong>Factory Method</strong> — “ampliamente usado”; aporta flexibilidad al crear objetos.</li>
+<li><strong>Abstract Factory</strong> — “bastante común”; frecuente en frameworks para extender/customizar componentes.</li>
+<li><strong>Builder</strong> — “bien conocido” en el mundo Python; útil cuando hay muchas opciones de configuración.</li>
+<li><strong>Iterator</strong> — “muy común”; estándar para recorrer colecciones.</li>
+<li><strong>Observer</strong> — “bastante común”, especialmente en GUIs y sistemas basados en eventos.</li>
+<li><strong>Command</strong> — “bastante común”; alternativa a callbacks, colas de tareas, histórico de operaciones.</li>
+<li><strong>Chain of Responsibility</strong> — “bastante común” cuando encadenas manejadores/filtros.</li>
+<li><strong>Composite</strong> — “bastante común”; muy útil para jerarquías (UI, árboles, grafos).</li>
+<li><strong>Adapter</strong> — “bastante común”, sobre todo para integrar <strong>código legado</strong> con clases modernas.</li>
+<li><strong>Template Method</strong> — “bastante común” en frameworks para esqueleto de algoritmos con pasos sobreescribibles.</li>
+</ul>
+<h5 id="poco-usados-desaconsejados-en-python">Poco usados / desaconsejados en Python</h5>
+<ul>
+<li><strong>Singleton</strong> — muchos desarrolladores lo consideran <strong>antipatrón</strong>; su uso <strong>va a la baja</strong> en Python.</li>
+<li><strong>Visitor</strong> — <strong>no es muy común</strong> por su complejidad y aplicabilidad limitada.</li>
+<li><strong>Proxy</strong> — <strong>no es un invitado frecuente</strong> en la mayoría de apps Python (aunque útil en casos especiales).</li>
+<li><strong>Flyweight</strong> — su único fin es minimizar memoria; <strong>si no tienes problemas de RAM, puedes ignorarlo</strong> por ahora.</li>
+</ul>
+<hr />
+<h2 id="9-tipos-de-metodos">9. Tipos de Métodos</h2>
+<h3 id="clasificacion">Clasificación</h3>
+<table>
+<thead>
+<tr>
+<th>Tipo de método</th>
+<th>Descripción</th>
+<th>Ejemplo real</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Instancia</strong></td>
+<td>Actúan sobre un objeto concreto.</td>
+<td>Un coche arranca.</td>
+</tr>
+<tr>
+<td><strong>Clase</strong></td>
+<td>Actúan sobre la clase completa.</td>
+<td>Contar coches creados.</td>
+</tr>
+<tr>
+<td><strong>Estáticos</strong></td>
+<td>No dependen de ningún objeto, es decir, no hace falta crear un objeto para utilizarlos</td>
+<td>Calcular impuestos.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="setters-y-getters">Setters y Getters</h3>
+<p>Permiten <strong>leer y modificar</strong> atributos de forma controlada.</p>
+<ul>
+<li><strong>Getter:</strong> devuelve el valor de un atributo.</li>
+<li><strong>Setter:</strong> cambia el valor de un atributo.</li>
+</ul>
+<h3 id="mutadores-y-no-mutadores">Mutadores y No Mutadores</h3>
+<ul>
+<li><strong>Mutadores:</strong> modifican el estado del objeto (por ejemplo, <code>depositar_dinero()</code>).</li>
+<li><strong>No mutadores:</strong> no modifican el estado (por ejemplo, <code>consultar_saldo()</code>).</li>
+</ul>
+<hr />
+<h3 id="conclusion">Conclusión</h3>
+<p>La <strong>Programación Orientada a Objetos</strong> es una forma estructurada de pensar el software como un conjunto de <strong>entidades interconectadas</strong>.<br />
+Cada clase representa un concepto del mundo real, y los objetos son sus manifestaciones concretas.<br />
+Python simplifica la aplicación de estos principios gracias a su sintaxis clara, favoreciendo el desarrollo de programas <strong>modulares, mantenibles y reutilizables</strong>.</p>
+<p>Dominar la POO es el primer paso para comprender <strong>patrones de diseño</strong>, <strong>arquitecturas modernas</strong> y <strong>frameworks avanzados</strong> como Django o Flask.<br />
+Su comprensión es esencial para el desarrollo profesional en Python.</p>
+<hr />
+<p><strong>Bibliografía y recursos recomendados:</strong></p>
+<ul>
+<li><a href="https://refactoring.guru/es/design-patterns">Refactoring Guru – Patrones de Diseño</a></li>
+<li>Booch, G. (2007). <em>Object-Oriented Analysis and Design with Applications.</em></li>
+<li>Lutz, M. (2013). <em>Learning Python.</em> O’Reilly Media.</li>
+<li>Documentación oficial de Python: <a href="https://docs.python.org/es/3/">https://docs.python.org/es/3/</a></li>
+</ul>
+</body>
+</html>

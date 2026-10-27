@@ -2,38 +2,60 @@
 
 ##  Índice de contenidos
 
-*   [UD2 – Programación Orientada a Objetos con Python](#ud2-programacion-orientada-a-objetos-con-python)
-*   [Índice](#indice)
-*   [1️ Módulos y Paquetes](#1-modulos-y-paquetes)
-    *   [1.1. ¿Qué es un módulo?](#11-que-es-un-modulo)
-*   [2️ Clases en Python](#2-clases-en-python)
-    *   [2.1. Conceptos de la estructura de una clase](#21-conceptos-de-la-estructura-de-una-clase)
-    *   [2.3. Decoradores:](#23-decoradores)
-*   [3️ Herencia](#3-herencia)
-    *   [3.1. Características específicas de la herencia en Python](#31-caracteristicas-especificas-de-la-herencia-en-python)
-    *   [3.2. El constructor ysuper()](#32-el-constructor-ysuper)
-    *   [3.3. Sobrescritura de métodos (overriding)](#33-sobrescritura-de-metodos-overriding)
-    *   [3.4. Herencia múltiple](#34-herencia-multiple)
-    *   [3.5. Herencia jerárquica y en cadena](#35-herencia-jerarquica-y-en-cadena)
-    *   [3.6. Uso de isinstance() y issubclass()](#36-uso-deisinstanceyissubclass)
-    *   [3.7. Ejemplo de uso de las clases creadas](#37-ejemplo-de-uso-de-las-clases-creadas)
-*   [4️ Polimorfismo](#4-polimorfismo)
-    *   [4.1. Polimorfismo en Python](#41-polimorfismo-en-python)
-    *   [4.2. Polimorfismo mediante herencia](#42-polimorfismo-mediante-herencia)
-    *   [4.3. Polimorfismo con métodos redefinidos (\_\_str\_\_)](#43-polimorfismo-con-metodos-redefinidos-__str__)
-    *   [4.4. Polimorfismo sin herencia (duck typing)](#44-polimorfismo-sin-herencia-duck-typing)
-    *   [Este comportamiento se conoce como polimorfismo dinámico.](#este-comportamiento-se-conoce-comopolimorfismo-dinamico)
-*   [5️ Abstracción en Python](#5-abstraccion-en-python)
-    *   [5.1. Introducción teórica ](#51-introduccion-teorica)
-    *   [5.2. Clases abstractas](#52-clases-abstractas)
-    *   [5.3. Implementación de subclases concretas](#53-implementacion-de-subclases-concretas)
-*   [6️ Interfaces en Python (Protocol)](#6-interfaces-en-python-protocol)
-    *   [6.1. Conceptos](#61-conceptos)
-    *   [6.2. Contruyendo una interfaz](#62-contruyendo-una-interfaz)
-    *   [6.3. Combinación de abstracción e interfaz](#63-combinacion-de-abstraccion-e-interfaz)
-    *   [6.4 Ejemplo completo y output](#64-ejemplo-completo-y-output)
+- [UD2 – Programación Orientada a Objetos con Python](#ud2--programación-orientada-a-objetos-con-python)
+  - [Índice de contenidos](#índice-de-contenidos)
+- [1. Módulos y Paquetes](#1-módulos-y-paquetes)
+  - [1.1. ¿Qué es un módulo?](#11-qué-es-un-módulo)
+    - [**Cómo se importa:**](#cómo-se-importa)
+    - [1.2. Ejemplo de desarrollo y utilización de un módulo](#12-ejemplo-de-desarrollo-y-utilización-de-un-módulo)
+    - [1.3. Fichero principal de la aplicación  `if __name__ == __main__`](#13-fichero-principal-de-la-aplicación--if-__name__--__main__)
+    - [1.4. ¿Qué es un paquete y cómo se estructura un proyecto?](#14-qué-es-un-paquete-y-cómo-se-estructura-un-proyecto)
+    - [1.5. Actividad práctica](#15-actividad-práctica)
+- [2. Clases en Python](#2-clases-en-python)
+  - [2.1. Conceptos de la estructura de una clase](#21-conceptos-de-la-estructura-de-una-clase)
+    - [Ejemplo de clase](#ejemplo-de-clase)
+    - [Actividad propuesta](#actividad-propuesta)
+  - [2.3. Decoradores:](#23-decoradores)
+    - [Conceptos](#conceptos)
+    - [Decoradores en la definición de clases](#decoradores-en-la-definición-de-clases)
+      - [`@staticmethod`](#staticmethod)
+    - [`@classmethod`](#classmethod)
+- [3. Herencia](#3-herencia)
+  - [3.1. Características específicas de la herencia en Python](#31-características-específicas-de-la-herencia-en-python)
+  - [3.2. El constructor y `super()`](#32-el-constructor-y-super)
+  - [3.3. Sobrescritura de métodos (overriding)](#33-sobrescritura-de-métodos-overriding)
+  - [3.4. Herencia múltiple](#34-herencia-múltiple)
+  - [3.5. Herencia jerárquica y en cadena](#35-herencia-jerárquica-y-en-cadena)
+  - [3.6. Uso de `isinstance()` y `issubclass()`](#36-uso-de-isinstance-y-issubclass)
+  - [3.7. Ejemplo de uso de las clases creadas](#37-ejemplo-de-uso-de-las-clases-creadas)
+- [4. Polimorfismo](#4-polimorfismo)
+  - [4.1. Polimorfismo en Python](#41-polimorfismo-en-python)
+  - [4.2. Polimorfismo mediante herencia](#42-polimorfismo-mediante-herencia)
+    - [Uso polimórfico](#uso-polimórfico)
+  - [4.3. Polimorfismo con métodos redefinidos (`__str__`)](#43-polimorfismo-con-métodos-redefinidos-__str__)
+  - [4.4. Polimorfismo sin herencia (duck typing)](#44-polimorfismo-sin-herencia-duck-typing)
+  - [Este comportamiento se conoce como **polimorfismo dinámico**.](#este-comportamiento-se-conoce-como-polimorfismo-dinámico)
+- [5. Abstracción en Python](#5-abstracción-en-python)
+  - [5.1. Introducción teórica](#51-introducción-teórica)
+    - [Relación con el Principio de Inversión de Dependencias (D de SOLID)](#relación-con-el-principio-de-inversión-de-dependencias-d-de-solid)
+  - [5.2. Clases abstractas](#52-clases-abstractas)
+    - [Ejemplo técnico](#ejemplo-técnico)
+  - [5.3. Implementación de subclases concretas](#53-implementación-de-subclases-concretas)
+- [6. Interfaces en Python (Protocol)](#6-interfaces-en-python-protocol)
+  - [6.1. Conceptos](#61-conceptos)
+  - [6.2. Contruyendo una interfaz](#62-contruyendo-una-interfaz)
+  - [6.3. Combinación de abstracción e interfaz](#63-combinación-de-abstracción-e-interfaz)
+  - [6.4 Ejemplo completo y output](#64-ejemplo-completo-y-output)
+    - [Estructura del proyecto](#estructura-del-proyecto)
+    - [Fichero `vehiculos/base.py`](#fichero-vehiculosbasepy)
+    - [Fichero `vehiculos/clases.py`](#fichero-vehiculosclasespy)
+    - [Fichero `vehiculos/interfaces.py`](#fichero-vehiculosinterfacespy)
+    - [Fichero `vehiculos/__init__.py`](#fichero-vehiculos__init__py)
+    - [Fichero `main.py`](#fichero-mainpy)
+    - [Explicación](#explicación)
+    - [Ejecución y salida esperada](#ejecución-y-salida-esperada)
 
-# 1️ Módulos y Paquetes
+# 1. Módulos y Paquetes
 
 ## 1.1. ¿Qué es un módulo?
 
@@ -295,12 +317,12 @@ def main() -> None:
     try:
         area_circulo(-1)  # Radio negativo -> debe disparar ValueError
     except ValueError as e:
-        print(f"  ✔️ Error controlado al calcular área de círculo: {e}")
+        print(f"   Error controlado al calcular área de círculo: {e}")
 
     try:
         area_rectangulo(3, -4)  # Lado negativo -> debe disparar ValueError
     except ValueError as e:
-        print(f"  ✔️ Error controlado al calcular área de rectángulo: {e}")
+        print(f"   Error controlado al calcular área de rectángulo: {e}")
 
     print("\nFin de la demostración.")
 
@@ -314,7 +336,7 @@ if __name__ == "__main__":
 
 - - -
 
-# 2️ Clases en Python
+# 2. Clases en Python
 
 ## 2.1. Conceptos de la estructura de una clase
 
@@ -401,18 +423,18 @@ class Vehiculo:
     def encender(self):
         """Cambia el estado del vehículo a encendido."""
         if self._encendido:
-            print("⚠️ El vehículo ya está encendido.")
+            print("El vehículo ya está encendido.")
         else:
             self._encendido = True
-            print("🔑 Vehículo encendido.")
+            print("Vehículo encendido.")
 
     def apagar(self):
         """Cambia el estado del vehículo a apagado."""
         if not self._encendido:
-            print("⚠️ El vehículo ya está apagado.")
+            print("El vehículo ya está apagado.")
         else:
             self._encendido = False
-            print("🛑 Vehículo apagado.")
+            print("Vehículo apagado.")
 
     # ========================
     #   MÉTODO ESTÁTICO
@@ -561,7 +583,7 @@ Declara un **método de clase**: recibe `cls` (la propia clase) en lugar de `sel
 
 - - -
 
-# 3️ Herencia
+# 3. Herencia
 
 ## 3.1. Características específicas de la herencia en Python
 
@@ -708,7 +730,7 @@ Actualmente existen 4 vehículos registrados.
 
 - - -
 
-# 4️ Polimorfismo
+# 4. Polimorfismo
 
 ## 4.1. Polimorfismo en Python
 
@@ -827,9 +849,9 @@ El patinete eléctrico acelera suavemente.
 
 ## Este comportamiento se conoce como **polimorfismo dinámico**.
 
-# 5️ Abstracción en Python
+# 5. Abstracción en Python
 
-## 5.1. Introducción teórica 📝
+## 5.1. Introducción teórica 
 
 La **abstracción** es uno de los cuatro pilares de la Programación Orientada a Objetos (POO), junto con la encapsulación, la herencia y el polimorfismo.
 
@@ -921,7 +943,7 @@ class Camion(Vehiculo):
 
 - - -
 
-# 6️ Interfaces en Python (Protocol)
+# 6. Interfaces en Python (Protocol)
 
 ## 6.1. Conceptos
 
