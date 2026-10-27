@@ -88,7 +88,7 @@ mi_proyecto_calculadora/
 
 ```
 
-**Fichero `operaciones.py` con operaciones matemáticas** :
+**Fichero `calculadora.py` con operaciones matemáticas** :
 
 Este es el fichero en el que se encuentra lo que queremos importar para ser utilizado en la aplicación desde el fichero principal.
 
