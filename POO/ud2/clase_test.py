@@ -9,7 +9,7 @@ class Vehiculo:
     # Atributo de clase (compartido por todas las instancias)
     total_vehiculos = 0
 
-    def __init__(self, marca, modelo, color, velocidad_maxima, combustible):
+    def __init__(self, marca, modelo, color, velocidad_maxima, combustible= None):
         """
         Método constructor (__init__):
         Se ejecuta automáticamente al crear un nuevo objeto Vehiculo.
@@ -74,9 +74,6 @@ class Vehiculo:
         else:
             raise ValueError ("El nombre debe ser un string") 
 
-        
-
-    
 
     # ========================
     #   MÉTODOS DE INSTANCIA
@@ -97,6 +94,9 @@ class Vehiculo:
         else:
             self._encendido = False
             print("Vehículo apagado.")
+
+    def arrancar(self):
+        print("El vehículo ha arrancado.")
 
     # ========================
     #   MÉTODO ESTÁTICO
@@ -134,8 +134,71 @@ class Vehiculo:
         """
         estado = "Encendido" if self._encendido else "Apagado"
         return (f"[Vehículo] Marca: {self._marca} | Modelo: {self._modelo} | "
-                f"Color: {self._color} | Velocidad Máxima: {self._velocidad_maxima} km/h | Estado: {estado}")
+                f"Color: {self._color} | Velocidad Máxima: {self._velocidad_maxima} km/h | Estado: {estado}"
+                f" |Combustible: {self._combustible}")
+
+
+
+
+class Coche(Vehiculo):
+    def __init__(self, marca, modelo, color, velocidad_maxima, puertas):
+        # Inicializa atributos heredados
+        super().__init__(
+            marca, modelo, color, velocidad_maxima
+        )  # No es necesario pasarle el atributo "combusitble" porque tiene por defecto valor None, si no si que habría que incluirlo aquí
+        # Inicializa atributos propios
+        self._puertas = puertas
+
+    def __str__(self):
+        # Reutiliza la representación base y la amplía
+        return super().__str__() + f" | Puertas: {self._puertas}"
+
+
+
+# Clase que va a ser utilizada para herencia
+class Registrable:
+    def registrar(self):
+        print("Registro en DGT completado.")
+
+# Clase que va a ser utilizada para herencia
+class MantenimientoProgramado:
+    def programar_revision(self, km):
+        print(f"Revisión programada a los {km} km.")
     
+
+# Clase que hereda
+class Camion(Vehiculo, Registrable, MantenimientoProgramado):
+    def __init__(self, marca, modelo, color, velocidad_maxima, carga_maxima):
+        super().__init__(marca, modelo, color, velocidad_maxima)
+        self._carga_maxima = carga_maxima
+
+    def __str__(self):
+        return super().__str__() + f" | Carga máxima: {self._carga_maxima} kg"
+
+#la clase Moto como no tiene método __init__ , se usa directamente el constructor de la clase padre
+class Moto(Vehiculo):
+    def hacer_caballito(self):
+        print(f"La moto {self.get_marca()} está haciendo un caballito.")
+
+    def arrancar(self):
+        print("La moto ruge al arrancar.")
+
+class MotoDeportiva(Moto):
+    def __init__(self, marca, modelo, color, velocidad_maxima, electronica_avanzada=True):
+        super().__init__(marca, modelo, color, velocidad_maxima)
+        self._electronica_avanzada = electronica_avanzada
+
+    def __str__(self):
+        return super().__str__() + (" | Electrónica avanzada" if self._electronica_avanzada else " | Sin electronica")
+
+
+
+class Bicicleta:
+    def arrancar(self):
+        print("La bicicleta comienza a pedalear.")
+
+
+
 
 # ========================
 #   BLOQUE DE PRUEBA (solo se ejecuta si el archivo se ejecuta directamente)
@@ -164,3 +227,42 @@ if __name__ == "__main__":
 
     # Método de clase: mostrar cuántos vehículos se han creado
     Vehiculo.mostrar_total_vehiculos()
+
+
+    coche1 = Coche("Toyota", "Corolla", "Rojo", 180,"3")
+    print (coche1.__str__())
+
+    camion1 = Camion("Volvo", "x40", "Rojo", 180,"20.000")
+    print(camion1.__str__())
+    print (Camion.__mro__)
+    camion1.registrar()
+
+    #error
+    #moto1 = Moto()
+    moto1 = Moto("Yamaha", "MT-07", "Azul", 200)
+    moto1.hacer_caballito()
+    print(moto1.get_color)
+
+    motogp = MotoDeportiva("Honda", "gsx", "Azul", 200)
+    print(motogp.__str__())
+
+
+    c = Coche("Seat", "Ibiza", "Azul", 180, 5)
+    print(isinstance(c, Vehiculo))   # True: instancia perteneciente a una subclase de Vehiculo
+    print(issubclass(Coche, Vehiculo))  # True: Coche es una subclase de Vehiculo
+
+
+    ##Uso polimórfico
+    def iniciar_vehiculo(vehiculo : Vehiculo):
+        # Puede recibir cualquier objeto que tenga el método arrancar()
+        vehiculo.arrancar()
+
+    coche1.arrancar()
+    moto1.arrancar()
+    iniciar_vehiculo(camion1)
+
+
+    print(coche1)
+
+    iniciar_vehiculo(Bicicleta())
+

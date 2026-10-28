@@ -588,7 +588,7 @@ Declara un **método de clase**: recibe `cls` (la propia clase) en lugar de `sel
 ## 3.1. Características específicas de la herencia en Python
 
 *   Puede ser **simple o múltiple** (cuando mezclas varios padres).
-*   `super()` llama ordenadamente a los métodos del padre según el **MRO**.
+*   `super()` llama ordenadamente a los métodos del padre según el **MRO** (Orden de Resolución de Métodos).
 *   Usa **mixins** para añadir “superpoderes” pequeños a varias clases.
 *   **Principios SOLID**: En el contexto de buenas prácticas de diseño, los principios SOLID sirven como guía para escribir software mantenible y escalable. En particular, el **Principio de Sustitución de Liskov (LSP)** establece que: _si S es una subclase de T, entonces los objetos de tipo T pueden ser reemplazados por objetos de tipo S sin alterar las propiedades deseables del programa_.
 
