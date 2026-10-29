@@ -16,9 +16,9 @@ mi_proyecto_zoo/
 ├─ zoo/
 │  ├─ __init__.py            # Re-exporta la API pública
 │  ├─ base.py                # ABC: Animal
-│  ├─ clases.py              # Subclases concretas (Perro, Aguila, Serpiente...)
+│  ├─ clases.py              # Subclases concretas (Perro, Aguila, Serpiente)
 │  ├─ interfaces.py          # Protocol: Sonoro, Alimentable (runtime_checkable)
-│  ├─ utils.py               # Utilidades (estáticas) y factorías (classmethod)
+│  ├─ utils.py               # Utilidades (estáticas)
 │  └─ excepciones.py         # Excepciones específicas del dominio
 │
 └─ main.py                   # Demostración (punto de entrada con __main__)
@@ -34,15 +34,15 @@ mi_proyecto_zoo/
     *   Métodos abstractos:
         *   `moverse() -> None`,
         *   `getTipo() -> str`: devuelve la raza dentro de la especie del animal.
+
     *   `__str__()` sobrescrito indicando:
         *   clase a la que pertenece el objeto, especie, peso y edad.
-    *   Método de generación de animales `parir()` (nacimientos) abstracto y estático que cuando se implemente:
-        *   El peso se genere aleatoreamente dentro de un rango según el animal.
-        *   La raza (tipo) se genere aleatoriamente dentro de una lista.
-*   **Subclases** de _Animal_ en `clases.py` (al menos 3): `Perro`, `Aguila`, `Serpiente`.
+    *   Método de generación de animales `parir()` (nacimientos) abstracto y estático, que cuando se implemente permita retornar una nueva instancia de la clase animal correspondiente.
+.
+*   **Subclases** de _Animal_ en `clases.py`: `Perro`, `Aguila`, `Serpiente`.
     
     *   Implementan atributos específicos.
-        *   Por ejemplo raza, patas, ojos, tipocola, etc.
+        *   Por ejemplo raza, patas, embergadura, venenosa, etc.
     *   Sobrescriben `moverse()` y `tipo()`.
     *   Implementan (si procede) métodos específicos (p. ej., `volar()` en `Aguila`).
 *   **Interfaces (Protocol)** en `interfaces.py` con `@runtime_checkable`:
@@ -103,8 +103,7 @@ Envergadura: 60.5 cm
 Clase <class 'zoo.clases.Aguila'>: nombre Fénix, especie Aguila, peso 15.0 kg, edad 5 años, envergadura 60.5 cm
 Este animal es de la subespecie Imperial
  ...batir alas...   ...ascendiendo...   ...planeando alto...
- IIIIIII-III!! (grito fuerte al lanzarse en picado)
- ¡IIIIIIIIHHHHH! (ruge triunfante, saciada y poderosa)
+ ¡IIIIIIIIHHHHH! (sonido agudo y penetrante)
 Peso: 15.0
 ¿Cómo está de peso este animal?: alto
 
@@ -113,8 +112,7 @@ Envergadura: 15 cm
 Clase <class 'zoo.clases.Aguila'>: nombre Águila recién nacida, especie Aguila, peso 2 kg, edad 0 años, envergadura 15 cm
 Este animal es de la subespecie Calva
  ...batir alas...   ...ascendiendo...   ...planeando alto...
-IIIIIII-III!! (grito fuerte al lanzarse en picado)
-¡IIIIIIIIHHHHH! (ruge triunfante, saciada y poderosa)
+¡IIIIIIIIHHHHH! (sonido agudo y penetrante)
 Peso: 2
 ¿Cómo está de peso este animal?: bajo
 
@@ -124,7 +122,6 @@ Clase <class 'zoo.clases.Perro'>: nombre Calcetines, especie Perro, peso 20.3 kg
 Este animal es de la subespecie Pastor Alemán
 ...corre...  ...salta...  ...mueve la cola...  ¡Guau guau!
 ¡GUAU GUAU GUAU! (ladrido fuerte de alerta)
-¡BURP! (come demasiado y se tumba satisfecho)
 Peso: 20.3
 ¿Cómo está de peso este animal?: bajo
 
@@ -134,7 +131,6 @@ Clase <class 'zoo.clases.Perro'>: nombre Perro recién nacido, especie Perro, pe
 Este animal es de la subespecie Bichón Maltés
 ...corre...  ...salta...  ...mueve la cola...  ¡Guau guau!
 ¡GUAU GUAU GUAU! (ladrido fuerte de alerta)
-¡BURP! (come demasiado y se tumba satisfecho)
 Peso: 2
 ¿Cómo está de peso este animal?: bajo
 
@@ -144,7 +140,6 @@ Clase <class 'zoo.clases.Serpiente'>: nombre Sisosa, especie Serpiente, peso 5.8
 Este animal es de la subespecie Culebra
 ...se desliza...  ...repta entre las rocas...  ...saca la lengua...  sss...
 SSSSSSS! (siseo fuerte, en actitud defensiva)
-¡sssssss~! (come demasiado y se queda inmóvil digiriendo)
 Peso: 5.8
 ¿Cómo está de peso este animal?: alto
 
@@ -154,7 +149,6 @@ Clase <class 'zoo.clases.Serpiente'>: nombre Serpiente recién nacida, especie S
 Este animal es de la subespecie Anaconda
 ...se desliza...  ...repta entre las rocas...  ...saca la lengua...  sss...
 SSSSSSS! (siseo fuerte, en actitud defensiva)
-¡sssssss~! (come demasiado y se queda inmóvil digiriendo)
 Peso: 2
 ¿Cómo está de peso este animal?: bajo
 
@@ -163,13 +157,13 @@ Peso: 2
 
 - - -
 
-## 2️⃣ Ejercicio B — Vivero (Plantas)
+## 2️. Ejercicio B — Vivero (Plantas)
 
-### 🎯 Enunciado
+### Enunciado
 
 Cree un paquete `botanica` para gestionar diferentes **plantas** en un vivero. Modele una jerarquía con una **clase abstracta** `Planta` y subclases concretas. Añada un **Protocol** para objetos **regables** y utilidades estáticas para validar **estacionalidad** y **riego**.
 
-### 📁 Estructura del proyecto (propuesta)
+### Estructura del proyecto (propuesta)
 
 ```
 mi_proyecto_botanica/
@@ -185,14 +179,14 @@ mi_proyecto_botanica/
 └─ main.py
 ```
 
-### 🧩 Requisitos funcionales y técnicos
+### Requisitos funcionales y técnicos
 
 *   **Clase abstracta `Planta`** con:
     *   Atributos: `_especie: str`, `_altura_cm: float`, `_perenne: bool` (validación: `altura_cm >= 0`).
     *   Métodos abstractos: `crecer(cm: float) -> None`, `tipo() -> str`.
     *   `__str__()` descriptivo.
     *   Método de clase estático `crearPlantaAleatoria()`.
-*   **Subclases**: `Arbol`, `Planta Herbácea`, `Hierba`.
+*   **Subclases**: `Arbol`, `Arbusto`, `Hierba`.
 *   **Protocol `Regable`** con `regar(litros: float) -> None` (validar `litros > 0`).
     *   **Implementación**: todas las plantas implementan `Regable`.
 *   **`utils.py`**:
@@ -204,13 +198,13 @@ mi_proyecto_botanica/
 
 - - -
 
-## 3️⃣ Ejercicio C — Aeronáutica (Aeronaves)
+## 3️. Ejercicio C — Aeronáutica (Aeronaves)
 
-### 🎯 Enunciado
+### Enunciado
 
 Desarrolle un paquete `aeronaves` para gestionar diferentes **aeronaves**. Modele una **clase abstracta** `Aeronave` y subclases concretas con capacidades de **despegue/aterrizaje**. Añada protocolos de **repostaje** y **mantenimiento** y utilidades para cálculo de **autonomía**.
 
-### 📁 Estructura del proyecto (propuesta)
+### Estructura del proyecto (propuesta)
 
 ```
 mi_proyecto_aeronautica/
@@ -226,7 +220,7 @@ mi_proyecto_aeronautica/
 └─ main.py
 ```
 
-### 🧩 Requisitos funcionales y técnicos
+### Requisitos funcionales y técnicos
 
 *   **ABC `Aeronave`** con:
     *   Atributos: `_matricula: str`, `_capacidad_combustible_l: float`, `_consumo_l_h: float` (validación: valores > 0).
