@@ -15,9 +15,23 @@ class Vehiculo(ABC):
     def arreglar(self):
         pass
 
+##INTERFACES
+from typing import Protocol, runtime_checkable
+
+@runtime_checkable
+class Repostable(Protocol):
+    """
+    Interfaz que define la capacidad de repostar.
+    Cualquier clase que implemente 'repostar()' se considera Repostable.
+    """
+    def repostar(self, litros: float) -> None:
+        print("REPOSTAR")
+        ...
+
+
 
 # 2. Creamos una clase hija concreta: Coche
-class Coche(Vehiculo):
+class Coche(Vehiculo, Repostable):
     def __init__(self, marca, modelo, puertas):
         super().__init__(marca, modelo)
         self.puertas = puertas
@@ -35,20 +49,11 @@ class Moto(Vehiculo):
     def arreglar(self):
         print(f"⚙️ Ajustando y engrasando la cadena de la moto {self.marca} {self.modelo}.")
 
+    def repostar(self, litros:float):
+        print("se ha repostado")
+        
 
-##INTERFACES
 
-import dis
-from typing import Protocol, runtime_checkable
-
-@runtime_checkable
-class Repostable(Protocol):
-    """
-    Interfaz que define la capacidad de repostar.
-    Cualquier clase que implemente 'repostar()' se considera Repostable.
-    """
-    def repostar(self, litros: float) -> None:
-        print (f"Se han repostado {litros} l") 
 
 
 # # Extensiones con la interfaz Repostable
@@ -63,7 +68,7 @@ class Repostable(Protocol):
 # Esta función exige que el objeto cumpla con el protocolo 'Arrancable'
 def iniciar_operacion(dispositivo: Repostable):
     if (isinstance(dispositivo, Repostable)):
-        dispositivo.repostar()
+        dispositivo.repostar(33)
     else:
         raise TypeError(f"Error: El objeto de tipo '{type(dispositivo).__name__}")
     
@@ -72,6 +77,8 @@ def iniciar_operacion(dispositivo: Repostable):
 def pruebas():
     # Esto fallará con un TypeError porque Vehiculo es abstracta
     #mi_vehiculo = Vehiculo("Generic", "X") 
+    coche1 =Coche("VW", "T4", 4)
+    iniciar_operacion(coche1)
     mr = Moto("ddddddd", "sdf")
     iniciar_operacion(mr)
     #mr.repostar()
