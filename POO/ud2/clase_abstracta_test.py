@@ -54,17 +54,6 @@ class Moto(Vehiculo):
         
 
 
-
-
-# # Extensiones con la interfaz Repostable
-# class CocheRepostable(Coche, Repostable):
-#     def repostar(self, litros: float):
-#         print(f"El coche {self._marca} ha repostado {litros} litros de gasolina.")
-
-# class MotoRepostable(Moto, Repostable):
-#     pass
-
-
 # Esta función exige que el objeto cumpla con el protocolo 'Arrancable'
 def iniciar_operacion(dispositivo: Repostable):
     if (isinstance(dispositivo, Repostable)):

@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud2_ejercicios</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="boletin-de-ejercicios-ud2-programacion-orientada-a-objetos-python">Boletín de Ejercicios — UD2: Programación Orientada a Objetos (Python)</h1>
+<hr />
+<h2 id="1-ejercicio-a-zoologico-animales">1️. Ejercicio A — Zoológico (Animales)</h2>
+<h3 id="enunciado">Enunciado</h3>
+<p>Implemente un paquete <code>zoo</code> para gestionar animales de un pequeño zoológico. Debe modelar la jerarquía de <strong>animales</strong> con una <strong>clase base abstracta</strong> y varias subclases. Añada una <strong>interfaz estructural</strong> (Protocol) para animales que pueden ser <strong>alimentados</strong> y otra para animales que pueden <strong>emitir sonido</strong>.</p>
+<h3 id="estructura-del-proyecto-propuesta">Estructura del proyecto (propuesta)</h3>
+<pre><code>mi_proyecto_zoo/
+│
+├─ zoo/
+│  ├─ __init__.py            # Re-exporta la API pública
+│  ├─ base.py                # ABC: Animal
+│  ├─ clases.py              # Subclases concretas (Perro, Aguila, Serpiente)
+│  ├─ interfaces.py          # Protocol: Sonoro, Alimentable (runtime_checkable)
+│  ├─ utils.py               # Utilidades (estáticas)
+│  └─ excepciones.py         # Excepciones específicas del dominio
+│
+└─ main.py                   # Demostración (punto de entrada con __main__)
+</code></pre>
+<h3 id="requisitos-funcionales-y-tecnicos">Requisitos funcionales y técnicos</h3>
+<ul>
+<li>
+<p><strong>Clase abstracta <code>Animal</code></strong> en el fichero <code>base.py</code> con:</p>
+<ul>
+<li>Atributos protegidos:<ul>
+<li><code>nombre</code>, <code>_especie: str</code>, <code>_peso_kg: float</code>, <code>_edad: int</code> .</li>
+<li>Hacer comprobación de validez (peso y edad deben tener valores positivos). Verificar utilizando los setters de la clase.</li>
+</ul>
+</li>
+<li>
+<p>Métodos abstractos:</p>
+<ul>
+<li><code>moverse() -&gt; None</code>,</li>
+<li><code>getTipo() -&gt; str</code>: devuelve la raza dentro de la especie del animal.</li>
+</ul>
+</li>
+<li>
+<p><code>__str__()</code> sobrescrito indicando:</p>
+<ul>
+<li>clase a la que pertenece el objeto, especie, peso y edad.</li>
+</ul>
+</li>
+<li>Método de generación de animales <code>parir()</code> (nacimientos) abstracto y estático, que cuando se implemente permita retornar una nueva instancia de la clase animal correspondiente.
+.</li>
+<li>
+<p><strong>Subclases</strong> de <em>Animal</em> en <code>clases.py</code>: <code>Perro</code>, <code>Aguila</code>, <code>Serpiente</code>.</p>
+</li>
+<li>
+<p>Implementan atributos específicos.</p>
+<ul>
+<li>Por ejemplo raza, patas, envergadura, venenosa, etc.</li>
+</ul>
+</li>
+<li>Sobrescriben <code>moverse()</code> y <code>tipo()</code>.</li>
+<li>Implementan (si procede) métodos específicos (p. ej., <code>volar()</code> en <code>Aguila</code>).</li>
+<li>
+<p><strong>Interfaces (Protocol)</strong> en <code>interfaces.py</code> con <code>@runtime_checkable</code>:</p>
+</li>
+<li>
+<p><code>Sonoro</code> con <code>hacerSonido() -&gt; None</code>.</p>
+</li>
+<li><code>Alimentable</code> con <code>alimentar(kg: float) -&gt; None</code><ul>
+<li>valida <code>kg &gt; 0</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>utils.py</code></strong>:</p>
+</li>
+<li>
+<p>Clase con métodos estáticos para diferentes funcionalidades como por ejemplo el comentado a continuación.</p>
+</li>
+<li><code>es_peso_saludable</code> indica si un peso determinado para un tipo de animal con una edad determinada es sano, devolviendo si está por debajo o por arriba del valor adecuado.</li>
+<li><strong>Excepciones</strong> en <code>excepciones.py</code> (p. ej., <code>PesoInvalido</code>, <code>EdadInvalida</code>).</li>
+</ul>
+</li>
+<li>
+<p><strong><code>__init__.py</code></strong>: permite el acceso a <code>Animal</code>, subclases e interfaces vía <code>__all__</code>.</p>
+</li>
+<li>
+<p><strong><code>main.py</code></strong>:</p>
+<ul>
+<li>Usa <code>if __name__ == "__main__":</code>.</li>
+<li>Crea una lista heterogénea de animales, recorre e imprime <code>__str__</code>, llama polimórficamente a <code>moverse()</code> y, si <code>isinstance(x, Sonoro)</code>, muestra <code>x.sonido()</code>; si <code>isinstance(x, Alimentable)</code>, <code>x.alimentar(kg)</code>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="uml-ascii">UML (ASCII)</h3>
+<p><strong>Clase base "Animal":</strong></p>
+<pre><code>+----------------------------------------------------+
+|                    &lt;&lt;abstract&gt;&gt;                    |
+|                       Animal                       |
++----------------------------------------------------+
+| # total_animales: int {static}                     |
+| - _nombre: str                                     |
+| - _especie: str                                    |
+| - _peso: float                                     |
+| - _edad: int                                       |
++----------------------------------------------------+
+| + __init__(nombre: str, especie: str,              |
+|            peso: float, edad: int)                 |
+| + getNombre() : str                                |
+| + setNombre(nombre: str) : None                    |
+| + getEspecie() : str                               |
+| + setEspecie(especie: str) : None                  |
+| + getPeso() : float                                |
+| + setPeso(peso: float) : None                      |
+| + getEdad() : int                                  |
+| + setEdad(edad: int) : None                        |
+| + __str__() : str                                  |
+| # moverse() : None {abstract}                      |
+| # getTipo() : str {abstract}                       |
+| # parirAnimal() : None {abstract, static}          |
++----------------------------------------------------+
+</code></pre>
+<h3 id="ejemplo-de-salida">Ejemplo de salida</h3>
+<pre><code>#### Fénix    ####
+Envergadura: 60.5 cm
+Clase &lt;class 'zoo.clases.Aguila'&gt;: nombre Fénix, especie Aguila, peso 15.0 kg, edad 5 años, envergadura 60.5 cm
+Este animal es de la subespecie Imperial
+ ...batir alas...   ...ascendiendo...   ...planeando alto...
+ ¡IIIIIIIIHHHHH! (sonido agudo y penetrante)
+Peso: 15.0
+¿Cómo está de peso este animal?: alto
+
+#### Águila recién nacida    ####
+Envergadura: 15 cm
+Clase &lt;class 'zoo.clases.Aguila'&gt;: nombre Águila recién nacida, especie Aguila, peso 2 kg, edad 0 años, envergadura 15 cm
+Este animal es de la subespecie Calva
+ ...batir alas...   ...ascendiendo...   ...planeando alto...
+¡IIIIIIIIHHHHH! (sonido agudo y penetrante)
+Peso: 2
+¿Cómo está de peso este animal?: bajo
+
+#### Calcetines    ####
+La raza del perro es: Pastor Alemán
+Clase &lt;class 'zoo.clases.Perro'&gt;: nombre Calcetines, especie Perro, peso 20.3 kg, edad 8 años, raza Pastor Alemán
+Este animal es de la subespecie Pastor Alemán
+...corre...  ...salta...  ...mueve la cola...  ¡Guau guau!
+¡GUAU GUAU GUAU! (ladrido fuerte de alerta)
+Peso: 20.3
+¿Cómo está de peso este animal?: bajo
+
+#### Perro recién nacido    ####
+La raza del perro es: Bichón Maltés
+Clase &lt;class 'zoo.clases.Perro'&gt;: nombre Perro recién nacido, especie Perro, peso 2 kg, edad 0 años, raza Bichón Maltés
+Este animal es de la subespecie Bichón Maltés
+...corre...  ...salta...  ...mueve la cola...  ¡Guau guau!
+¡GUAU GUAU GUAU! (ladrido fuerte de alerta)
+Peso: 2
+¿Cómo está de peso este animal?: bajo
+
+#### Sisosa    ####
+¿Es venenosa esta serpiente? False
+Clase &lt;class 'zoo.clases.Serpiente'&gt;: nombre Sisosa, especie Serpiente, peso 5.8 kg, edad 3 años, venenosaa False 
+Este animal es de la subespecie Culebra
+...se desliza...  ...repta entre las rocas...  ...saca la lengua...  sss...
+SSSSSSS! (siseo fuerte, en actitud defensiva)
+Peso: 5.8
+¿Cómo está de peso este animal?: alto
+
+#### Serpiente recién nacida    ####
+¿Es venenosa esta serpiente? True
+Clase &lt;class 'zoo.clases.Serpiente'&gt;: nombre Serpiente recién nacida, especie Serpiente, peso 2 kg, edad 4 años, venenosaa True 
+Este animal es de la subespecie Anaconda
+...se desliza...  ...repta entre las rocas...  ...saca la lengua...  sss...
+SSSSSSS! (siseo fuerte, en actitud defensiva)
+Peso: 2
+¿Cómo está de peso este animal?: bajo
+
+
+</code></pre>
+<hr />
+<h2 id="2-ejercicio-b-vivero-plantas">2️. Ejercicio B — Vivero (Plantas)</h2>
+<h3 id="enunciado_1">Enunciado</h3>
+<p>Cree un paquete <code>botanica</code> para gestionar diferentes <strong>plantas</strong> en un vivero. Modele una jerarquía con una <strong>clase abstracta</strong> <code>Planta</code> y subclases concretas. Añada un <strong>Protocol</strong> para objetos <strong>regables</strong> y utilidades estáticas para validar <strong>estacionalidad</strong> y <strong>riego</strong>.</p>
+<h3 id="estructura-del-proyecto-propuesta_1">Estructura del proyecto (propuesta)</h3>
+<pre><code>mi_proyecto_botanica/
+│
+├─ botanica/
+│  ├─ __init__.py
+│  ├─ base.py                # ABC: Planta
+│  ├─ clases.py              # Arbol, Arbusto, Hierba (Olivo, Rosal, Cesped)
+│  ├─ interfaces.py          # Protocol: Regable (runtime_checkable)
+│  ├─ utils.py               # Validaciones estáticas y factorías de clase
+│  └─ excepciones.py
+│
+└─ main.py
+</code></pre>
+<h3 id="requisitos-funcionales-y-tecnicos_1">Requisitos funcionales y técnicos</h3>
+<ul>
+<li><strong>Clase abstracta <code>Planta</code></strong> con:<ul>
+<li>Atributos: <code>_especie: str</code>, <code>_altura_cm: float</code>, <code>_perenne: bool</code> (validación: <code>altura_cm &gt;= 0</code>).</li>
+<li>Métodos abstractos: <code>crecer(cm: float) -&gt; None</code>, <code>tipo() -&gt; str</code>.</li>
+<li><code>__str__()</code> descriptivo.</li>
+<li>Método de clase estático <code>crearPlantaAleatoria()</code>.</li>
+</ul>
+</li>
+<li><strong>Subclases</strong>: <code>Arbol</code>, <code>Arbusto</code>, <code>Hierba</code>.</li>
+<li><strong>Protocol <code>Regable</code></strong> con <code>regar(litros: float) -&gt; None</code> (validar <code>litros &gt; 0</code>).<ul>
+<li><strong>Implementación</strong>: todas las plantas implementan <code>Regable</code>.</li>
+</ul>
+</li>
+<li><strong><code>utils.py</code></strong>:<ul>
+<li><strong>@staticmethod</strong> <code>es_epoca_riego(mes: int) -&gt; bool</code>.</li>
+<li><strong>@staticmethod</strong> <code>calcular_riego_recomendado(altura_cm: float) -&gt; float</code>.</li>
+</ul>
+</li>
+<li><strong>Excepciones</strong>: <code>AlturaInvalida</code>, <code>RiegoInvalido</code>.</li>
+<li><strong><code>__init__.py</code></strong>: re-exporta API pública con <code>__all__</code>.</li>
+<li><strong><code>main.py</code></strong>: patrón <code>__main__</code>; crea varias plantas de distintos tipos; aplica <code>regar()</code> y <code>crecer()</code> polimórficamente y muestra resultados; captura excepciones.</li>
+</ul>
+<hr />
+<h2 id="3-ejercicio-c-aeronautica-aeronaves">3️. Ejercicio C — Aeronáutica (Aeronaves)</h2>
+<h3 id="enunciado_2">Enunciado</h3>
+<p>Desarrolle un paquete <code>aeronaves</code> para gestionar diferentes <strong>aeronaves</strong>. Modele una <strong>clase abstracta</strong> <code>Aeronave</code> y subclases concretas con capacidades de <strong>despegue/aterrizaje</strong>. Añada protocolos de <strong>repostaje</strong> y <strong>mantenimiento</strong> y utilidades para cálculo de <strong>autonomía</strong>.</p>
+<h3 id="estructura-del-proyecto-propuesta_2">Estructura del proyecto (propuesta)</h3>
+<pre><code>mi_proyecto_aeronautica/
+│
+├─ aeronaves/
+│  ├─ __init__.py
+│  ├─ base.py                # ABC: Aeronave
+│  ├─ clases.py              # Avion, Helicoptero, Dron
+│  ├─ interfaces.py          # Protocol: Volable, Repostable, Mantenible (runtime_checkable)
+│  ├─ utils.py               # Cálculos estáticos (autonomía, consumo)
+│  └─ excepciones.py
+│
+└─ main.py
+</code></pre>
+<h3 id="requisitos-funcionales-y-tecnicos_2">Requisitos funcionales y técnicos</h3>
+<ul>
+<li><strong>ABC <code>Aeronave</code></strong> con:<ul>
+<li>Atributos: <code>_matricula: str</code>, <code>_capacidad_combustible_l: float</code>, <code>_consumo_l_h: float</code> (validación: valores &gt; 0).</li>
+<li>Métodos abstractos: <code>despegar() -&gt; None</code>, <code>aterrizar() -&gt; None</code>, <code>tipo() -&gt; str</code>.</li>
+<li><code>__str__()</code> informativo.</li>
+<li>Método de clase estático <code>generarAeronaaveAleatoria() -&gt; "Aeronave"</code>.</li>
+</ul>
+</li>
+<li><strong>Subclases</strong>: <code>Avion</code>, <code>Helicoptero</code>, <code>Dron</code> (cada una implementa despegue/aterrizaje).</li>
+<li><strong>Protocols</strong> en <code>interfaces.py</code> con <code>@runtime_checkable</code>:<ul>
+<li><code>Volable</code> (<code>volar(horas: float) -&gt; None</code>),</li>
+<li><code>Repostable</code> (<code>repostar_en_vuelo(litros: float) -&gt; None</code>),</li>
+<li><code>Mantenible</code> (<code>realizar_mantenimiento(desc: str) -&gt; None</code>).</li>
+</ul>
+</li>
+<li><strong>Implementación</strong>:<ul>
+<li>todas implementan <code>Volable</code> y <code>Mantenible</code>.</li>
+<li>Solo <code>Avion</code>implementa <code>repostar_en_vuelo()</code>.</li>
+</ul>
+</li>
+<li><strong><code>utils.py</code></strong>:<ul>
+<li><strong>@staticmethod</strong> <code>autonomia_horas(capacidad_l: float, consumo_l_h: float) -&gt; float</code>.</li>
+<li><strong>@staticmethod</strong> <code>consumo_mision(horas: float, consumo_l_h: float) -&gt; float</code>.</li>
+</ul>
+</li>
+<li><strong>Excepciones</strong>: <code>CombustibleInvalido</code>, <code>ConsumoInvalido</code>.</li>
+<li><strong><code>__init__.py</code></strong>: re-exporta API pública con <code>__all__</code>.</li>
+<li><strong><code>main.py</code></strong>:<ul>
+<li>Patrón <code>__main__</code>.</li>
+<li>Demostración: crea varias aeronaves, calcula autonomía, simula <code>repostar()</code> y <code>volar()</code> con control de consumo, prueba manejo de errores.</li>
+</ul>
+</li>
+</ul>
+<hr />
+</body>
+</html>

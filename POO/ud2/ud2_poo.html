@@ -1,0 +1,1036 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud2_poo</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud2-programacion-orientada-a-objetos-con-python">UD2 – Programación Orientada a Objetos con Python</h1>
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#ud2--programación-orientada-a-objetos-con-python">UD2 – Programación Orientada a Objetos con Python</a></li>
+<li><a href="#índice-de-contenidos">Índice de contenidos</a></li>
+<li><a href="#1-módulos-y-paquetes">1. Módulos y Paquetes</a></li>
+<li><a href="#11-qué-es-un-módulo">1.1. ¿Qué es un módulo?</a><ul>
+<li><a href="#cómo-se-importa"><strong>Cómo se importa:</strong></a></li>
+<li><a href="#12-ejemplo-de-desarrollo-y-utilización-de-un-módulo">1.2. Ejemplo de desarrollo y utilización de un módulo</a></li>
+<li><a href="#13-fichero-principal-de-la-aplicación--if-__name__--__main__">1.3. Fichero principal de la aplicación  <code>if __name__ == __main__</code></a></li>
+<li><a href="#14-qué-es-un-paquete-y-cómo-se-estructura-un-proyecto">1.4. ¿Qué es un paquete y cómo se estructura un proyecto?</a></li>
+<li><a href="#15-actividad-práctica">1.5. Actividad práctica</a></li>
+</ul>
+</li>
+<li><a href="#2-clases-en-python">2. Clases en Python</a></li>
+<li><a href="#21-conceptos-de-la-estructura-de-una-clase">2.1. Conceptos de la estructura de una clase</a><ul>
+<li><a href="#ejemplo-de-clase">Ejemplo de clase</a></li>
+<li><a href="#actividad-propuesta">Actividad propuesta</a></li>
+</ul>
+</li>
+<li><a href="#23-decoradores">2.3. Decoradores:</a><ul>
+<li><a href="#conceptos">Conceptos</a></li>
+<li><a href="#decoradores-en-la-definición-de-clases">Decoradores en la definición de clases</a></li>
+<li><a href="#staticmethod"><code>@staticmethod</code></a></li>
+<li><a href="#classmethod"><code>@classmethod</code></a></li>
+</ul>
+</li>
+<li><a href="#3-herencia">3. Herencia</a></li>
+<li><a href="#31-características-específicas-de-la-herencia-en-python">3.1. Características específicas de la herencia en Python</a></li>
+<li><a href="#32-el-constructor-y-super">3.2. El constructor y <code>super()</code></a></li>
+<li><a href="#33-sobrescritura-de-métodos-overriding">3.3. Sobrescritura de métodos (overriding)</a></li>
+<li><a href="#34-herencia-múltiple">3.4. Herencia múltiple</a></li>
+<li><a href="#35-herencia-jerárquica-y-en-cadena">3.5. Herencia jerárquica y en cadena</a></li>
+<li><a href="#36-uso-de-isinstance-y-issubclass">3.6. Uso de <code>isinstance()</code> y <code>issubclass()</code></a></li>
+<li><a href="#37-ejemplo-de-uso-de-las-clases-creadas">3.7. Ejemplo de uso de las clases creadas</a></li>
+<li><a href="#4-polimorfismo">4. Polimorfismo</a></li>
+<li><a href="#41-polimorfismo-en-python">4.1. Polimorfismo en Python</a></li>
+<li><a href="#42-polimorfismo-mediante-herencia">4.2. Polimorfismo mediante herencia</a><ul>
+<li><a href="#uso-polimórfico">Uso polimórfico</a></li>
+</ul>
+</li>
+<li><a href="#43-polimorfismo-con-métodos-redefinidos-__str__">4.3. Polimorfismo con métodos redefinidos (<code>__str__</code>)</a></li>
+<li><a href="#44-polimorfismo-sin-herencia-duck-typing">4.4. Polimorfismo sin herencia (duck typing)</a></li>
+<li><a href="#este-comportamiento-se-conoce-como-polimorfismo-dinámico">Este comportamiento se conoce como <strong>polimorfismo dinámico</strong>.</a></li>
+<li><a href="#5-abstracción-en-python">5. Abstracción en Python</a></li>
+<li><a href="#51-introducción-teórica">5.1. Introducción teórica</a><ul>
+<li><a href="#relación-con-el-principio-de-inversión-de-dependencias-d-de-solid">Relación con el Principio de Inversión de Dependencias (D de SOLID)</a></li>
+</ul>
+</li>
+<li><a href="#52-clases-abstractas">5.2. Clases abstractas</a><ul>
+<li><a href="#ejemplo-técnico">Ejemplo técnico</a></li>
+</ul>
+</li>
+<li><a href="#53-implementación-de-subclases-concretas">5.3. Implementación de subclases concretas</a></li>
+<li><a href="#6-interfaces-en-python-protocol">6. Interfaces en Python (Protocol)</a></li>
+<li><a href="#61-conceptos">6.1. Conceptos</a></li>
+<li><a href="#62-contruyendo-una-interfaz">6.2. Contruyendo una interfaz</a></li>
+<li><a href="#63-combinación-de-abstracción-e-interfaz">6.3. Combinación de abstracción e interfaz</a></li>
+<li><a href="#64-ejemplo-completo-y-output">6.4 Ejemplo completo y output</a><ul>
+<li><a href="#estructura-del-proyecto">Estructura del proyecto</a></li>
+<li><a href="#fichero-vehiculosbasepy">Fichero <code>vehiculos/base.py</code></a></li>
+<li><a href="#fichero-vehiculosclasespy">Fichero <code>vehiculos/clases.py</code></a></li>
+<li><a href="#fichero-vehiculosinterfacespy">Fichero <code>vehiculos/interfaces.py</code></a></li>
+<li><a href="#fichero-vehiculos__init__py">Fichero <code>vehiculos/__init__.py</code></a></li>
+<li><a href="#fichero-mainpy">Fichero <code>main.py</code></a></li>
+<li><a href="#explicación">Explicación</a></li>
+<li><a href="#ejecución-y-salida-esperada">Ejecución y salida esperada</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="1-modulos-y-paquetes">1. Módulos y Paquetes</h1>
+<h2 id="11-que-es-un-modulo">1.1. ¿Qué es un módulo?</h2>
+<p>Un <strong>módulo</strong> es un archivo de código Python (<code>.py</code>) que agrupa definiciones reutilizables: funciones, clases, constantes y variables.</p>
+<p>Se carga una única vez por proceso (gracias al <em>module cache</em> en <code>sys.modules</code>) y expone un <strong>espacio de nombres</strong> propio, evitando colisiones.</p>
+<p>El <strong>nombre de módulo</strong> se determina por su ruta de importación (p. ej., <code>app.modelos</code>), no por el título del archivo en sí.</p>
+<h3 id="como-se-importa"><strong>Cómo se importa:</strong></h3>
+<pre><code class="language-python">import math                # módulo completo
+from math import sqrt      # sólo lo que necesitas
+import math as m           # con alias
+</code></pre>
+<p><strong>Idempotencia al importar</strong><br />
+Una segunda importación del mismo módulo no vuelve a ejecutar su código <em>top-level</em>; Python reutiliza el objeto ya cargado en <code>sys.modules</code>.</p>
+<h3 id="12-ejemplo-de-desarrollo-y-utilizacion-de-un-modulo">1.2. Ejemplo de desarrollo y utilización de un módulo</h3>
+<p><strong>Estructura mínima</strong>:</p>
+<pre><code>mi_proyecto_calculadora/
+│
+├─ calculadora.py        # Módulo con funciones y constantes matemáticas
+└─ main.py               # Programa principal que importa y usa el módulo
+
+</code></pre>
+<p><strong>Fichero <code>calculadora.py</code> con operaciones matemáticas</strong> :</p>
+<p>Este es el fichero en el que se encuentra lo que queremos importar para ser utilizado en la aplicación desde el fichero principal.</p>
+<pre><code class="language-python">&quot;&quot;&quot;
+Módulo: calculadora.py
+Este archivo contiene funciones matemáticas básicas y algunas constantes útiles.
+Puede ser importado por cualquier otro script de Python (por ejemplo, main.py).
+&quot;&quot;&quot;
+
+# Constantes matemáticas (podrían venir también de math, pero aquí las definimos nosotros)
+PI = 3.14159
+E = 2.71828
+
+# --- FUNCIONES MATEMÁTICAS BÁSICAS ---
+
+def sumar(a, b):
+    &quot;&quot;&quot;Devuelve la suma de dos números.&quot;&quot;&quot;
+    return a + b
+
+def restar(a, b):
+    &quot;&quot;&quot;Devuelve la resta (a - b).&quot;&quot;&quot;
+    return a - b
+
+def multiplicar(a, b):
+    &quot;&quot;&quot;Devuelve el producto de dos números.&quot;&quot;&quot;
+    return a * b
+
+def dividir(a, b):
+    &quot;&quot;&quot;
+    Devuelve el cociente (a / b).
+    Lanza un ValueError si se intenta dividir entre cero.
+    &quot;&quot;&quot;
+    if b == 0:
+        raise ValueError(&quot;No se puede dividir entre cero.&quot;)
+    return a / b
+
+def area_circulo(radio):
+    &quot;&quot;&quot;Calcula el área de un círculo usando la constante PI.&quot;&quot;&quot;
+    if radio &lt; 0:
+        raise ValueError(&quot;El radio no puede ser negativo.&quot;)
+    return PI * (radio ** 2)
+
+def exponencial(base, exponente):
+    &quot;&quot;&quot;Calcula base^exponente utilizando una función simple.&quot;&quot;&quot;
+    return base ** exponente
+
+</code></pre>
+<p><strong>Fichero principal de la aplicación</strong> <code>main.py</code>:</p>
+<pre><code class="language-python"># Importamos el módulo completo (recomendado cuando queremos usar varios elementos)
+import calculadora
+
+# También podemos importar elementos específicos (para acortar el código)
+from calculadora import dividir, area_circulo
+
+print(&quot;=== DEMOSTRACIÓN DEL MÓDULO CALCULADORA ===\n&quot;)
+
+# Uso de funciones del módulo importado completo
+a, b = 10, 5
+print(f&quot;Suma ({a} + {b}):&quot;, calculadora.sumar(a, b))
+print(f&quot;Resta ({a} - {b}):&quot;, calculadora.restar(a, b))
+print(f&quot;Multiplicación ({a} × {b}):&quot;, calculadora.multiplicar(a, b))
+
+# Uso de función importada directamente
+print(f&quot;División ({a} ÷ {b}):&quot;, dividir(a, b))
+
+# Cálculo del área de un círculo
+radio = 3
+print(f&quot;\nÁrea de un círculo de radio {radio}: {area_circulo(radio):.2f}&quot;)
+
+</code></pre>
+<h3 id="13-fichero-principal-de-la-aplicacion-if-__name__-__main__">1.3. Fichero principal de la aplicación  <code>if __name__ == __main__</code></h3>
+<p>En Python, cada archivo .py tiene un atributo especial llamado <code>__name__</code> que indica cómo se está ejecutando el archivo:</p>
+<ul>
+<li>Si el archivo se ejecuta directamente, Python asigna <code>__name__ = "__main__"</code>.</li>
+<li>Si el archivo se importa como módulo, <code>__name__</code> toma el nombre del módulo (por ejemplo, "calculadora" o "geometria.areas").</li>
+</ul>
+<p>El bloque:</p>
+<pre><code class="language-python">if &quot;__name__&quot; == &quot;__main__&quot;:
+    main()
+</code></pre>
+<p>es una convención estándar que permite distinguir si el archivo se está ejecutando directamente o si ha sido importado por otro. Esto evita que el código dentro del bloque se ejecute automáticamente al importar el módulo.</p>
+<p><strong>En resumen</strong>:</p>
+<ul>
+<li>Protege el código de ejecución (por ejemplo, pruebas o demostraciones).</li>
+<li>Permite reutilizar el módulo sin ejecutar la parte principal.</li>
+<li>Mejora la legibilidad y sigue una práctica universal en Python.</li>
+</ul>
+<h3 id="14-que-es-un-paquete-y-como-se-estructura-un-proyecto">1.4. ¿Qué es un paquete y cómo se estructura un proyecto?</h3>
+<p>Un <strong>paquete</strong> es un directorio que contiene un archivo <code>__init__.py</code>. Este archivo marca el directorio como paquete y puede definir la API pública mediante <code>__all__</code>. Sirve para <strong>organizar</strong> módulos bajo el mismo apellido (prefijo) y decidir qué partes expones como API pública.</p>
+<p><strong>Ventajas</strong></p>
+<ul>
+<li>Encapsulación de submódulos bajo un prefijo común.</li>
+<li>Importaciones explícitas y rutas estables.</li>
+<li>Inicialización controlada en <code>__init__.py</code>.</li>
+</ul>
+<p><strong>Estructura típica</strong></p>
+<pre><code>mi_proyecto/
+│
+├─ app/
+│  ├─ __init__.py
+│  ├─ modelos.py
+│  └─ servicios.py
+└─ main.py
+</code></pre>
+<p><strong>Tips rápidos:</strong></p>
+<ul>
+<li>Usa <code>__init__.py</code> para “re-exportar” lo más importante (p. ej. <code>from .modelos import Usuario</code>).</li>
+<li>Nombres claros: <code>modelos.py</code> para entidades, <code>servicios.py</code> para la lógica.</li>
+</ul>
+<h3 id="15-actividad-practica">1.5. Actividad práctica</h3>
+<p><strong>Enunciado.</strong> Crea un paquete <code>geometria</code> con:</p>
+<ul>
+<li><code>__init__.py</code> exponiendo <code>area_circulo</code> y <code>area_rectangulo</code>.</li>
+<li><code>areas.py</code> con ambas funciones (validando parámetros).</li>
+<li><code>constantes.py</code> con <code>PI = 3.14159</code>. Escribe <code>demo.py</code> que importe desde <code>geometria</code> y calcule áreas.</li>
+</ul>
+<p><strong>Solución orientativa.</strong></p>
+<p>Estructura del proyecto:</p>
+<pre><code>mi_proyecto_geometria/
+│
+├─ geometria/                 # Paquete: agrupa lógica de áreas y constantes
+│  ├─ __init__.py             # Expone la API pública del paquete
+│  ├─ areas.py                # Funciones de cálculo de áreas (con validación)
+│  └─ constantes.py           # Constantes matemáticas (p. ej. PI)
+│
+└─ demo.py                    # Aplicación: ejemplos de uso del paquete 'geometria'
+</code></pre>
+<p>Fichero <code>constantes.py</code>:</p>
+<pre><code class="language-python"># constantes.py
+# Propósito: centralizar constantes matemáticas reutilizables en el paquete.
+
+PI: float = 3.14159  # Aproximación de π utilizada en los cálculos de área
+
+</code></pre>
+<p>Fichero <code>areas.py</code>:</p>
+<pre><code># areas.py
+# Propósito: funciones puras para calcular áreas de figuras planas.
+# Incluye validación de parámetros para evitar estados/entradas inválidas.
+
+from .constantes import PI
+
+def area_circulo(r: float) -&gt; float:
+    &quot;&quot;&quot;
+    Calcula el área de un círculo.
+    &quot;&quot;&quot;
+    if r &lt; 0:
+        raise ValueError(&quot;El radio no puede ser negativo (r &gt;= 0).&quot;)
+    return PI * (r ** 2)
+
+
+def area_rectangulo(a: float, b: float) -&gt; float:
+    &quot;&quot;&quot;
+    Calcula el área de un rectángulo.
+    &quot;&quot;&quot;
+    if a &lt; 0 or b &lt; 0:
+        raise ValueError(&quot;Los lados del rectángulo deben ser no negativos (a, b &gt;= 0).&quot;)
+    return a * b
+
+</code></pre>
+<p>Fichero <code>__init__.py</code>:</p>
+<pre><code># __init__.py
+# Propósito: definir la API pública del paquete 'geometria' para que
+# los consumidores puedan importar directamente lo que necesitan.
+# Ejemplo: `from geometria import area_circulo`
+
+from .areas import area_circulo, area_rectangulo
+
+# __all__ controla qué símbolos se exportan cuando se usa `from geometria import *`.
+__all__ = [&quot;area_circulo&quot;, &quot;area_rectangulo&quot;]
+
+</code></pre>
+<p>Fichero <code>demo.py</code>:</p>
+<pre><code># Importación directa desde el paquete (gracias a __init__.py)
+from geometria import area_circulo, area_rectangulo
+
+def main() -&gt; None:
+    &quot;&quot;&quot;
+    Punto de entrada de la aplicación.
+    &quot;&quot;&quot;
+
+    print(&quot;=== DEMOSTRACIÓN DEL PAQUETE 'geometria' ===\n&quot;)
+
+    # Ejemplo 1: área de un círculo de radio 3
+    r = 3.0
+    area_c = area_circulo(r)
+    print(f&quot;[Ejemplo 1] Área de círculo (r = {r}): {area_c:.2f}&quot;)
+
+    # Ejemplo 2: área de un rectángulo 2 x 5
+    a, b = 2.0, 5.0
+    area_r = area_rectangulo(a, b)
+    print(f&quot;[Ejemplo 2] Área de rectángulo ({a} x {b}): {area_r:.2f}&quot;)
+
+    # Ejemplo 3: demostración de validación y manejo de errores
+    print(&quot;\n[Ejemplo 3] Validación y manejo de errores:&quot;)
+    try:
+        area_circulo(-1)  # Radio negativo -&gt; debe disparar ValueError
+    except ValueError as e:
+        print(f&quot;   Error controlado al calcular área de círculo: {e}&quot;)
+
+    try:
+        area_rectangulo(3, -4)  # Lado negativo -&gt; debe disparar ValueError
+    except ValueError as e:
+        print(f&quot;   Error controlado al calcular área de rectángulo: {e}&quot;)
+
+    print(&quot;\nFin de la demostración.&quot;)
+
+# Convención estándar: sólo ejecuta main() si el archivo se ejecuta directamente.
+# Si se importa (por ejemplo, desde tests), no se ejecuta el bloque siguiente.
+
+if __name__ == &quot;__main__&quot;:
+    main()
+
+</code></pre>
+<hr />
+<h1 id="2-clases-en-python">2. Clases en Python</h1>
+<h2 id="21-conceptos-de-la-estructura-de-una-clase">2.1. Conceptos de la estructura de una clase</h2>
+<p>Una <strong>clase</strong> define un tipo; sus <strong>instancias</strong> poseen estado (atributos) y comportamiento (métodos).</p>
+<ul>
+<li><strong>Constructor</strong>: <code>__init__(self, ...)</code> inicializa el estado del objeto ya creado por <code>__new__</code>.</li>
+<li><strong>Destructore</strong>: <code>__del__</code> no se recomienda; libera recursos con <code>with</code> o <code>try/finally</code>.</li>
+<li><strong>Representador del objeto</strong>: el método <code>__str__</code> controla lo que debe ser mostrado cuando se quiere representar el objeto como una cadena.</li>
+<li><strong>Parámetro <code>self</code></strong>:<ul>
+<li>referencia a la instancia actual de la clase</li>
+<li>pasada implícitamente en la llamada.</li>
+<li>realmente lo podemos llamar como queramos pero por convenio se le llama "self".</li>
+</ul>
+</li>
+<li><strong>Sentencia <code>pass</code></strong>: permite tener una clase sin definición.</li>
+</ul>
+<p>Para más información sobre cláses en Python consultar: <a href="https://www.w3schools.com/python/python_classes.asp">Clases en W3schools</a></p>
+<h3 id="ejemplo-de-clase">Ejemplo de clase</h3>
+<pre><code class="language-python">&quot;&quot;&quot;
+Clase base: Vehiculo
+--------------------
+Representa un vehículo genérico. 
+Más adelante se usará como clase padre de Coche, Autobus, Camion y Moto.
+&quot;&quot;&quot;
+
+class Vehiculo:
+    # Atributo de clase (compartido por todas las instancias)
+    total_vehiculos = 0
+
+    def __init__(self, marca, modelo, color, velocidad_maxima):
+        &quot;&quot;&quot;
+        Método constructor (__init__):
+        Se ejecuta automáticamente al crear un nuevo objeto Vehiculo.
+        Define los atributos básicos del vehículo.
+        &quot;&quot;&quot;
+        self._marca = marca                # atributo protegido (convención: _nombre)
+        self._modelo = modelo
+        self._color = color
+        self._velocidad_maxima = velocidad_maxima
+        self._encendido = False            # estado inicial: apagado
+
+        # Cada vez que se crea un vehículo, se incrementa el contador de clase
+        Vehiculo.total_vehiculos += 1
+
+    # ========================
+    #   MÉTODOS GETTER / SETTER
+    # ========================
+
+    def get_marca(self):
+        &quot;&quot;&quot;Devuelve la marca del vehículo.&quot;&quot;&quot;
+        return self._marca
+
+    def set_marca(self, nueva_marca):
+        &quot;&quot;&quot;Cambia la marca del vehículo.&quot;&quot;&quot;
+        if not nueva_marca:
+            raise ValueError(&quot;La marca no puede estar vacía.&quot;)
+        self._marca = nueva_marca
+
+    def get_color(self):
+        &quot;&quot;&quot;Devuelve el color actual del vehículo.&quot;&quot;&quot;
+        return self._color
+
+    def set_color(self, nuevo_color):
+        &quot;&quot;&quot;Permite cambiar el color del vehículo.&quot;&quot;&quot;
+        if not isinstance(nuevo_color, str):
+            raise ValueError(&quot;El color debe ser una cadena de texto.&quot;)
+        self._color = nuevo_color
+
+    def get_velocidad_maxima(self):
+        &quot;&quot;&quot;Devuelve la velocidad máxima.&quot;&quot;&quot;
+        return self._velocidad_maxima
+
+    def set_velocidad_maxima(self, nueva_velocidad):
+        &quot;&quot;&quot;Cambia la velocidad máxima, con validación.&quot;&quot;&quot;
+        if nueva_velocidad &lt;= 0:
+            raise ValueError(&quot;La velocidad máxima debe ser positiva.&quot;)
+        self._velocidad_maxima = nueva_velocidad
+
+    # ========================
+    #   MÉTODOS DE INSTANCIA
+    # ========================
+
+    def encender(self):
+        &quot;&quot;&quot;Cambia el estado del vehículo a encendido.&quot;&quot;&quot;
+        if self._encendido:
+            print(&quot;El vehículo ya está encendido.&quot;)
+        else:
+            self._encendido = True
+            print(&quot;Vehículo encendido.&quot;)
+
+    def apagar(self):
+        &quot;&quot;&quot;Cambia el estado del vehículo a apagado.&quot;&quot;&quot;
+        if not self._encendido:
+            print(&quot;El vehículo ya está apagado.&quot;)
+        else:
+            self._encendido = False
+            print(&quot;Vehículo apagado.&quot;)
+
+    # ========================
+    #   MÉTODO ESTÁTICO
+    # ========================
+
+    @staticmethod
+    def es_vehiculo_pesado(peso):
+        &quot;&quot;&quot;
+        Determina si un vehículo se considera 'pesado'.
+        No depende de ninguna instancia, por eso es estático.
+        &quot;&quot;&quot;
+        return peso &gt; 3500  # kg
+
+    # ========================
+    #   MÉTODO DE CLASE
+    # ========================
+
+    @classmethod
+    def mostrar_total_vehiculos(cls):
+        &quot;&quot;&quot;
+        Método de clase:
+        Permite acceder o modificar atributos de clase.
+        En este caso, muestra cuántos vehículos se han creado.
+        &quot;&quot;&quot;
+        print(f&quot;Actualmente existen {cls.total_vehiculos} vehículos registrados.&quot;)
+
+    # ========================
+    #   REPRESENTACIÓN DEL OBJETO
+    # ========================
+
+    def __str__(self):
+        &quot;&quot;&quot;
+        Representación legible del objeto.
+        Se ejecuta al usar print() o str() sobre una instancia.
+        &quot;&quot;&quot;
+        estado = &quot;Encendido&quot; if self._encendido else &quot;Apagado&quot;
+        return (f&quot;[Vehículo] Marca: {self._marca} | Modelo: {self._modelo} | &quot;
+                f&quot;Color: {self._color} | Velocidad Máxima: {self._velocidad_maxima} km/h | Estado: {estado}&quot;)
+
+
+# ========================
+#   BLOQUE DE PRUEBA (solo se ejecuta si el archivo se ejecuta directamente)
+# ========================
+if __name__ == &quot;__main__&quot;:
+    # Crear varios vehículos
+    v1 = Vehiculo(&quot;Toyota&quot;, &quot;Corolla&quot;, &quot;Rojo&quot;, 180)
+    v2 = Vehiculo(&quot;Mercedes&quot;, &quot;Actros&quot;, &quot;Blanco&quot;, 120)
+
+    # Usar getters y setters
+    print(v1.get_marca(), &quot;-&quot;, v1.get_color())
+    v1.set_color(&quot;Negro&quot;)
+    print(&quot;Nuevo color:&quot;, v1.get_color())
+
+    # Probar métodos de instancia
+    v1.encender()
+    print(v1)
+    v1.apagar()
+
+    # Método estático: comprobar si un vehículo es pesado
+    print(&quot;¿El camión es pesado?&quot;, Vehiculo.es_vehiculo_pesado(8000))
+
+    # Método de clase: mostrar cuántos vehículos se han creado
+    Vehiculo.mostrar_total_vehiculos()
+
+</code></pre>
+<h3 id="actividad-propuesta">Actividad propuesta</h3>
+<p>Crea la clase <code>Animal</code>, la cual deberá constar de:</p>
+<ul>
+<li>Constructor.</li>
+<li>Atributo de clase.</li>
+<li>Atributos de instancia.</li>
+<li>Setters</li>
+<li>Getters</li>
+<li>Al menos un método estático.</li>
+<li>Al menos un método de clase.</li>
+<li>Método <code>__str__</code></li>
+</ul>
+<p>Adicionalmente deberás crear una aplicación que utilice dicha clase.</p>
+<h2 id="23-decoradores">2.3. Decoradores:</h2>
+<h3 id="conceptos">Conceptos</h3>
+<ul>
+<li>
+<p>Los <strong><a href="https://www.w3schools.com/python/python_decorators.asp">decoradores</a></strong> son una característica avanzada del lenguaje Python que permiten <strong>modificar o ampliar el comportamiento de funciones, métodos o clases</strong> sin alterar su código fuente directamente.</p>
+</li>
+<li>
+<p>En la práctica, un decorador es <strong>una función que recibe otra función (o clase)</strong> y devuelve una versión modificada de la misma.</p>
+</li>
+</ul>
+<p>Definición de un decorador:</p>
+<pre><code class="language-python">def amayusculas(a):
+  def interior():
+    return a().upper()
+  return interior
+</code></pre>
+<p>Cómo usar un decorador:</p>
+<pre><code class="language-python">@amayusculas
+def saludar():
+    print(&quot;Hola mundo!&quot;)
+
+print(saludar)
+</code></pre>
+<p>Esto devolverá: <code>HOLA MUNDO!</code></p>
+<h3 id="decoradores-en-la-definicion-de-clases">Decoradores en la definición de clases</h3>
+<h4 id="staticmethod"><code>@staticmethod</code></h4>
+<p>Convierte una función definida dentro de la clase en un <strong>método estático</strong>: no recibe <code>self</code> ni <code>cls</code>.</p>
+<pre><code class="language-python"># Método de la clase vehículo vista previamente
+    @staticmethod
+    def es_vehiculo_pesado(peso):
+        &quot;&quot;&quot;
+        Determina si un vehículo se considera 'pesado'.
+        No depende de ninguna instancia, por eso es estático.
+        &quot;&quot;&quot;
+        return peso &gt; 3500  # kg
+</code></pre>
+<h3 id="classmethod"><code>@classmethod</code></h3>
+<p>Declara un <strong>método de clase</strong>: recibe <code>cls</code> (la propia clase) en lugar de <code>self</code>.</p>
+<pre><code class="language-python"># Método de la clase vehículo
+    @classmethod
+    def mostrar_total_vehiculos(cls):
+        &quot;&quot;&quot;
+        Método de clase:
+        Permite acceder o modificar atributos de clase.
+        En este caso, muestra cuántos vehículos se han creado.
+        &quot;&quot;&quot;
+        print(f&quot;Actualmente existen {cls.total_vehiculos} vehículos registrados.&quot;)
+</code></pre>
+<p><strong>Cuándo usarlo</strong>: <strong>fábricas</strong>, constructores alternativos, acceso/edición de <strong>estado global</strong> de la clase.</p>
+<hr />
+<h1 id="3-herencia">3. Herencia</h1>
+<h2 id="31-caracteristicas-especificas-de-la-herencia-en-python">3.1. Características específicas de la herencia en Python</h2>
+<ul>
+<li>Puede ser <strong>simple o múltiple</strong> (cuando mezclas varios padres).</li>
+<li><code>super()</code> llama ordenadamente a los métodos del padre según el <strong>MRO</strong> (Orden de Resolución de Métodos).</li>
+<li>Usa <strong>mixins</strong> para añadir “superpoderes” pequeños a varias clases.</li>
+<li><strong>Principios SOLID</strong>: En el contexto de buenas prácticas de diseño, los principios SOLID sirven como guía para escribir software mantenible y escalable. En particular, el <strong>Principio de Sustitución de Liskov (LSP)</strong> establece que: <em>si S es una subclase de T, entonces los objetos de tipo T pueden ser reemplazados por objetos de tipo S sin alterar las propiedades deseables del programa</em>.</li>
+</ul>
+<h2 id="32-el-constructor-y-super">3.2. El constructor y <code>super()</code></h2>
+<p>Las subclases deben invocar el constructor de la superclase para <strong>inicializar correctamente</strong> el estado heredado. En Python, se utiliza <code>super()</code>:</p>
+<pre><code class="language-python">class Coche(Vehiculo):
+    def __init__(self, marca, modelo, color, velocidad_maxima, puertas):
+        # Inicializa atributos heredados
+        super().__init__(marca, modelo, color, velocidad_maxima)
+        # Inicializa atributos propios
+        self._puertas = puertas
+</code></pre>
+<p><strong>Comentario técnico:</strong> <code>super()</code> devuelve un objeto proxy que delega llamadas a la superclase según el <strong>Method Resolution Order (MRO)</strong>. Esto permite herencia múltiple cooperativa cuando se siguen firmas compatibles.</p>
+<h2 id="33-sobrescritura-de-metodos-overriding">3.3. Sobrescritura de métodos (overriding)</h2>
+<p>Una subclase puede <strong>redefinir</strong> métodos de la superclase para <strong>especializar</strong> su comportamiento, manteniendo el contrato (LSP).</p>
+<p>Ejemplo sobrescribiendo el método <code>__str__</code>:</p>
+<pre><code class="language-python">class Coche(Vehiculo):
+    def __init__(self, marca, modelo, color, velocidad_maxima, puertas):
+        super().__init__(marca, modelo, color, velocidad_maxima)
+        self._puertas = puertas
+
+    def __str__(self):
+        # Reutiliza la representación base y la amplía
+        return super().__str__() + f&quot; | Puertas: {self._puertas}&quot;
+
+class Autobus(Vehiculo):
+    def __init__(self, marca, modelo, color, velocidad_maxima, plazas):
+        super().__init__(marca, modelo, color, velocidad_maxima)
+        self._plazas = plazas
+
+    def __str__(self):
+        return super().__str__() + f&quot; | Plazas: {self._plazas}&quot;
+</code></pre>
+<h2 id="34-herencia-multiple">3.4. Herencia múltiple</h2>
+<p>Python permite heredar de <strong>múltiples superclases</strong>. Cuando las superclases cooperan mediante <code>super()</code>, la inicialización y la resolución de métodos siguen el <strong>MRO</strong>.</p>
+<pre><code class="language-python"># Clase que va a ser utilizada para herencia
+class Registrable:
+    def registrar(self):
+        print(&quot;Registro en DGT completado.&quot;)
+
+# Clase que va a ser utilizada para herencia
+class MantenimientoProgramado:
+    def programar_revision(self, km):
+        print(f&quot;Revisión programada a los {km} km.&quot;)
+
+# Clase que hereda
+class Camion(Vehiculo, Registrable, MantenimientoProgramado):
+    def __init__(self, marca, modelo, color, velocidad_maxima, carga_maxima):
+        super().__init__(marca, modelo, color, velocidad_maxima)
+        self._carga_maxima = carga_maxima
+
+    def __str__(self):
+        return super().__str__() + f&quot; | Carga máxima: {self._carga_maxima} kg&quot;
+</code></pre>
+<p><strong>Comentario técnico:</strong> el orden <code>Camion(Vehiculo, Registrable, MantenimientoProgramado)</code> determina el MRO. Puede consultarse con <code>Camion.__mro__</code>.</p>
+<h2 id="35-herencia-jerarquica-y-en-cadena">3.5. Herencia jerárquica y en cadena</h2>
+<p>Es común definir jerarquías donde una subclase actúa a su vez como superclase de una especialización posterior.</p>
+<pre><code class="language-python">class Moto(Vehiculo):
+    def hacer_caballito(self):
+        print(f&quot;La moto {self.get_marca()} está haciendo un caballito.&quot;)
+
+class MotoDeportiva(Moto):
+    def __init__(self, marca, modelo, color, velocidad_maxima, electronica_avanzada=True):
+        super().__init__(marca, modelo, color, velocidad_maxima)
+        self._electronica_avanzada = electronica_avanzada
+
+    def __str__(self):
+        return super().__str__() + (&quot; | Electrónica avanzada&quot; if self._electronica_avanzada else &quot;&quot;)
+</code></pre>
+<h2 id="36-uso-de-isinstance-y-issubclass">3.6. Uso de <code>isinstance()</code> y <code>issubclass()</code></h2>
+<p>Estas funciones permiten <strong>verificar relaciones de herencia</strong> en tiempo de ejecución:</p>
+<pre><code class="language-python">c = Coche(&quot;Seat&quot;, &quot;Ibiza&quot;, &quot;Azul&quot;, 180, 5)
+print(isinstance(c, Vehiculo))   # True: instancia perteneciente a una subclase de Vehiculo
+print(issubclass(Coche, Vehiculo))  # True: Coche es una subclase de Vehiculo
+</code></pre>
+<p>Estas comprobaciones son útiles para validaciones, <em>type checks</em> dinámicos y composición de algoritmos polimórficos.</p>
+<h2 id="37-ejemplo-de-uso-de-las-clases-creadas">3.7. Ejemplo de uso de las clases creadas</h2>
+<p>El siguiente ejemplo integra creación de instancias, herencia simple y múltiple, sobrescritura de métodos y uso de métodos estáticos y de clase.</p>
+<pre><code class="language-python">def demo():
+    coche = Coche(&quot;Seat&quot;, &quot;Ibiza&quot;, &quot;Azul&quot;, 180, 5)
+    bus = Autobus(&quot;Mercedes&quot;, &quot;Citaro&quot;, &quot;Amarillo&quot;, 100, 50)
+    camion = Camion(&quot;Volvo&quot;, &quot;FH16&quot;, &quot;Blanco&quot;, 120, 25000)
+    moto = Moto(&quot;Yamaha&quot;, &quot;MT-07&quot;, &quot;Negro&quot;, 200)
+
+    coche.encender()
+    print(coche)           # __str__ sobrescrito
+    bus.encender()
+    print(bus)             # __str__ sobrescrito
+    print(camion)          # herencia múltiple + __str__
+    moto.hacer_caballito() # método propio de Moto
+
+    # Métodos heredados de clase/estáticos
+    Vehiculo.mostrar_total_vehiculos()
+    print(&quot;¿El camión es pesado?&quot;, Vehiculo.es_vehiculo_pesado(8000))
+
+if __name__ == &quot;__main__&quot;:
+    demo()
+</code></pre>
+<p><strong>Salida esperada (resumen, puede variar en detalles):</strong></p>
+<pre><code>Vehículo encendido.
+[Vehículo] Marca: Seat | Modelo: Ibiza | Color: Azul | Velocidad Máxima: 180 km/h | Estado: Encendido | Puertas: 5
+Vehículo encendido.
+[Vehículo] Marca: Mercedes | Modelo: Citaro | Color: Amarillo | Velocidad Máxima: 100 km/h | Estado: Encendido | Plazas: 50
+[Vehículo] Marca: Volvo | Modelo: FH16 | Color: Blanco | Velocidad Máxima: 120 km/h | Estado: Apagado | Carga máxima: 25000 kg
+La moto Yamaha está haciendo un caballito.
+Actualmente existen 4 vehículos registrados.
+¿El camión es pesado? True
+</code></pre>
+<hr />
+<h1 id="4-polimorfismo">4. Polimorfismo</h1>
+<h2 id="41-polimorfismo-en-python">4.1. Polimorfismo en Python</h2>
+<p>Python implementa el polimorfismo de forma <strong>dinámica</strong>, lo que se conoce como <em>duck typing</em>.<br />
+No importa el tipo de la clase concreta, sino que el objeto tenga los <strong>métodos esperados</strong>.</p>
+<blockquote>
+<p>“Si camina como un pato y suena como un pato, probablemente sea un pato.”</p>
+</blockquote>
+<h2 id="42-polimorfismo-mediante-herencia">4.2. Polimorfismo mediante herencia</h2>
+<p>En el ejemplo de jerarquía de clases, todas las subclases (<code>Coche</code>, <code>Autobus</code>, <code>Camion</code>, <code>Moto</code>) heredan de <code>Vehiculo</code> y redefinen algunos métodos.<br />
+Esto permite enviar el mismo mensaje (<code>arrancar()</code>, <code>__str__()</code>, etc.) a diferentes objetos y obtener resultados distintos según la clase.</p>
+<pre><code class="language-python">class Vehiculo:
+    def arrancar(self):
+        print(&quot;El vehículo ha arrancado.&quot;)
+
+class Coche(Vehiculo):
+    def arrancar(self):
+        print(&quot;El coche ha arrancado silenciosamente.&quot;)
+
+class Autobus(Vehiculo):
+    def arrancar(self):
+        print(&quot;El autobús ha arrancado y comienza su ruta.&quot;)
+
+class Moto(Vehiculo):
+    def arrancar(self):
+        print(&quot;La moto ruge al arrancar.&quot;)
+</code></pre>
+<h3 id="uso-polimorfico">Uso polimórfico</h3>
+<pre><code class="language-python">def iniciar_vehiculo(vehiculo):
+    # Puede recibir cualquier objeto que tenga el método arrancar()
+    vehiculo.arrancar()
+</code></pre>
+<pre><code class="language-python"># Instancias de distintas clases
+v = Vehiculo()
+c = Coche()
+a = Autobus()
+m = Moto()
+
+for objeto in (v, c, a, m):
+    iniciar_vehiculo(objeto)
+</code></pre>
+<p><strong>Salida:</strong></p>
+<pre><code>El vehículo ha arrancado.
+El coche ha arrancado silenciosamente.
+El autobús ha arrancado y comienza su ruta.
+La moto ruge al arrancar.
+</code></pre>
+<h2 id="43-polimorfismo-con-metodos-redefinidos-__str__">4.3. Polimorfismo con métodos redefinidos (<code>__str__</code>)</h2>
+<p>El método <code>__str__()</code> redefinido en las subclases permite mostrar información adaptada al tipo de vehículo:</p>
+<pre><code class="language-python">vehiculos = [
+    Coche(&quot;Seat&quot;, &quot;Ibiza&quot;, &quot;Azul&quot;, 180, 5),
+    Autobus(&quot;Mercedes&quot;, &quot;Citaro&quot;, &quot;Amarillo&quot;, 100, 50),
+    Camion(&quot;Volvo&quot;, &quot;FH16&quot;, &quot;Blanco&quot;, 120, 25000),
+    Moto(&quot;Yamaha&quot;, &quot;MT-07&quot;, &quot;Negro&quot;, 200)
+]
+
+for v in vehiculos:
+    print(v)
+</code></pre>
+<p><strong>Salida:</strong></p>
+<pre><code>[Vehículo] Marca: Seat | Modelo: Ibiza | Color: Azul | Velocidad Máxima: 180 km/h | Estado: Apagado | Puertas: 5
+[Vehículo] Marca: Mercedes | Modelo: Citaro | Color: Amarillo | Velocidad Máxima: 100 km/h | Estado: Apagado | Plazas: 50
+[Vehículo] Marca: Volvo | Modelo: FH16 | Color: Blanco | Velocidad Máxima: 120 km/h | Estado: Apagado | Carga máxima: 25000 kg
+[Vehículo] Marca: Yamaha | Modelo: MT-07 | Color: Negro | Velocidad Máxima: 200 km/h | Estado: Apagado
+</code></pre>
+<h2 id="44-polimorfismo-sin-herencia-duck-typing">4.4. Polimorfismo sin herencia (duck typing)</h2>
+<p>Python no requiere herencia formal. Cualquier objeto que implemente los métodos esperados puede participar en operaciones polimórficas.</p>
+<pre><code class="language-python">class Bicicleta:
+    def arrancar(self):
+        print(&quot;La bicicleta comienza a pedalear.&quot;)
+
+class PatineteElectrico:
+    def arrancar(self):
+        print(&quot;El patinete eléctrico acelera suavemente.&quot;)
+</code></pre>
+<pre><code class="language-python">def probar_arranque(vehiculo):
+    vehiculo.arrancar()
+</code></pre>
+<pre><code class="language-python">for obj in (Coche(), Bicicleta(), PatineteElectrico()):
+    probar_arranque(obj)
+</code></pre>
+<p><strong>Salida:</strong></p>
+<pre><code>El coche ha arrancado silenciosamente.
+La bicicleta comienza a pedalear.
+El patinete eléctrico acelera suavemente.
+</code></pre>
+<h2 id="este-comportamiento-se-conoce-como-polimorfismo-dinamico">Este comportamiento se conoce como <strong>polimorfismo dinámico</strong>.</h2>
+<h1 id="5-abstraccion-en-python">5. Abstracción en Python</h1>
+<h2 id="51-introduccion-teorica">5.1. Introducción teórica</h2>
+<p>La <strong>abstracción</strong> es uno de los cuatro pilares de la Programación Orientada a Objetos (POO), junto con la encapsulación, la herencia y el polimorfismo.</p>
+<p>En el diseño de software, la abstracción permite centrarse en <strong>qué hace</strong> un objeto, sin preocuparse por <strong>cómo lo hace</strong>.</p>
+<h3 id="relacion-con-el-principio-de-inversion-de-dependencias-d-de-solid">Relación con el Principio de Inversión de Dependencias (D de SOLID)</h3>
+<p>El principio de <strong>Inversión de Dependencias</strong> establece que:</p>
+<blockquote>
+<p>“Los módulos de alto nivel no deben depender de módulos de bajo nivel, ambos deben depender de abstracciones.”</p>
+</blockquote>
+<p>Esto implica que las clases no deben depender de implementaciones concretas, sino de <strong>interfaces o clases abstractas</strong>. De este modo, se logra un <strong>bajo acoplamiento</strong> y una <strong>alta cohesión</strong>, facilitando la mantenibilidad y extensibilidad del sistema.</p>
+<h2 id="52-clases-abstractas">5.2. Clases abstractas</h2>
+<p>Se utiliza para declarar métodos que las clases derivadas <strong>deben implementar obligatoriamente</strong>.</p>
+<p>En Python se definen con el módulo <code>abc</code> (<strong>Abstract Base Classes</strong>), el decorador <code>@abstractmethod</code> y como contenido del método utilizamos la keyword <code>pass</code>.</p>
+<h3 id="ejemplo-tecnico">Ejemplo técnico</h3>
+<p>Clase abstracta que define la estructura básica de un vehículo. <em><strong>No puede instanciarse directamente</strong></em>.</p>
+<pre><code class="language-python">from abc import ABC, abstractmethod
+
+class Vehiculo(ABC):
+    &quot;&quot;&quot;
+    Clase abstracta que define la estructura básica de un vehículo.
+    No puede instanciarse directamente.
+    &quot;&quot;&quot;
+    def __init__(self, marca, modelo, color):
+        self._marca = marca
+        self._modelo = modelo
+        self._color = color
+
+    @abstractmethod
+    def arrancar(self):
+        &quot;&quot;&quot;Método abstracto que debe ser implementado por las subclases.&quot;&quot;&quot;
+        pass
+
+    @abstractmethod
+    def detener(self):
+        &quot;&quot;&quot;Método abstracto que debe ser implementado por las subclases.&quot;&quot;&quot;
+        pass
+
+    def __str__(self):
+        return f&quot;[Vehículo] {self._marca} {self._modelo} ({self._color})&quot;
+</code></pre>
+<p>Intentar crear una instancia directa de <code>Vehiculo</code> producirá un error:</p>
+<pre><code class="language-python">v = Vehiculo(&quot;Marca&quot;, &quot;Modelo&quot;, &quot;Color&quot;)  # TypeError
+</code></pre>
+<p><strong>Salida:</strong></p>
+<pre><code>TypeError: Can't instantiate abstract class Vehiculo with abstract methods arrancar, detener
+</code></pre>
+<h2 id="53-implementacion-de-subclases-concretas">5.3. Implementación de subclases concretas</h2>
+<p>Las subclases deben <strong>heredar de <code>Vehiculo</code></strong> e implementar todos los métodos abstractos para ser instanciables.</p>
+<pre><code class="language-python">class Coche(Vehiculo):
+    def arrancar(self):
+        print(f&quot;El coche {self._marca} arranca suavemente.&quot;)
+
+    def detener(self):
+        print(f&quot;El coche {self._marca} se detiene con el freno de mano.&quot;)
+
+class Moto(Vehiculo):
+    def arrancar(self):
+        print(f&quot;La moto {self._marca} ruge al arrancar.&quot;)
+
+    def detener(self):
+        print(f&quot;La moto {self._marca} se detiene gradualmente.&quot;)
+
+class Camion(Vehiculo):
+    def arrancar(self):
+        print(f&quot;El camión {self._marca} enciende su motor diésel.&quot;)
+
+    def detener(self):
+        print(f&quot;El camión {self._marca} utiliza el freno de aire para detenerse.&quot;)
+</code></pre>
+<hr />
+<h1 id="6-interfaces-en-python-protocol">6. Interfaces en Python (Protocol)</h1>
+<h2 id="61-conceptos">6.1. Conceptos</h2>
+<p>La abstracción y las interfaces son herramientas fundamentales para diseñar software <strong>modular, extensible y desacoplado</strong>.</p>
+<p>En Python:</p>
+<ul>
+<li>Las <strong>clases abstractas</strong> permiten definir la <strong>estructura común</strong> de una jerarquía de clases.</li>
+<li>Las <strong>interfaces (Protocol)</strong> proporcionan un mecanismo para declarar <strong>capacidades compartidas</strong> entre clases dispares.</li>
+</ul>
+<p>Python no tiene interfaces como tal (como Java o C#), pero puede emularlas con <code>Protocol</code> del módulo <code>typing</code>.</p>
+<ul>
+<li><code>Protocol</code> define un <strong>contrato de comportamiento</strong> que cualquier clase puede cumplir si implementa los métodos declarados.</li>
+<li><code>@runtime_checkable</code>: sin el decorador <em>@runtime_checkable</em>, esta comprobación solo ocurre en tiempo de análisis estático, no en ejecución.</li>
+</ul>
+<h2 id="62-contruyendo-una-interfaz">6.2. Contruyendo una interfaz</h2>
+<p>A continuación <strong>creamos una interfaz</strong> para implementar en las clases derivadas de "Vehiculo" para añadir la funcionalidad de repostaje:</p>
+<pre><code class="language-python">from typing import Protocol, runtime_checkable
+
+@runtime_checkable
+class Repostable(Protocol):
+    &quot;&quot;&quot;
+    Interfaz que define la capacidad de repostar.
+    Cualquier clase que implemente 'repostar()' se considera Repostable.
+    &quot;&quot;&quot;
+    def repostar(self, litros: float) -&gt; None:
+        ...
+</code></pre>
+<h2 id="63-combinacion-de-abstraccion-e-interfaz">6.3. Combinación de abstracción e interfaz</h2>
+<p>Las clases concretas pueden <strong>heredar de la clase abstracta <code>Vehiculo</code></strong> e implementar la interfaz <code>Repostable</code>. De esta forma, definen tanto la estructura común como un comportamiento adicional opcional.</p>
+<pre><code class="language-python">class CocheRepostable(Coche, Repostable):
+    def repostar(self, litros: float) -&gt; None:
+        print(f&quot;El coche {self._marca} ha repostado {litros} litros de combustible.&quot;)
+
+class CamionRepostable(Camion, Repostable):
+    def repostar(self, litros: float) -&gt; None:
+        print(f&quot;El camión {self._marca} ha repostado {litros} litros de diésel.&quot;)
+</code></pre>
+<h2 id="64-ejemplo-completo-y-output">6.4 Ejemplo completo y output</h2>
+<p>A continuación creamos una clase principal que utiliza las clases creadas y muestra el output</p>
+<h3 id="estructura-del-proyecto">Estructura del proyecto</h3>
+<pre><code>mi_proyecto_vehiculos/
+│
+├─ vehiculos/                       # Paquete principal
+│  ├─ __init__.py                   # Expone la API pública
+│  ├─ base.py                       # Clase abstracta Vehiculo
+│  ├─ clases.py                     # Subclases concretas: Coche, Moto, Camion
+│  └─ interfaces.py                 # Interfaz Repostable (Protocol)
+│
+└─ main.py                          # Programa principal que utiliza el paquete
+</code></pre>
+<h3 id="fichero-vehiculosbasepy">Fichero <code>vehiculos/base.py</code></h3>
+<pre><code class="language-python">from abc import ABC, abstractmethod
+
+class Vehiculo(ABC):
+    &quot;&quot;&quot;
+    Clase abstracta que define la estructura base de un vehículo.
+    Incluye métodos que deberán implementarse en las subclases.
+    &quot;&quot;&quot;
+    def __init__(self, marca: str, modelo: str, color: str):
+        self._marca = marca
+        self._modelo = modelo
+        self._color = color
+
+    @abstractmethod
+    def arrancar(self):
+        &quot;&quot;&quot;Método abstracto que debe implementar cada tipo de vehículo.&quot;&quot;&quot;
+        pass
+
+    @abstractmethod
+    def detener(self):
+        &quot;&quot;&quot;Método abstracto que debe implementar cada tipo de vehículo.&quot;&quot;&quot;
+        pass
+
+    def __str__(self):
+        return f&quot;[Vehículo] {self._marca} {self._modelo} ({self._color})&quot;
+</code></pre>
+<h3 id="fichero-vehiculosclasespy">Fichero <code>vehiculos/clases.py</code></h3>
+<pre><code class="language-python">from .base import Vehiculo
+
+class Coche(Vehiculo):
+    def arrancar(self):
+        print(f&quot;El coche {self._marca} arranca suavemente.&quot;)
+
+    def detener(self):
+        print(f&quot;El coche {self._marca} se detiene con el freno de mano.&quot;)
+
+class Moto(Vehiculo):
+    def arrancar(self):
+        print(f&quot;La moto {self._marca} ruge al arrancar.&quot;)
+
+    def detener(self):
+        print(f&quot;La moto {self._marca} se detiene gradualmente.&quot;)
+
+class Camion(Vehiculo):
+    def arrancar(self):
+        print(f&quot;El camión {self._marca} enciende su motor diésel.&quot;)
+
+    def detener(self):
+        print(f&quot;El camión {self._marca} utiliza el freno de aire para detenerse.&quot;)
+</code></pre>
+<h3 id="fichero-vehiculosinterfacespy">Fichero <code>vehiculos/interfaces.py</code></h3>
+<pre><code class="language-python">from typing import Protocol, runtime_checkable
+
+@runtime_checkable
+class Repostable(Protocol):
+    &quot;&quot;&quot;
+    Interfaz que define la capacidad de repostar combustible.
+    Cualquier clase que implemente este método se considera Repostable.
+    &quot;&quot;&quot;
+    def repostar(self, litros: float) -&gt; None:
+        ...
+</code></pre>
+<h3 id="fichero-vehiculos__init__py">Fichero <code>vehiculos/__init__.py</code></h3>
+<pre><code class="language-python"># __init__.py
+# Expone los elementos principales del paquete para su uso externo.
+
+from .base import Vehiculo
+from .clases import Coche, Moto, Camion
+from .interfaces import Repostable
+
+__all__ = [&quot;Vehiculo&quot;, &quot;Coche&quot;, &quot;Moto&quot;, &quot;Camion&quot;, &quot;Repostable&quot;]
+</code></pre>
+<h3 id="fichero-mainpy">Fichero <code>main.py</code></h3>
+<p>Este script ejecuta el programa demostrativo, integrando herencia, polimorfismo, abstracción e interfaces.</p>
+<pre><code class="language-python">from vehiculos import Coche, Moto, Camion, Repostable
+
+# Extensiones con la interfaz Repostable
+class CocheRepostable(Coche, Repostable):
+    def repostar(self, litros: float):
+        print(f&quot;El coche {self._marca} ha repostado {litros} litros de gasolina.&quot;)
+
+class CamionRepostable(Camion, Repostable):
+    def repostar(self, litros: float):
+        print(f&quot;El camión {self._marca} ha repostado {litros} litros de diésel.&quot;)
+
+def main():
+    vehiculos = [
+        CocheRepostable(&quot;Seat&quot;, &quot;Ibiza&quot;, &quot;Azul&quot;),
+        Moto(&quot;Yamaha&quot;, &quot;MT-07&quot;, &quot;Negra&quot;),
+        CamionRepostable(&quot;Volvo&quot;, &quot;FH16&quot;, &quot;Blanco&quot;)
+    ]
+
+    print(&quot;=== DEMOSTRACIÓN DE LA APLICACIÓN DE VEHÍCULOS ===\n&quot;)
+
+    for v in vehiculos:
+        print(v)
+        v.arrancar()
+        v.detener()
+        # Comprobación polimórfica de interfaz
+        if isinstance(v, Repostable):
+            v.repostar(50)
+        print(&quot;-&quot; * 60)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<h3 id="explicacion">Explicación</h3>
+<p>Este proyecto integra los principales conceptos de la Programación Orientada a Objetos en Python:</p>
+<table>
+<thead>
+<tr>
+<th>Concepto</th>
+<th>Ejemplo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Abstracción</strong></td>
+<td><code>Vehiculo</code> (clase abstracta)</td>
+<td>Define los métodos esenciales comunes a todos los vehículos.</td>
+</tr>
+<tr>
+<td><strong>Herencia</strong></td>
+<td><code>Coche</code>, <code>Moto</code>, <code>Camion</code></td>
+<td>Reutilizan la estructura base y especializan el comportamiento.</td>
+</tr>
+<tr>
+<td><strong>Polimorfismo</strong></td>
+<td><code>v.arrancar()</code> y <code>v.detener()</code></td>
+<td>Cada subclase redefine el método adaptándolo a su tipo.</td>
+</tr>
+<tr>
+<td><strong>Interfaces (<code>Protocol</code>)</strong></td>
+<td><code>Repostable</code></td>
+<td>Define un contrato estructural sin herencia explícita.</td>
+</tr>
+<tr>
+<td><strong>Encapsulación</strong></td>
+<td>Atributos <code>_marca</code>, <code>_modelo</code>, <code>_color</code></td>
+<td>Protegen los datos internos de acceso directo externo.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="ejecucion-y-salida-esperada">Ejecución y salida esperada</h3>
+<p>Al ejecutar <code>python main.py</code> en el directorio raíz del proyecto:</p>
+<p><strong>Salida esperada:</strong></p>
+<pre><code>=== DEMOSTRACIÓN DE LA APLICACIÓN DE VEHÍCULOS ===
+
+[Vehículo] Seat Ibiza (Azul)
+El coche Seat arranca suavemente.
+El coche Seat se detiene con el freno de mano.
+El coche Seat ha repostado 50 litros de gasolina.
+------------------------------------------------------------
+[Vehículo] Yamaha MT-07 (Negra)
+La moto Yamaha ruge al arrancar.
+La moto Yamaha se detiene gradualmente.
+------------------------------------------------------------
+[Vehículo] Volvo FH16 (Blanco)
+El camión Volvo enciende su motor diésel.
+El camión Volvo utiliza el freno de aire para detenerse.
+El camión Volvo ha repostado 50 litros de diésel.
+------------------------------------------------------------
+</code></pre>
+<hr />
+</body>
+</html>

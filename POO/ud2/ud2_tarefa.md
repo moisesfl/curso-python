@@ -179,7 +179,7 @@ El módulo common.py centraliza utilidades transversales y excepciones de domini
 *   Valida el formato de identificador de un dispositivo.
 *   Reglas de validación (todas obligatorias):
     *   Texto debe ser str y no vacío (tras strip()).
-    *   Debe comenzar por letra \[A-Za-z\].
+    *   Debe comenzar por letra \[A-Z, a-z\].
     *   Por convención en la unidad: B (bombilla), S (sensor), C (cerradura)… pero no limitar solo a estas.
     *   El resto de caracteres deben ser alfanuméricos o guiones: \[A-Za-z0-9-\].
     *   No se permiten espacios internos.
@@ -403,7 +403,7 @@ Pruebas de errores controlados:
 
 - - -
 
-# 📐 UML de clases (ASCII)
+# UML de clases (ASCII)
 
 ```
 +-----------------------------------+
@@ -429,5 +429,6 @@ Pruebas de errores controlados:
 | + leer_valor() | | - _encendida   | | + bloquear()   |
 | + tipo()       | | + encender()   | | + desbloquear()|
 |                | | + apagar()     | | + tipo()       |
+|                | | + tipo()       | |                |
 +----------------+ +----------------+ +----------------+
 ```

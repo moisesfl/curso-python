@@ -21,7 +21,7 @@ if edad >= 18:
     print("Mayor de edad")
 ```
 """
-file_path = "Z:/Workspace/curso-python/ESCO/ud4/ud4_tarefa"
+file_path = "Z:/Workspace/curso-python/POO/ud2/ud2_tarefa"
 file_name = Path(file_path).stem  # Extrae el nombre del archivo sin extensión
 
 # Lee tu archivo Markdown

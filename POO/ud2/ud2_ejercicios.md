@@ -42,7 +42,7 @@ mi_proyecto_zoo/
 *   **Subclases** de _Animal_ en `clases.py`: `Perro`, `Aguila`, `Serpiente`.
     
     *   Implementan atributos específicos.
-        *   Por ejemplo raza, patas, embergadura, venenosa, etc.
+        *   Por ejemplo raza, patas, envergadura, venenosa, etc.
     *   Sobrescriben `moverse()` y `tipo()`.
     *   Implementan (si procede) métodos específicos (p. ej., `volar()` en `Aguila`).
 *   **Interfaces (Protocol)** en `interfaces.py` con `@runtime_checkable`:

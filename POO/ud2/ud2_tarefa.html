@@ -1,0 +1,539 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud2_tarefa</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud2-tarea-entregable-sistema-de-domotica">UD2 — Tarea entregable - Sistema de Domótica</h1>
+<hr />
+<h1 id="entrega">Entrega</h1>
+<h2 id="como-entregar">Cómo entregar</h2>
+<ul>
+<li>Proyecto en Github.<ul>
+<li>El proyecto deberá tener un README.MD con una breve explicación del mismo.</li>
+<li>Se deberá crear en modo público para que pueda acceder.</li>
+<li>Crear un fichero de texto .txt con el enlace al proyecto de GitHub.</li>
+</ul>
+</li>
+<li>Fichero zip con el proyecto.<ul>
+<li>El formato del nombre del fichero zip será el siguiente: <code>apelido1_apelido2_nome_UD02_tarefa.zip</code>.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h1 id="enunciado-general">Enunciado general</h1>
+<p>Desarrolla una <strong>aplicación modular en Python</strong> que simule un <strong>sistema de domótica</strong> donde diferentes dispositivos (sensores, bombillas, cerraduras, etc.) se gestionan desde un <strong>Hub central</strong>.</p>
+<p>El objetivo es aplicar <strong>Programación Orientada a Objetos (POO)</strong> para organizar el código de forma estructurada, reutilizable y extensible, poniendo en práctica:</p>
+<ul>
+<li>Clases, objetos y herencia.</li>
+<li>Encapsulación.</li>
+<li>Polimorfismo mediante clases abstractas y Protocols.</li>
+<li>Métodos estáticos y de clase.</li>
+<li>Estructuras de control y datos: bucles, condicionales, listas, diccionarios.</li>
+<li>Manejo de excepciones propias.</li>
+</ul>
+<hr />
+<h1 id="estructura-del-proyecto">Estructura del proyecto</h1>
+<pre><code>mi_proyecto_domotica/
+│
+├─ domotica/                      # Paquete principal
+│  ├─ __init__.py                 # Expone las clases principales del paquete
+│  ├─ base.py                     # Clase abstracta base Dispositivo
+│  ├─ dispositivos.py             # Subclases: SensorTemperatura, BombillaInteligente, CerraduraInteligente
+│  ├─ hub.py                      # Clase Hub: registro y operaciones polimórficas
+│  ├─ interfaces.py               # Protocols: Medible, Conmutable, Actualizable
+│  ├─ common.py                   # Utilidades (validaciones, factorías, excepciones)
+│
+└─ main.py                        # Programa principal de demostración
+</code></pre>
+<hr />
+<h1 id="requisitos-funcionales-y-tecnicos">Requisitos funcionales y técnicos</h1>
+<h2 id="1-clase-base-abstracta-dispositivo-basepy">1. Clase base (abstracta) <code>Dispositivo</code> (<code>base.py</code>)</h2>
+<p>Define la estructura común de todos los dispositivos.</p>
+<ul>
+<li>
+<p>Atributos protegidos:</p>
+<ul>
+<li><code>_id: str</code></li>
+<li><code>_nombre: str</code></li>
+<li><code>_fabricante: str</code></li>
+<li>
+<p>Métodos:</p>
+</li>
+<li>
+<p><code>__init__</code>: constructor con validaciones.</p>
+</li>
+<li>Métodos <em>setters</em> y <em>getters</em> para los atributos.</li>
+<li><code>__str__</code>: representación legible del objeto.</li>
+<li><code>tipo()</code>: método abstracto que devuelva el tipo de dispositivo.</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-subclases-dispositivospy">2. Subclases (<code>dispositivos.py</code>)</h2>
+<p>Implementa tres clases derivadas de <code>Dispositivo</code>, cada una con atributos y métodos propios:</p>
+<h3 id="sensortemperatura"><code>SensorTemperatura</code></h3>
+<ul>
+<li>
+<p>Atributo adicional:</p>
+<ul>
+<li><code>_celsius: float</code></li>
+<li>
+<p>Métodos:</p>
+</li>
+<li>
+<p><code>leer_valor()</code>: devuelve la temperatura actual.</p>
+</li>
+<li><code>tipo()</code>: devuelve <code>"SensorTemperatura"</code>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="bombillainteligente"><code>BombillaInteligente</code></h3>
+<ul>
+<li>
+<p>Atributos adicionales:</p>
+<ul>
+<li><code>_brillo: int</code> (0–100)</li>
+<li><code>_encendida: bool</code></li>
+<li>
+<p>Métodos:</p>
+</li>
+<li>
+<p><code>encender()</code>, <code>apagar()</code></p>
+</li>
+<li><code>tipo()</code>: <code>"BombillaInteligente"</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="cerradurainteligente"><code>CerraduraInteligente</code></h3>
+<ul>
+<li>
+<p>Atributos adicionales:</p>
+<ul>
+<li><code>_bloqueada: bool</code></li>
+<li>
+<p>Métodos:</p>
+</li>
+<li>
+<p><code>bloquear()</code>, <code>desbloquear()</code></p>
+</li>
+<li><code>tipo()</code>: <code>"CerraduraInteligente"</code></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="3-protocols-interfacespy">3. Protocols (<code>interfaces.py</code>)</h2>
+<p>Define las capacidades que un dispositivo puede tener, sin obligar a una jerarquía rígida.</p>
+<pre><code class="language-python">from typing import Protocol, runtime_checkable
+
+@runtime_checkable
+class Medible(Protocol):
+    def leer_valor(self) -&gt; float: ...
+
+@runtime_checkable
+class Conmutable(Protocol):
+    &quot;&quot;&quot; Adaptar a cada tipo de dispositivo para que se puedan activar/desactivar utilizando polimorfismo llamando al metodo correspondiente si  ya lo integran &quot;&quot;&quot;
+    def encender(self) -&gt; None: ...
+    def apagar(self) -&gt; None: ...
+
+@runtime_checkable
+class Actualizable(Protocol):
+    def actualizar_firmware(self, version: str) -&gt; None: ...
+</code></pre>
+<hr />
+<h2 id="4-clase-hub-hubpy">4. Clase <code>Hub</code> (<code>hub.py</code>)</h2>
+<p>Gestiona los dispositivos registrados y realiza operaciones comunes.</p>
+<ul>
+<li>
+<p><strong>Atributos</strong>:</p>
+<ul>
+<li><code>_dispositivos: dict[str, Dispositivo]</code> :<ul>
+<li>Diccionario donde se almacenan los dispositivos con clave ID y objeto.</li>
+<li>Formato del ID:<ul>
+<li>Formato bombillas: "B001", "B002", ...</li>
+<li>Formato sensores: "S001", "S002", ...</li>
+<li>Formato cerradura: "C001", "C002", ...</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Métodos</strong>:</p>
+</li>
+<li>
+<p><code>registrar(disp: Dispositivo)</code>: añade dispositivos evitando duplicados.</p>
+</li>
+<li>
+<p><code>listar()</code>: devuelve todos los dispositivos.</p>
+</li>
+<li>
+<p><code>operar_todos()</code>: Recorre la colección de dispositivos:</p>
+<ul>
+<li>Si es <code>Medible</code>, muestra su lectura.</li>
+<li>Si es <code>Conmutable</code>, alterna encendido/apagado.<ul>
+<li><code>estadisticas()</code>: devuelve un diccionario con el número de dispositivos por tipo.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="5-modulo-comun-commonpy">5. Módulo común (<code>common.py</code>)</h2>
+<p>El módulo common.py centraliza utilidades transversales y excepciones de dominio para el sistema de domótica. Debe ser independiente del resto de módulos (no debe importar Dispositivo ni subclases), para evitar dependencias circulares y permitir pruebas unitarias aisladas.</p>
+<h4 id="excepciones">Excepciones:</h4>
+<table>
+<thead>
+<tr>
+<th>Clase</th>
+<th>Hereda de</th>
+<th>¿Cuándo lanzarla?</th>
+<th>Ejemplo de mensaje</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DatoInvalido</code></td>
+<td><code>ValueError</code></td>
+<td>Un dato no cumple el formato o las reglas de negocio</td>
+<td><code>"ID generado inválido: 'B00-'"</code></td>
+</tr>
+<tr>
+<td><code>Duplicado</code></td>
+<td><code>Exception</code></td>
+<td>Se intenta registrar/insertar un elemento con clave ya existente (validado en <code>Hub</code>)</td>
+<td><code>"El ID 'B001' ya existe"</code></td>
+</tr>
+<tr>
+<td><code>NoEncontrado</code></td>
+<td><code>Exception</code></td>
+<td>No existe un elemento solicitado por su identificador</td>
+<td><code>"No existe el dispositivo 'X999'"</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="clase-utils">Clase Utils</h4>
+<ul>
+<li>
+<p>Clase <code>Utils</code> con:</p>
+<ul>
+<li><code>validar_id(texto: str) -&gt; bool</code></li>
+<li><code>fabricar_id(prefijo: str, n: int) -&gt; str</code></li>
+<li><code>validar_version(version: str) -&gt; bool</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="funcion-validar_id">Función validar_id</h4>
+<ul>
+<li>Valida el formato de identificador de un dispositivo.</li>
+<li>Reglas de validación (todas obligatorias):<ul>
+<li>Texto debe ser str y no vacío (tras strip()).</li>
+<li>Debe comenzar por letra [A-Z, a-z].</li>
+<li>Por convención en la unidad: B (bombilla), S (sensor), C (cerradura)… pero no limitar solo a estas.</li>
+<li>El resto de caracteres deben ser alfanuméricos o guiones: [A-Za-z0-9-].</li>
+<li>No se permiten espacios internos.</li>
+</ul>
+</li>
+</ul>
+<h4 id="funcion-fabricar_id">Función fabricar_id</h4>
+<p>Genera un nuevo ID canonizado para dispositivos, con el formato:</p>
+<pre><code>&lt;PREFIJO&gt;&lt;NNN&gt;
+</code></pre>
+<p>donde es una letra (o varias letras) en mayúsculas y es un entero con 3 dígitos (con cero a la izquierda si procede).</p>
+<p><strong>Reglas</strong>:</p>
+<ul>
+<li>prefijo debe ser str, no vacío; se normaliza a mayúsculas (upper()).</li>
+<li>n debe ser int positivo (&gt;= 1).</li>
+<li>El id_candidato debe superar validar_id(...); en caso contrario, lanzar DatoInvalido con mensaje:<ul>
+<li>"ID generado inválido: ''".</li>
+</ul>
+</li>
+</ul>
+<p>Ejemplos:</p>
+<ul>
+<li>fabricar_id("b", 1) → "B001"</li>
+<li>fabricar_id("S", 12) → "S012"</li>
+<li>fabricar_id("Hub", 7) → "HUB007"</li>
+</ul>
+<p>Casos que deben lanzar DatoInvalido:</p>
+<ul>
+<li>fabricar_id("", 1) → prefijo vacío</li>
+<li>fabricar_id("B", 0) → n no positivo</li>
+<li>fabricar_id("X_", 5) → guion bajo no permitido por validar_id</li>
+</ul>
+<p>Notas:</p>
+<ul>
+<li>No comprueba colisiones (IDs ya usados); eso corresponde a Hub.</li>
+</ul>
+<hr />
+<h2 id="6-programa-principal-mainpy">6. Programa principal (<code>main.py</code>)</h2>
+<p>Demostración completa del funcionamiento.</p>
+<ul>
+<li>Crear una lista de dispositivos de distintos tipos.</li>
+<li>Registrarlos en el <code>Hub</code>.</li>
+<li>Mostrar su información y estadísticas.</li>
+<li>Utilizar bucles, condicionales, listas y diccionarios.</li>
+<li>Mostrar manejo de excepciones controladas.</li>
+</ul>
+<h3 id="presentacion-e-inicio">Presentación e inicio</h3>
+<ol>
+<li>Mostrar un encabezado breve indicando que comienza la demo del sistema de domótica.</li>
+<li>Crear una instancia del <code>Hub</code> (registro interno vacío).</li>
+</ol>
+<h3 id="preparacion-de-datos-entrada">Preparación de datos (entrada)</h3>
+<ol>
+<li>
+<p>Preparar una <strong>lista de diccionarios</strong> con la definición de dispositivos a crear.</p>
+<ul>
+<li>
+<p>Cada elemento define: <code>id</code>, <code>tipo</code> (sensor/bombilla/cerradura), <code>nombre</code>, <code>fabricante</code> y los parámetros específicos:</p>
+<ul>
+<li><code>SensorTemperatura</code>: <code>celsius</code> inicial.</li>
+<li><code>BombillaInteligente</code>: <code>brillo</code> inicial (0–100).</li>
+<li><code>CerraduraInteligente</code>: estado inicial (bloqueada por defecto, opcional).</li>
+</ul>
+</li>
+<li>
+<p>Incluir <strong>al menos dos dispositivos por tipo</strong> para que las estadísticas sean significativas.</p>
+</li>
+<li>
+<p>Incluir <strong>casos problemáticos</strong> para probar validaciones:</p>
+<ul>
+<li>Un <code>id</code> inválido (por ejemplo, que no empiece por letra).</li>
+<li>Un <code>id</code> duplicado (repetir uno existente).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="creacion-e-inyeccion-en-el-hub">Creación e inyección en el <code>Hub</code></h3>
+<ol>
+<li>
+<p>Recorrer con un <strong>bucle</strong> la lista de definiciones:</p>
+<ul>
+<li>
+<p>Según el <code>tipo</code>, <strong>instanciar</strong> la subclase correspondiente:</p>
+<ul>
+<li><code>SensorTemperatura(...)</code></li>
+<li><code>BombillaInteligente(...)</code></li>
+<li><code>CerraduraInteligente(...)</code><ul>
+<li>Validar previamente el <code>id</code> con <code>Utils.validar_id</code>; si es inválido, <strong>avisar</strong> y <strong>saltar</strong> ese elemento.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Registrar cada dispositivo en el <code>Hub</code> con <code>hub.registrar(disp)</code>:</p>
+<ul>
+<li>Si el <code>id</code> <strong>ya existe</strong>, capturar <code>Duplicado</code> y mostrar un mensaje indicando el fallo.</li>
+<li>Si algún dato fuese inválido en el constructor, capturar <code>DatoInvalido</code> y continuar con el siguiente.</li>
+</ul>
+</li>
+</ol>
+<h3 id="listado-y-representacion">Listado y representación</h3>
+<ol>
+<li>
+<p>Imprimir un <strong>listado de todos los dispositivos</strong> registrados, recorriendo <code>hub.listar()</code>:</p>
+<ul>
+<li>Mostrar la representación legible (<code>__str__</code>) de cada objeto.</li>
+<li>Comprobar que los estados iniciales (<code>online</code>, brillo, bloqueada, etc.) se muestran correctamente.</li>
+</ul>
+</li>
+</ol>
+<h3 id="capacidades-por-dispositivo-duck-typing-con-protocols">Capacidades por dispositivo (duck typing con Protocols)</h3>
+<ol>
+<li>
+<p>Para cada dispositivo registrado:</p>
+<ul>
+<li>
+<p>Comprobar <strong>dinámicamente</strong> si implementa <code>Medible</code> (<code>isinstance(d, Medible)</code>):</p>
+<ul>
+<li>
+<p>Si sí, imprimir “Medible”.</p>
+<ul>
+<li>Comprobar si implementa <code>Conmutable</code>:</li>
+</ul>
+</li>
+<li>
+<p>Si sí, imprimir “Conmutable”.</p>
+<ul>
+<li>Comprobar si implementa <code>Actualizable</code>:</li>
+</ul>
+</li>
+<li>
+<p>Si sí, imprimir “Actualizable”.</p>
+<ul>
+<li>Construir un <strong>resumen de capacidades</strong> por cada dispositivo.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="operaciones-polimorficas-masivas">Operaciones polimórficas masivas</h3>
+<ol>
+<li>
+<p>Llamar a <code>hub.operar_todos()</code> (recorre todos los dispositivos):</p>
+<ul>
+<li>Para cada <strong>Medible</strong>: llamar a <code>leer_valor()</code> y mostrar la lectura.</li>
+<li>Para cada <strong>Conmutable</strong>: ejecutar <code>encender()</code> y luego <code>apagar()</code>; mostrar mensajes de acción (o estado resultante).</li>
+</ul>
+</li>
+</ol>
+<h3 id="acciones-especificas-por-tipo">Acciones específicas por tipo</h3>
+<ol>
+<li>
+<p>Localizar una <code>BombillaInteligente</code> y:</p>
+<ul>
+<li>
+<p>Cambiar su <strong>brillo</strong> (p. ej., 50 → 90) y mostrar el nuevo valor.</p>
+</li>
+<li>
+<p>Ejecutar una <strong>actualización de firmware</strong> con <code>Actualizable.actualizar_firmware("1.2.3")</code>, validando versión con <code>Utils.validar_version</code>.</p>
+<ul>
+<li>Si la versión es inválida, capturar <code>DatoInvalido</code> y mostrar mensaje.</li>
+<li>Localizar una <code>CerraduraInteligente</code> y:</li>
+</ul>
+</li>
+<li>
+<p>Mostrar su estado (bloqueada/desbloqueada).</p>
+</li>
+<li>Llamar a <code>bloquear()</code> y luego a <code>desbloquear()</code> (y viceversa) para evidenciar la <strong>conmutación</strong>.</li>
+</ul>
+</li>
+</ol>
+<h2 id="estadisticas-y-resumenes">Estadísticas y resúmenes</h2>
+<ol>
+<li>
+<p>Obtener <code>hub.estadisticas()</code> y mostrar el <strong>diccionario</strong> con recuento por tipo (p. ej., <code>{'SensorTemperatura': 2, 'BombillaInteligente': 2, 'CerraduraInteligente': 1}</code>).</p>
+</li>
+<li>
+<p>Mostrar un <strong>resumen final</strong>: total de dispositivos, cuántos son medibles, cuántos conmutables y cuántos actualizables (se puede calcular sobre <code>hub.listar()</code> con contadores).</p>
+</li>
+</ol>
+<h2 id="manejo-de-errores-y-casos-limite-demostracion-explicita">Manejo de errores y casos límite (demostración explícita)</h2>
+<ol>
+<li>Intentar registrar de nuevo un <code>id</code> existente para mostrar el mensaje de <code>Duplicado</code>.</li>
+<li>Probar a validar una <strong>versión incorrecta</strong> (por ejemplo <code>"1.0"</code>) para evidenciar <code>validar_version == False</code> y el lanzamiento de <code>DatoInvalido</code> si se intenta actualizar con ella.</li>
+<li>Intentar consultar un dispositivo inexistente para ilustrar <code>NoEncontrado</code>.</li>
+</ol>
+<h2 id="cierre">Cierre</h2>
+<ol>
+<li>Mostrar un mensaje de <strong>fin de la demostración</strong>.</li>
+</ol>
+<hr />
+<h1 id="ejemplo-de-salida-output-del-programa">Ejemplo de salida (output) del programa</h1>
+<p>\=== DEMO DOMÓTICA — INICIO ===</p>
+<p>Creando Hub… OK Cargando definiciones de dispositivos (lista de diccionarios)…</p>
+<p>Validando e instanciando:</p>
+<ul>
+<li>OK: S001 (sensor) → SensorTemperatura "Sensor Cocina" (Acme, 22.5 ºC)</li>
+<li>OK: B001 (bombilla) → BombillaInteligente "Bombilla Salón" (Lumen, brillo=80)</li>
+<li>OK: C001 (cerradura) → CerraduraInteligente "Puerta Principal" (SafeCo, bloqueada)</li>
+<li>OK: S002 (sensor) → SensorTemperatura "Sensor Dormitorio" (Acme, 19.3 ºC)</li>
+<li>OK: B002 (bombilla) → BombillaInteligente "Bombilla Pasillo" (Lumen, brillo=50)</li>
+<li>ERROR: id "001" inválido → se omite</li>
+<li>ERROR: Duplicado "B001" ya existe → se omite</li>
+</ul>
+<p>Registro en Hub completado: 5 dispositivos.</p>
+<p>Listado de dispositivos:</p>
+<ul>
+<li>[SensorTemperatura] Sensor Cocina (id=S001, fabricante=Acme)</li>
+<li>[BombillaInteligente] Bombilla Salón (id=B001, fabricante=Lumen)</li>
+<li>[CerraduraInteligente] Puerta Principal (id=C001, fabricante=SafeCo)</li>
+<li>[SensorTemperatura] Sensor Dormitorio (id=S002, fabricante=Acme)</li>
+<li>[BombillaInteligente] Bombilla Pasillo (id=B002, fabricante=Lumen)</li>
+</ul>
+<p>Capacidades detectadas:</p>
+<ul>
+<li>S001 → Medible</li>
+<li>B001 → Conmutable, Actualizable</li>
+<li>C001 → Conmutable</li>
+<li>S002 → Medible</li>
+<li>B002 → Conmutable, Actualizable</li>
+</ul>
+<p>Operar todos (polimorfismo):</p>
+<ul>
+<li>S001 → lectura = 22.50 ºC</li>
+<li>B001 → encender() → OK; apagar() → OK</li>
+<li>C001 → encender() (bloquear) → OK; apagar() (desbloquear) → OK</li>
+<li>S002 → lectura = 19.30 ºC</li>
+<li>B002 → encender() → OK; apagar() → OK</li>
+</ul>
+<p>Acciones específicas:</p>
+<ul>
+<li>Calibrar S001 con offset +0.70 → nueva lectura = 23.20 ºC</li>
+<li>B001: brillo previo = 80 → brillo nuevo = 90</li>
+<li>B001: actualizar_firmware("1.2.3") → OK</li>
+<li>B002: actualizar_firmware("1.0") → ERROR: versión inválida (formato esperado X.Y.Z)</li>
+<li>C001: estado → bloqueada; desbloquear() → OK; bloquear() → OK</li>
+</ul>
+<p>Estadísticas por tipo:</p>
+<ul>
+<li>SensorTemperatura: 2</li>
+<li>BombillaInteligente: 2</li>
+<li>CerraduraInteligente: 1 Total dispositivos: 5</li>
+</ul>
+<p>Resumen de capacidades:</p>
+<ul>
+<li>Medibles: 2</li>
+<li>Conmutables: 3</li>
+<li>Actualizables: 2</li>
+</ul>
+<p>Pruebas de errores controlados:</p>
+<ul>
+<li>Registrar de nuevo B001 → ERROR: Duplicado (el ID ya existe)</li>
+<li>Validar id "A_01" → False (carácter '_' no permitido)</li>
+<li>Actualizar firmware B002 a "v1.2.3" → ERROR: versión inválida</li>
+<li>Obtener "X999" → ERROR: NoEncontrado (no existe)</li>
+</ul>
+<p>\=== DEMO DOMÓTICA — FIN ===</p>
+<hr />
+<h1 id="uml-de-clases-ascii">UML de clases (ASCII)</h1>
+<pre><code>+-----------------------------------+
+|        &lt;&lt;abstract&gt;&gt;               |
+|            Dispositivo            |
++-----------------------------------+
+| - _id: str                        |
+| - _nombre: str                    |
+| - _fabricante: str                |                   
++-----------------------------------+
+| + __init__()                      |
+| + __str__()                       |
+| + tipo(): str {abstract}          |          
+| + propiedades (get/set)           |
++-----------------^-----------------+
+                  |
+  +---------------+---------------+----------------+
+  |               |               |                |
++----------------+ +----------------+ +----------------+
+|SensorTemperatura| |BombillaInteligente| |CerraduraInteligente|
++----------------+ +----------------+ +----------------+
+| - _celsius     | | - _brillo      | | - _bloqueada   |
+| + leer_valor() | | - _encendida   | | + bloquear()   |
+| + tipo()       | | + encender()   | | + desbloquear()|
+|                | | + apagar()     | | + tipo()       |
+|                | | + tipo()       | |                |
++----------------+ +----------------+ +----------------+
+</code></pre>
+</body>
+</html>
