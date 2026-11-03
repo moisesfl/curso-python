@@ -101,11 +101,11 @@ with open("ruta/al/archivo.txt", mode="r", encoding="utf-8") as f:
     contenido = f.read()
 ```
 
-🔹 El bloque `with` garantiza el cierre automático del fichero, incluso si ocurre un error.
+* El bloque `with` garantiza el cierre automático del fichero, incluso si ocurre un error.
 
-🔹 El parámetro `mode` indica el modo de apertura (`"r"`, `"w"`, `"a"`, etc.).
+* El parámetro `mode` indica el modo de apertura (`"r"`, `"w"`, `"a"`, etc.).
 
-🔹 El parámetro `encoding` define la codificación del texto, habitualmente `"utf-8"`.
+* El parámetro `encoding` define la codificación del texto, habitualmente `"utf-8"`.
 
 Es recomendable utilizar **`pathlib.Path`** para manejar rutas de forma más clara y portable:
 
@@ -279,7 +279,7 @@ with ruta.open("w", encoding="utf-8") as f:
 print("Archivo creado correctamente.")
 ```
 
-🔹 Claves:
+**Claves**:
 
 *   El archivo se crea (o sobrescribe si ya existía).
 *   Cada llamada a .write() añade texto donde está el puntero.
@@ -323,7 +323,7 @@ with archivo.open("w+", encoding="utf-8") as f:
     print("Primeros 20 caracteres:", inicio)  # Mostramos el texto leído
 ```
 
-🔸 Claves:
+**Claves**:
 
 *   El modo "w+" permite leer y escribir.
 *   `.seek(0)` reposiciona el puntero al inicio.
