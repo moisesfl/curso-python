@@ -1,12 +1,11 @@
 import mysql.connector
 
-
 # Establecer la conexión
 conexion = mysql.connector.connect(
     host="localhost",
     user="root",
     password="",
-    database="test"
+    database="proba"
 )
 
 # Verificar si la conexión fue exitosa
