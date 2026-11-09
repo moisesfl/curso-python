@@ -587,7 +587,7 @@ Empleados tras la eliminación:
 
 A continuación, se encapsula toda la funcionalidad en una clase `GestorBD` que implementa las operaciones CRUD (**Create**, **Read**, **Update**, **Delete**) mediante funciones.
 
-### 🧩 Clase `GestorBD`[🔗](#clase-gestorbd "Permanent link")
+### Clase `GestorBD`[](#clase-gestorbd "Permanent link")
 
 ```
 import sqlite3
@@ -638,7 +638,7 @@ class GestorBD:
 
 - - -
 
-### 🧪 Ejemplo de uso de la clase[🔗](#ejemplo-de-uso-de-la-clase "Permanent link")
+### Ejemplo de uso de la clase[](#ejemplo-de-uso-de-la-clase "Permanent link")
 
 ```
 if __name__ == "__main__":
@@ -649,35 +649,35 @@ if __name__ == "__main__":
     gestor.insertar_empleado("Luis", "IT", 2200.75)
     gestor.insertar_empleado("Marta", "RRHH", 2000.00)
 
-    print("📋 Empleados actuales:")
+    print("Empleados actuales:")
     for e in gestor.listar_empleados():
         print(e)
 
     gestor.eliminar_por_salario(2000)
 
-    print("\n📋 Tras eliminar salarios bajos:")
+    print("\nTras eliminar salarios bajos:")
     for e in gestor.listar_empleados():
         print(e)
 
     gestor.cerrar()
 ```
 
-**🧾 Output esperado:**
+**Output esperado:**
 
 ```
-📋 Empleados actuales:
+Empleados actuales:
 (1, 'Ana', 'Ventas', 1800.5)
 (2, 'Luis', 'IT', 2200.75)
 (3, 'Marta', 'RRHH', 2000.0)
 
-📋 Tras eliminar salarios bajos:
+Tras eliminar salarios bajos:
 (2, 'Luis', 'IT', 2200.75)
 (3, 'Marta', 'RRHH', 2000.0)
 ```
 
 - - -
 
-# 🧠 Conclusiones[🔗](#conclusiones "Permanent link")
+# Conclusiones[](#conclusiones "Permanent link")
 
 *   Todas las bases de datos comparten las operaciones CRUD.
 *   En motores relacionales, se usa SQL; en MongoDB, se trabaja con documentos JSON.
