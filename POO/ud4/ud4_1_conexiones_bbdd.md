@@ -121,7 +121,7 @@ Estas operaciones son comunes a todas las bases de datos, ya sean relacionales (
 
 ## Cuestiones de seguridad[](#cuestiones-de-seguridad "Permanent link")
 
-### ¿Qué es el sql injection?[🔗](#que-es-el-sql-injection "Permanent link")
+### ¿Qué es el sql injection?[](#que-es-el-sql-injection "Permanent link")
 
 Consiste en utilizar vulnerabilidades en las páginas web, y otras aplicaciones que interactúan con bases de datos, para introducir instrucciones SQL y así **poder saltarse los controles de autenticación y realizar acciones no autorizadas en el sistema**.
 
@@ -135,9 +135,9 @@ Aquí tienes **4 ejemplos claros y didácticos de SQL Injection**, cada uno con 
 
 - - -
 
-#### 🔥 **1\. Ejemplo clásico: evasión de login**[🔗](#1-ejemplo-clasico-evasion-de-login "Permanent link")
+#### **1\. Ejemplo clásico: evasión de login**[](#1-ejemplo-clasico-evasion-de-login "Permanent link")
 
-💉 _Inyección en un campo de usuario para saltarse la autenticación_
+_Inyección en un campo de usuario para saltarse la autenticación_
 
 **Entrada del atacante (campo “usuario”):**
 
@@ -152,21 +152,21 @@ SELECT * FROM usuarios
 WHERE usuario = '' OR '1'='1' AND password = '';
 ```
 
-##### 🧠 Explicación[🔗](#explicacion "Permanent link")
+##### Explicación[](#explicacion "Permanent link")
 
 *   `'1'='1'` es siempre verdadero.
 *   La condición completa del `WHERE` se convierte en verdadera para **todas las filas**.
 *   El atacante entra sin conocer contraseña.
 
-##### ⚠️ Consecuencia[🔗](#consecuencia "Permanent link")
+##### Consecuencia[](#consecuencia "Permanent link")
 
 Acceso total sin credenciales.
 
 - - -
 
-#### 🔥 **2\. Eliminación masiva de datos**[🔗](#2-eliminacion-masiva-de-datos "Permanent link")
+#### **2\. Eliminación masiva de datos**[](#2-eliminacion-masiva-de-datos "Permanent link")
 
-💉 _Ataque para borrar contenido completo de una tabla_
+_Ataque para borrar contenido completo de una tabla_
 
 **Entrada del atacante (por ejemplo, en un formulario de “nombre”):**
 
@@ -182,21 +182,21 @@ DROP TABLE empleados;
 -- ';
 ```
 
-##### 🧠 Explicación[🔗](#explicacion_1 "Permanent link")
+##### Explicación[](#explicacion_1 "Permanent link")
 
 *   El atacante **cierra la consulta legítima** con `';`
 *   Inserta una instrucción destructiva: `DROP TABLE empleados;`
 *   `--` comenta el resto para evitar errores sintácticos.
 
-##### ⚠️ Consecuencia[🔗](#consecuencia_1 "Permanent link")
+##### Consecuencia[](#consecuencia_1 "Permanent link")
 
 La tabla `empleados` desaparece por completo.
 
 - - -
 
-#### 🔥 **3\. Extracción de datos sensibles ignorando filtros**[🔗](#3-extraccion-de-datos-sensibles-ignorando-filtros "Permanent link")
+#### **3\. Extracción de datos sensibles ignorando filtros**[🔗](#3-extraccion-de-datos-sensibles-ignorando-filtros "Permanent link")
 
-💉 _Ataque para ver toda la tabla saltándose restricciones_
+_Ataque para ver toda la tabla saltándose restricciones_
 
 **Entrada del atacante (parámetro “id”):**
 
@@ -210,20 +210,20 @@ La tabla `empleados` desaparece por completo.
 SELECT * FROM cuentas WHERE id = 1 OR 1=1;
 ```
 
-##### 🧠 Explicación[🔗](#explicacion_2 "Permanent link")
+##### Explicación[](#explicacion_2 "Permanent link")
 
 *   El filtro por ID queda inutilizado.
 *   `1 OR 1=1` devuelve **todas** las filas de la tabla.
 
-##### ⚠️ Consecuencia[🔗](#consecuencia_2 "Permanent link")
+##### Consecuencia[](#consecuencia_2 "Permanent link")
 
 El atacante obtiene la lista completa de cuentas, sueldos, correos, etc.
 
 - - -
 
-#### 🔥 **4\. Ataque UNION para robar otra tabla**[🔗](#4-ataque-union-para-robar-otra-tabla "Permanent link")
+#### **4\. Ataque UNION para robar otra tabla**[](#4-ataque-union-para-robar-otra-tabla "Permanent link")
 
-💉 _Inyección que combina resultados con tablas sensibles (por ejemplo, contraseñas)_
+_Inyección que combina resultados con tablas sensibles (por ejemplo, contraseñas)_
 
 **Entrada del atacante (campo “nombre”):**
 
@@ -241,34 +241,34 @@ SELECT usuario, password FROM admin;
 -- ';
 ```
 
-##### 🧠 Explicación[🔗](#explicacion_3 "Permanent link")
+##### Explicación[](#explicacion_3 "Permanent link")
 
 *   `UNION` permite devolver datos de una segunda consulta.
 *   El atacante mezcla la tabla original con `admin`.
 *   Los resultados muestran **usuarios y contraseñas** junto a los empleados.
 
-##### ⚠️ Consecuencia[🔗](#consecuencia_3 "Permanent link")
+##### Consecuencia[](#consecuencia_3 "Permanent link")
 
 Filtración directa de credenciales.
 
 - - -
 
-### ¿Cómo evitamos sql injection?[🔗](#como-evitamos-sql-injection "Permanent link")
+### ¿Cómo evitamos sql injection?[](#como-evitamos-sql-injection "Permanent link")
 
 Los ataques de SQL Injection se producen cuando el atacante consigue que la aplicación mezcle datos y código SQL, permitiéndole modificar o ejecutar instrucciones maliciosas. En Python, la protección es sencilla si se siguen cuatro principios fundamentales.
 
-#### ✅ 1. Usar siempre consultas parametrizadas (NUNCA concatenar strings)[🔗](#1-usar-siempre-consultas-parametrizadas-nunca-concatenar-strings "Permanent link")
+#### 1. Usar siempre consultas parametrizadas (NUNCA concatenar strings)[](#1-usar-siempre-consultas-parametrizadas-nunca-concatenar-strings "Permanent link")
 
 Este es el método más importante y eficaz.
 
-❌ **Vulnerable**
+**Vulnerable:**
 
 ```
 sql = f"SELECT * FROM usuarios WHERE nombre = '{usuario}'"
 cursor.execute(sql)
 ```
 
-✅ **Seguro**
+**Seguro:**
 
 ```
 cursor.execute(
@@ -282,23 +282,23 @@ cursor.execute(
 )   # MySQL / PostgreSQL
 ```
 
-🧠 **Por qué funciona**
+**Por qué funciona**
 
 *   Cuando se usa ? o %s, el driver:
-*   Escapa caracteres peligrosos.
-*   Trata la entrada como dato, no como código.
+    *   Escapa caracteres peligrosos.
+    *   Trata la entrada como dato, no como código.
 
-#### ✅ 2. No interpolar identificadores: usar “listas blancas” (whitelists)[🔗](#2-no-interpolar-identificadores-usar-listas-blancas-whitelists "Permanent link")
+#### 2. No interpolar identificadores: usar “listas blancas” (whitelists)[](#2-no-interpolar-identificadores-usar-listas-blancas-whitelists "Permanent link")
 
 Los placeholders no sirven para nombres de columnas o tablas, solo para valores.
 
-❌ Vulnerable
+Vulnerable:
 
 ```
 cursor.execute(f"SELECT {columna} FROM empleados")
 ```
 
-✅ Seguro
+Seguro:
 
 ```
 permitidas = {"id", "nombre", "salario"}
@@ -306,7 +306,7 @@ if columna in permitidas:
     cursor.execute(f"SELECT {columna} FROM empleados")
 ```
 
-#### ✅ 3. Validar y sanear todas las entradas del usuario[🔗](#3-validar-y-sanear-todas-las-entradas-del-usuario "Permanent link")
+#### 3. Validar y sanear todas las entradas del usuario[](#3-validar-y-sanear-todas-las-entradas-del-usuario "Permanent link")
 
 **Comprobar**: - Tipo de dato (int, float, str…) - Longitud (ej. máximo 50 caracteres) - Formatos esperados (ej. email) - Rangos numéricos
 
@@ -321,7 +321,7 @@ def validar_id(x):
 
 La validación evita valores maliciosos antes de llegar al SQL.
 
-#### ✅ 4. Usar transacciones y manejar errores correctamente[🔗](#4-usar-transacciones-y-manejar-errores-correctamente "Permanent link")
+#### 4. Usar transacciones y manejar errores correctamente[](#4-usar-transacciones-y-manejar-errores-correctamente "Permanent link")
 
 Evita quedar en estados inconsistentes si un ataque intenta romper la consulta.
 

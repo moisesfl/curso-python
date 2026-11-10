@@ -3,12 +3,11 @@ import os
 
 
 #template_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
-# template_dir = os.path.join (template_dir, 'src', 'templates')
+#template_dir = os.path.join (template_dir, 'src', 'templates')
 
 
 #'templates' es el nombre por defecto
 app = Flask(__name__)
-
 TITLE = "FLASK PROJECT"
 
 @app.route('/')
@@ -21,7 +20,7 @@ def show_post(slug):
     return f"mostrar el post {slug}"
 
 
-@app.route("/admin/post/", methods = ['POST'])
+@app.route("/admin/post/", methods = ['POST','GET'])
 def post_form( ):
     if request.method == 'POST':
         nombre = request.form.get('nombre')
@@ -36,3 +35,4 @@ def post_form( ):
 
 if __name__ ==  "__main__":
     app.run (debug=True, port = 4000)
+    
