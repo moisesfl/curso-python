@@ -3,8 +3,8 @@ from abc import ABC, abstractmethod
 
 class Database(ABC):
 
-    def __init__(self, database_name):
-        self.database_name = database_name
+    def __init__(self, database):
+        self.database = database
 
     @abstractmethod
     def connect(self):

@@ -1,4 +1,13 @@
-if if __name__ == "__main__":
+import mysql
+
+from data_base import *
+
+if __name__ == "__main__":
+
+    mysql_db = MySQLDatabase("root", "", "clase")
+    mysql_db.connect()
+
+
 
     # Crear usuario
     usuario = {
