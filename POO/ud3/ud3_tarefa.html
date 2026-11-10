@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud3_tarefa</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud3-tarea-entregable-gestion-de-estudiantes-y-docentes-de-un-instituto">UD3 — Tarea entregable - Gestión de estudiantes y docentes de un instituto</h1>
+<h2 id="entrega">Entrega</h2>
+<h3 id="como-entregar">Cómo entregar</h3>
+<ul>
+<li>Proyecto en Github.<ul>
+<li>El proyecto deberá tener un README.MD con una breve explicación del mismo.</li>
+<li>Se deberá crear en modo público para que pueda acceder.</li>
+<li>Crear un fichero de texto .txt con el enlace al proyecto de GitHub y subirlo a la plataforma.</li>
+</ul>
+</li>
+<li>Fichero zip con el proyecto.<ul>
+<li>Subir a la plataforma el fichero .zip con el siguiente formato: <code>apelido1_apelido2_nome_UD03_tarefa.zip</code>.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="enunciado-general">Enunciado general</h2>
+<p><strong>Descripción:</strong> Aplicación con interfaz por consola que permite gestionar los estudiantes y profesores de un centro de formación profesional de informática mediante el almacenamiento de datos en un fichero json básico para estudiantes y otro para profesores.</p>
+<ul>
+<li>Más información: <a href="https://es.wikipedia.org/wiki/JSON">Wikipedia JSON</a></li>
+</ul>
+<p><strong>Requisitos:</strong></p>
+<ul>
+<li>
+<p><strong>Menú de usuario</strong>:</p>
+<ol>
+<li>Listar estudiantes.</li>
+<li>Listar profesores.</li>
+<li>Crear estudiante.</li>
+<li>Eliminar estudiante.</li>
+<li>Crear profesor.</li>
+<li>Eliminar profesor.</li>
+<li>Modificar datos estudiante.</li>
+<li>Modificar datos de profesor.</li>
+<li>Buscar datos de estudiantee.</li>
+<li>Buscar datos de profesor.</li>
+<li>Salir.</li>
+</ol>
+</li>
+<li>
+<p><strong>Datos de estudiantes</strong>:</p>
+<ul>
+<li>DNI -&gt; clave que identifica cada registro. str.</li>
+<li>Nombre -&gt; str.</li>
+<li>Apellidos -&gt; str.</li>
+<li>Ciclo -&gt; siglas (ASIR, DAM, etc). str.</li>
+<li>Curso -&gt; int.</li>
+</ul>
+</li>
+<li>
+<p><strong>Datos profesores</strong>:</p>
+<ul>
+<li>DNI -&gt; clave que identificaa cada registro. str.</li>
+<li>Nombre -&gt; str.</li>
+<li>Apellidos -&gt; str.</li>
+<li>Especialidad. -&gt; <em>Informática, Sistemas y Aplicaciones informáticas, Formación y Orientación Laboral</em></li>
+<li>Ciclos -&gt; siglas (ASIR, DAM, etc). str.</li>
+<li>Módulos -&gt; siglas (SRI, PSP, SAD, AD, PAR, ...). str.</li>
+</ul>
+</li>
+<li>
+<p><strong>Gestión de errores</strong>:</p>
+<ul>
+<li>Gestionar los posibles errores que pueda dar el programa si el fichero no existe, etc.</li>
+<li>En caso de que haya un error, el programa mostrará cual es el error y volverá al menú principal.</li>
+<li>Generar un <strong>log</strong> en la carpeta en que se ejecuta el programa. Se almacenara en cada línea la fecha y hora, la tarea ejecutada y el usuario que la ejecutó. También se mostrarán los errores.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Estructura:</strong></p>
+<ul>
+<li><code>main.py</code></li>
+<li>
+<p>app</p>
+<ul>
+<li>
+<p><code>__init__.py</code></p>
+</li>
+<li>
+<p><code>interfaz_usuario.py</code> -&gt; clase con el menú y banners.</p>
+</li>
+<li>
+<p><code>ficheros.py</code> -&gt; clase con las funcionalidades para trabajar con ficheros.</p>
+</li>
+<li>
+<p><code>gestion_instituto.py</code> -&gt; clase con las funcionalidades para gestionar estudiantes y profesores que usa las clases respectivas.</p>
+</li>
+<li>
+<p><code>estudiante.py</code> -&gt; clase con funcionalidades específicas para gestionar a los estudiantes y que usa las funcionalidades de "ficheros.py".</p>
+</li>
+<li>
+<p><code>docente.py</code> -&gt; clase con funcionalidades específicas para gestionar a los docentes y que usa las funcionalidades de "ficheros.py".</p>
+</li>
+<li>
+<p><code>registrar.py</code> -&gt; clase con las funciones para generar logs.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>datos</p>
+<ul>
+<li><code>docentes.json</code></li>
+<li><code>estudiantes.json</code></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="pistas">Pistas</h2>
+<h3 id="fichero-mainpy">Fichero main.py</h3>
+<pre><code class="language-python"># Importaciones
+from app import cargarInterfaz 
+
+# Función principal
+def main():
+    &quot;&quot;&quot; Ejecuta la interfaz de usuario &quot;&quot;&quot;
+    cargarInterfaz()
+
+if __name__ == &quot;__main__&quot;:
+    main()
+
+</code></pre>
+<h3 id="estructura-fichero-interfaz_usuariopy">Estructura fichero interfaz_usuario.py</h3>
+<pre><code class="language-python">
+from .gestion_instituto import GestorInstituto
+
+# FUNCIONALIDADES DE LA INTERFAZ
+
+def cargarInterfaz() -&gt; None:
+    &quot;&quot;&quot; Renderizado de la Interfaz &quot;&quot;&quot;
+    mostrarBannerInicio()
+    mostrarMenuPrincipal()
+    mostrarBannerFin()
+
+def mostrarBannerInicio() -&gt; None:
+    &quot;&quot;&quot; BANNER DE INICIO &quot;&quot;&quot;
+
+def mostrarBannerFin() -&gt; None:
+    &quot;&quot;&quot; BANNER DE FIN &quot;&quot;&quot;
+
+def mostrarMenuPrincipal() -&gt; None:
+    &quot;&quot;&quot; Menú principal &quot;&quot;&quot;
+
+def pedirDatosEstudiante() -&gt; dict:
+
+def pedirModificacionEstudiante(dni) -&gt; dict:
+
+</code></pre>
+<h3 id="fichero-ficherospy">Fichero ficheros.py</h3>
+<p>Este fichero tiene las funciones para leer y escribir JSON. Ejemplo:</p>
+<pre><code class="language-Python">class GestorFicheros():
+    # ATRIBUTOS DE CLASE
+    ficheros_abiertos = 0
+    operaciones_ficheros = 0
+
+    # CONSTRUCTOR
+    &quot;&quot;&quot; Clase para leer, escribir, ... ficheros &quot;&quot;&quot;
+    def __init__(self, ruta: str):
+        &quot;&quot;&quot; Inicialización para un fichero concreto.
+            Mantenemos el objeto creado para tratar con
+            un fichero determinado
+
+            Args:
+            - ruta: ruta del fichero de estudiantes.json, profesores.json ...
+        &quot;&quot;&quot;
+        self._ruta = ruta
+
+    # MÉTODOS DE INSTANCIA JSON
+    # leer fichero json
+    def leerJSON(self) -&gt; json:
+        &quot;&quot;&quot;
+        Lectura de ficheros JSON (no formatea)
+
+        :param ruta: objeto Path con la ruta del fichero
+        :type ruta: Path
+        :return: Devuelve un objeto con el contenido del fichero
+        :rtype: str
+        &quot;&quot;&quot;
+
+    # Escribir fichero json
+    def añadirEnJSON(self, contenido: dict) -&gt; None:
+        &quot;&quot;&quot; 
+        Escritura de ficheros json
+
+        :param ruta: ruta al fichero
+        :param contenido: nuevo contenido que va a tener el fichero json
+        &quot;&quot;&quot;
+
+</code></pre>
+</body>
+</html>

@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud3_ejercicios</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud3-boletin-de-ejercicios-poo-ficheros-en-python">UD3 – Boletín de ejercicios (POO + Ficheros en Python)</h1>
+<blockquote>
+<p>Recomendación general para todos: usa <code>pathlib.Path</code>, apertura segura con <code>with</code>, <code>encoding="utf-8"</code>, y captura de errores (<code>FileNotFoundError</code>, <code>PermissionError</code>, <code>json.JSONDecodeError</code>, etc.).</p>
+</blockquote>
+<h1 id="indice">Índice</h1>
+<ol>
+<li><a href="#1-cifrado-c%C3%A9sar-con-men%C3%BA-de-consola">Cifrado César con menú de consola</a></li>
+<li><a href="#2-utilidades-de-texto-por-consola">Utilidades de texto por consola</a></li>
+<li><a href="#taller-json">Gestión de un taller de reparación informática (JSON)</a></li>
+</ol>
+<hr />
+<h1 id="1-cifrado-cesar-con-menu-de-consola">1) Cifrado César con menú de consola</h1>
+<p><strong>Descripción.</strong></p>
+<p>Aplicación de consola que cifra o descifra un fichero de texto mediante <strong>Cifrado César</strong>.</p>
+<ul>
+<li>Más información: <a href="https://es.wikipedia.org/wiki/Cifrado_C%C3%A9sar">Wikipedia - Cifrado César</a></li>
+<li>Ayuda: <a href="https://www.geeksforgeeks.org/ethical-hacking/caesar-cipher-in-cryptography/">Geeksforgeeks</a></li>
+</ul>
+<p><strong>Requisitos.</strong></p>
+<ul>
+<li>Menú que ve el usuario:<ol>
+<li>Cifrar</li>
+<li>Descifrar</li>
+<li>Salir</li>
+</ol>
+</li>
+<li>Al cifrar/descifrar, leer el fichero de entrada y <strong>generar un fichero nuevo</strong> con el resultado añadiendo al nombre "_cifrado" o "_descifrado".</li>
+<li>Debe permitir al usuario elegir el desplazamiento.</li>
+<li>
+<p>Generar un log en la carpeta en que se ejecuta el programa. Se almacenara en cada línea la fecha y hora, la tarea ejecutada y el usuario que la ejecutó. También se mostrarán los errores.</p>
+</li>
+<li>
+<p>Gestión de errores:</p>
+<ul>
+<li>Gestionar los posibles errores que pueda dar el programa si el fichero no existe, etc.</li>
+<li>En caso de que haya un error, el programa mostrará cual es el error y volverá al menú principal.</li>
+</ul>
+</li>
+<li>El programa mostrará un banner de inicio con el nombre de la aplicación y los datos del estudiante, y un banner de cierre de la aplicación.</li>
+</ul>
+<p><strong>Estructura.</strong></p>
+<ul>
+<li><code>main.py</code></li>
+<li><code>__init__.py</code></li>
+<li><code>interfaz_usuario.py</code> -&gt; clase con el menú y banners</li>
+<li><code>script_cesar.py</code> -&gt; clase con las funcionalidades para cifrar/descifrar.</li>
+<li><code>ficheros.py</code> -&gt; clase con las funcionalidades para trabajar con ficheros</li>
+</ul>
+<hr />
+<h1 id="2-utilidades-de-texto-por-consola">2) Utilidades de texto por consola</h1>
+<p><strong>Descripción.</strong> Programa con interfaz de consola para operar sobre un fichero de texto.</p>
+<p><strong>Requisitos:</strong> El programa permitirá al usuario:</p>
+<ul>
+<li><strong>Visualizar</strong> todo el contenido.</li>
+<li>Mostrar las <strong>palabras con una letra</strong> indicada por el usuario (insensible a mayúsculas).</li>
+<li>Mostrar la <strong>cantidad de apariciones</strong> de una <strong>palabra</strong> (insensible a mayúsculas).</li>
+<li>Mostrar la <strong>cantidad de apariciones</strong> de una <strong>letra</strong>.</li>
+<li><strong>Sustituir</strong> una palabra por otra y <strong>guardar</strong> en un fichero nuevo con el nombre del original añadiendo "_mod" al nombre.</li>
+</ul>
+<p><strong>Estructura.</strong></p>
+<ul>
+<li><code>main.py</code></li>
+<li><code>__init__.py</code></li>
+<li><code>interfaz_usuario.py</code> -&gt; clase con el menú y banners.</li>
+<li><code>ficheros.py</code> -&gt; clase con las funcionalidades para trabajar con ficheros.</li>
+<li><code>text_parser.py</code> -&gt; clase con las funcionalidades para realizar las operaciones pedidas.</li>
+</ul>
+<hr />
+<h1 id="3-gestion-de-un-taller-de-reparacion-informatica-json"><a id="taller-json"></a>3) Gestión de un taller de reparación informática (JSON)</h1>
+<h2 id="descripcion">Descripción</h2>
+<p>Desarrollar una aplicación con interfaz por consola que permita gestionar los equipos informáticos de un taller de reparación mediante el almacenamiento de datos en ficheros JSON.</p>
+<p>La aplicación permitirá registrar equipos, consultar su información, modificar sus datos y gestionar las intervenciones técnicas realizadas.</p>
+<h2 id="requisitos">Requisitos</h2>
+<ul>
+<li>
+<p><strong>Menú de usuario</strong>:</p>
+<ol>
+<li>Listar equipos.</li>
+<li>Registrar un equipo.</li>
+<li>Eliminar un equipo.</li>
+<li>Modificar datos de un equipo.</li>
+<li>Buscar un equipo por número de serie.</li>
+<li>Registrar una intervención técnica.</li>
+<li>Listar las intervenciones de un equipo.</li>
+<li>Salir.</li>
+</ol>
+</li>
+<li>
+<p><strong>Datos de los equipos</strong>:</p>
+<p>Cada equipo se identificará mediante su número de serie, que será la clave del registro.</p>
+<ul>
+<li><strong>Número de serie:</strong> <code>str</code></li>
+<li><strong>Cliente:</strong> <code>str</code></li>
+<li><strong>Tipo de equipo:</strong> <code>str</code> (PC, portátil, impresora, etc.).</li>
+<li><strong>Marca:</strong> <code>str</code></li>
+<li><strong>Modelo:</strong> <code>str</code></li>
+<li><strong>Avería:</strong> <code>str</code></li>
+<li><strong>Estado:</strong> <code>str</code> (RECIBIDO, EN_REPARACION, REPARADO).</li>
+</ul>
+</li>
+<li>
+<p><strong>Datos de las intervenciones</strong>:</p>
+<p>Cada intervención tendrá un identificador único.</p>
+<ul>
+<li><strong>ID de intervención:</strong> <code>str</code></li>
+<li><strong>Número de serie del equipo:</strong> <code>str</code></li>
+<li><strong>Técnico:</strong> <code>str</code></li>
+<li><strong>Descripción del trabajo:</strong> <code>str</code></li>
+<li><strong>Horas dedicadas:</strong> <code>float</code></li>
+</ul>
+<p>Un equipo podrá tener varias intervenciones técnicas.</p>
+</li>
+<li>
+<p><strong>Los datos se almacenarán en dos ficheros JSON</strong>:</p>
+<ul>
+<li><code>equipos.json</code></li>
+<li><code>intervenciones.json</code></li>
+</ul>
+<p>La aplicación deberá guardar los cambios realizados para que los datos se mantengan al cerrar y volver a ejecutar el programa.</p>
+</li>
+<li>
+<p><strong>Gestión de errores</strong>:</p>
+<p>El programa deberá gestionar, al menos, los siguientes errores:</p>
+<ul>
+<li>Ficheros inexistentes o con formato JSON incorrecto.</li>
+<li>Errores de lectura y escritura.</li>
+<li>Equipos duplicados o inexistentes.</li>
+<li>Intervenciones asociadas a equipos inexistentes.</li>
+</ul>
+<p>En caso de error, se mostrará un mensaje al usuario y se volverá al menú principal cuando sea posible.</p>
+</li>
+<li>
+<p><strong>Registro de actividad (log)</strong>:</p>
+<p>El programa generará un fichero <code>taller.log</code> en el que se registrará:</p>
+<ul>
+<li>Fecha y hora.</li>
+<li>Operación realizada.</li>
+<li>Errores producidos.</li>
+</ul>
+</li>
+<li>
+<p><strong>Estructura</strong>:</p>
+<ul>
+<li><code>main.py</code></li>
+<li><code>app/</code><ul>
+<li><code>__init__.py</code></li>
+<li><code>interfaz_usuario.py</code> -&gt; Menú y presentación de información.</li>
+<li><code>ficheros.py</code> -&gt; Lectura y escritura de ficheros JSON.</li>
+<li><code>gestion_taller.py</code> -&gt; Coordinación de las operaciones.</li>
+<li><code>equipo.py</code> -&gt; Gestión de equipos.</li>
+<li><code>intervencion.py</code> -&gt; Gestión de intervenciones.</li>
+<li><code>registrar.py</code> -&gt; Registro de actividad y errores.</li>
+</ul>
+</li>
+<li><code>datos/</code><ul>
+<li><code>equipos.json</code></li>
+<li><code>intervenciones.json</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Consideraciones</strong>:</p>
+<ul>
+<li>No se permitirá registrar dos equipos con el mismo número de serie.</li>
+<li>No se permitirá registrar intervenciones para equipos inexistentes.</li>
+<li>No se permitirá eliminar un equipo que tenga intervenciones registradas.</li>
+<li>Los datos deberán validarse antes de guardarse.</li>
+<li>Se utilizará programación orientada a objetos y código modular.</li>
+</ul>
+</li>
+</ul>
+</body>
+</html>

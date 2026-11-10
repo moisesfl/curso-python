@@ -1,0 +1,881 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud3_ficheros</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud3-tratamiento-de-ficheros-con-python">UD3 – Tratamiento de ficheros con Python</h1>
+<h2 id="indice">Índice</h2>
+<ol>
+<li>Conceptos.</li>
+<li>Apertura y lectura de ficheros.</li>
+<li>Escritura, punteros y control de flujo.</li>
+<li>Ficheros JSON.</li>
+<li>Gestión de errores con ficheros. Logging.</li>
+</ol>
+<h1 id="1-conceptos">1️. Conceptos</h1>
+<ul>
+<li>
+<p><strong>Tipos de rutas</strong>:</p>
+<ul>
+<li><strong>Absolutas</strong>: indican la localización completa del archivo desde la raíz del sistema de archivos. No dependen del directorio de trabajo actual.<br />
+    Ejemplo: <code>/home/usuario/documentos/datos.txt</code> o <code>C:\\Users\\usuario\\datos.txt</code>.</li>
+<li><strong>Relativas</strong>: se definen respecto al directorio de trabajo actual del programa.<br />
+    Ejemplo: <code>datos/alumnos.txt</code> o <code>../config/config.json</code>.</li>
+<li><strong>Manejo de rutas</strong>: se utiliza el módulo <code>pathlib</code>, que proporciona la clase <code>Path</code> para manipular rutas de forma más segura, legible y multiplataforma.<br />
+Permite operaciones como: comprobar existencia (<code>Path.exists()</code>), crear carpetas (<code>Path.mkdir()</code>), cambiar nombres (<code>Path.rename()</code>), o concatenar rutas mediante el operador <code>/</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Modos de apertura</strong>:</p>
+<ul>
+<li><code>"r"</code> → <strong>Solo lectura</strong>. Lanza error si el archivo no existe.</li>
+<li><code>"w"</code> → <strong>Solo escritura</strong>. Crea el archivo si no existe o sobrescribe su contenido si ya existe.</li>
+<li><code>"a"</code> → <strong>Añadir (append)</strong>. Abre el archivo y sitúa el puntero al final; si no existe, lo crea.</li>
+<li><code>"x"</code> → <strong>Creación exclusiva</strong>. Crea un archivo nuevo y genera error si ya existe.</li>
+<li><code>"b"</code> → <strong>Modo binario</strong>. Se utiliza junto con los anteriores (<code>"rb"</code>, <code>"wb"</code>, etc.) para leer o escribir datos binarios (imágenes, audio, etc.).</li>
+<li><code>encoding</code> → Define la codificación del texto. Por defecto suele ser <code>"utf-8"</code>, y debe especificarse para evitar errores con caracteres especiales.</li>
+<li><strong>Uso de <code>with</code> (context manager)</strong>:<br />
+Se utiliza el bloque <code>with open(...) as f:</code> para <strong>abrir el fichero de forma segura</strong>, garantizando su cierre automático incluso si ocurre un error durante la ejecución.<br />
+Evita tener que llamar manualmente a <code>f.close()</code> y mejora la gestión de recursos.</li>
+</ul>
+</li>
+<li>
+<p><strong>Métodos de lectura</strong>:</p>
+<ul>
+<li>
+<p><code>.read()</code> → Lee <strong>todo el contenido del fichero</strong> y lo devuelve como una cadena.<br />
+    Ideal para archivos pequeños o cuando se necesita el contenido completo de una vez.</p>
+</li>
+<li>
+<p><code>.readline()</code> → Lee <strong>una única línea</strong> del fichero, manteniendo el puntero en la siguiente posición.<br />
+    Útil para procesar línea a línea de forma controlada.</p>
+</li>
+<li>
+<p><code>.readlines()</code> → Devuelve <strong>una lista de todas las líneas</strong> del fichero.<br />
+    No recomendable para archivos muy grandes, ya que carga todo en memoria.</p>
+</li>
+<li>
+<p><strong>Iteración línea a línea</strong> → Permite recorrer el archivo de forma eficiente:<br />
+    Esta forma es <strong>la más eficiente y recomendada</strong> para leer archivos de texto grandes.</p>
+<p><code>python
+with open("datos.txt", "r", encoding="utf-8") as f:
+    for linea in f:
+        print(linea.strip())</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="propiedades-y-metodos-del-objeto-file">Propiedades y métodos del objeto <code>File</code></h2>
+<p>El objeto <code>File</code>, obtenido al abrir un fichero mediante la función <code>open()</code> o el método <code>Path.open()</code>, dispone de diversas <strong>propiedades y métodos</strong> que permiten conocer su estado y comportamiento durante la lectura o escritura.</p>
+<p>A continuación se describen las más importantes:</p>
+<h3 id="propiedades-basicas">Propiedades básicas</h3>
+<ul>
+<li>
+<p><strong><code>f.name</code></strong> → Devuelve el <strong>nombre y ruta</strong> del archivo asociado al objeto.<br />
+    Ejemplo: <code>print(f.name)</code> puede devolver <code>"datos/alumnos.txt"</code>.</p>
+</li>
+<li>
+<p><strong><code>f.mode</code></strong> → Indica el <strong>modo de apertura</strong> del fichero (<code>"r"</code>, <code>"w"</code>, <code>"a"</code>, <code>"rb"</code>, etc.).<br />
+    Útil para comprobar si el archivo fue abierto en modo lectura, escritura o binario.</p>
+</li>
+<li>
+<p><strong><code>f.closed</code></strong> → Es un valor booleano (<code>True</code> o <code>False</code>) que indica si el archivo <strong>ya ha sido cerrado</strong>.<br />
+    Puede consultarse tras el bloque <code>with</code> o después de ejecutar <code>f.close()</code>.</p>
+</li>
+<li>
+<p><strong><code>f.encoding</code></strong> → Muestra la <strong>codificación de caracteres</strong> utilizada al leer o escribir el archivo (por ejemplo, <code>"UTF-8"</code>).<br />
+    Permite verificar que la codificación sea la esperada, especialmente en sistemas con configuraciones locales distintas.</p>
+</li>
+</ul>
+<h3 id="metodos-de-comprobacion-de-capacidades">Métodos de comprobación de capacidades</h3>
+<ul>
+<li>
+<p><strong><code>f.readable()</code></strong> → Devuelve <code>True</code> si el archivo <strong>permite lectura</strong>, es decir, si fue abierto en modo <code>"r"</code> o similar.<br />
+    Útil para condicionar operaciones según la capacidad del archivo.</p>
+</li>
+<li>
+<p><strong><code>f.writable()</code></strong> → Devuelve <code>True</code> si el archivo <strong>permite escritura</strong>, como ocurre en los modos <code>"w"</code>, <code>"a"</code>, <code>"x"</code>, o <code>"r+"</code>.<br />
+    Permite validar si se puede escribir antes de llamar a <code>.write()</code>.</p>
+</li>
+<li>
+<p><strong><code>f.seekable()</code></strong> → Devuelve <code>True</code> si el archivo <strong>permite mover el puntero</strong> mediante el método <code>.seek()</code>.<br />
+    Los archivos de texto suelen ser <em>seekable</em>, pero algunos flujos (por ejemplo, sockets o pipes) no lo son.</p>
+</li>
+</ul>
+<hr />
+<h1 id="2-apertura-y-lectura-de-ficheros-de-texto">2️ – Apertura y lectura de ficheros de texto</h1>
+<ul>
+<li>Un <strong>fichero de texto</strong> almacena en memoria persistente información codificada en caracteres legibles (por ejemplo, UTF-8).</li>
+<li>Al abrirlo, Python crea en la memoria RAM un <strong>objeto <code>File</code></strong>, que representa el flujo de datos entre el programa y el archivo físico.</li>
+<li>Este objeto permite leer, escribir y consultar información del fichero, así como conocer su estado.</li>
+</ul>
+<h2 id="sintaxis-basica-de-apertura">Sintaxis básica de apertura</h2>
+<pre><code class="language-python">with open(&quot;ruta/al/archivo.txt&quot;, mode=&quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    # Operaciones de lectura o escritura
+    contenido = f.read()
+</code></pre>
+<ul>
+<li>
+<p>El bloque <code>with</code> garantiza el cierre automático del fichero, incluso si ocurre un error.</p>
+</li>
+<li>
+<p>El parámetro <code>mode</code> indica el modo de apertura (<code>"r"</code>, <code>"w"</code>, <code>"a"</code>, etc.).</p>
+</li>
+<li>
+<p>El parámetro <code>encoding</code> define la codificación del texto, habitualmente <code>"utf-8"</code>.</p>
+</li>
+</ul>
+<p>Es recomendable utilizar <strong><code>pathlib.Path</code></strong> para manejar rutas de forma más clara y portable:</p>
+<pre><code class="language-python">from pathlib import Path
+
+ruta = Path(&quot;datos/alumnos.txt&quot;)
+with ruta.open(&quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    contenido = f.read()
+</code></pre>
+<h2 id="ejemplo-1-inspeccion-de-propiedades-del-objeto-file">Ejemplo 1 – Inspección de propiedades del objeto <code>File</code></h2>
+<p>El siguiente ejemplo muestra cómo acceder a las <strong>propiedades y métodos</strong> más importantes del objeto <code>File</code>:</p>
+<pre><code class="language-python">from pathlib import Path
+
+ruta = Path(&quot;datos/alumnos.txt&quot;)
+
+with ruta.open(&quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    print(&quot;Nombre del fichero:&quot;, f.name)
+    print(&quot;Modo de apertura:&quot;, f.mode)
+    print(&quot;Codificación:&quot;, f.encoding)
+    print(&quot;¿Permite lectura?:&quot;, f.readable())
+    print(&quot;¿Permite escritura?:&quot;, f.writable())
+    print(&quot;¿Permite mover el puntero?:&quot;, f.seekable())
+
+print(&quot;Archivo cerrado:&quot;, f.closed)
+</code></pre>
+<p>Este ejemplo ilustra cómo consultar el estado del archivo y comprobar sus capacidades antes de operar sobre él.</p>
+<h2 id="ejemplo-2-lectura-completa-del-fichero-read">Ejemplo 2 – Lectura completa del fichero (<code>.read()</code>)</h2>
+<p>El método <code>.read()</code> lee <strong>todo el contenido del fichero</strong> y lo devuelve como una cadena.</p>
+<pre><code class="language-python">with open(&quot;datos/alumnos.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    texto = f.read()
+    print(&quot;Contenido completo del archivo:\n&quot;)
+    print(texto)
+</code></pre>
+<p>Se recomienda solo para ficheros pequeños, ya que carga todo el contenido en memoria.</p>
+<h2 id="ejemplo-3-lectura-linea-a-linea-readline">Ejemplo 3 – Lectura línea a línea (<code>.readline()</code>)</h2>
+<p>El método <code>.readline()</code> devuelve una <strong>única línea</strong> del fichero cada vez que se llama.</p>
+<pre><code class="language-python">with open(&quot;datos/alumnos.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    linea1 = f.readline()
+    linea2 = f.readline()
+    print(&quot;Primera línea:&quot;, linea1.strip())
+    print(&quot;Segunda línea:&quot;, linea2.strip())
+</code></pre>
+<p>Útil cuando se desea procesar las líneas de manera controlada o cuando solo se necesitan unas pocas líneas del inicio.</p>
+<h2 id="ejemplo-4-lectura-como-lista-readlines">Ejemplo 4 – Lectura como lista (<code>.readlines()</code>)</h2>
+<p>El método <code>.readlines()</code> devuelve una lista donde cada elemento corresponde a una línea del fichero.</p>
+<pre><code class="language-python">with open(&quot;datos/alumnos.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    lineas = f.readlines()
+    print(&quot;Número de líneas:&quot;, len(lineas))
+    print(&quot;Tercera línea:&quot;, lineas[2].strip())
+</code></pre>
+<p>Como <code>.read()</code>, también carga todo el contenido en memoria, por lo que no es adecuado para ficheros grandes.</p>
+<h2 id="ejemplo-5-iteracion-linea-a-linea-forma-recomendada">Ejemplo 5 – Iteración línea a línea (forma recomendada)</h2>
+<p>Es la <strong>forma más eficiente y legible</strong> de leer ficheros grandes, ya que procesa una línea cada vez y libera memoria progresivamente.</p>
+<p>Python permite recorrer directamente el archivo como si fuera una secuencia iterable:</p>
+<pre><code class="language-python">from pathlib import Path
+
+# Definir la ruta del archivo
+ruta = Path(&quot;datos/alumnos.txt&quot;)
+
+# Apertura segura con codificación UTF-8
+with ruta.open(&quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    # Lectura línea a línea (forma eficiente y legible)
+    for linea in f:
+        print(linea.strip())
+</code></pre>
+<p>Otra forma de implementarla pero mostrando el número línea:</p>
+<pre><code class="language-python">from pathlib import Path
+
+ruta = Path(&quot;datos/alumnos.txt&quot;)
+
+with ruta.open(&quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    for numero, linea in enumerate(f, start=1):
+        print(f&quot;{numero:02d}: {linea.strip()}&quot;)
+</code></pre>
+<h2 id="buenas-practicas-a-aplicar">Buenas prácticas a aplicar</h2>
+<ul>
+<li>Utilizar siempre <code>with open(...)</code> o <code>Path.open()</code> para garantizar el cierre.</li>
+<li>Especificar <code>encoding="utf-8"</code>.</li>
+<li>Evitar usar <code>read()</code> o <code>readlines()</code> con ficheros grandes.</li>
+<li>Validar la existencia de la ruta antes de abrir el archivo.</li>
+<li>Manejar las excepciones comunes del sistema de archivos.</li>
+<li>Formatear la salida de forma clara y legible para el usuario.</li>
+</ul>
+<hr />
+<h1 id="3-escritura-punteros-y-control-del-flujo">3️ – Escritura, punteros y control del flujo</h1>
+<h2 id="conceptos-basicos">Conceptos básicos</h2>
+<h3 id="modos-de-escritura-de-archivos">Modos de escritura de archivos</h3>
+<p>Los ficheros se pueden abrir en diferentes <strong>modos de escritura</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Modo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"w"</code></td>
+<td>Escribe un archivo nuevo. Si ya existe, <strong>sobrescribe</strong> su contenido.</td>
+</tr>
+<tr>
+<td><code>"a"</code></td>
+<td>Añade nuevo contenido <strong>al final</strong> del archivo existente (modo <em>append</em>).</td>
+</tr>
+<tr>
+<td><code>"x"</code></td>
+<td>Crea un archivo nuevo; da error si ya existe.</td>
+</tr>
+<tr>
+<td><code>"wb"</code> / <code>"ab"</code></td>
+<td>Versiones en <strong>modo binario</strong> (útiles para imágenes o bytes).</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Siempre que se abra un archivo para escribir, es recomendable especificar el parámetro <code>encoding="utf-8"</code> para evitar errores con acentos o caracteres especiales.</p>
+</blockquote>
+<h3 id="puntero-del-archivo">Puntero del archivo</h3>
+<p>Cada fichero tiene un <strong>puntero interno</strong> que indica la posición actual de lectura o escritura.</p>
+<ul>
+<li><strong><code>f.tell()</code></strong> → Devuelve la posición actual (en bytes) del puntero.</li>
+<li><strong><code>f.seek(offset, whence)</code></strong> → Mueve el puntero:<ul>
+<li><code>offset</code>: desplazamiento en bytes.</li>
+<li><code>whence</code> (opcional):<ul>
+<li><code>0</code>: desde el inicio (por defecto)</li>
+<li><code>1</code>: desde la posición actual</li>
+<li><code>2</code>: desde el final del archivo</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Ejemplo: <code>f.seek(0)</code> vuelve al inicio del fichero.</p>
+</blockquote>
+<h3 id="control-del-bufer">Control del búfer</h3>
+<p>Python no escribe inmediatamente en disco: los datos se almacenan en un <strong>búfer temporal</strong>.</p>
+<ul>
+<li><strong><code>f.flush()</code></strong> → Fuerza el vaciado del búfer y escribe los datos en disco de inmediato.</li>
+<li>El archivo también se vacía automáticamente al cerrarse (<code>f.close()</code> o al salir del bloque <code>with</code>).</li>
+</ul>
+<h2 id="ejemplo-1-escritura-basica">Ejemplo 1 – Escritura básica</h2>
+<pre><code class="language-python"># Importamos Path para manejar rutas de forma moderna y multiplataforma
+from pathlib import Path  
+# Definimos la ruta del archivo de salida
+ruta = Path(&quot;datos/saludo.txt&quot;)
+
+# Creamos la carpeta 'datos' si no existe (evita errores de ruta)
+ruta.parent.mkdir(parents=True, exist_ok=True)
+
+# Abrimos el archivo en modo escritura ('w') con codificación UTF-8
+with ruta.open(&quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    f.write(&quot;Hola, mundo!\n&quot;)  # Escribimos la primera línea
+    f.write(&quot;Este es mi primer archivo escrito con Python.\n&quot;)  # Escribimos otra línea
+
+# Al salir del bloque 'with', el archivo se cierra automáticamente
+print(&quot;Archivo creado correctamente.&quot;)
+</code></pre>
+<p><strong>Claves</strong>:</p>
+<ul>
+<li>El archivo se crea (o sobrescribe si ya existía).</li>
+<li>Cada llamada a .write() añade texto donde está el puntero.</li>
+<li>Se recomienda usar UTF-8 para evitar errores con tildes o eñes.</li>
+</ul>
+<h2 id="ejemplo-2-anadir-informacion-y-consultar-el-puntero">Ejemplo 2 – Añadir información y consultar el puntero</h2>
+<pre><code class="language-python">from pathlib import Path  # Importamos Path
+
+log = Path(&quot;logs/registro.log&quot;)  # Definimos la ruta del archivo de log
+log.parent.mkdir(parents=True, exist_ok=True)  # Creamos la carpeta si no existe
+
+# Abrimos el archivo en modo 'a' (append) para añadir texto al final
+with log.open(&quot;a&quot;, encoding=&quot;utf-8&quot;) as f:
+    f.write(&quot;Inicio de la sesión.\n&quot;)  # Añadimos una línea de texto
+    print(&quot;Puntero actual:&quot;, f.tell())  # Mostramos la posición actual del puntero en bytes
+    f.write(&quot;Nueva entrada registrada correctamente.\n&quot;)  # Añadimos otra línea
+    f.flush()  # Forzamos el guardado inmediato de los datos en disco
+
+# El archivo se cierra automáticamente al salir del bloque
+print(&quot;Datos añadidos al log.&quot;)
+</code></pre>
+<h2 id="ejemplo-3-uso-de-seek-y-lectura-parcial">Ejemplo 3 – Uso de <code>.seek()</code> y lectura parcial</h2>
+<pre><code class="language-python">from pathlib import Path  # Importamos Path para manejar la ruta del archivo
+
+archivo = Path(&quot;datos/demo_seek.txt&quot;)  # Definimos la ruta del archivo
+
+# Abrimos en modo 'w+' para escribir y leer en el mismo archivo
+with archivo.open(&quot;w+&quot;, encoding=&quot;utf-8&quot;) as f:
+    f.write(&quot;Python permite mover el puntero en archivos de texto.\n&quot;)  # Escribimos una línea
+    f.write(&quot;Esta línea se añadirá después.\n&quot;)  # Añadimos otra línea
+
+    f.seek(0)  # Movemos el puntero al inicio del archivo (posición 0)
+    print(&quot;Puntero movido al inicio:&quot;, f.tell())  # Confirmamos la nueva posición
+
+    inicio = f.read(20)  # Leemos los primeros 20 caracteres
+    print(&quot;Primeros 20 caracteres:&quot;, inicio)  # Mostramos el texto leído
+</code></pre>
+<p><strong>Claves</strong>:</p>
+<ul>
+<li>El modo "w+" permite leer y escribir.</li>
+<li><code>.seek(0)</code> reposiciona el puntero al inicio.</li>
+<li><code>.read(20)</code> lee solo los primeros 20 caracteres, no todo el archivo.</li>
+</ul>
+<h2 id="ejemplo-4-escritura-con-listas-y-writelines">Ejemplo 4 – Escritura con listas y <code>.writelines()</code></h2>
+<pre><code class="language-python">from pathlib import Path  # Importamos Path para manejar rutas
+
+ruta = Path(&quot;datos/alumnos.txt&quot;)  # Definimos la ruta del archivo
+alumnos = [&quot;Ana López\n&quot;, &quot;Luis García\n&quot;, &quot;María Torres\n&quot;]  # Lista con las líneas a escribir
+
+# Abrimos el archivo en modo escritura ('w')
+with ruta.open(&quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    f.writelines(alumnos)  # Escribimos todas las líneas de la lista en una sola operación
+
+# Cierre automático del archivo al salir del bloque
+print(&quot;Archivo 'alumnos.txt' creado con varias líneas.&quot;)
+</code></pre>
+<p><strong>Claves</strong>:</p>
+<ul>
+<li>.writelines() escribe una secuencia de cadenas (lista o tupla).</li>
+<li>No añade saltos de línea automáticamente, cada cadena debe incluir \n.</li>
+<li>Es más eficiente que varias llamadas a .write() cuando hay muchas líneas.</li>
+</ul>
+<h2 id="ejemplo-5-registro-de-operaciones-con-timestamp">Ejemplo 5 – Registro de operaciones con timestamp</h2>
+<pre><code class="language-python">from pathlib import Path  # Módulo moderno para rutas
+from datetime import datetime  # Para registrar la fecha y hora
+
+ruta_log = Path(&quot;logs/operaciones.log&quot;)  # Definimos la ruta del log
+ruta_log.parent.mkdir(parents=True, exist_ok=True)  # Creamos la carpeta si no existe
+
+# Abrimos el archivo en modo append
+with ruta_log.open(&quot;a&quot;, encoding=&quot;utf-8&quot;) as f:
+    # Obtenemos la fecha y hora actuales formateadas
+    timestamp = datetime.now().strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)
+
+    # Escribimos una línea con la marca temporal
+    f.write(f&quot;[{timestamp}] Inicio de la operación\n&quot;)
+
+    # Consultamos la posición del puntero tras escribir
+    pos = f.tell()
+    f.write(f&quot;[{timestamp}] Puntero tras escribir: {pos}\n&quot;)
+
+    # Vaciamos el búfer para asegurar que se escriba de inmediato
+    f.flush()
+
+    # Movemos el puntero al inicio y leemos el contenido para mostrarlo
+    f.seek(0)
+    print(&quot;Contenido actual del log:\n&quot;)
+    print(f.read())  # Leemos todo el contenido del archivo
+</code></pre>
+<p><strong>Claves</strong>:</p>
+<ul>
+<li>Uso de datetime para generar marcas temporales precisas.</li>
+<li>Control completo del flujo: escribir, mover puntero y leer.</li>
+<li>Ideal para logs de auditoría.</li>
+</ul>
+<h2 id="buenas-practicas-a-aplicar_1">Buenas prácticas a aplicar</h2>
+<ul>
+<li>Siempre usar <code>with open(...)</code> o <code>Path.open()</code> para garantizar cierre automático.</li>
+<li>Especificar la codificación <code>utf-8</code>.</li>
+<li>Forzar escritura inmediata con <code>.flush()</code> en procesos críticos.</li>
+<li>Reposicionar el puntero antes de leer (<code>f.seek(0)</code> o similar).</li>
+<li>Incluir marcas temporales o separadores al registrar logs.</li>
+<li>Manejar excepciones (<code>FileNotFoundError</code>, <code>PermissionError</code>) al abrir ficheros.</li>
+</ul>
+<hr />
+<h1 id="4-tratamiento-de-ficheros-json">4️ – Tratamiento de ficheros JSON</h1>
+<h2 id="conceptos">Conceptos</h2>
+<p>Los ficheros <strong>JSON (JavaScript Object Notation)</strong> se utilizan para <strong>intercambiar y persistir datos estructurados</strong> de forma <strong>ligera, legible y multiplataforma</strong>. Son el formato de facto para <strong>APIs web</strong>, <strong>configuraciones de aplicaciones</strong>, <strong>exportación/importación de datos</strong> y <strong>registro de eventos</strong>.</p>
+<p><strong>¿Para qué se utilizan?</strong> </p>
+<ul>
+<li><strong>Configuración de aplicaciones</strong>: <code>config.json</code> con parámetros de ejecución (puertos, rutas, credenciales de prueba).</li>
+<li><strong>Intercambio de datos por APIs</strong>: respuestas REST/GraphQL (<code>users</code>, <code>orders</code>, <code>metrics</code>).</li>
+<li><strong>Datasets ligeros</strong>: listas de objetos (alumnos, productos, sensores).</li>
+<li><strong>Logs estructurados</strong>: eventos con <code>timestamp</code>, <code>level</code> y <code>message</code>.</li>
+<li><strong>Persistencia rápida</strong>: guardar el estado de un programa o un resultado intermedio de cálculo.</li>
+</ul>
+<h2 id="referencias">Referencias</h2>
+<ul>
+<li>W3Schools: <a href="url">https://www.w3schools.com/python/python_json.asp</a></li>
+<li>Wikipedia: <a href="url">https://es.wikipedia.org/wiki/JSON</a></li>
+<li>Validador de formato: <a href="url">https://jsonlint.com</a></li>
+<li>JSON web tokens: <a href="url">https://www.jwt.io</a></li>
+</ul>
+<h2 id="informacion-de-libreria">Información de librería</h2>
+<ul>
+<li><strong>Módulo estándar <code>json</code></strong>: no requiere instalación. Proporciona funciones para <strong>serializar</strong> (Python → JSON) y <strong>deserializar</strong> (JSON → Python).</li>
+<li><strong>Funciones principales</strong>:<ul>
+<li><code>json.load(f)</code> / <code>json.dump(obj, f, ...)</code> → trabajar directamente con <strong>ficheros</strong>.</li>
+<li><code>json.loads(s)</code> / <code>json.dumps(obj, ...)</code> → trabajar con <strong>cadenas</strong> en memoria.</li>
+</ul>
+</li>
+<li><strong>Parámetros útiles al serializar (Guardar en JSON)</strong>:<ul>
+<li><code>indent=int</code> → sangría legible (p. ej., <code>indent=2</code>). Si no aparece todo en una sola línea.</li>
+<li><code>ensure_ascii=bool</code> → si <code>False</code>, permite <strong>tildes y eñes</strong> directamente (UTF-8), si no en el fichero aparecen los códigos ASCII.</li>
+<li><code>sort_keys=bool</code> → ordena claves para salidas <strong>deterministas</strong> y comparables.</li>
+<li><code>separators=(',', ':')</code> → controla separadores para reducir tamaño.</li>
+<li><code>default=callable</code> → conversor para <strong>tipos no JSON</strong> (p. ej., <code>datetime</code>).</li>
+</ul>
+</li>
+<li><strong>Parámetros útiles al deserializar (Leer JSON)</strong>:<ul>
+<li><code>parse_float</code>, <code>parse_int</code>, <code>parse_constant</code> → parseo especializado.</li>
+<li><code>object_hook</code> / <code>object_pairs_hook</code> → <strong>post-procesado</strong> de dicts al cargar.</li>
+</ul>
+</li>
+<li><strong>Tipos compatibles (JSON ↔ Python)</strong>:<ul>
+<li><code>object</code> ↔ <code>dict</code>, <code>array</code> ↔ <code>list</code>, <code>string</code> ↔ <code>str</code>, <code>number</code> ↔ <code>int/float</code>, <code>true/false</code> ↔ <code>bool</code>, <code>null</code> ↔ <code>None</code>.</li>
+</ul>
+</li>
+<li><strong>Manejo de errores</strong>: <code>json.JSONDecodeError</code> (formato inválido); capturar y notificar con mensajes claros.</li>
+<li><strong>Validación de estructura</strong>: comprobación de <strong>claves requeridas</strong>, tipos y rangos; para validaciones formales, puede emplearse <code>jsonschema</code> (opcional, no estándar).</li>
+<li><strong>Buenas prácticas</strong>: abrir con <code>encoding="utf-8"</code>, usar <code>with</code> para cierre automático, mantener claves estables y documentadas.</li>
+</ul>
+<h2 id="ejemplo-de-fichero-json">Ejemplo de fichero json</h2>
+<pre><code class="language-json">[
+  {
+    &quot;isbn&quot;: &quot;978-84-376-0494-7&quot;,
+    &quot;título&quot;: &quot;Cien años de soledad&quot;,
+    &quot;autor&quot;: &quot;Gabriel García Márquez&quot;,
+    &quot;año_publicacion&quot;: 1967,
+    &quot;género&quot;: &quot;Realismo mágico&quot;,
+    &quot;disponible&quot;: true
+  },
+  {
+    &quot;isbn&quot;: &quot;978-84-339-7135-6&quot;,
+    &quot;título&quot;: &quot;La sombra del viento&quot;,
+    &quot;autor&quot;: &quot;Carlos Ruiz Zafón&quot;,
+    &quot;año_publicacion&quot;: 2001,
+    &quot;género&quot;: &quot;Misterio&quot;,
+    &quot;disponible&quot;: false
+  },
+  {
+    &quot;isbn&quot;: &quot;978-84-670-6046-5&quot;,
+    &quot;título&quot;: &quot;Don Quijote de la Mancha&quot;,
+    &quot;autor&quot;: &quot;Miguel de Cervantes&quot;,
+    &quot;año_publicacion&quot;: 1605,
+    &quot;género&quot;: &quot;Aventura&quot;,
+    &quot;disponible&quot;: true
+  }
+]
+</code></pre>
+<h2 id="escribir-en-un-fichero-json">Escribir en un fichero JSON</h2>
+<p>Ahora vamos a crear el fichero anterior:</p>
+<pre><code class="language-python">import json
+from pathlib import Path
+
+def crearFicheroBiblioteca(ruta_fichero: str) -&gt; None:
+    &quot;&quot;&quot;
+    Crea un fichero JSON con información de libros de una biblioteca.
+    Si el fichero ya existe, lo sobrescribe.
+    &quot;&quot;&quot;
+
+    # Datos iniciales (lista de diccionarios)
+    libros = [
+        {
+            &quot;isbn&quot;: &quot;978-84-376-0494-7&quot;,
+            &quot;título&quot;: &quot;Cien años de soledad&quot;,
+            &quot;autor&quot;: &quot;Gabriel García Márquez&quot;,
+            &quot;año_publicación&quot;: 1967,
+            &quot;género&quot;: &quot;Realismo mágico&quot;,
+            &quot;disponible&quot;: True
+        },
+        {
+            &quot;isbn&quot;: &quot;978-84-339-7135-6&quot;,
+            &quot;título&quot;: &quot;La sombra del viento&quot;,
+            &quot;autor&quot;: &quot;Carlos Ruiz Zafón&quot;,
+            &quot;año_publicación&quot;: 2001,
+            &quot;género&quot;: &quot;Misterio&quot;,
+            &quot;disponible&quot;: False
+        },
+        {
+            &quot;isbn&quot;: &quot;978-84-670-6046-5&quot;,
+            &quot;título&quot;: &quot;Don Quijote de la Mancha&quot;,
+            &quot;autor&quot;: &quot;Miguel de Cervantes&quot;,
+            &quot;año_publicación&quot;: 1605,
+            &quot;género&quot;: &quot;Aventura&quot;,
+            &quot;disponible&quot;: True
+        }
+    ]
+
+    ruta = Path(ruta_fichero)
+    ruta.parent.mkdir(parents=True, exist_ok=True)  # crea carpeta si no existe
+
+    # Escribimos el JSON en UTF-8 y con formato legible
+    with open(ruta, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+        json.dump(libros, f, ensure_ascii=False, indent=2)
+
+    print(f&quot;Fichero '{ruta.name}' creado correctamente con {len(libros)} libros.&quot;)
+
+
+</code></pre>
+<h2 id="leer-un-fichero-json">Leer un fichero JSON</h2>
+<p>Leemos los contenidos del fichero anterior y los mostramos por pantalla:</p>
+<pre><code class="language-python">import json
+from pathlib import Path
+
+def mostrarLibros(ruta_fichero: str) -&gt; None:
+    &quot;&quot;&quot;
+    Lee el fichero JSON con información de libros y muestra su contenido
+    recorriendo las claves y valores de cada diccionario (libro).
+    &quot;&quot;&quot;
+
+    ruta = Path(ruta_fichero)
+
+    # Comprobamos si el fichero existe
+    if not ruta.exists():
+        print(f&quot;El fichero '{ruta_fichero}' no existe.&quot;)
+        return
+
+    # Leemos el contenido del JSON
+    with open(ruta, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+        libros = json.load(f)
+
+    # Si no hay libros, avisamos
+    if not libros:
+        print(&quot;No hay libros en la biblioteca.&quot;)
+        return
+
+    print(&quot;\n *** LISTADO DE LIBROS ***&quot;)
+    print(&quot;-&quot; * 40)
+
+    # Recorremos cada libro (cada diccionario dentro de la lista)
+    for i, libro in enumerate(libros, start=1):
+        print(f&quot;Libro {i}:&quot;)
+        # Recorremos las claves y valores del diccionario
+        for clave, valor in libro.items():
+            print(f&quot;   {clave}: {valor}&quot;)
+        print(&quot;-&quot; * 40)
+
+</code></pre>
+<h2 id="anadir-una-entrada-en-un-fichero-json">Añadir una entrada en un fichero JSON</h2>
+<p>Ahora añadimos un libro al fichero:</p>
+<pre><code class="language-python">import json
+from pathlib import Path
+
+def agregarLibro(ruta_fichero: str, nuevo_libro: dict) -&gt; None:
+    &quot;&quot;&quot;
+    Añade un nuevo libro al fichero JSON de la biblioteca.
+
+    Parámetros:
+        ruta_fichero (str): ruta del fichero JSON.
+        nuevo_libro (dict): diccionario con los datos del libro.
+    &quot;&quot;&quot;
+
+    ruta = Path(ruta_fichero)
+
+    # Si el fichero no existe, creamos una lista vacía
+    if not ruta.exists():
+        libros = []
+    else:
+        # Leemos el JSON actual
+        with open(ruta, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+            try:
+                libros = json.load(f)
+            except json.JSONDecodeError:
+                libros = []
+
+    # Añadimos el nuevo libro a la lista
+    libros.append(nuevo_libro)
+
+    # Guardamos de nuevo el fichero
+    with open(ruta, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+        json.dump(libros, f, ensure_ascii=False, indent=2)
+
+    print(f&quot;Libro '{nuevo_libro.get('titulo', 'Sin título')}' añadido correctamente.&quot;)
+
+</code></pre>
+<h2 id="eliminar-una-entrada-en-un-fichero-json">Eliminar una entrada en un fichero JSON</h2>
+<p>Ahora vamos a liminar uno de los libros del fichero:</p>
+<pre><code class="language-Python">import json
+from pathlib import Path
+
+def eliminarLibro(ruta_fichero: str, isbn: str) -&gt; None:
+    &quot;&quot;&quot;
+    Elimina un libro del fichero JSON en función de su ISBN.
+
+    Parámetros:
+        ruta_fichero (str): ruta al fichero JSON.
+        isbn (str): código ISBN del libro a eliminar.
+    &quot;&quot;&quot;
+
+    ruta = Path(ruta_fichero)
+
+    # 1️ Comprobar que el fichero existe
+    if not ruta.exists():
+        print(f&quot;El fichero '{ruta_fichero}' no existe.&quot;)
+        return
+
+    # 2️ Leer el fichero JSON
+    with open(ruta, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+        try:
+            libros = json.load(f)
+        except json.JSONDecodeError:
+            print(&quot;Error: el fichero JSON está corrupto o vacío.&quot;)
+            return
+
+    # 3️ Buscar el libro por ISBN
+    isbn = isbn.strip()
+    libro_encontrado = False
+
+    nuevos_libros = []
+    for libro in libros:
+        if str(libro.get(&quot;isbn&quot;, &quot;&quot;)).strip() != isbn:
+            nuevos_libros.append(libro)
+        else:
+            libro_encontrado = True
+
+    # 4️ Verificar si se encontró
+    if not libro_encontrado:
+        print(f&quot;No se encontró ningún libro con ISBN {isbn}.&quot;)
+        return
+
+    # 5️ Guardar el fichero actualizado
+    with open(ruta, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+        json.dump(nuevos_libros, f, ensure_ascii=False, indent=2)
+
+    print(f&quot;Libro con ISBN {isbn} eliminado correctamente.&quot;)
+
+
+</code></pre>
+<h2 id="modificar-una-entrada-en-un-fichero-json">Modificar una entrada en un fichero JSON</h2>
+<pre><code class="language-python">import json
+from pathlib import Path
+
+def modificarLibro(ruta_fichero: str, isbn: str, campo: str, nuevo_valor) -&gt; None:
+    &quot;&quot;&quot;
+    Modifica un dato de un libro en el fichero JSON según su ISBN.
+
+    Parámetros:
+        ruta_fichero (str): ruta al fichero JSON.
+        isbn (str): ISBN del libro a modificar.
+        campo (str): nombre de la clave que se quiere cambiar.
+        nuevo_valor: valor nuevo para ese campo (puede ser str, int, bool...).
+    &quot;&quot;&quot;
+
+    ruta = Path(ruta_fichero)
+
+    # 1️ Verificar existencia del fichero
+    if not ruta.exists():
+        print(f&quot;El fichero '{ruta_fichero}' no existe.&quot;)
+        return
+
+    # 2️ Leer el JSON
+    with open(ruta, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+        try:
+            libros = json.load(f)
+        except json.JSONDecodeError:
+            print(&quot;Error: el fichero JSON está corrupto o vacío.&quot;)
+            return
+
+    # 3️ Buscar el libro y modificar el campo
+    isbn = isbn.strip()
+    modificado = False
+
+    for libro in libros:
+        if str(libro.get(&quot;isbn&quot;, &quot;&quot;)).strip() == isbn:
+            if campo not in libro:
+                print(f&quot;El campo '{campo}' no existe en el libro.&quot;)
+                return
+            libro[campo] = nuevo_valor
+            modificado = True
+            break
+
+    # 4️ Comprobar si se encontró y guardarlo
+    if not modificado:
+        print(f&quot;No se encontró ningún libro con ISBN {isbn}.&quot;)
+        return
+
+    with open(ruta, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+        json.dump(libros, f, ensure_ascii=False, indent=2)
+
+    print(f&quot;Campo '{campo}' del libro con ISBN {isbn} actualizado correctamente.&quot;)
+
+
+</code></pre>
+<hr />
+<h1 id="6-gestion-de-errores-con-ficheros">6️ Gestión de errores con ficheros</h1>
+<p>Trabajar con ficheros implica posibles <strong>errores en tiempo de ejecución</strong>: rutas inexistentes, permisos insuficientes o contenidos corruptos.<br />
+Una buena gestión de errores mantiene el programa <strong>estable</strong>, informa al usuario y evita <strong>pérdidas de datos</strong>.</p>
+<h2 id="contenidos-desarrollados">Contenidos desarrollados</h2>
+<ul>
+<li><strong>Errores comunes al trabajar con ficheros:</strong><ul>
+<li><code>FileNotFoundError</code> → el archivo no existe.</li>
+<li><code>PermissionError</code> → permisos insuficientes de lectura/escritura.</li>
+<li><code>IsADirectoryError</code> → se intenta abrir una carpeta como archivo.</li>
+<li><code>IOError</code> / <code>OSError</code> → errores generales de E/S.</li>
+<li><code>json.JSONDecodeError</code> → JSON inválido.</li>
+</ul>
+</li>
+<li><strong>Estructura de manejo de errores:</strong><ul>
+<li>Bloques <code>try</code> / <code>except</code> / <code>else</code> / <code>finally</code>.</li>
+<li>Validación previa con <code>Path.exists()</code> y <code>Path.is_file()</code>.</li>
+<li>Registro de errores mediante <code>logging</code> (ficheros <code>.log</code>).</li>
+</ul>
+</li>
+<li><strong>Buenas prácticas:</strong><ul>
+<li>No asumir existencia de archivos: comprobar y crear si procede.</li>
+<li>Mensajes de error claros y accionables.</li>
+<li>Usar <code>raise</code> o terminar el programa si no se puede continuar.</li>
+<li>Cerrar ficheros siempre (preferiblemente con <code>with</code>).</li>
+</ul>
+</li>
+</ul>
+<h2 id="ejemplo-1-control-basico-al-abrir-un-fichero">Ejemplo 1 – Control básico al abrir un fichero</h2>
+<pre><code class="language-python">from pathlib import Path  # Path ofrece manejo de rutas multiplataforma
+
+ruta = Path(&quot;datos/alumnos.txt&quot;)  # Ruta al fichero de entrada
+
+try:
+    # Abrimos el archivo en modo lectura con codificación UTF-8
+    with ruta.open(&quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+        contenido = f.read()  # Leemos todo el contenido
+        print(&quot;Contenido del archivo:&quot;)
+        print(contenido)      # Mostramos el resultado por consola
+
+# El archivo no existe o la ruta es incorrecta
+except FileNotFoundError:
+    print(&quot;Error: el archivo no existe. Verifica la ruta y el nombre.&quot;)
+
+# El usuario no tiene permisos para leer el recurso
+except PermissionError:
+    print(&quot;Error: no dispones de permisos para acceder al archivo.&quot;)
+
+# Cualquier otro error no previsto (con el tipo y el detalle)
+except Exception as e:
+    print(f&quot;Error inesperado: {type(e).__name__} → {e}&quot;)
+
+# Se ejecuta solo si no saltó ninguna excepción en el bloque try
+else:
+    print(&quot;Lectura completada sin errores.&quot;)
+
+# Se ejecuta SIEMPRE: haya error o no (útil para liberar recursos, logs, etc.)
+finally:
+    print(&quot;Fin del proceso de lectura.&quot;)
+</code></pre>
+<h2 id="ejemplo-2-validacion-previa-con-pathlib">Ejemplo 2 – Validación previa con <code>pathlib</code></h2>
+<pre><code class="language-python">from pathlib import Path  # Importamos Path para manejar rutas
+
+ruta = Path(&quot;datos/notas.csv&quot;)  # Definimos la ruta del CSV
+
+# Comprobamos si el archivo existe antes de abrirlo
+if not ruta.exists():
+    print(&quot;El archivo no existe. Creándolo con encabezado por defecto...&quot;)
+    ruta.parent.mkdir(parents=True, exist_ok=True)    # Creamos la carpeta si no existe
+    ruta.write_text(&quot;nombre,nota\n&quot;, encoding=&quot;utf-8&quot;)  # Creamos el archivo con cabecera
+else:
+    print(&quot;Archivo encontrado:&quot;, ruta.name)
+
+# Intentamos abrir el archivo en modo lectura
+try:
+    with ruta.open(&quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+        for linea in f:                 # Recorremos el archivo línea a línea (eficiente)
+            print(&quot;→&quot;, linea.strip())   # strip() elimina saltos de línea finales
+# OSError agrupa varios errores de entrada/salida (p. ej., dispositivo no disponible)
+except OSError as e:
+    print(f&quot;Error de acceso al archivo: {e}&quot;)
+</code></pre>
+<hr />
+<h2 id="ejemplo-3-captura-de-errores-al-procesar-json">Ejemplo 3 – Captura de errores al procesar JSON</h2>
+<pre><code class="language-python">import json              # Módulo estándar para JSON
+from pathlib import Path # Manejo de rutas
+
+ruta = Path(&quot;datos/config.json&quot;)  # Ruta del archivo JSON
+
+try:
+    # Abrimos y cargamos el JSON (puede fallar si el formato es inválido)
+    with ruta.open(&quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+        datos = json.load(f)  # Convierte el JSON a dict/list de Python
+    print(&quot;Archivo JSON cargado correctamente.&quot;)
+
+# Archivo no encontrado
+except FileNotFoundError:
+    print(&quot;No se encontró el archivo de configuración.&quot;)
+
+# JSON mal formado: proporciona línea y columna del error
+except json.JSONDecodeError as e:
+    print(f&quot;Error de formato JSON: línea {e.lineno}, columna {e.colno} → {e.msg}&quot;)
+
+# Cualquier otro error
+except Exception as e:
+    print(f&quot;Error inesperado: {e}&quot;)
+
+# Si todo fue bien, mostramos un resumen de claves
+else:
+    # list(datos.keys()) asume que 'datos' es un dict;
+    # si no lo fuera, se puede comprobar con isinstance(datos, dict)
+    if isinstance(datos, dict):
+        print(&quot;Claves del JSON:&quot;, list(datos.keys()))
+    else:
+        print(&quot;El JSON cargado no es un objeto (dict), es de tipo:&quot;, type(datos).__name__)
+
+# Bloque que siempre se ejecuta (útil para cerrar recursos extra o trazar finalización)
+finally:
+    print(&quot;Fin del proceso de carga de configuración.&quot;)
+</code></pre>
+<hr />
+<h2 id="ejemplo-4-registro-de-errores-a-fichero-con-logging">Ejemplo 4 – Registro de errores a fichero con <code>logging</code></h2>
+<pre><code class="language-python">import logging           # Módulo estándar para registro de eventos
+from pathlib import Path # Manejo de rutas
+
+# Configuramos el logger para escribir en un archivo .log
+ruta_log = Path(&quot;logs/errores.log&quot;)
+ruta_log.parent.mkdir(parents=True, exist_ok=True)  # Creamos la carpeta 'logs' si no existe
+
+logging.basicConfig(
+    filename=ruta_log,                     # Archivo donde se guardarán los logs
+    level=logging.ERROR,                   # Nivel mínimo: solo errores o más graves
+    format=&quot;%(asctime)s - %(levelname)s - %(message)s&quot;  # Formato con fecha y nivel
+)
+
+ruta = Path(&quot;datos/inexistente.txt&quot;)  # Archivo que no existe (forzará FileNotFoundError)
+
+try:
+    with ruta.open(&quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+        contenido = f.read()  # Intentamos leer (no llegaremos aquí si falla)
+except FileNotFoundError as e:
+    # Registramos el error en el fichero .log con el detalle de la excepción
+    logging.error(&quot;Archivo no encontrado: %s&quot;, e)
+    print(&quot;Se ha registrado el error en el log:&quot;, ruta_log)
+except Exception as e:
+    # Registramos cualquier otro error no esperado
+    logging.exception(&quot;Error inesperado accediendo al archivo&quot;)  # incluye traceback
+    print(&quot;Error inesperado registrado en el log.&quot;)
+</code></pre>
+<hr />
+<h1 id="buenas-practicas-recomendadas">Buenas prácticas recomendadas</h1>
+<ul>
+<li>Usar siempre <code>with open(...)</code> para garantizar el cierre automático.</li>
+<li>Especificar <code>encoding="utf-8"</code> en los ficheros de texto.</li>
+<li>Verificar la existencia de rutas con <code>Path.exists()</code>.</li>
+<li>Manejar excepciones comunes:<ul>
+<li><code>FileNotFoundError</code></li>
+<li><code>PermissionError</code></li>
+<li><code>JSONDecodeError</code></li>
+</ul>
+</li>
+<li>Evitar <code>readlines()</code> en ficheros grandes, mejor iterar línea a línea.</li>
+<li>No mezclar lectura y escritura sin reposicionar el puntero.</li>
+</ul>
+</body>
+</html>

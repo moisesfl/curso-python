@@ -638,7 +638,7 @@ def eliminarLibro(ruta_fichero: str, isbn: str) -> None:
         try:
             libros = json.load(f)
         except json.JSONDecodeError:
-            print("❌ Error: el fichero JSON está corrupto o vacío.")
+            print("Error: el fichero JSON está corrupto o vacío.")
             return
 
     # 3️ Buscar el libro por ISBN
