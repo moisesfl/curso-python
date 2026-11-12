@@ -1,7 +1,15 @@
+import re
+
 import mysql.connector
 import sqlite3
 from data_base import Database
+from dataclasses import dataclass
 
+
+@dataclass
+class Alumno:
+  nombre: str
+  email: str
 
 class MySQLDatabase(Database):
 
@@ -36,22 +44,27 @@ class MySQLDatabase(Database):
             print(f"Error inesperado al conectar con MySQL: {error}")
             return None
 
-    def create(self, data):
+    def create(self, data: Alumno):
 
         try:
+            if not isinstance(data, Alumno):
+                raise ValueError ("Dato no válido")
+            
             if self.connection is None:
                 raise RuntimeError("No existe una conexión con MySQL.")
 
             cursor = self.connection.cursor()
 
             sql = """
-                INSERT INTO usuarios (nombre, email)
+                INSERT INTO alumnos (nombre, email)
                 VALUES (%s, %s)
             """
 
-            cursor.execute(sql, (data["nombre"], data["email"]))
+            cursor.execute(sql, (data.nombre, data.email))
 
             self.connection.commit()
+
+            print("Insertado correctamente")
 
             return cursor.lastrowid
 
@@ -63,6 +76,8 @@ class MySQLDatabase(Database):
         except Exception as error:
             print(f"Error inesperado al insertar el usuario: {error}")
             return None
+
+
 
     def read(self, record_id):
 

@@ -1,9 +1,14 @@
 from flask import Flask, render_template, request
 import os
-
+from base_de_datos import data_base
 
 #template_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 #template_dir = os.path.join (template_dir, 'src', 'templates')
+
+# def main():
+#     mysql_db = data_base.MySQLDatabase("root", "", "clase")
+#     mysql_db.connect()
+
 
 
 #'templates' es el nombre por defecto
@@ -24,7 +29,14 @@ def show_post(slug):
 def post_form( ):
     if request.method == 'POST':
         nombre = request.form.get('nombre')
-        contraseña = request.form.get('contraseña')
+        email = request.form.get('email')
+        
+        #guardar datos
+        alumno = data_base.Alumno(nombre, email)
+        mysql_db = data_base.MySQLDatabase("root", "", "clase")
+        mysql_db.connect()
+        mysql_db.create(alumno)
+
     return render_template("new_post_form.html")
 
 # @app.route("/admin/post/")
@@ -33,6 +45,8 @@ def post_form( ):
 #     return render_template("new_post_form.html", post_id=post_id)
 
 
+
+    
 if __name__ ==  "__main__":
     app.run (debug=True, port = 4000)
     
