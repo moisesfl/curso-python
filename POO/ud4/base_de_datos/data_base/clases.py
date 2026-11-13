@@ -87,7 +87,7 @@ class MySQLDatabase(Database):
 
             cursor = self.connection.cursor(dictionary=True)
 
-            sql = "SELECT * FROM usuarios WHERE id = %s"
+            sql = "SELECT * FROM alumnos WHERE id = %s"
 
             cursor.execute(sql, (record_id,))
 

@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "data_base"
+version = "0.1.1"
+description = "Paquete para gestionar bases de datos en sqlite y mysql."
+readme = "README.md"
+requires-python = ">=3.14"
+authors = [
+    {name = "Moises"}
+]
+
+[tool.setuptools.packages.find]
+where = ["."]

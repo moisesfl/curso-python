@@ -14,7 +14,10 @@ if __name__ == "__main__":
 
 
     #Guardar el usuario
-    mysql_db.create(alumno)
+    #mysql_db.create(alumno)
+    print (mysql_db.read(1))
+
+
 
 
     # # Leer usuario
