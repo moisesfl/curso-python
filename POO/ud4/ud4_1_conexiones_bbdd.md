@@ -22,9 +22,16 @@
     *   [🔸 MongoDB (NoSQL)](#mongodb-nosql)
 *   [3. Comparativa general de las operaciones CRUD](#3-comparativa-general-de-las-operaciones-crud)
 *   [4. Prueba simple de instrucciones](#4-prueba-simple-de-instrucciones)
+    *   [sqlite](#sqlite)
+    *   [mysql](#sqlite)
+
 *   [5. Ejemplo de Aplicación](#5-ejemplo-de-aplicacion)
-    *   [Clase GestorBD](#clase-gestorbd)
-    *   [Ejemplo de uso de la clase](#ejemplo-de-uso-de-la-clase)
+    *   [sqlite](#sqlite)
+        *   [Clase GestorBD](#clase-gestorbd)
+        *   [Ejemplo de uso de la clase](#ejemplo-de-uso-de-la-clase)
+    *   [mysql](#sqlite)
+        *   [Clase GestorBD](#clase-gestorbd)
+        *   [Ejemplo de uso de la clase](#ejemplo-de-uso-de-la-clase)
 *   [Conclusiones](#conclusiones)
 
 _ _ _
@@ -517,9 +524,11 @@ cliente.close()
 
 # 4. Prueba simple de instrucciones[](#4-prueba-simple-de-instrucciones "Permanent link")
 
-Aplicación simple para hacer la prueba de instrucciones básicas de lo que sería la interacción con una base de datos de empleados embebida (sqlite).
 
-```
+Aplicación simple para hacer la prueba de instrucciones básicas de lo que sería la interacción con una base de datos de empleados embebida.
+## 🔸sqlite[](#sqlite "Permanent link")
+
+````
 import sqlite3
 
 # 1️ Conectar o crear base de datos
@@ -564,7 +573,7 @@ for fila in cursor.fetchall():
 
 # 7️ Cerrar conexión
 conexion.close()
-```
+````
 
 **Output esperado:**
 
@@ -580,6 +589,84 @@ Empleados tras la eliminación:
 (3, 'Marta', 'RRHH', 2000.0)
 (4, 'Carlos', 'IT', 2500.0)
 ```
+## 🔸mysql
+````
+import mysql.connector
+
+# 1. Conectar con la base de datos
+conexion = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="1234",
+    database="empresa"
+)
+
+cursor = conexion.cursor()
+
+# 2. Crear tabla
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS empleados (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    departamento VARCHAR(50),
+    salario DECIMAL(10,2)
+)
+""")
+
+# 3. Insertar registros
+empleados = [
+    ("Ana", "Ventas", 1800.50),
+    ("Luis", "IT", 2200.75),
+    ("Marta", "RRHH", 2000.00),
+    ("Carlos", "IT", 2500.00)
+]
+
+cursor.executemany(
+    "INSERT INTO empleados (nombre, departamento, salario) VALUES (%s, %s, %s)",
+    empleados
+)
+
+conexion.commit()
+
+# 4. Consultar registros
+print("Lista de empleados:")
+cursor.execute("SELECT * FROM empleados")
+
+for fila in cursor.fetchall():
+    print(fila)
+
+# 5. Eliminar empleados con salario bajo
+cursor.execute(
+    "DELETE FROM empleados WHERE salario < %s",
+    (2000,)
+)
+
+conexion.commit()
+
+# 6. Mostrar datos actualizados
+print("\nEmpleados tras la eliminación:")
+cursor.execute("SELECT * FROM empleados")
+
+for fila in cursor.fetchall():
+    print(fila)
+
+# 7. Cerrar conexión
+cursor.close()
+conexion.close()
+````
+**Output esperado:**
+````
+Lista de empleados:
+(1, 'Ana', 'Ventas', Decimal('1800.50'))
+(2, 'Luis', 'IT', Decimal('2200.75'))
+(3, 'Marta', 'RRHH', Decimal('2000.00'))
+(4, 'Carlos', 'IT', Decimal('2500.00'))
+
+Empleados tras la eliminación:
+(2, 'Luis', 'IT', Decimal('2200.75'))
+(3, 'Marta', 'RRHH', Decimal('2000.00'))
+(4, 'Carlos', 'IT', Decimal('2500.00'))
+````
 
 - - -
 
@@ -587,9 +674,10 @@ Empleados tras la eliminación:
 
 A continuación, se encapsula toda la funcionalidad en una clase `GestorBD` que implementa las operaciones CRUD (**Create**, **Read**, **Update**, **Delete**) mediante funciones.
 
-### Clase `GestorBD`[](#clase-gestorbd "Permanent link")
+## 🔸sqlite
+### Clase GestorBD[](#clase-gestorbd "Permanent link")
 
-```
+````
 import sqlite3
 
 class GestorBD:
@@ -634,13 +722,13 @@ class GestorBD:
     def cerrar(self):
         """Cierra la conexión."""
         self.conexion.close()
-```
+````
 
 - - -
 
 ### Ejemplo de uso de la clase[](#ejemplo-de-uso-de-la-clase "Permanent link")
 
-```
+````
 if __name__ == "__main__":
     gestor = GestorBD()
 
@@ -660,11 +748,11 @@ if __name__ == "__main__":
         print(e)
 
     gestor.cerrar()
-```
+````
 
 **Output esperado:**
 
-```
+````
 Empleados actuales:
 (1, 'Ana', 'Ventas', 1800.5)
 (2, 'Luis', 'IT', 2200.75)
@@ -673,9 +761,118 @@ Empleados actuales:
 Tras eliminar salarios bajos:
 (2, 'Luis', 'IT', 2200.75)
 (3, 'Marta', 'RRHH', 2000.0)
-```
+````
 
 - - -
+
+## 🔸 mysql
+### Clase GestorBD
+
+````
+import mysql.connector
+
+class GestorBD:
+    """Clase que gestiona una base de datos MySQL."""
+
+    def __init__(self, nombre_bd="empresa"):
+        self.conexion = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="1234",
+            database=nombre_bd
+        )
+
+        self.cursor = self.conexion.cursor()
+
+        self.crear_tabla()
+
+    def crear_tabla(self):
+        """Crea la tabla empleados si no existe."""
+
+        self.cursor.execute("""
+        CREATE TABLE IF NOT EXISTS empleados (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nombre VARCHAR(50) NOT NULL,
+            departamento VARCHAR(50),
+            salario DECIMAL(10,2)
+        )
+        """)
+
+    def insertar_empleado(self, nombre, departamento, salario):
+        """Inserta un nuevo empleado."""
+
+        self.cursor.execute(
+            "INSERT INTO empleados (nombre, departamento, salario) VALUES (%s, %s, %s)",
+            (nombre, departamento, salario)
+        )
+
+        self.conexion.commit()
+
+    def listar_empleados(self):
+        """Devuelve todos los empleados."""
+
+        self.cursor.execute("SELECT * FROM empleados")
+
+        return self.cursor.fetchall()
+
+    def eliminar_por_salario(self, limite):
+        """Elimina empleados con salario inferior al límite."""
+
+        self.cursor.execute(
+            "DELETE FROM empleados WHERE salario < %s",
+            (limite,)
+        )
+
+        self.conexion.commit()
+
+    def cerrar(self):
+        """Cierra la conexión."""
+
+        self.cursor.close()
+        self.conexion.close()
+````
+### Ejemplo de uso de la clase
+````
+
+if __name__ == "__main__":
+
+    gestor = GestorBD()
+
+    # Insertar empleados
+    gestor.insertar_empleado("Ana", "Ventas", 1800.50)
+    gestor.insertar_empleado("Luis", "IT", 2200.75)
+    gestor.insertar_empleado("Marta", "RRHH", 2000.00)
+
+    print("Empleados actuales:")
+
+    for empleado in gestor.listar_empleados():
+        print(empleado)
+
+    # Eliminar empleados con salario inferior a 2000
+    gestor.eliminar_por_salario(2000)
+
+    print("\nTras eliminar salarios bajos:")
+
+    for empleado in gestor.listar_empleados():
+        print(empleado)
+
+    # Cerrar conexión
+    gestor.cerrar()
+````
+
+**Output esperado:**
+
+````
+Empleados actuales:
+(1, 'Ana', 'Ventas', Decimal('1800.50'))
+(2, 'Luis', 'IT', Decimal('2200.75'))
+(3, 'Marta', 'RRHH', Decimal('2000.00'))
+
+Tras eliminar salarios bajos:
+(2, 'Luis', 'IT', Decimal('2200.75'))
+(3, 'Marta', 'RRHH', Decimal('2000.00'))
+````
+
 
 # Conclusiones[](#conclusiones "Permanent link")
 

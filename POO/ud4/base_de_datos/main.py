@@ -1,3 +1,5 @@
+from ast import Delete
+
 import mysql
 from data_base import *
 
@@ -17,6 +19,7 @@ if __name__ == "__main__":
     #mysql_db.create(alumno)
     print (mysql_db.read(1))
 
+    mysql_db.delete(7)
 
 
 

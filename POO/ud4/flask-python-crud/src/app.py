@@ -58,6 +58,22 @@ def obtener_info_alumnos(slug_id):
 
     return mesaje
 
+
+@app.route("/admin/eliminar_alumno/<int:slug_id>/")
+def eliminar_alumno(slug_id):
+    assert isinstance(slug_id, int), 'La variable debe ser un entero'
+
+    #Consulta
+    res = mysql_db.delete(slug_id)
+
+    mesaje = (
+        f"Eliminado alumnos con id {slug_id}" 
+        if res != 0 else f"No existe el alumno con el id {slug_id}" 
+    )
+
+    return mesaje
+
+
 # @app.route("/admin/post/")
 # @app.route("/admin/post/<int:post_id>/")
 # def post_form(post_id=None):

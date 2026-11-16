@@ -64,8 +64,6 @@ class MySQLDatabase(Database):
 
             self.connection.commit()
 
-            print("Insertado correctamente")
-
             return cursor.lastrowid
 
         except mysql.connector.Error as error:
@@ -141,7 +139,7 @@ class MySQLDatabase(Database):
 
             cursor = self.connection.cursor()
 
-            sql = "DELETE FROM usuarios WHERE id = %s"
+            sql = "DELETE FROM alumnos WHERE id = %s"
 
             cursor.execute(sql, (record_id,))
 
