@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio1_ud04-consultas_bd_sqlite</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud4-ejercicio-minigestor-sqlite-crud-sql-libre-por-consola">UD4 – Ejercicio: “MiniGestor SQLite” — CRUD + SQL libre por Consola</h1>
+<h2 id="enunciado">Enunciado</h2>
+<p>Vas a desarrollar una pequeña <strong>aplicación de consola</strong> en Python llamada <strong>MiniGestor SQLite</strong>.
+El programa permitirá al usuario <strong>conectarse a una base de datos SQLite</strong> y realizar operaciones CRUD sobre una tabla de personas, además de <strong>introducir cualquier sentencia SQL manualmente</strong>.</p>
+<hr />
+<h2 id="1-descripcion-general">1. Descripción general</h2>
+<ol>
+<li>
+<p>Al iniciar el programa, el usuario debe indicar el <strong>nombre del fichero de base de datos</strong> (por ejemplo, <code>datos.db</code>).</p>
+</li>
+<li>
+<p>Si el fichero no existe, el programa lo <strong>creará automáticamente</strong> y generará la tabla necesaria.</p>
+</li>
+<li>
+<p>Una vez establecida la conexión, se mostrará un <strong>menú principal</strong> con las operaciones disponibles:</p>
+</li>
+</ol>
+<p><code>=== MiniGestor SQLite ===
+   [1] Crear registro
+   [2] Listar registros
+   [3] Buscar por ID
+   [4] Actualizar registro
+   [5] Eliminar registro
+   [6] Ejecutar sentencia SQL personalizada
+   [0] Salir</code></p>
+<ol>
+<li>El usuario podrá elegir libremente qué acción ejecutar hasta que decida salir.</li>
+</ol>
+<hr />
+<h2 id="2-modelo-de-datos">2. Modelo de datos</h2>
+<p>El programa gestionará una tabla llamada <code>personas</code> con los siguientes campos:</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Tipo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>INTEGER PK</td>
+<td>Identificador único (autonumérico)</td>
+</tr>
+<tr>
+<td><code>nombre</code></td>
+<td>TEXT</td>
+<td>Nombre de la persona</td>
+</tr>
+<tr>
+<td><code>edad</code></td>
+<td>INTEGER</td>
+<td>Edad en años</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>TEXT</td>
+<td>Correo electrónico (único)</td>
+</tr>
+</tbody>
+</table>
+<p>Ejemplo de creación de tabla (el programa debe ejecutarlo si no existe):</p>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS personas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    edad INTEGER NOT NULL,
+    email TEXT UNIQUE
+);
+</code></pre>
+<hr />
+<h2 id="3-funcionalidades-requeridas">3. Funcionalidades requeridas</h2>
+<h3 id="crear-registro">Crear registro</h3>
+<ul>
+<li>Solicita <code>nombre</code>, <code>edad</code> y <code>email</code>.</li>
+<li>Inserta el registro y confirma al usuario.</li>
+</ul>
+<h3 id="listar-registros">Listar registros</h3>
+<ul>
+<li>Muestra todos los registros existentes en formato tabulado.</li>
+</ul>
+<h3 id="buscar-por-id">Buscar por ID</h3>
+<ul>
+<li>Solicita un ID y muestra los datos correspondientes.</li>
+</ul>
+<h3 id="actualizar-registro">Actualizar registro</h3>
+<ul>
+<li>Permite modificar un registro existente, seleccionando por ID.</li>
+</ul>
+<h3 id="eliminar-registro">Eliminar registro</h3>
+<ul>
+<li>Pide el ID a eliminar y solicita confirmación antes de borrarlo.</li>
+</ul>
+<h3 id="ejecutar-sentencia-sql-personalizada">Ejecutar sentencia SQL personalizada</h3>
+<ul>
+<li>Permite al usuario introducir <strong>una sentencia SQL completa</strong> y ejecutarla directamente.</li>
+<li>Debe permitir tanto consultas (<code>SELECT</code>) como instrucciones (<code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>CREATE</code>, etc.).</li>
+<li>Si la sentencia devuelve resultados (por ejemplo, en un <code>SELECT</code>), se deben mostrar en pantalla en formato de tabla.</li>
+<li>Si la sentencia no devuelve filas, debe informar de que se ha ejecutado correctamente.</li>
+</ul>
+<blockquote>
+<p><strong>Importante:</strong></p>
+<ul>
+<li>Implementa <strong>control de errores</strong> (por ejemplo, si la sentencia está mal escrita).</li>
+<li>No permitas más de una sentencia a la vez (por seguridad).</li>
+</ul>
+</blockquote>
+<p>Ejemplo:</p>
+<pre><code>Selecciona una opción: 6
+Introduce tu sentencia SQL:
+&gt; SELECT nombre, edad FROM personas WHERE edad &gt; 25;
+
+Resultados:
+-------------------------------------
+Nombre           | Edad
+-------------------------------------
+Luis Martínez     | 31
+María Pérez       | 45
+</code></pre>
+<hr />
+<h2 id="4-estructura-sugerida">4. Estructura sugerida</h2>
+<pre><code>minigestor_sqlite/
+├── main.py           # Programa principal (menú)
+├── README.md         # Instrucciones de uso
+└── App/
+  |─ __init__.py 
+  |─ interfaz_usuario.py 
+  |─ db_manager.py     # Funciones para conectar y operar con la BD. Utilizar Programación orientada a objetos. 
+  |─ Data/
+    |─ datos.db     # Fichero de la base de datos sqlite
+
+</code></pre>
+<hr />
+<h2 id="5-ejemplo-de-ejecucion">5. Ejemplo de ejecución</h2>
+<pre><code>Introduce el nombre del fichero de base de datos: datos.db
+Conectado correctamente a datos.db
+
+=== MiniGestor SQLite ===
+[1] Crear registro
+[2] Listar registros
+[3] Buscar por ID
+[4] Actualizar registro
+[5] Eliminar registro
+[6] Ejecutar sentencia SQL personalizada
+[0] Salir
+--------------------------------
+Selecciona una opción: 6
+
+Introduce tu sentencia SQL:
+&gt; SELECT COUNT(*) AS total FROM personas;
+
+Resultados:
+-------------------------------------
+total
+-------------------------------------
+3
+</code></pre>
+<hr />
+</body>
+</html>

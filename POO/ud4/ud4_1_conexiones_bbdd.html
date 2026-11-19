@@ -1,0 +1,866 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud4_1_conexiones_bbdd</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud4-1-conexion-con-bases-de-datos-en-python">UD4 - 1. Conexión con Bases de Datos en Python</h1>
+<h2 id="indice-de-contenidos">Índice de contenidos</h2>
+<ul>
+<li><a href="#crud-conceptos-basicos-de-conexion-a-bases-de-datos">CRUD - Conceptos básicos de conexión a bases de datos</a><ul>
+<li><a href="#definicion">🔹 Definición</a></li>
+<li><a href="#ejemplo-visual-del-ciclo-crud">🔹 Ejemplo visual del ciclo CRUD</a></li>
+</ul>
+</li>
+<li><a href="#1-librerias-necesarias">1. Librerías necesarias</a><ul>
+<li><a href="#documentacion">Documentación</a><ul>
+<li><a href="#sqlite">SQLite</a></li>
+<li><a href="#mysql">MySQL</a></li>
+<li><a href="#postgresql">PostGreSQL</a></li>
+<li><a href="#mongodb">MongoDB</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2uso-de-las-librerias-para-gestion-de-conexion-y-operaciones-crud">2.Uso de las librerías para gestión de conexión y operaciones CRUD</a><ul>
+<li><a href="#pasos-generales">Pasos generales</a></li>
+<li><a href="#cuestiones-de-seguridad">Cuestiones de seguridad</a><ul>
+<li><a href="#que-es-el-sql-injection">¿Qué es el sql injection?</a></li>
+<li><a href="#como-evitamos-sql-injection">¿Cómo evitamos sql injection?</a></li>
+</ul>
+</li>
+<li><a href="#sqlite_1">🔸 SQLite</a></li>
+<li><a href="#mysql_1">🔸 MySQL</a></li>
+<li><a href="#postgresql_1">🔸 PostgreSQL</a></li>
+<li><a href="#mongodb-nosql">🔸 MongoDB (NoSQL)</a></li>
+</ul>
+</li>
+<li><a href="#3-comparativa-general-de-las-operaciones-crud">3. Comparativa general de las operaciones CRUD</a></li>
+<li>
+<p><a href="#4-prueba-simple-de-instrucciones">4. Prueba simple de instrucciones</a></p>
+<ul>
+<li><a href="#sqlite_2">sqlite</a></li>
+<li><a href="#mysql_2">mysql</a></li>
+</ul>
+</li>
+<li>
+<p><a href="#5-ejemplo-de-aplicacion">5. Ejemplo de Aplicación</a></p>
+<ul>
+<li><a href="#sqlite-3">sqlite</a><ul>
+<li><a href="#clase-gestorbd-sqlite">Clase GestorBD</a></li>
+<li><a href="#ejemplo-de-uso-de-la-clase-sqlite">Ejemplo de uso de la clase</a></li>
+</ul>
+</li>
+<li><a href="#mysql-3">mysql</a><ul>
+<li><a href="#clase-gestorbd-mysql">Clase GestorBD</a></li>
+<li><a href="#ejemplo-de-uso-de-la-clase-mysql">Ejemplo de uso de la clase</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#conclusiones">Conclusiones</a></li>
+</ul>
+<hr />
+<h1 id="crud-conceptos-basicos-de-conexion-a-bases-de-datos">CRUD - Conceptos básicos de conexión a bases de datos<a href="#crud-conceptos-basicos-de-conexion-a-bases-de-datos" title="Permanent link"></a></h1>
+<h2 id="definicion">🔹 Definición<a href="#definicion" title="Permanent link"></a></h2>
+<p>El término <strong>CRUD</strong> proviene del acrónimo inglés de las cuatro operaciones básicas que se pueden realizar sobre una base de datos:</p>
+<table>
+<thead>
+<tr>
+<th>Letra</th>
+<th>Operación</th>
+<th>Significado</th>
+<th>Ejemplo en SQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>C</strong></td>
+<td><strong>Create</strong></td>
+<td>Crear o insertar datos nuevos</td>
+<td><code>INSERT INTO ...</code></td>
+</tr>
+<tr>
+<td><strong>R</strong></td>
+<td><strong>Read</strong></td>
+<td>Leer o consultar datos existentes</td>
+<td><code>SELECT ... FROM ...</code></td>
+</tr>
+<tr>
+<td><strong>U</strong></td>
+<td><strong>Update</strong></td>
+<td>Actualizar o modificar datos existentes</td>
+<td><code>UPDATE ... SET ...</code></td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td><strong>Delete</strong></td>
+<td>Eliminar datos</td>
+<td><code>DELETE FROM ...</code></td>
+</tr>
+</tbody>
+</table>
+<p>Estas operaciones son comunes a todas las bases de datos, ya sean relacionales (como SQLite, MySQL, PostgreSQL) o NoSQL (como MongoDB).</p>
+<h2 id="ejemplo-visual-del-ciclo-crud">🔹 Ejemplo visual del ciclo CRUD<a href="#ejemplo-visual-del-ciclo-crud" title="Permanent link"></a></h2>
+<pre><code>┌────────────┐
+│   CREATE   │  ➜ Inserta nuevos datos
+└──────┬─────┘
+       │
+       ▼
+┌────────────┐
+│    READ    │  ➜ Consulta y muestra información
+└──────┬─────┘
+       │
+       ▼
+┌────────────┐
+│   UPDATE   │  ➜ Modifica registros existentes
+└──────┬─────┘
+       │
+       ▼
+┌────────────┐
+│   DELETE   │  ➜ Elimina registros
+└────────────┘
+</code></pre>
+<p><img alt="CRUD" src="https://files.realpython.com/media/What-Are-CRUD-Operations_Watermarked.b243ab2b79cb.jpg" /></p>
+<hr />
+<h1 id="1-librerias-necesarias">1. Librerías necesarias<a href="#1-librerias-necesarias" title="Permanent link"></a></h1>
+<table>
+<thead>
+<tr>
+<th>Motor</th>
+<th>Librería Python</th>
+<th>Instalación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SQLite</td>
+<td><code>sqlite3</code></td>
+<td>Incluida en Python</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td><code>mysql.connector</code></td>
+<td><code>pip install mysql-connector-python</code></td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td><code>psycopg2</code></td>
+<td><code>pip install psycopg2</code></td>
+</tr>
+<tr>
+<td>MongoDB</td>
+<td><code>pymongo</code></td>
+<td><code>pip install pymongo</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="documentacion">Documentación<a href="#documentacion" title="Permanent link"></a></h2>
+<h3 id="sqlite">SQLite<a href="#sqlite" title="Permanent link"></a></h3>
+<ul>
+<li>Documentación SQLite: <a href="url">https://sqlite.org</a> </li>
+<li>Documentación API Python SQLite3: <a href="url">https://docs.python.org/3/library/sqlite3.html</a></li>
+</ul>
+<h3 id="mysql">MySQL<a href="#mysql" title="Permanent link"></a></h3>
+<ul>
+<li>Documentación MySQL: <a href="url">https://dev.mysql.com/doc/refman/8.4/en/</a> </li>
+<li>Tutorial guía W3Schools: <a href="url">https://www.w3schools.com/python/python_mysql_getstarted.asp</a></li>
+</ul>
+<h3 id="postgresql">PostGreSQL<a href="#postgresql" title="Permanent link"></a></h3>
+<ul>
+<li>Documentación PostgreSQL: <a href="url">https://www.postgresql.org/docs/</a> </li>
+<li>Documentación Psycopg (Python postgresql adapter): <a href="url">https://www.psycopg.org/docs/</a></li>
+</ul>
+<h3 id="mongodb">MongoDB<a href="#mongodb" title="Permanent link"></a></h3>
+<ul>
+<li>Documentación MongoDB: <a href="url">https://www.mongodb.com/es/docs/?msockid=325001c78bee654a109816118a966489</a></li>
+<li>Tutorial guía W3Schools: <a href="url">https://www.w3schools.com/python/python_mongodb_getstarted.asp</a></li>
+</ul>
+<hr />
+<h1 id="2uso-de-las-librerias-para-gestion-de-conexion-y-operaciones-crud">2.Uso de las librerías para gestión de conexión y operaciones CRUD<a href="#2uso-de-las-librerias-para-gestion-de-conexion-y-operaciones-crud" title="Permanent link"></a></h1>
+<h2 id="pasos-generales">Pasos generales<a href="#pasos-generales" title="Permanent link"></a></h2>
+<p>1) Contectar con la base de datos. 
+2) Crear el objeto <em>cursor</em>. Representa un objeto de control de operaciones que: 
+    - Ejecuta sentencias SQL (cursor.execute(...)) 
+    - Recupera resultados (cursor.fetchone(), cursor.fetchall()) 
+    - Gestiona parámetros de las consultas. 
+3) Crear la query SQL. 
+4) Hacer commit (ejecutar la sentencia SQL). 
+5) Cerrar la conexión.</p>
+<h2 id="cuestiones-de-seguridad">Cuestiones de seguridad<a href="#cuestiones-de-seguridad" title="Permanent link"></a></h2>
+<h3 id="que-es-el-sql-injection">¿Qué es el sql injection?<a href="#que-es-el-sql-injection" title="Permanent link"></a></h3>
+<p>Consiste en utilizar vulnerabilidades en las páginas web, y otras aplicaciones que interactúan con bases de datos, para introducir instrucciones SQL y así <strong>poder saltarse los controles de autenticación y realizar acciones no autorizadas en el sistema</strong>.</p>
+<p><strong>Ocurre normalmente cuando</strong> se pide al usuario por un input, como su nombre, y el usuario, en lugar de su nombre de usuario, introduce una sentencia SQL que será ejecutada en la base de datos sin ser tenida en cuenta a la hora de programar la web, lo que puede dar lugar a ejecuciones de código SQL no deseadas.</p>
+<p>En la siguiente página se puede llevar a cabo a modo de práctica un ataque SQL Injection: <a href="https://www.hacksplaining.com/exercises/sql-injection#/">hacksplaining - sql-injection</a></p>
+<p>Herramienta online para analizar sitios web en búsqueda de vulnerabilidades de este tipo: <a href="https://pentest-tools.com/website-vulnerability-scanning/sql-injection-scanner-online">pentest tools - sql injection scanner</a></p>
+<p>Aquí tienes <strong>4 ejemplos claros y didácticos de SQL Injection</strong>, cada uno con <strong>sentencia, explicación y por qué es peligroso</strong>. Están diseñados para que puedas usarlos directamente en apuntes o ejercicios.</p>
+<hr />
+<h4 id="1-ejemplo-clasico-evasion-de-login"><strong>1. Ejemplo clásico: evasión de login</strong><a href="#1-ejemplo-clasico-evasion-de-login" title="Permanent link"></a></h4>
+<p><em>Inyección en un campo de usuario para saltarse la autenticación</em></p>
+<p><strong>Entrada del atacante (campo “usuario”):</strong></p>
+<pre><code>' OR '1'='1
+</code></pre>
+<p><strong>Consulta SQL vulnerable:</strong></p>
+<pre><code>SELECT * FROM usuarios
+WHERE usuario = '' OR '1'='1' AND password = '';
+</code></pre>
+<h5 id="explicacion">Explicación<a href="#explicacion" title="Permanent link"></a></h5>
+<ul>
+<li><code>'1'='1'</code> es siempre verdadero.</li>
+<li>La condición completa del <code>WHERE</code> se convierte en verdadera para <strong>todas las filas</strong>.</li>
+<li>El atacante entra sin conocer contraseña.</li>
+</ul>
+<h5 id="consecuencia">Consecuencia<a href="#consecuencia" title="Permanent link"></a></h5>
+<p>Acceso total sin credenciales.</p>
+<hr />
+<h4 id="2-eliminacion-masiva-de-datos"><strong>2. Eliminación masiva de datos</strong><a href="#2-eliminacion-masiva-de-datos" title="Permanent link"></a></h4>
+<p><em>Ataque para borrar contenido completo de una tabla</em></p>
+<p><strong>Entrada del atacante (por ejemplo, en un formulario de “nombre”):</strong></p>
+<pre><code>'; DROP TABLE empleados; --
+</code></pre>
+<p><strong>SQL final ejecutado en un sistema vulnerable:</strong></p>
+<pre><code>SELECT * FROM empleados WHERE nombre = '';
+DROP TABLE empleados;
+-- ';
+</code></pre>
+<h5 id="explicacion_1">Explicación<a href="#explicacion_1" title="Permanent link"></a></h5>
+<ul>
+<li>El atacante <strong>cierra la consulta legítima</strong> con <code>';</code></li>
+<li>Inserta una instrucción destructiva: <code>DROP TABLE empleados;</code></li>
+<li><code>--</code> comenta el resto para evitar errores sintácticos.</li>
+</ul>
+<h5 id="consecuencia_1">Consecuencia<a href="#consecuencia_1" title="Permanent link"></a></h5>
+<p>La tabla <code>empleados</code> desaparece por completo.</p>
+<hr />
+<h4 id="3-extraccion-de-datos-sensibles-ignorando-filtros"><strong>3. Extracción de datos sensibles ignorando filtros</strong><a href="#3-extraccion-de-datos-sensibles-ignorando-filtros" title="Permanent link"></a></h4>
+<p><em>Ataque para ver toda la tabla saltándose restricciones</em></p>
+<p><strong>Entrada del atacante (parámetro “id”):</strong></p>
+<pre><code>1 OR 1=1
+</code></pre>
+<p><strong>Consulta vulnerable:</strong></p>
+<pre><code>SELECT * FROM cuentas WHERE id = 1 OR 1=1;
+</code></pre>
+<h5 id="explicacion_2">Explicación<a href="#explicacion_2" title="Permanent link"></a></h5>
+<ul>
+<li>El filtro por ID queda inutilizado.</li>
+<li><code>1 OR 1=1</code> devuelve <strong>todas</strong> las filas de la tabla.</li>
+</ul>
+<h5 id="consecuencia_2">Consecuencia<a href="#consecuencia_2" title="Permanent link"></a></h5>
+<p>El atacante obtiene la lista completa de cuentas, sueldos, correos, etc.</p>
+<hr />
+<h4 id="4-ataque-union-para-robar-otra-tabla"><strong>4. Ataque UNION para robar otra tabla</strong><a href="#4-ataque-union-para-robar-otra-tabla" title="Permanent link"></a></h4>
+<p><em>Inyección que combina resultados con tablas sensibles (por ejemplo, contraseñas)</em></p>
+<p><strong>Entrada del atacante (campo “nombre”):</strong></p>
+<pre><code>' UNION SELECT usuario, password FROM admin; --
+</code></pre>
+<p><strong>SQL resultante:</strong></p>
+<pre><code>SELECT nombre, salario FROM empleados
+WHERE nombre = ''
+UNION
+SELECT usuario, password FROM admin;
+-- ';
+</code></pre>
+<h5 id="explicacion_3">Explicación<a href="#explicacion_3" title="Permanent link"></a></h5>
+<ul>
+<li><code>UNION</code> permite devolver datos de una segunda consulta.</li>
+<li>El atacante mezcla la tabla original con <code>admin</code>.</li>
+<li>Los resultados muestran <strong>usuarios y contraseñas</strong> junto a los empleados.</li>
+</ul>
+<h5 id="consecuencia_3">Consecuencia<a href="#consecuencia_3" title="Permanent link"></a></h5>
+<p>Filtración directa de credenciales.</p>
+<hr />
+<h3 id="como-evitamos-sql-injection">¿Cómo evitamos sql injection?<a href="#como-evitamos-sql-injection" title="Permanent link"></a></h3>
+<p>Los ataques de SQL Injection se producen cuando el atacante consigue que la aplicación mezcle datos y código SQL, permitiéndole modificar o ejecutar instrucciones maliciosas. En Python, la protección es sencilla si se siguen cuatro principios fundamentales.</p>
+<h4 id="1-usar-siempre-consultas-parametrizadas-nunca-concatenar-strings">1. Usar siempre consultas parametrizadas (NUNCA concatenar strings)<a href="#1-usar-siempre-consultas-parametrizadas-nunca-concatenar-strings" title="Permanent link"></a></h4>
+<p>Este es el método más importante y eficaz.</p>
+<p><strong>Vulnerable:</strong></p>
+<pre><code>sql = f&quot;SELECT * FROM usuarios WHERE nombre = '{usuario}'&quot;
+cursor.execute(sql)
+</code></pre>
+<p><strong>Seguro:</strong></p>
+<pre><code>cursor.execute(
+    &quot;SELECT * FROM usuarios WHERE nombre = ?&quot;,
+    (usuario,)
+)   # SQLite
+
+cursor.execute(
+    &quot;SELECT * FROM usuarios WHERE nombre = %s&quot;,
+    (usuario,)
+)   # MySQL / PostgreSQL
+</code></pre>
+<p><strong>Por qué funciona</strong></p>
+<ul>
+<li>Cuando se usa ? o %s, el driver:<ul>
+<li>Escapa caracteres peligrosos.</li>
+<li>Trata la entrada como dato, no como código.</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-no-interpolar-identificadores-usar-listas-blancas-whitelists">2. No interpolar identificadores: usar “listas blancas” (whitelists)<a href="#2-no-interpolar-identificadores-usar-listas-blancas-whitelists" title="Permanent link"></a></h4>
+<p>Los placeholders no sirven para nombres de columnas o tablas, solo para valores.</p>
+<p>Vulnerable:</p>
+<pre><code>cursor.execute(f&quot;SELECT {columna} FROM empleados&quot;)
+</code></pre>
+<p>Seguro:</p>
+<pre><code>permitidas = {&quot;id&quot;, &quot;nombre&quot;, &quot;salario&quot;}
+if columna in permitidas:
+    cursor.execute(f&quot;SELECT {columna} FROM empleados&quot;)
+</code></pre>
+<h4 id="3-validar-y-sanear-todas-las-entradas-del-usuario">3. Validar y sanear todas las entradas del usuario<a href="#3-validar-y-sanear-todas-las-entradas-del-usuario" title="Permanent link"></a></h4>
+<p><strong>Comprobar</strong>: - Tipo de dato (int, float, str…) - Longitud (ej. máximo 50 caracteres) - Formatos esperados (ej. email) - Rangos numéricos</p>
+<p><strong>Ejemplo</strong>:</p>
+<pre><code>def validar_id(x):
+    if not str(x).isdigit():
+        raise ValueError(&quot;ID inválido&quot;)
+    return int(x)
+</code></pre>
+<p>La validación evita valores maliciosos antes de llegar al SQL.</p>
+<h4 id="4-usar-transacciones-y-manejar-errores-correctamente">4. Usar transacciones y manejar errores correctamente<a href="#4-usar-transacciones-y-manejar-errores-correctamente" title="Permanent link"></a></h4>
+<p>Evita quedar en estados inconsistentes si un ataque intenta romper la consulta.</p>
+<pre><code>try:
+    conn.execute(&quot;BEGIN&quot;)
+    cursor.execute(...)   # operaciones SQL
+    conn.commit()
+except:
+    conn.rollback()
+</code></pre>
+<hr />
+<h2 id="sqlite_1">🔸 SQLite<a href="#sqlite_1" title="Permanent link"></a></h2>
+<pre><code>import sqlite3
+
+# 1️ ---  CONEXIÓN CON LA BASE DE DATOS ------------------------
+      #(si no existe, se crea automáticamente)
+conexion = sqlite3.connect(&quot;empresa.db&quot;)
+
+# 2️ ---  CREACIÓN DEL CURSOR     ------------------------------
+cursor = conexion.cursor()
+
+# 3️ ---  OPERACIONES CRUD           ------------------------------
+
+# Crear una TABLA
+cursor.execute('''CREATE TABLE IF NOT EXISTS empleados (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nombre TEXT,
+                    departamento TEXT,
+                    salario REAL)''')
+conexion.commit()
+
+# CREATE: Insertar un nuevo registro
+cursor.execute(&quot;INSERT INTO empleados (nombre, departamento, salario) VALUES (?, ?, ?)&quot;, (&quot;Ana&quot;, &quot;Ventas&quot;, 1800))
+conexion.commit()
+
+# READ: Consultar registros
+cursor.execute(&quot;SELECT * FROM empleados&quot;)
+for fila in cursor.fetchall():
+    print(fila)  # Muestra cada fila de la tabla empleados
+
+# UPDATE: Actualizar un registro
+cursor.execute(&quot;UPDATE empleados SET salario = ? WHERE nombre = ?&quot;, (1900, &quot;Ana&quot;))
+conexion.commit()
+
+# DELETE: Eliminar un registro
+cursor.execute(&quot;DELETE FROM empleados WHERE nombre = ?&quot;, (&quot;Ana&quot;,))
+conexion.commit()
+
+# 4️ --- CERRAR LA CONEXIÓN    -----------------------------------
+conexion.close() 
+</code></pre>
+<hr />
+<h2 id="mysql_1">🔸 MySQL<a href="#mysql_1" title="Permanent link"></a></h2>
+<pre><code>import mysql.connector
+
+# 1️ ---  CONEXIÓN CON LA BASE DE DATOS ------------------------
+conexion = mysql.connector.connect(
+    host=&quot;localhost&quot;,
+    user=&quot;root&quot;,
+    password=&quot;&quot;,
+    database=&quot;empleados&quot;
+)
+
+# 2️ ---  CREACIÓN DEL CURSOR     ------------------------------
+cursor = conexion.cursor()
+
+# 3️ ---  OPERACIONES CRUD           ------------------------------
+# Crear una TABLA
+cursor.execute('''CREATE TABLE IF NOT EXISTS empleados (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    nombre VARCHAR(100) NOT NULL,
+                    departamento VARCHAR(100),
+                    salario DECIMAL(10, 2))'''
+)
+
+# CREATE: Insertar datos
+cursor.execute(&quot;INSERT INTO empleados (nombre, departamento, salario) VALUES (%s, %s, %s)&quot;, (&quot;Luis&quot;, &quot;IT&quot;, 2200))
+conexion.commit()
+
+# READ: Consultar datos
+cursor.execute(&quot;SELECT * FROM empleados&quot;)
+for fila in cursor.fetchall():
+    print(fila)  # Muestra los registros existentes
+
+# UPDATE: Modificar un salario
+cursor.execute(&quot;UPDATE empleados SET salario = %s WHERE nombre = %s&quot;, (2300, &quot;Luis&quot;))
+conexion.commit()
+
+# DELETE: Borrar un empleado
+cursor.execute(&quot;DELETE FROM empleados WHERE nombre = %s&quot;, (&quot;Luis&quot;,))
+
+conexion.commit()
+
+# 4️ --- CERRAR LA CONEXIÓN    -----------------------------------
+conexion.close() 
+</code></pre>
+<hr />
+<h2 id="postgresql_1">🔸 PostgreSQL<a href="#postgresql_1" title="Permanent link"></a></h2>
+<pre><code>import psycopg2
+
+# 1️ ---  CONEXIÓN CON LA BASE DE DATOS ------------------------
+conexion = psycopg2.connect(
+    host=&quot;localhost/IP/url&quot;,
+    user=&quot;postgres&quot;,
+    password=&quot;1234&quot;,
+    dbname=&quot;empresa&quot;
+)
+# 2️ ---  CREACIÓN DEL CURSOR     ------------------------------
+cursor = conexion.cursor()
+
+# 3️ ---  OPERACIONES CRUD           ------------------------------
+# CREATE: Insertar un registro
+cursor.execute(&quot;INSERT INTO empleados (nombre, departamento, salario) VALUES (%s, %s, %s)&quot;, (&quot;Marta&quot;, &quot;RRHH&quot;, 2000))
+conexion.commit()
+
+# READ: Consultar registros
+cursor.execute(&quot;SELECT * FROM empleados&quot;)
+for fila in cursor.fetchall():
+    print(fila)
+
+# UPDATE: Actualizar un registro
+cursor.execute(&quot;UPDATE empleados SET salario = %s WHERE nombre = %s&quot;, (2100, &quot;Marta&quot;))
+conexion.commit()
+
+# DELETE: Eliminar un registro
+cursor.execute(&quot;DELETE FROM empleados WHERE nombre = %s&quot;, (&quot;Marta&quot;,))
+conexion.commit()
+
+# 4️ --- CERRAR LA CONEXIÓN    -----------------------------------
+conexion.close()  
+</code></pre>
+<hr />
+<h2 id="mongodb-nosql">🔸 MongoDB (NoSQL)<a href="#mongodb-nosql" title="Permanent link"></a></h2>
+<pre><code>from pymongo import MongoClient
+
+# 1️ ---  CONEXIÓN CON LA BASE DE DATOS ------------------------
+    #(por defecto puerto 27017)
+cliente = MongoClient(&quot;mongodb://localhost_o_IP_o_URL:27017/&quot;)
+
+# 2️ ---  OPERACIONES CRUD           ------------------------------
+
+#  Crear base de datos y colección
+db = cliente[&quot;empresa&quot;]
+coleccion = db[&quot;empleados&quot;]
+
+# CREATE: Insertar un documento
+empleado = {&quot;nombre&quot;: &quot;Carlos&quot;, &quot;departamento&quot;: &quot;IT&quot;, &quot;salario&quot;: 2500}
+coleccion.insert_one(empleado)
+
+# READ: Consultar documentos
+for doc in coleccion.find():
+    print(doc)  # Muestra todos los documentos almacenados
+
+# UPDATE: Actualizar un documento
+coleccion.update_one({&quot;nombre&quot;: &quot;Carlos&quot;}, {&quot;$set&quot;: {&quot;salario&quot;: 2700}})
+
+# DELETE: Eliminar documentos
+coleccion.delete_one({&quot;nombre&quot;: &quot;Carlos&quot;})
+
+# 3 --- CERRAR LA CONEXIÓN    -----------------------------------
+cliente.close()  
+</code></pre>
+<hr />
+<h1 id="3-comparativa-general-de-las-operaciones-crud">3. Comparativa general de las operaciones CRUD<a href="#3-comparativa-general-de-las-operaciones-crud" title="Permanent link"></a></h1>
+<table>
+<thead>
+<tr>
+<th>Operación</th>
+<th>SQLite</th>
+<th>MySQL</th>
+<th>PostgreSQL</th>
+<th>MongoDB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Create</strong></td>
+<td><code>INSERT INTO ... VALUES (?, ?, ?)</code></td>
+<td><code>INSERT INTO ... VALUES (%s, %s, %s)</code></td>
+<td><code>INSERT INTO ... VALUES (%s, %s, %s)</code></td>
+<td><code>insert_one({})</code></td>
+</tr>
+<tr>
+<td><strong>Read</strong></td>
+<td><code>SELECT * FROM tabla</code></td>
+<td><code>SELECT * FROM tabla</code></td>
+<td><code>SELECT * FROM tabla</code></td>
+<td><code>find({})</code></td>
+</tr>
+<tr>
+<td><strong>Update</strong></td>
+<td><code>UPDATE tabla SET campo=? WHERE id=?</code></td>
+<td><code>UPDATE tabla SET campo=%s WHERE id=%s</code></td>
+<td><code>UPDATE tabla SET campo=%s WHERE id=%s</code></td>
+<td><code>update_one({}, {"$set":{}})</code></td>
+</tr>
+<tr>
+<td><strong>Delete</strong></td>
+<td><code>DELETE FROM tabla WHERE id=?</code></td>
+<td><code>DELETE FROM tabla WHERE id=%s</code></td>
+<td><code>DELETE FROM tabla WHERE id=%s</code></td>
+<td><code>delete_one({})</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="4-prueba-simple-de-instrucciones">4. Prueba simple de instrucciones<a href="#4-prueba-simple-de-instrucciones" title="Permanent link"></a></h1>
+<p>Aplicación simple para hacer la prueba de instrucciones básicas de lo que sería la interacción con una base de datos de empleados embebida.</p>
+<h2 id="sqlite_2">🔸sqlite<a href="#sqlite_2" title="Permanent link"></a></h2>
+<pre><code>import sqlite3
+
+# 1️ Conectar o crear base de datos
+conexion = sqlite3.connect(&quot;empresa.db&quot;)
+cursor = conexion.cursor()
+
+# 2️ Crear tabla
+cursor.execute(&quot;&quot;&quot;
+CREATE TABLE IF NOT EXISTS empleados (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    departamento TEXT,
+    salario REAL
+)
+&quot;&quot;&quot;)
+
+# 3️ Insertar registros
+empleados = [
+    (&quot;Ana&quot;, &quot;Ventas&quot;, 1800.50),
+    (&quot;Luis&quot;, &quot;IT&quot;, 2200.75),
+    (&quot;Marta&quot;, &quot;RRHH&quot;, 2000.00),
+    (&quot;Carlos&quot;, &quot;IT&quot;, 2500.00)
+]
+cursor.executemany(&quot;INSERT INTO empleados (nombre, departamento, salario) VALUES (?, ?, ?)&quot;, empleados)
+conexion.commit()
+
+# 4️ Consultar registros
+print(&quot;Lista de empleados:&quot;)
+cursor.execute(&quot;SELECT * FROM empleados&quot;)
+for fila in cursor.fetchall():
+    print(fila)
+
+# 5️ Eliminar empleados con salario bajo
+cursor.execute(&quot;DELETE FROM empleados WHERE salario &lt; 2000&quot;)
+conexion.commit()
+
+# 6️ Mostrar datos actualizados
+print(&quot;\nEmpleados tras la eliminación:&quot;)
+cursor.execute(&quot;SELECT * FROM empleados&quot;)
+for fila in cursor.fetchall():
+    print(fila)
+
+# 7️ Cerrar conexión
+conexion.close()
+</code></pre>
+<p><strong>Output esperado:</strong></p>
+<pre><code>Lista de empleados:
+(1, 'Ana', 'Ventas', 1800.5)
+(2, 'Luis', 'IT', 2200.75)
+(3, 'Marta', 'RRHH', 2000.0)
+(4, 'Carlos', 'IT', 2500.0)
+
+Empleados tras la eliminación:
+(2, 'Luis', 'IT', 2200.75)
+(3, 'Marta', 'RRHH', 2000.0)
+(4, 'Carlos', 'IT', 2500.0)
+</code></pre>
+<h2 id="mysql_2">🔸mysql<a href="#mysql_2" title="Permanent link"></a></h2>
+<pre><code>import mysql.connector
+
+# 1. Conectar con la base de datos
+conexion = mysql.connector.connect(
+    host=&quot;localhost&quot;,
+    user=&quot;root&quot;,
+    password=&quot;1234&quot;,
+    database=&quot;empresa&quot;
+)
+
+cursor = conexion.cursor()
+
+# 2. Crear tabla
+cursor.execute(&quot;&quot;&quot;
+CREATE TABLE IF NOT EXISTS empleados (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    departamento VARCHAR(50),
+    salario DECIMAL(10,2)
+)
+&quot;&quot;&quot;)
+
+# 3. Insertar registros
+empleados = [
+    (&quot;Ana&quot;, &quot;Ventas&quot;, 1800.50),
+    (&quot;Luis&quot;, &quot;IT&quot;, 2200.75),
+    (&quot;Marta&quot;, &quot;RRHH&quot;, 2000.00),
+    (&quot;Carlos&quot;, &quot;IT&quot;, 2500.00)
+]
+
+cursor.executemany(
+    &quot;INSERT INTO empleados (nombre, departamento, salario) VALUES (%s, %s, %s)&quot;,
+    empleados
+)
+
+conexion.commit()
+
+# 4. Consultar registros
+print(&quot;Lista de empleados:&quot;)
+cursor.execute(&quot;SELECT * FROM empleados&quot;)
+
+for fila in cursor.fetchall():
+    print(fila)
+
+# 5. Eliminar empleados con salario bajo
+cursor.execute(
+    &quot;DELETE FROM empleados WHERE salario &lt; %s&quot;,
+    (2000,)
+)
+
+conexion.commit()
+
+# 6. Mostrar datos actualizados
+print(&quot;\nEmpleados tras la eliminación:&quot;)
+cursor.execute(&quot;SELECT * FROM empleados&quot;)
+
+for fila in cursor.fetchall():
+    print(fila)
+
+# 7. Cerrar conexión
+cursor.close()
+conexion.close()
+</code></pre>
+<p><strong>Output esperado:</strong></p>
+<pre><code>Lista de empleados:
+(1, 'Ana', 'Ventas', Decimal('1800.50'))
+(2, 'Luis', 'IT', Decimal('2200.75'))
+(3, 'Marta', 'RRHH', Decimal('2000.00'))
+(4, 'Carlos', 'IT', Decimal('2500.00'))
+
+Empleados tras la eliminación:
+(2, 'Luis', 'IT', Decimal('2200.75'))
+(3, 'Marta', 'RRHH', Decimal('2000.00'))
+(4, 'Carlos', 'IT', Decimal('2500.00'))
+</code></pre>
+<hr />
+<h1 id="5-ejemplo-de-aplicacion">5. Ejemplo de Aplicación<a href="#5-ejemplo-de-aplicacion" title="Permanent link"></a></h1>
+<p>A continuación, se encapsula toda la funcionalidad en una clase <code>GestorBD</code> que implementa las operaciones CRUD (<strong>Create</strong>, <strong>Read</strong>, <strong>Update</strong>, <strong>Delete</strong>) mediante funciones.</p>
+<h2 id="sqlite_3">🔸sqlite<a href="#sqlite-3" title="Permanent link"></a></h2>
+<h3 id="clase-gestorbd">Clase GestorBD<a href="#clase-gestorbd-sqlite" title="Permanent link"></a></h3>
+<pre><code>import sqlite3
+
+class GestorBD:
+    &quot;&quot;&quot;Clase que gestiona la conexión y operaciones CRUD de una base de datos SQLite.&quot;&quot;&quot;
+
+    def __init__(self, nombre_bd=&quot;empresa.db&quot;):
+        self.nombre_bd = nombre_bd
+        self.conexion = sqlite3.connect(self.nombre_bd)
+        self.cursor = self.conexion.cursor()
+        self.crear_tabla()
+
+    def crear_tabla(self):
+        &quot;&quot;&quot;Crea la tabla empleados si no existe.&quot;&quot;&quot;
+        self.cursor.execute(&quot;&quot;&quot;
+        CREATE TABLE IF NOT EXISTS empleados (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            departamento TEXT,
+            salario REAL
+        )
+        &quot;&quot;&quot;)
+        self.conexion.commit()
+
+    def insertar_empleado(self, nombre, departamento, salario):
+        &quot;&quot;&quot;Inserta un nuevo empleado.&quot;&quot;&quot;
+        self.cursor.execute(
+            &quot;INSERT INTO empleados (nombre, departamento, salario) VALUES (?, ?, ?)&quot;,
+            (nombre, departamento, salario)
+        )
+        self.conexion.commit()
+
+    def listar_empleados(self):
+        &quot;&quot;&quot;Devuelve todos los empleados.&quot;&quot;&quot;
+        self.cursor.execute(&quot;SELECT * FROM empleados&quot;)
+        return self.cursor.fetchall()
+
+    def eliminar_por_salario(self, limite):
+        &quot;&quot;&quot;Elimina empleados con salario inferior al límite indicado.&quot;&quot;&quot;
+        self.cursor.execute(&quot;DELETE FROM empleados WHERE salario &lt; ?&quot;, (limite,))
+        self.conexion.commit()
+
+    def cerrar(self):
+        &quot;&quot;&quot;Cierra la conexión.&quot;&quot;&quot;
+        self.conexion.close()
+</code></pre>
+<hr />
+<h3 id="ejemplo-de-uso-de-la-clase">Ejemplo de uso de la clase<a href="#ejemplo-de-uso-de-la-clase-sqlite" title="Permanent link"></a></h3>
+<pre><code>if __name__ == &quot;__main__&quot;:
+    gestor = GestorBD()
+
+    # Insertar empleados
+    gestor.insertar_empleado(&quot;Ana&quot;, &quot;Ventas&quot;, 1800.50)
+    gestor.insertar_empleado(&quot;Luis&quot;, &quot;IT&quot;, 2200.75)
+    gestor.insertar_empleado(&quot;Marta&quot;, &quot;RRHH&quot;, 2000.00)
+
+    print(&quot;Empleados actuales:&quot;)
+    for e in gestor.listar_empleados():
+        print(e)
+
+    gestor.eliminar_por_salario(2000)
+
+    print(&quot;\nTras eliminar salarios bajos:&quot;)
+    for e in gestor.listar_empleados():
+        print(e)
+
+    gestor.cerrar()
+</code></pre>
+<p><strong>Output esperado:</strong></p>
+<pre><code>Empleados actuales:
+(1, 'Ana', 'Ventas', 1800.5)
+(2, 'Luis', 'IT', 2200.75)
+(3, 'Marta', 'RRHH', 2000.0)
+
+Tras eliminar salarios bajos:
+(2, 'Luis', 'IT', 2200.75)
+(3, 'Marta', 'RRHH', 2000.0)
+</code></pre>
+<hr />
+<h2 id="mysql_3">🔸 mysql<a href="#mysql-3" title="Permanent link"></a></h2>
+<h3 id="clase-gestorbd_1">Clase GestorBD</h3>
+<pre><code>import mysql.connector
+
+class GestorBD:
+    &quot;&quot;&quot;Clase que gestiona una base de datos MySQL.&quot;&quot;&quot;
+
+    def __init__(self, nombre_bd=&quot;empresa&quot;):
+        self.conexion = mysql.connector.connect(
+            host=&quot;localhost&quot;,
+            user=&quot;root&quot;,
+            password=&quot;1234&quot;,
+            database=nombre_bd
+        )
+
+        self.cursor = self.conexion.cursor()
+
+        self.crear_tabla()
+
+    def crear_tabla(self):
+        &quot;&quot;&quot;Crea la tabla empleados si no existe.&quot;&quot;&quot;
+
+        self.cursor.execute(&quot;&quot;&quot;
+        CREATE TABLE IF NOT EXISTS empleados (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nombre VARCHAR(50) NOT NULL,
+            departamento VARCHAR(50),
+            salario DECIMAL(10,2)
+        )
+        &quot;&quot;&quot;)
+
+    def insertar_empleado(self, nombre, departamento, salario):
+        &quot;&quot;&quot;Inserta un nuevo empleado.&quot;&quot;&quot;
+
+        self.cursor.execute(
+            &quot;INSERT INTO empleados (nombre, departamento, salario) VALUES (%s, %s, %s)&quot;,
+            (nombre, departamento, salario)
+        )
+
+        self.conexion.commit()
+
+    def listar_empleados(self):
+        &quot;&quot;&quot;Devuelve todos los empleados.&quot;&quot;&quot;
+
+        self.cursor.execute(&quot;SELECT * FROM empleados&quot;)
+
+        return self.cursor.fetchall()
+
+    def eliminar_por_salario(self, limite):
+        &quot;&quot;&quot;Elimina empleados con salario inferior al límite.&quot;&quot;&quot;
+
+        self.cursor.execute(
+            &quot;DELETE FROM empleados WHERE salario &lt; %s&quot;,
+            (limite,)
+        )
+
+        self.conexion.commit()
+
+    def cerrar(self):
+        &quot;&quot;&quot;Cierra la conexión.&quot;&quot;&quot;
+
+        self.cursor.close()
+        self.conexion.close()
+</code></pre>
+<h3 id="ejemplo-de-uso-de-la-clase_1">Ejemplo de uso de la clase</h3>
+<pre><code>
+if __name__ == &quot;__main__&quot;:
+
+    gestor = GestorBD()
+
+    # Insertar empleados
+    gestor.insertar_empleado(&quot;Ana&quot;, &quot;Ventas&quot;, 1800.50)
+    gestor.insertar_empleado(&quot;Luis&quot;, &quot;IT&quot;, 2200.75)
+    gestor.insertar_empleado(&quot;Marta&quot;, &quot;RRHH&quot;, 2000.00)
+
+    print(&quot;Empleados actuales:&quot;)
+
+    for empleado in gestor.listar_empleados():
+        print(empleado)
+
+    # Eliminar empleados con salario inferior a 2000
+    gestor.eliminar_por_salario(2000)
+
+    print(&quot;\nTras eliminar salarios bajos:&quot;)
+
+    for empleado in gestor.listar_empleados():
+        print(empleado)
+
+    # Cerrar conexión
+    gestor.cerrar()
+</code></pre>
+<p><strong>Output esperado:</strong></p>
+<pre><code>Empleados actuales:
+(1, 'Ana', 'Ventas', Decimal('1800.50'))
+(2, 'Luis', 'IT', Decimal('2200.75'))
+(3, 'Marta', 'RRHH', Decimal('2000.00'))
+
+Tras eliminar salarios bajos:
+(2, 'Luis', 'IT', Decimal('2200.75'))
+(3, 'Marta', 'RRHH', Decimal('2000.00'))
+</code></pre>
+<h1 id="conclusiones">Conclusiones<a href="#conclusiones" title="Permanent link"></a></h1>
+<ul>
+<li>Todas las bases de datos comparten las operaciones CRUD.</li>
+<li>En motores relacionales, se usa SQL; en MongoDB, se trabaja con documentos JSON.</li>
+</ul>
+<p><a href="#top">⬆ Ir arriba</a></p>
+</body>
+</html>

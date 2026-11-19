@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio2_ud04- consultas_bd_remotas</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud4-ejercicio-2-minigestor-remoto-consola-crud-en-mysql">UD4 – Ejercicio 2: “MiniGestor Remoto” — Consola + CRUD en <strong>MySQL</strong></h1>
+<h2 id="enunciado">Enunciado</h2>
+<p>Desarrolla <strong>MiniGestor Remoto</strong>, un programa de consola que:</p>
+<ol>
+<li><strong>Configura</strong> la conexión remota a <strong>MySQL</strong> (host/IP, puerto, usuario, contraseña, base de datos).</li>
+<li>Ofrece un <strong>menú CRUD</strong> sobre una tabla <code>personas</code>.</li>
+<li>Añade una opción para <strong>ejecutar una sentencia SQL</strong> introducida por el usuario (una sola sentencia cada vez).</li>
+</ol>
+<hr />
+<h2 id="1-flujo-de-uso">1. Flujo de uso</h2>
+<ol>
+<li>
+<p>Al iniciar:</p>
+</li>
+<li>
+<p>Muestra un selector de motor:</p>
+<p><code>Selecciona motor:
+ [1] MySQL</code>
+   * Solicita: <strong>host</strong>, <strong>puerto</strong>, <strong>usuario</strong>, <strong>contraseña</strong>, <strong>base de datos</strong>.
+   * Leer/guardar estos datos en <code>config.json</code>.</p>
+</li>
+<li>
+<p><strong>Prueba de conexión</strong>:</p>
+</li>
+<li>
+<p>Intenta conectar y muestra <strong>OK</strong> o <strong>error</strong> con detalle.</p>
+</li>
+<li>
+<p>Si conecta, crea la tabla <code>personas</code> si no existe (ver esquema más abajo).</p>
+</li>
+<li>
+<p><strong>Menú principal</strong>:</p>
+</li>
+</ol>
+<p><code>=== MiniGestor Remoto ===
+   [1] Crear registro
+   [2] Listar registros
+   [3] Buscar por ID
+   [4] Actualizar registro
+   [5] Eliminar registro
+   [6] Ejecutar sentencia SQL personalizada
+   [0] Salir</code></p>
+<hr />
+<h2 id="2-modelo-de-datos">2. Modelo de datos</h2>
+<p>Tabla <strong>personas</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Tipo (MySQL)</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>INT AUTO_INCREMENT PK</td>
+<td>Identificador único</td>
+</tr>
+<tr>
+<td>nombre</td>
+<td>VARCHAR(100) NOT NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>edad</td>
+<td>INT NOT NULL</td>
+<td><code>edad &gt;= 0</code> (validación)</td>
+</tr>
+<tr>
+<td>email</td>
+<td>VARCHAR(255) UNIQUE</td>
+<td>Único</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Script MySQL (creación si no existe):</strong></p>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS personas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  edad INT NOT NULL,
+  email VARCHAR(255) UNIQUE
+) ENGINE=InnoDB;
+</code></pre>
+<blockquote>
+<p>Puedes ejecutar este <code>CREATE TABLE</code> desde el programa al iniciar sesión si la tabla no existe.</p>
+</blockquote>
+<hr />
+<h2 id="3-requisitos-tecnicos">3. Requisitos técnicos</h2>
+<ul>
+<li><strong>Python 3.14+</strong></li>
+<li>
+<p>Conectores:</p>
+</li>
+<li>
+<p><strong>MySQL:</strong> <code>mysql-connector-python</code> (o <code>PyMySQL</code>)</p>
+</li>
+<li>
+<p><strong>Parámetros de conexión</strong>:</p>
+</li>
+<li>
+<p>MySQL: host, port (3306), user, password, database</p>
+</li>
+<li>
+<p><strong>Buenas prácticas</strong>:</p>
+</li>
+<li>
+<p><strong>Consultas parametrizadas</strong> (placeholder <code>%s</code>, evita concatenar strings).</p>
+</li>
+<li>Manejo de excepciones con mensajes claros.</li>
+<li>Validaciones (edad numérica, email no vacío, etc.).</li>
+</ul>
+<hr />
+<h2 id="4-funcionalidades-requeridas">4. Funcionalidades requeridas</h2>
+<h3 id="crear-registro">Crear registro</h3>
+<ul>
+<li>Pide <code>nombre</code>, <code>edad</code>, <code>email</code>.</li>
+<li>Inserta en <code>personas</code>.</li>
+<li>Confirma con el <code>id</code> inserto.</li>
+</ul>
+<h3 id="listar-registros">Listar registros</h3>
+<ul>
+<li>Muestra todas las filas en formato tabular.</li>
+</ul>
+<h3 id="buscar-por-id">Buscar por ID</h3>
+<ul>
+<li>Pide <code>id</code> y muestra la fila o avisa si no existe.</li>
+</ul>
+<h3 id="actualizar-registro">Actualizar registro</h3>
+<ul>
+<li>Pide <code>id</code>, muestra valores actuales y permite introducir los nuevos.</li>
+<li>Actualiza solo si el <code>id</code> existe.</li>
+</ul>
+<h3 id="eliminar-registro">Eliminar registro</h3>
+<ul>
+<li>Pide <code>id</code>, solicita confirmación, elimina si existe.</li>
+</ul>
+<h3 id="sql-personalizada-una-sentencia">SQL personalizada (una sentencia)</h3>
+<ul>
+<li>Pide una sentencia SQL completa <strong>(una sola)</strong>.</li>
+<li>Si es <code>SELECT</code>, muestra filas en tabla.</li>
+<li>Si es <code>INSERT/UPDATE/DELETE/DDL</code>, ejecuta y confirma filas afectadas.</li>
+<li>Controla errores (sintaxis, permisos, etc.).</li>
+</ul>
+<blockquote>
+<p><strong>Seguridad &amp; control</strong>:</p>
+<ul>
+<li>Acepta <strong>una</strong> sentencia por ejecución (rechaza si detectas <code>;</code> extra).</li>
+<li>No interpolar input del usuario, <strong>no</strong> formatees strings en la sentencia.</li>
+<li>Para <code>SELECT</code>, no impongas límites, pero puedes sugerir <code>LIMIT</code>.</li>
+</ul>
+</blockquote>
+<hr />
+<h2 id="5-estructura-sugerida">5. Estructura sugerida</h2>
+<pre><code>minigestor_sqlite/
+├── main.py           # Programa principal (menú)
+├── README.md         # Instrucciones de uso
+└── App/
+  |─ __init__.py 
+  |─ interfaz_usuario.py 
+  |─ db_manager.py     # Funciones para conectar y operar con la BD. Utilizar Programación  orientada a objetos.    
+  |─ config.py         # Carga/guardado de o JSON
+
+
+</code></pre>
+<h2 id="6-ejemplo-de-interaccion">6. Ejemplo de interacción</h2>
+<pre><code>Motor:
+[1] MySQL
+&gt; 1
+
+Host: db.miempresa.com
+Puerto [5432]: 5432
+Usuario: alumno
+Contraseña: ****
+Base de datos: demo
+
+Conexión OK. Tabla personas lista.
+
+=== MiniGestor Remoto ===
+[1] Crear  [2] Listar  [3] Buscar ID  [4] Actualizar  [5] Eliminar
+[6] SQL personalizada
+[0] Salir
+&gt; 6
+
+Introduce UNA sentencia SQL:
+&gt; SELECT nombre, edad FROM personas WHERE edad &gt;= 30 ORDER BY edad DESC;
+
+Resultados:
+------------------------------------
+nombre               | edad
+------------------------------------
+&quot;María Pérez&quot;        | 45
+&quot;Luis Martínez&quot;      | 31
+</code></pre>
+<hr />
+</body>
+</html>

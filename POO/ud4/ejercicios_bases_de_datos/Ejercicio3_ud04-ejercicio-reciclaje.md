@@ -103,7 +103,7 @@ Implementa al menos estas opciones:
 
 ---
 
-## 3) Scripts de inicialización (para contenedores)
+## 3) Scripts de inicialización
 
 > Usa estos scripts para **crear el esquema** y **cargar datos de ejemplo**.
 
