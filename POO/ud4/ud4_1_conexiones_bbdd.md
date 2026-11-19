@@ -22,16 +22,16 @@
     *   [🔸 MongoDB (NoSQL)](#mongodb-nosql)
 *   [3. Comparativa general de las operaciones CRUD](#3-comparativa-general-de-las-operaciones-crud)
 *   [4. Prueba simple de instrucciones](#4-prueba-simple-de-instrucciones)
-    *   [sqlite](#sqlite)
-    *   [mysql](#sqlite)
+    *   [sqlite](#sqlite_2)
+    *   [mysql](#mysql_2)
 
 *   [5. Ejemplo de Aplicación](#5-ejemplo-de-aplicacion)
-    *   [sqlite](#sqlite)
-        *   [Clase GestorBD](#clase-gestorbd)
-        *   [Ejemplo de uso de la clase](#ejemplo-de-uso-de-la-clase)
-    *   [mysql](#sqlite)
-        *   [Clase GestorBD](#clase-gestorbd)
-        *   [Ejemplo de uso de la clase](#ejemplo-de-uso-de-la-clase)
+    *   [sqlite](#sqlite-3)
+        *   [Clase GestorBD](#clase-gestorbd-sqlite)
+        *   [Ejemplo de uso de la clase](#ejemplo-de-uso-de-la-clase-sqlite)
+    *   [mysql](#mysql-3)
+        *   [Clase GestorBD](#clase-gestorbd-mysql)
+        *   [Ejemplo de uso de la clase](#ejemplo-de-uso-de-la-clase-mysql)
 *   [Conclusiones](#conclusiones)
 
 _ _ _
@@ -201,7 +201,7 @@ La tabla `empleados` desaparece por completo.
 
 - - -
 
-#### **3\. Extracción de datos sensibles ignorando filtros**[🔗](#3-extraccion-de-datos-sensibles-ignorando-filtros "Permanent link")
+#### **3\. Extracción de datos sensibles ignorando filtros**[](#3-extraccion-de-datos-sensibles-ignorando-filtros "Permanent link")
 
 _Ataque para ver toda la tabla saltándose restricciones_
 
@@ -526,7 +526,7 @@ cliente.close()
 
 
 Aplicación simple para hacer la prueba de instrucciones básicas de lo que sería la interacción con una base de datos de empleados embebida.
-## 🔸sqlite[](#sqlite "Permanent link")
+## 🔸sqlite[](#sqlite_2 "Permanent link")
 
 ````
 import sqlite3
@@ -589,7 +589,7 @@ Empleados tras la eliminación:
 (3, 'Marta', 'RRHH', 2000.0)
 (4, 'Carlos', 'IT', 2500.0)
 ```
-## 🔸mysql
+## 🔸mysql[](#mysql_2 "Permanent link")
 ````
 import mysql.connector
 
@@ -674,8 +674,9 @@ Empleados tras la eliminación:
 
 A continuación, se encapsula toda la funcionalidad en una clase `GestorBD` que implementa las operaciones CRUD (**Create**, **Read**, **Update**, **Delete**) mediante funciones.
 
-## 🔸sqlite
-### Clase GestorBD[](#clase-gestorbd "Permanent link")
+## 🔸sqlite[](#sqlite-3 "Permanent link")
+
+### Clase GestorBD[](#clase-gestorbd-sqlite "Permanent link")
 
 ````
 import sqlite3
@@ -726,7 +727,7 @@ class GestorBD:
 
 - - -
 
-### Ejemplo de uso de la clase[](#ejemplo-de-uso-de-la-clase "Permanent link")
+### Ejemplo de uso de la clase[](#ejemplo-de-uso-de-la-clase-sqlite "Permanent link")
 
 ````
 if __name__ == "__main__":
@@ -765,7 +766,7 @@ Tras eliminar salarios bajos:
 
 - - -
 
-## 🔸 mysql
+## 🔸 mysql[](#mysql-3 "Permanent link")
 ### Clase GestorBD
 
 ````
