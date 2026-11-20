@@ -159,15 +159,15 @@ class MySQLDatabase(Database):
 
 class SQLiteDatabase(Database):
 
-    def __init__(self, database_name):
-        super().__init__(database_name)
+    def __init__(self, database):
+        super().__init__(database)
 
         self.connection = None
 
     def connect(self):
 
         try:
-            self.connection = sqlite3.connect(self.database_name)
+            self.connection = sqlite3.connect(self.database)
 
             # Permite recuperar los registros como diccionarios
             self.connection.row_factory = sqlite3.Row

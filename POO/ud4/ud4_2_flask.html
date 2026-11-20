@@ -1,0 +1,4653 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud4_2_flask</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="indice">Índice</h1>
+<ul>
+<li><a href="#seccion-01">1. Programación web - Flask I</a></li>
+<li><a href="#seccion-02">1.1. Instalación e preparación do contorno</a><ul>
+<li><a href="#seccion-03">1.1.1. Creación do contorno virtual</a></li>
+<li><a href="#seccion-04">1.1.2. Instalación de Flask</a></li>
+<li><a href="#seccion-05">1.1.3. Creación dunha aplicación web</a></li>
+<li><a href="#seccion-06">1.1.4. Estrutura</a></li>
+<li><a href="#seccion-07">1.1.5. Depuración dunha aplicación Flask en VS Code</a></li>
+</ul>
+</li>
+<li><a href="#seccion-08">1.2. Rutas</a><ul>
+<li><a href="#seccion-09">1.2.1. Rutas dinámicas</a></li>
+</ul>
+</li>
+<li><a href="#seccion-10">1.3. Métodos HTTP</a><ul>
+<li><a href="#seccion-11">1.3.1. Métodos</a></li>
+<li><a href="#seccion-12">1.3.2. Códigos de resposta máis típicos</a></li>
+<li><a href="#seccion-13">1.3.3. Request</a></li>
+<li><a href="#seccion-14">1.3.4. Response</a></li>
+</ul>
+</li>
+<li><a href="#seccion-15">1.4. Plantillas - Jinja I</a><ul>
+<li><a href="#seccion-16">1.4.1. Organización de ficheiros</a></li>
+<li><a href="#seccion-17">1.4.2. Renderizar unha plantilla</a></li>
+<li><a href="#seccion-18">1.4.3. Variables</a></li>
+</ul>
+</li>
+<li><a href="#seccion-19">1.5. Repaso HTML + CSS + JS</a></li>
+<li><a href="#seccion-20">2. Programacion web - Flask II</a></li>
+<li><a href="#seccion-21">2.1. Recursos estáticos</a><ul>
+<li><a href="#seccion-22">2.1.1. CSS, Bootstrap e máis</a></li>
+</ul>
+</li>
+<li><a href="#seccion-23">2.2. Uso de url_for</a></li>
+<li><a href="#seccion-24">2.3. Carga inicial de datos</a></li>
+<li><a href="#seccion-25">2.4. Plantillas - Jinja II</a><ul>
+<li><a href="#seccion-26">2.4.1. Herdanza</a></li>
+<li><a href="#seccion-27">2.4.2. Condicionais</a></li>
+<li><a href="#seccion-28">2.4.3. Bucles</a></li>
+<li><a href="#seccion-29">2.4.4. Comentarios</a></li>
+</ul>
+</li>
+<li><a href="#seccion-30">2.5. Formularios</a><ul>
+<li><a href="#seccion-31">2.5.1. Formularios en Flask</a></li>
+<li><a href="#seccion-32">2.5.2. Validación no servidor</a></li>
+<li><a href="#seccion-33">2.5.3. Erros nas plantillas</a></li>
+<li><a href="#seccion-34">2.5.4. Seguridade</a></li>
+<li><a href="#seccion-35">2.5.5. Subida de ficheiros</a></li>
+</ul>
+</li>
+</ul>
+<hr />
+<p><a id="seccion-01"></a></p>
+<h1 id="programacion-web-flask-i">Programación web - Flask I</h1>
+<figure class="my-6">
+![Imaxe 25](https://python-poo-edu.rdpzi.com/docs/python-poo/gl/.gitbook/assets/image%20%2825%29.png)
+</figure>
+
+<p>Para realizar aplicacións con Python e algunhas outras linguas é necesario utilizar frameworks como por exemplo <strong>Flask</strong>. Estes utilizan un concepto coñecido como <strong>WSGI</strong> (Web Server Gateway Interfaz).</p>
+<div class="not-prose my-5 rounded-xl border overflow-hidden bg-green-50/60 dark:bg-green-950/20 border-green-200 dark:border-green-900/60" hint="success">
+
+<div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-green-200 dark:border-green-900/60 bg-green-100/60 dark:bg-green-900/20">
+
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">WSGI</span>
+
+</div>
+
+<div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
+
+Un servidor web non sabe ou non ten forma de executar aplicacións en Python. Por iso se creou **WSGI**. Esta é unha especificación de como se comunica un servidor web cunha aplicación web escrita en Python. Este estándar está descrito en detalle na especificación **PEP 3333**.
+
+</div>
+
+</div>
+
+<p><strong>Flask</strong> é un “micro” <strong>framework</strong>. Céntrase en proporcionar o mínimo necesario para que poidas poñer a funcionar unha aplicación básica en uns minutos. Se necesitamos máis funcionalidades podemos estendelo coas <strong>Flask extensions</strong>. Xeralmente se utiliza como <em>framework</em> para <strong>backend</strong> aínda que é posible realizar aplicacións web <strong>full-stack</strong>.</p>
+<p>Inclúe un servidor web de desenvolvemento para que poidas probar as túas aplicacións sen ter que instalar nun servidor web. Tamén trae un depurador e soporte integrado para probas unitarias. É 100% compatible co estándar <strong>WSGI</strong>. Algunhas características:</p>
+<ul>
+<li>Bo manejo de rutas. Co uso dun decorator Python podemos facer que a nosa aplicación utiliza URL simples e limpas.</li>
+<li>Soporta o uso de cookies seguras e o uso de sesiones.</li>
+<li>Utiliza o motor de plantillas Jinja, que nos permite renderizar vistas.</li>
+<li>Ideal para construír servizos web (como APIs REST), aplicacións estáticas ou pequenas aplicacións.</li>
+<li>É de código aberto baixo licenza BSD.</li>
+</ul>
+<p>A súa documentación oficial: <a href="https://flask.palletsprojects.com/en/2.2.x/" rel="noopener noreferrer" target="_blank">https://flask.palletsprojects.com/en/2.2.x/</a></p>
+<p><a id="seccion-02"></a></p>
+<h2 id="instalacion-e-preparacion-do-entorno">Instalación e preparación do entorno</h2>
+<p><a id="seccion-03"></a></p>
+<h3 id="creacion-do-contorno-virtual">Creación do contorno virtual</h3>
+<p>Vamos a realizar a instalación de <strong>Flask</strong> utilizando a ferramenta <strong>pip</strong> nun contorno virtual creado con <strong>venv</strong>. (<a href="https://docs.python.org/3/library/venv.html#creating-virtual-environments" rel="noopener noreferrer" target="_blank">https://docs.python.org/3/library/venv.html#creating-virtual-environments</a>)</p>
+<p>Un contorno virtual de Python é un ambiente creado co obxectivo de illar recursos como librerías e contorno de execución, do sistema principal e de outros contornos virtuais. Isto significa que nun mesmo sistema é posible ter instaladas múltiples versións dunha mesma librería sen crear ningún tipo de conflito.</p>
+<figure class="my-6">
+![Imaxe 26](https://python-poo-edu.rdpzi.com/docs/python-poo/gl/.gitbook/assets/image%20%2826%29.png)
+</figure>
+
+<p>Para crear un contorno virtual executamos o seguinte comando:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="bash">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">bash</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-bash">python -m venv venv
+</code></pre>
+
+
+</div>
+
+<div class="not-prose my-5 rounded-xl border overflow-hidden bg-amber-50/60 dark:bg-amber-950/20 border-amber-200 dark:border-amber-900/60" hint="warning">
+
+<div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-amber-200 dark:border-amber-900/60 bg-amber-100/60 dark:bg-amber-900/20">
+
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">**Nome do contorno virtual**</span>
+
+</div>
+
+<div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
+
+Podemos chamar como queiramos á carpeta do contorno virtual, pero os nomes máis comúns son:
+
+- venv → É o nome máis habitual e recomendado, porque coincide co módulo que a crea (python -m venv venv).
+- .venv → Igual que o anterior pero con punto ao inicio, para que quede “oculto”.
+- env ou .env → Tamén se usa moito, sobre todo en proxectos antigos ou por costume. (Non se recomenda para non confundir co ficheiro de variables de contorno)
+
+</div>
+
+</div>
+
+<div class="not-prose my-5 rounded-xl border overflow-hidden bg-red-50/60 dark:bg-red-950/20 border-red-200 dark:border-red-900/60" hint="danger">
+
+<div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-red-200 dark:border-red-900/60 bg-red-100/60 dark:bg-red-900/20">
+
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">**Importante**</span>
+
+</div>
+
+<div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
+
+Nun repositorio GIT, este contorno virtual debe engadirse ao .gitignore e non incluirse no control de versións.
+
+</div>
+
+</div>
+
+<p>Unha vez creado, para empezar a utilizalo, debemos activalo:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="bash">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">bash</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-bash">1$ source venv/bin/activate
+2(venv)$ 
+3
+4# Windows
+5$ .\venv\Scripts\activate
+6(venv)$ 
+</code></pre>
+
+
+</div>
+
+<p>Unha vez activado, todas as librerías que se instalar faranse só neste contorno virtual (Entre paréntesis podemos ver o nome do contorno virtual activado).</p>
+<p>Se queremos desactivalo, tan só temos que executar o seguinte comando:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="bash">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">bash</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-bash">(venv)$ deactivate
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-04"></a></p>
+<h3 id="instalacion-de-flask">Instalación de Flask</h3>
+<div class="not-prose my-5 rounded-xl border overflow-hidden bg-red-50/60 dark:bg-red-950/20 border-red-200 dark:border-red-900/60" hint="danger">
+
+<div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-red-200 dark:border-red-900/60 bg-red-100/60 dark:bg-red-900/20">
+
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">IMPORTANTE</span>
+
+</div>
+
+<div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
+
+Se o non temos permisos da máquina para executar o "activate". Os comandos de **python** e **pip** que queiramos executar no noso proxecto deberán ser empregando os executables que están dentro do `venv` . Exemplo:
+
+- `.\venv\Scripts\pip install Flask` en vez de `pip install Flask`
+- `.\venv\Scripts\pip freeze` en vez de `pip freeze`
+- `.\venv\Scripts\pip install -r requirements` en vez de `pip install -r requirements`
+- `.\venv\Scripts\flask --version` en vez de `flask --version`
+
+</div>
+
+</div>
+
+<p>Unha vez creado o noso entorno de virtual, podemos realizar a instalación de Flask mediante <strong>pip</strong>. Para iso executaremos o seguinte comando:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="bash">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">bash</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-bash">(venv)$ pip install Flask
+</code></pre>
+
+
+</div>
+
+<p>Podemos comprobar a versión de <strong>Flask</strong> instalada con o seguinte comando:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="bash">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">bash</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-bash">(venv)$ flask --version
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-04-01"></a></p>
+<h4 id="ficheiro-de-dependencias">Ficheiro de dependencias <a href="#ficheiro-de-dependencias"></a></h4>
+<p>Se queremos comprobar todos os paquetes instalados de Python no noso entorno virtual podemos executar o seguinte:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="bash">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">bash</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-bash">(venv)$ pip freeze
+</code></pre>
+
+
+</div>
+
+<p>Se queremos gardar esa lista de paquetes, xerando o arquivo de dependencias da nosa aplicación, utilizamos:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="bash">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">bash</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-bash">(venv)$ pip freeze &gt; requirements.txt
+</code></pre>
+
+
+</div>
+
+<p>O arquivo <strong>requirements.txt</strong> é moi útil porque mantén un rexistro exacto das bibliotecas necesarias para o proxecto.</p>
+<p>Grazas a el, podemos recrear o mesmo entorno en outra máquina ou tras unha reinstalación simplemente executando:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="bash">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">bash</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-bash">(venv)$ pip install -r requirements.txt
+</code></pre>
+
+
+</div>
+
+<p>Deste modo garantimos que todos os membros do equipo ou futuros despregues traballen coas mesmas versións das dependencias, evitando incompatibilidades.</p>
+<p><a id="seccion-05"></a></p>
+<h3 id="creacion-dunha-aplicacion-web">Creación dunha aplicación web</h3>
+<p>Podemos gardar a primeira aplicación nun único ficheiro chamado <code>main.py</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1from flask import Flask
+2
+3app = Flask(__name__)
+4
+5@app.route('/')
+6def hello_world():
+7    return 'Ola, Mundo!'
+8
+9if __name__ == '__main__':
+10    app.run('0.0.0.0', 8080)
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-05-01"></a></p>
+<h4 id="explicacion-do-codigo">Explicación do código</h4>
+<div class="my-6" stepper="">
+
+<div class="flex gap-4">
+
+<div class="flex flex-col items-center shrink-0">
+
+<div class="mt-3.5 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm ring-4 ring-white dark:ring-neutral-800" style="background-color: var(--color-book);">
+
+1
+
+</div>
+
+<div class="w-0.5 flex-1 rounded-full" style="background-color: var(--color-book-bg-strong);">
+
+</div>
+
+</div>
+
+<div class="min-w-0 flex-1 mb-4 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="1">
+
+**Importación da clase Flask**
+
+Na primeira liña relevante importamos a clase Flask desde a librería do mesmo nome.
+
+</div>
+
+</div>
+
+<div class="flex gap-4">
+
+<div class="flex flex-col items-center shrink-0">
+
+<div class="mt-3.5 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm ring-4 ring-white dark:ring-neutral-800" style="background-color: var(--color-book);">
+
+2
+
+</div>
+
+<div class="w-0.5 flex-1 rounded-full" style="background-color: var(--color-book-bg-strong);">
+
+</div>
+
+</div>
+
+<div class="min-w-0 flex-1 mb-4 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="2">
+
+**Creación da aplicación**
+
+A continuación creamos o obxecto app da clase **Flask**. Este obxecto é a aplicación **WSGI**, que nos permitirá despregar e probar o noso proxecto.
+
+Lle pasamos como argumento `__name__`, que indica o módulo actual.
+
+</div>
+
+</div>
+
+<div class="flex gap-4">
+
+<div class="flex flex-col items-center shrink-0">
+
+<div class="mt-3.5 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm ring-4 ring-white dark:ring-neutral-800" style="background-color: var(--color-book);">
+
+3
+
+</div>
+
+<div class="w-0.5 flex-1 rounded-full" style="background-color: var(--color-book-bg-strong);">
+
+</div>
+
+</div>
+
+<div class="min-w-0 flex-1 mb-4 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="3">
+
+**Decorador @app.route('/')**
+
+O decorador da función `hello_world()` define a ruta de acceso.
+
+Neste caso, cando o navegador solicita a URL raíz (/), se executará esa función.
+
+</div>
+
+</div>
+
+<div class="flex gap-4">
+
+<div class="flex flex-col items-center shrink-0">
+
+<div class="mt-3.5 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm ring-4 ring-white dark:ring-neutral-800" style="background-color: var(--color-book);">
+
+4
+
+</div>
+
+<div class="w-0.5 flex-1 rounded-full" style="background-color: var(--color-book-bg-strong);">
+
+</div>
+
+</div>
+
+<div class="min-w-0 flex-1 mb-4 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="4">
+
+**Función `hello_world` (función vista)**
+
+A función `hello_world()` devolve unha **respuesta HTTP**, neste exemplo unha simple cadea de texto: "Ola, Mundo!".
+
+</div>
+
+</div>
+
+<div class="flex gap-4">
+
+<div class="flex flex-col items-center shrink-0">
+
+<div class="mt-3.5 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm ring-4 ring-white dark:ring-neutral-800" style="background-color: var(--color-book);">
+
+5
+
+</div>
+
+</div>
+
+<div class="min-w-0 flex-1 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="5">
+
+**Ejecución do servidor de desenvolvemento**
+
+A sección `if __name__ == '__main__':` indica que, se executamos este ficheiro directamente, se iniciará o servidor de desenvolvemento de Flask con:
+
+- Host 0.0.0.0: accesible desde calquera IP da rede.
+- Porto 8080: porto no que escuchará a aplicación.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="not-prose my-5 rounded-xl border overflow-hidden bg-green-50/60 dark:bg-green-950/20 border-green-200 dark:border-green-900/60" hint="success">
+
+<div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-green-200 dark:border-green-900/60 bg-green-100/60 dark:bg-green-900/20">
+
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">**Decorador**</span>
+
+</div>
+
+<div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
+
+Un **decorador** non é máis que unha función (función a) que toma como parámetro unha función (función b) e devolve outra función (función c).
+
+Ao **decorar** unha función, estamos indicando que queremos modificar o comportamento dunha función xa existente, pero sen ter que modificar o seu código. Isto é moi útil cando queremos estender novas funcionalidades a dita función. Para decorar unha función só é necesario indicar o decorador co prefixo “@” na liña anterior á función a decorar.
+
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python" runnable="" source="@decorador
+def función_decorada():
+    print('Ola mundo!!')">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@decorador
+def función_decorada():
+    print('Ola mundo!!')
+</code></pre>
+
+
+</div>
+
+</div>
+
+</div>
+
+<p>Para poder executar a nosa aplicación web, invocamos o seguinte:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="bash">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">bash</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-bash">(venv)$ python main.py
+</code></pre>
+
+
+</div>
+
+<p>Agora, podemos acceder á nosa aplicación desde o navegador coa URL: http://{{ IP }}:8080</p>
+<p><a id="detalle-05-02"></a></p>
+<h3 id="modo-debug">Modo debug</h3>
+<p>Durante o desenvolvemento é recomendable activar o modo <em>debug</em> para:</p>
+<ul>
+<li>Recibir mensaxes detallados de erros.</li>
+<li>Habilitar o auto-reload, que reinicia o servidor cando detecta cambios no código.</li>
+</ul>
+<p>Para ello, modificamos a chamada a run:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python" runnable="" source="app.run('0.0.0.0', 8080, debug=True)">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">app.run('0.0.0.0', 8080, debug=True)
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-05-03"></a></p>
+<h4 id="habilitar-a-saida-por-consola">Habilitar a saída por consola</h4>
+<p>Para facer que os <code>print</code> se vexan na consola do servidor, no ficheiro <code>main.py</code> é necesario engadir as seguintes liñas.</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python" runnable="" source="import logging
+logging.basicConfig(level=logging.DEBUG)">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">import logging
+logging.basicConfig(level=logging.DEBUG)
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-06"></a></p>
+<h3 id="estrutura">Estrutura</h3>
+<p>Unha organización sinxela e recomendable para un proxecto <strong>Flask</strong> pode ser a seguinte:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-text">mi_proxecto/
+├─ requirements.txt
+├─ venv/
+└─ app/
+   └─ main.py
+</code></pre>
+
+
+</div>
+
+<hr />
+<ul>
+<li>
+<p><strong>requirements.txt</strong></p>
+</li>
+<li>
+<p>Cal é:</p>
+</li>
+</ul>
+<p>Un arquivo de texto que recolle todas as dependencias de Python necesarias para a aplicación, normalmente coas versións exactas.</p>
+<ul>
+<li>Para que serve:</li>
+</ul>
+<p>Permite instalar de unha vez todas as librerías requiridas en calquera entorno novo con:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-text">pip install -r requirements.txt
+</code></pre>
+
+
+</div>
+
+<hr />
+<ul>
+<li>
+<p><strong>Directorio app/</strong></p>
+</li>
+<li>
+<p>Función:</p>
+</li>
+</ul>
+<p>Contén o código fonte da aplicación.</p>
+<ul>
+<li>Ventaxe:</li>
+</ul>
+<p>Manter o código separado da raíz facilita a orde e escalabilidade.</p>
+<ul>
+<li>Exemplo actual de contido:<ul>
+<li><strong>main.py:</strong> Arquivo principal de arranque de Flask.</li>
+<li>Define a aplicación (Flask(<strong>name</strong>)).</li>
+<li>Configura as rutas.</li>
+<li>Inicia o servidor de desenvolvemento.</li>
+</ul>
+</li>
+</ul>
+<p>A medida que o proxecto creza, aquí poderíamos engadir:</p>
+<ul>
+<li>routes/: para dividir as distintas rutas da aplicación.</li>
+<li>templates/: para as plantillas HTML de Flask.</li>
+<li>static/: para arquivos estáticos como CSS, JavaScript ou imaxes.</li>
+<li>models.py ou unha carpeta models/: para a lóxica de datos e as clases que representen entidades de base de datos.</li>
+</ul>
+<p><a id="seccion-07"></a></p>
+<h3 id="depuracion-dunha-aplicacion-flask-en-vs-code">Depuración dunha aplicación Flask en VS Code</h3>
+<p>Cando desenvolvemos con Flask é moi útil poder poñer puntos de ruptura (breakpoints) e executar a aplicación en modo depuración.</p>
+<p>Con Visual Studio Code isto faise creando un arquivo de configuración chamado <strong>launch.json</strong>.</p>
+<p><a id="detalle-07-01"></a></p>
+<h3 id="crear-a-carpeta-vscode">Crear a carpeta <code>.vscode</code></h3>
+<p>Na raíz do teu proxecto (a carpeta onde está <code>requirements.txt</code> ou o <code>venv</code>) crea unha carpeta:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-text">.vscode/
+</code></pre>
+
+
+</div>
+
+<p>Dentro desta carpeta crea un ficheiro <code>launch.json</code> co seguinte contido.</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="json">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="flex items-center gap-2 min-w-0"><span class="text-xs font-mono font-semibold truncate" code-title="" style="color: var(--color-book);">launch.json</span><span class="shrink-0 text-[0.65rem] font-mono uppercase tracking-wide text-gray-400 dark:text-gray-500">json</span></span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-json">1{
+2  &quot;version&quot;: &quot;0.2.0&quot;,
+3  &quot;configurations&quot;: [
+4    {
+5      &quot;name&quot;: &quot;Python: Flask&quot;,
+6      &quot;type&quot;: &quot;debugpy&quot;,
+7      &quot;request&quot;: &quot;launch&quot;,
+8      &quot;module&quot;: &quot;flask&quot;,
+9      &quot;env&quot;: {
+10        &quot;FLASK_APP&quot;: &quot;app.main&quot;,        // módulo onde está a variable 'app'
+11        &quot;FLASK_ENV&quot;: &quot;development&quot;      // activa o modo debug de Flask
+12      },
+13      &quot;args&quot;: [&quot;run&quot;, &quot;--no-debugger&quot;, &quot;--no-reload&quot;],
+14      &quot;jinja&quot;: true,
+15      &quot;justMyCode&quot;: true
+16    }
+17  ]
+18}
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-07-02"></a></p>
+<h3 id="iniciar-a-depuracion">Iniciar a depuración</h3>
+<ol>
+<li>Abre VS Code na carpeta do proxecto.</li>
+<li>Activa o entorno virtual na terminal integrada.</li>
+<li>Preme F5 ou o botón verde de “Run and Debug”.</li>
+<li>Elige a configuración Python: Flask.</li>
+</ol>
+<p>A aplicación executará e poderás:</p>
+<ul>
+<li>Colocar breakpoints en calquera arquivo .py.</li>
+<li>Inspeccionar variables na pestaña Debug.</li>
+<li>Ver a consola de Flask na terminal de depuración.</li>
+</ul>
+<p><a id="detalle-07-03"></a></p>
+<h4 id="engadir-a-git">Engadir a Git</h4>
+<p>Dependendo do tipo de proxecto e do uso que se quiera dar ao repositorio, ten sentido ter esta carpeta incluída no control de versión.</p>
+<ul>
+<li>Se todo o equipo usa VS Code e queredes compartir unha configuración de depuración común para facilitar a vida a todos.</li>
+<li>Nese caso pódese manter o ficheiro <code>launch.json</code> no control de versión</li>
+</ul>
+<p><a id="detalle-07-04"></a></p>
+<h4 id="non-engadir-a-git">Non Engadir a Git</h4>
+<p>Posto que os arquivos de .vscode suelen incluir configuracións de depuración, extensións ou preferencias que varían dun equipo a outro, pode que teña sentido engadir a carpeta no <code>.gitignore</code></p>
+<ul>
+<li>Evitar conflictos: rutas ou entornos distintos que poidan provocar conflictos de merge innecesarios.</li>
+<li>Manter o repo limpo: o código e a documentación do proxecto non dependen destas configuracións.</li>
+</ul>
+<p><a id="seccion-08"></a></p>
+<h2 id="rutas">Rutas</h2>
+<p>O obxecto app de Flask nos proporciona o decorador @app.route, que permite asociar unha <strong>función vista</strong> a <strong>unha ruta concreta</strong>.</p>
+<p>Cando o servidor recibe unha petición HTTP, Flask analiza a URL solicitada e o método HTTP (GET, POST, etc.) para decidir qué función executar.</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1@app.route('/')
+2def inicio():
+3    return 'Página principal'   
+4
+5@app.route('/articulos/')
+6def articulos():
+7    return 'Lista de artículos'
+8
+9@app.route('/acerca-de')
+10def acercade():
+11    return 'Página acerca de...'
+</code></pre>
+
+
+</div>
+
+<ul>
+<li>Se o navegador accede a /, Flask executa inicio().</li>
+<li>Se a URL é /articulos/, executa articulos().</li>
+<li>Se é /acerca-de, executa acercade().</li>
+</ul>
+<p>A función asociada debe devolver sempre unha resposta HTTP (texto, HTML, JSON, etc.).</p>
+<blockquote>
+<p>Se ningunha ruta coincide, Flask responde automaticamente con código de estado 404, indicando que o recurso non se encontrou.</p>
+</blockquote>
+<hr />
+<p><a id="detalle-08-01"></a></p>
+<h4 id="consideracions-sobre-as-barras-finais">Consideracións sobre as barras finais</h4>
+<ul>
+<li>Ruta terminada en /</li>
+</ul>
+<p>Intérprease como un directorio.</p>
+<p>Se o usuario omite a barra final (por exemplo visita /articulos en vez de /articulos/), Flask redirixe automaticamente á ruta correcta.</p>
+<ul>
+<li>Ruta sen / final</li>
+</ul>
+<p>Intérprease como un arquivo.</p>
+<p>Se o usuario engade a barra final (por exemplo /acercade/), Flask devolve un 404.</p>
+<p><a id="seccion-09"></a></p>
+<h3 id="rutas-dinamicas">Rutas dinámicas</h3>
+<p>Podemos crear rutas que acepten parámetros variables na URL, capturándoos como argumentos da función:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route(&quot;/artigos/&lt;int:id&gt;&quot;)
+def amosar_artigo(id):
+    return f&quot;Amosando o artigo con id: {id}&quot;
+</code></pre>
+
+
+</div>
+
+<p>URL de exemplo: <a href="http://IP:8080/artigos/6" rel="noopener noreferrer" target="_blank">http://IP:8080/artigos/6</a></p>
+<blockquote>
+<p>Resposta: <em>“Amosando o artigo con id: 6”</em>.</p>
+</blockquote>
+<p><a id="detalle-09-01"></a></p>
+<h4 id="varios-patrons-na-mesma-funcion">Varios patróns na mesma función</h4>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1@app.route(&quot;/ola/&quot;)
+2@app.route(&quot;/ola/&lt;string:nome&gt;/&quot;)
+3@app.route(&quot;/ola/&lt;string:nome&gt;/&lt;int:idade&gt;/&quot;)
+4def ola(nome=None, idade=None):
+5    se nome e idade:
+6        return f&quot;Ola, {nome}, tes {idade} anos.&quot;
+7    elif nome:
+8        return f&quot;Ola, {nome}&quot;
+9    else:
+10        return &quot;Ola mundo&quot;
+</code></pre>
+
+
+</div>
+
+<blockquote>
+<p><a href="http://IP:8080/ola/" rel="noopener noreferrer" target="_blank">http://IP:8080/ola/</a> → <em>Ola mundo</em></p>
+<p><a href="http://IP:8080/ola/pepe/" rel="noopener noreferrer" target="_blank">http://IP:8080/ola/pepe/</a> → <em>Ola, pepe</em></p>
+<p><a href="http://IP:8080/ola/pepe/16/" rel="noopener noreferrer" target="_blank">http://IP:8080/ola/pepe/16/</a> → <em>Ola, pepe, tes 16 anos.</em></p>
+</blockquote>
+<div class="not-prose my-5 rounded-xl border overflow-hidden bg-green-50/60 dark:bg-green-950/20 border-green-200 dark:border-green-900/60" hint="success">
+
+<div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-green-200 dark:border-green-900/60 bg-green-100/60 dark:bg-green-900/20">
+
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">**Unha mesma función pode atender varias rutas.**</span>
+
+</div>
+
+<div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
+
+Nos parámetros podemos especificar o tipo de variable (opcional):
+
+- string: texto sen barras (valor por defecto).
+- int: números enteros.
+- float: números decimais.
+- path: texto que pode conter barras.
+
+</div>
+
+</div>
+
+<p><a id="seccion-10"></a></p>
+<h2 id="metodos-http">Métodos HTTP</h2>
+<p><a id="detalle-10-01"></a></p>
+<h3 id="o-que-e-http">O que é HTTP?</h3>
+<p>HTTP (Protocolo de Transferencia de HiperTexto) é o protocolo que utilizan os navegadores e servidores web para comunicarse.</p>
+<p>Cada vez que un usuario abre unha páxina, o seu navegador envía unha petición HTTP ao servidor, e este responde cunha resposta HTTP que inclúe:</p>
+<ul>
+<li>Unha cabeceira de estado → o famoso “código de resposta”.</li>
+<li>Opcionalmente datos → como HTML, JSON, imaxes, etc.</li>
+</ul>
+<p>Exemplo de petición e resposta:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="bash">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">bash</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-bash">1&gt; Petición (cliente → servidor)
+2GET /index.html HTTP/1.1
+3Host: www.ejemplo.com
+4
+5&lt; Respuesta (servidor → cliente)
+6HTTP/1.1 200 OK
+7Content-Type: text/html
+8
+9&lt;html&gt;...&lt;/html&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-10-02"></a></p>
+<h3 id="codigos-de-resposta-http">Códigos de resposta HTTP</h3>
+<p>Os códigos están divididos en grupos segundo a primeira cifra:</p>
+<ul>
+<li>1xx → Informativos (pouco usados en desenvolvemento web básico).</li>
+<li>2xx → Éxito (a petición se procesou correctamente).</li>
+<li>3xx → Redireccións (indican que o recurso está en outra ubicación).</li>
+<li>4xx → Erros do cliente (cando a petición está mal feita).</li>
+<li>5xx → Erros do servidor (fallos internos do servidor).</li>
+</ul>
+<p>En codigos-de-respuesta-mas-tipicos.md veremos os códigos máis empregados no desenvolvemento web.</p>
+<p><a id="seccion-11"></a></p>
+<h3 id="metodos">Métodos</h3>
+<p>Flask admite distintos <strong>métodos</strong> de petición <strong>HTTP</strong>.</p>
+<p>Os máis habituais en aplicacións web son:</p>
+<ul>
+<li><strong>GET</strong>: solicita un recurso do servidor (o método por defecto). Pódense enviar datos na propia URL mediante parámetros de consulta.</li>
+<li><strong>POST</strong>: envía información ao servidor, por exemplo ao enviar un formulario HTML.</li>
+</ul>
+<p>Por defecto, unha ruta en Flask só acepta <strong>GET</strong>.</p>
+<p>Para permitir outros métodos, indícase co argumento <code>methods</code>.</p>
+<p><a id="detalle-11-01"></a></p>
+<h4 id="exemplo-so-post">Exemplo só POST</h4>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route('/artigos/novo', methods=['POST'])
+def artigos_novo():
+    return 'Esta URL recibe información dun formulario con POST'
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-11-02"></a></p>
+<h4 id="exemplo-get-e-post-na-mesma-ruta">Exemplo GET e POST na mesma ruta</h4>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1from flask import request
+2
+3@app.route('/login', methods=['GET', 'POST'])
+4def login():
+5    if request.method == 'POST':
+6        return 'Accedemos con POST'
+7    else:
+8        return 'Accedemos con GET'
+</code></pre>
+
+
+</div>
+
+<blockquote>
+<p>Se o usuario abre a páxina no navegador (GET), execútase a parte do else.</p>
+<p>Se envía un formulario a esta mesma URL (POST), execútase o bloque de if.</p>
+</blockquote>
+<p>Con estas ferramentas, Flask permite manexar rutas simples, dinámicas e múltiples métodos HTTP, facilitando a construción de aplicacións web flexibles e ben organizadas.</p>
+<p><a id="detalle-11-03"></a></p>
+<h4 id="outros-metodos-http">Outros métodos HTTP</h4>
+<div class="my-5 rounded-xl border border-gray-200 dark:border-neutral-700 overflow-hidden" tabs="">
+
+<div class="flex flex-wrap gap-1 px-2 pt-1.5 border-b border-gray-200 dark:border-neutral-700 bg-gray-50 dark:bg-white/3" role="tablist">
+
+</div>
+
+<div class="px-5 py-4 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0" tab-content="">
+
+- Obxectivo: Solicitar datos ao servidor.
+- Exemplo: cargar unha páxina ou pedir información dun usuario.
+
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="http">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">http</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-http">GET /usuarios?id=5 HTTP/1.1
+</code></pre>
+
+
+</div>
+
+</div>
+
+<div class="px-5 py-4 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0" tab-content="" style="display: none;">
+
+- Obxectivo: Enviar datos ao servidor para crear ou procesar algo novo.
+- Exemplo: rexistrar un usuario, enviar un formulario.
+
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="http">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">http</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-http">POST /usuarios HTTP/1.1
+Content-Type: application/json
+
+{ &quot;nome&quot;: &quot;Ana&quot;, &quot;idade&quot;: 22 }
+</code></pre>
+
+
+</div>
+
+</div>
+
+<div class="px-5 py-4 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0" tab-content="" style="display: none;">
+
+- Obxectivo: Reemplazar completamente un recurso existente.
+- Exemplo: actualizar todos os datos dun usuario.
+
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="http">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">http</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-http">PUT /usuarios/1 HTTP/1.1
+Content-Type: application/json
+
+{ &quot;nome&quot;: &quot;Ana&quot;, &quot;idade&quot;: 23 }
+</code></pre>
+
+
+</div>
+
+</div>
+
+<div class="px-5 py-4 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0" tab-content="" style="display: none;">
+
+- Obxectivo: Actualizar parcialmente un recurso.
+- Exemplo: cambiar só a idade dun usuario.
+
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="http">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">http</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-http">PATCH /usuarios/1 HTTP/1.1
+Content-Type: application/json
+
+{ &quot;idade&quot;: 24 }
+</code></pre>
+
+
+</div>
+
+</div>
+
+<div class="px-5 py-4 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0" tab-content="" style="display: none;">
+
+- Obxectivo: Eliminar un recurso.
+- Exemplo: borra un usuario da base de datos.
+
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="http">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">http</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-http">DELETE /usuarios/1 HTTP/1.1
+</code></pre>
+
+
+</div>
+
+</div>
+
+</div>
+
+<p><a id="seccion-12"></a></p>
+<h3 id="codigos-de-resposta-mais-tipicos">Códigos de resposta máis típicos</h3>
+<p><a id="detalle-12-01"></a></p>
+<h3 id="2xx-exito">2xx: Éxito</h3>
+<ul>
+<li>200 OK</li>
+<li>Todo foi ben. É a resposta típica cando cargamos unha páxina ou un recurso.</li>
+<li>201 Created</li>
+<li>Úsase cando se crea un recurso novo, por exemplo, ao rexistrar un usuario nunha API.</li>
+<li>204 No Content</li>
+<li>A petición foi correcta, pero non hai contido que devolver (típico en peticiones DELETE).</li>
+</ul>
+<hr />
+<p><a id="detalle-12-02"></a></p>
+<h3 id="3xx-redireccions">3xx: Redireccións</h3>
+<ul>
+<li>301 Moved Permanently</li>
+<li>O recurso mudouse de forma definitiva a outra URL. O navegador lembralo.</li>
+<li>302 Found</li>
+<li>Redirección temporal, úsase moito para enviar ao usuario a outra páxina.</li>
+<li>304 Not Modified</li>
+<li>O navegador pide un recurso e o servidor di que xa o ten en caché, así que non o envía de novo.</li>
+</ul>
+<hr />
+<p><a id="detalle-12-03"></a></p>
+<h3 id="4xx-erros-do-cliente">4xx: Erros do cliente</h3>
+<ul>
+<li>400 Bad Request</li>
+<li>A petición está mal formada (falta un dato, formato incorrecto…).</li>
+<li>401 Unauthorized</li>
+<li>O usuario non está autenticado (necesita login/token).</li>
+<li>403 Forbidden</li>
+<li>O usuario está autenticado, pero non ten permisos para acceder.</li>
+<li>404 Not Found</li>
+<li>Recurso non encontrado, o clásico “páxina non existe”.</li>
+<li>405 Method Not Allowed</li>
+<li>O recurso existe, pero o método usado (GET, POST, etc.) non está permitido.</li>
+</ul>
+<hr />
+<p><a id="detalle-12-04"></a></p>
+<h3 id="5xx-erros-do-servidor">5xx: Erros do servidor</h3>
+<ul>
+<li>500 Internal Server Error</li>
+<li>Algo fallou dentro do servidor, pero non se especifica qué.</li>
+<li>502 Bad Gateway</li>
+<li>O servidor actúa como “porta de enlace” (proxy) e recibe unha resposta inválida de outro servidor.</li>
+<li>503 Service Unavailable</li>
+<li>O servidor non está dispoñible (sobrecarga ou mantemento).</li>
+</ul>
+<p><a id="seccion-13"></a></p>
+<h3 id="peticion">Petición</h3>
+<p>Cando a nosa aplicación <strong>Flask</strong> recibe unha petición HTTP, Flask compara a URL e o método coas rutas definidas mediante o decorador @app.route. Se atopa unha coincidencia, executa a función vista correspondente.</p>
+<p>Dentro dese función podemos acceder ao obxecto <code>request</code>, que contén toda a información da petición, incluídas cabeceras, parámetros e datos enviados.</p>
+<p>Para utilizalo, primeiro debemos importalo:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">from flask import Flask, request
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-13-01"></a></p>
+<h4 id="atributos-principais-de-request">Atributos principais de request</h4>
+<ul>
+<li><code>request.url</code></li>
+<li>URL completa á que se fixo a petición, incluídos parámetros de consulta.</li>
+<li><code>request.path</code></li>
+<li>Só a ruta da URL, sen o dominio nin os parámetros.</li>
+<li><code>request.method</code></li>
+<li>Método HTTP utilizado (GET, POST, etc.).</li>
+<li><code>request.headers</code></li>
+<li>Todas as cabeceras da petición.<ul>
+<li>Exemplo útil: request.user_agent (información do navegador e sistema operativo).</li>
+</ul>
+</li>
+<li><code>request.form</code></li>
+<li>
+<p>Datos enviados no corpo da petición <strong>POST</strong>, normalmente desde un formulario HTML.</p>
+<p>Acceso: request.form['nome_campo'].
+- <code>request.args</code>
+  - Parámetros enviados na URL mediante <strong>GET</strong>.</p>
+<p>Acceso: request.args.get('clave').</p>
+</li>
+</ul>
+<div class="not-prose my-5 rounded-xl border overflow-hidden bg-amber-50/60 dark:bg-amber-950/20 border-amber-200 dark:border-amber-900/60" hint="warning">
+
+<div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-amber-200 dark:border-amber-900/60 bg-amber-100/60 dark:bg-amber-900/20">
+
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">**Parámetros GET**</span>
+
+</div>
+
+<div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
+
+Os parámetros GET úsanse para enviar información na propia URL.
+
+Características principais:
+
+- A URL e os parámetros sepáranse con ?.
+- Cada parámetro defínese como clave=valor.
+- Os pares clave-valor sepáranse con &.
+
+Exemplo: <a href="https://www.exemplo.com/index.html?nome1=valor1&amp;nome2=valor2" rel="noopener noreferrer" target="_blank">https://www.exemplo.com/index.html?nome1=valor1&amp;nome2=valor2</a>
+
+En Python podemos capturalo -\> `nome1 = request.args.get('nome1')`
+
+</div>
+
+</div>
+
+<ul>
+<li><code>request.files</code></li>
+<li>Ficheiros subidos ao servidor en peticións <strong>POST</strong> ou <strong>PUT</strong>.</li>
+<li><code>request.remote_addr</code></li>
+<li>Dirección IP do cliente que realiza a petición.</li>
+<li><code>request.user_agent</code></li>
+<li>
+<p>Detalles do navegador, versión, sistema operativo e dispositivo do cliente.</p>
+<p>Conviene convertilo a cadea: str(request.user_agent).</p>
+</li>
+</ul>
+<p><a id="detalle-13-02"></a></p>
+<h4 id="exemplo-practico">Exemplo práctico</h4>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route('/peticiones/')
+def return_string():
+    url = request.url
+    return f&quot;A URL solicitada é: {url}&quot;
+</code></pre>
+
+
+</div>
+
+<p>Se accedemos a <a href="http://localhost:8080/peticiones/?dato=123" rel="noopener noreferrer" target="_blank">http://localhost:8080/peticiones/?dato=123</a>, a resposta será:</p>
+<blockquote>
+<p>A URL solicitada é: <a href="http://localhost:8080/peticiones/?dato=123" rel="noopener noreferrer" target="_blank">http://localhost:8080/peticiones/?dato=123</a></p>
+</blockquote>
+<p><a id="seccion-14"></a></p>
+<h3 id="resposta">Resposta</h3>
+<p><a id="detalle-14-01"></a></p>
+<h3 id="o-obxecto-response-en-flask">O obxecto Response en Flask</h3>
+<p>Cando <strong>Flask</strong> recibe unha petición HTTP e atopa unha ruta coincidente, o decorador <strong><code>@app.route</code></strong> executa a función vista e xera un obxecto <strong>Response</strong> que inclúe:</p>
+<ul>
+<li>Código de estado (por exemplo 200, 404, 500…).</li>
+<li>Cabeceras HTTP.</li>
+<li>Datos da resposta (texto, HTML, JSON, etc.).</li>
+</ul>
+<p>O contido dese obxecto constrúese a partir do que devolva a función vista. Flask permite devolver a resposta de tres formas principais:</p>
+<p><a id="detalle-14-02"></a></p>
+<h4 id="1-cadena-de-texto-string">1. Cadena de texto (string)</h4>
+<p>A forma máis sinxela.</p>
+<ul>
+<li>Código de estado por defecto: 200 (OK).</li>
+<li>Cabeceras: as que Flask asigna automaticamente (por exemplo, Content-Type: text/html).</li>
+</ul>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route('/string/')
+def return_string():
+    return '¡Hola, mundo!'
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-14-03"></a></p>
+<h4 id="2-obxecto-response">2. Obxecto Response</h4>
+<p>Permite controlar datos, código de estado e cabeceras manualmente.</p>
+<p>Para crealo se usa a función <strong>make_response</strong>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1from flask import make_response
+2
+3@app.route('/object/')
+4def return_object():
+5    headers = {'Content-Type': 'text/plain'}
+6    return make_response('¡Hola, mundo!', 200, headers)
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-14-04"></a></p>
+<h4 id="3-tupla">3. Tupla</h4>
+<p>Podemos devolver unha tupla en dúas variantes:</p>
+<ul>
+<li>Dous valores: (datos, código_de_estado)</li>
+</ul>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route('/tuple/')
+def return_tuple():
+    return '¡Hola, mundo!', 200
+</code></pre>
+
+
+</div>
+
+<ul>
+<li>Tres valores: (datos, código_de_estado, cabeceras)</li>
+</ul>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route('/tuple/')
+def return_tuple_full():
+    return '¡Hola, mundo!', 200, {'Content-Type': 'text/plain'}
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-14-05"></a></p>
+<h3 id="respostas-de-erro">Respostas de erro</h3>
+<p>Para interromper a execución e enviar un erro HTTP en calquera momento se usa a función abort (hai que importala):</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1from flask import abort
+2
+3@app.route('/login')
+4def login():
+5    abort(401)  # Non autorizado
+6    # O código posterior non se executa
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-14-06"></a></p>
+<h4 id="paxinas-de-erro-personalizadas">Páxinas de erro personalizadas</h4>
+<p>Podemos definir unha resposta personalizada para un erro concreto usando o decorador <code>@app.errorhandler</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.errorhandler(404)
+def page_not_found(error):
+    return 'Página non encontrada...', 404
+</code></pre>
+
+
+</div>
+
+<p>Así, cada vez que se produza un 404, Flask devolverá esa mensaxe e o código de estado correspondente.</p>
+<p><a id="detalle-14-07"></a></p>
+<h3 id="redireccions">Redireccións</h3>
+<p>Para redirixir ao usuario a outra URL utilizamos redirect xunto con <code>url_for</code>.</p>
+<p>O argumento de <code>url_for</code> é o nome da función vista á que queremos enviar ao usuario.</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">from flask import redirect, url_for
+
+@app.route('/')
+def index():
+    return redirect(url_for('nome_funcion_vista'))
+</code></pre>
+
+
+</div>
+
+<ul>
+<li><code>url_for('nome_funcion_vista')</code> constrúe a URL asociada á función indicada.</li>
+<li><code>redirect()</code> envía a cabecera HTTP Location e o código de estado 302 por defecto.</li>
+</ul>
+<p><a id="seccion-15"></a></p>
+<h2 id="plantillas-jinja-i">Plantillas - Jinja I</h2>
+<p><a id="detalle-15-01"></a></p>
+<h3 id="o-que-e-jinja2">O que é Jinja2?</h3>
+<p><strong>Jinja2</strong> é o motor de plantillas que utiliza <strong>Flask</strong> para xerar <strong>HTML dinámico</strong>.</p>
+<blockquote>
+<p>Cando instalamos Flask, Jinja2 instálase automaticamente como dependencia.</p>
+</blockquote>
+<p>Documentación oficial: <a href="https://jinja.palletsprojects.com" rel="noopener noreferrer" target="_blank">https://jinja.palletsprojects.com</a></p>
+<p>Idea clave: Unha plantilla Jinja é un arquivo HTML cunha sintaxe especial que permite:</p>
+<ul>
+<li>Insertar variables.</li>
+<li>Executar bucles e condicionais.</li>
+<li>Reutilizar estruturas mediante herdanza.</li>
+</ul>
+<p><a id="seccion-16"></a></p>
+<h3 id="organizacion-de-ficheiros">Organización de ficheiros</h3>
+<p>O habitual é ter unha carpeta templates dentro do proxecto:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-text">mi_proxecto/
+├─ app.py
+└─ templates/
+   ├─ base.html
+   ├─ pagina1.html
+   └─ ...
+</code></pre>
+
+
+</div>
+
+<ul>
+<li><code>templates/</code>: Aquí gardamos todos os ficheiros de plantillas HTML.</li>
+<li>Cada plantilla é un ficheiro HTML (extensión .html) con marcado Jinja.  </li>
+</ul>
+<p>Ao crear a aplicación Flask, podemos indicar a ruta da carpeta de plantillas (<strong>aunque por defecto xa é templates</strong>):</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">from flask import Flask
+app = Flask(__name__, template_folder='templates')
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-17"></a></p>
+<h3 id="renderizar-unha-plantilla">Renderizar unha plantilla</h3>
+<p>Para enviar HTML como resposta HTTP usamos <code>render_template</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">from flask import Flask, render_template
+
+@app.route('/hola/')
+def saludo():
+    return render_template('template1.html')
+</code></pre>
+
+
+</div>
+
+<p>Se <code>template1.html</code> está na carpeta <strong>templates</strong>, Flask búscalo e devolve o seu contido.</p>
+<hr />
+<p><a id="detalle-17-01"></a></p>
+<h4 id="exemplo-de-plantilla-basica-template1html">Exemplo de plantilla básica (template1.html)</h4>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">1&lt;!DOCTYPE html&gt;
+2&lt;html lang=&quot;gl&quot;&gt;
+3&lt;head&gt;
+4  &lt;meta charset=&quot;utf-8&quot;&gt;
+5  &lt;title&gt;Ola, como estás?&lt;/title&gt;
+6&lt;/head&gt;
+7&lt;body&gt;
+8  &lt;h1&gt;Meu sitio web&lt;/h1&gt;
+9  &lt;p&gt;Benvido á miña primeira páxina con Flask e Jinja2.&lt;/p&gt;
+10&lt;/body&gt;
+11&lt;/html&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-18"></a></p>
+<h3 id="variables">Variables</h3>
+<p>As variábeis permiten que o HTML sexa dinámico. Podemos enviar datos desde Flask á plantilla e amosalos ou procesalos directamente no arquivo HTML.</p>
+<p><a id="detalle-18-01"></a></p>
+<h4 id="paso-de-variables-desde-flask">Paso de variables desde Flask</h4>
+<p>Podemos pasar datos desde a función vista á plantilla e amosalos con <code>{{ variable }}</code>.</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1from flask import Flask, render_template
+2app = Flask(__name__)
+3
+4@app.route('/usuario/&lt;nombre&gt;/')
+5def usuario(nombre):
+6    # Pasamos unha variable &quot;nombre&quot; á plantilla
+7    return render_template('saludo.html', nombre=nombre)
+</code></pre>
+
+
+</div>
+
+<p>En <em>saludo.html</em>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;h1&gt;Ola, {{ nombre }}!&lt;/h1&gt;
+</code></pre>
+
+
+</div>
+
+<p>Cando o usuario visite <em>/usuario/Ana</em>, a resposta será:</p>
+<blockquote>
+<p>Ola, Ana!</p>
+</blockquote>
+<p><a id="detalle-18-02"></a></p>
+<h4 id="tipos-de-datos-que-se-pueden-pasar">Tipos de datos que se pueden pasar</h4>
+<p>Podemos enviar case calquera obxecto de Python:</p>
+<table>
+<thead>
+<tr>
+<th>Tipo de dato en Flask</th>
+<th>Cómo acceder na plantilla</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Texto (<code>str</code>)</td>
+<td><code>{{ nombre }}</code></td>
+</tr>
+<tr>
+<td>Números (<code>int</code>, <code>float</code>)</td>
+<td><code>{{ precio }}</code></td>
+</tr>
+<tr>
+<td>Booleanos (<code>bool</code>)</td>
+<td><code>{{ activo }}</code> ou en <code>{% if activo %}</code></td>
+</tr>
+<tr>
+<td>Listas ou tuplas</td>
+<td><code>{{ lista[0] }}</code> ou en bucle <code>{% for x in lista %}</code></td>
+</tr>
+<tr>
+<td>Diccionarios</td>
+<td><code>{{ usuario['email'] }}</code> ou <code>{{ usuario.email }}</code></td>
+</tr>
+<tr>
+<td>Obxectos personalizados</td>
+<td>Atributos e métodos públicos: <code>{{ obxecto.campo }}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Exemplo con varios tipos:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1@app.route('/datos/')
+2def datos():
+3    return render_template(
+4        'datos.html',
+5        nombre='Laura',
+6        idade=25,
+7        cores=['vermello', 'verde', 'azul'],
+8        usuario={'email': 'laura@example.com', 'activo': True}
+9    )
+</code></pre>
+
+
+</div>
+
+<p>En <code>datos.html</code></p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">1&lt;p&gt;Nome: {{ nombre }} ({{ idade }} anos)&lt;/p&gt;
+2&lt;p&gt;Email: {{ usuario.email }}&lt;/p&gt;
+3&lt;ul&gt;
+4  {% for cor in cores %}
+5    &lt;li&gt;{{ loop.index }} - {{ cor }}&lt;/li&gt;
+6  {% endfor %}
+7&lt;/ul&gt;
+</code></pre>
+
+
+</div>
+
+<div class="not-prose my-5 rounded-xl border overflow-hidden bg-green-50/60 dark:bg-green-950/20 border-green-200 dark:border-green-900/60" hint="success">
+
+<div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-green-200 dark:border-green-900/60 bg-green-100/60 dark:bg-green-900/20">
+
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">Condicionais, bucles e mais</span>
+
+</div>
+
+<div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
+
+No exemplo anterior se emprega a sintaxe para utilizar estruturas iterativas dentro das plantillas. Por agora non profundizaremos mais. Vémo-lo na seguinte unidade.
+
+</div>
+
+</div>
+
+<p><a id="detalle-18-03"></a></p>
+<h4 id="encadenar-atributos-e-metodos">Encadenar atributos e métodos</h4>
+<p>Jinja2 permite acceder a atributos, índices e incluso métodos seguros (sen paréntesis se non requiren argumentos):</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;p&gt;{{ usuario.email.upper() }}&lt;/p&gt;
+&lt;p&gt;{{ cores|length }} cores na lista&lt;/p&gt;
+</code></pre>
+
+
+</div>
+
+<p>Os filtros permiten transformar valores na plantilla, usando o operador <code>|</code>.</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;p&gt;{{ nombre|capitalize }}&lt;/p&gt;
+</code></pre>
+
+
+</div>
+
+<ul>
+<li>capitalize pon a primeira letra en maiúscula.</li>
+<li>Poden encadearse filtros: {{ texto|striptags|upper }}.</li>
+</ul>
+<p>Doc:</p>
+<p><a id="detalle-18-04"></a></p>
+<h4 id="valores-por-defecto-e-control-de-variables">Valores por defecto e control de variables</h4>
+<p>Se unha variable non existe ou é None, non amosará nada.</p>
+<p>Podemos usar o filtro default para asignar un valor:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;p&gt;Pais: {{ pais | default(&quot;Non especificado&quot;) }}&lt;/p&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-18-05"></a></p>
+<h4 id="escapado-automatico">Escapado automático</h4>
+<p>Jinja2 escapa o HTML das variables por defecto para evitar ataques XSS:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">comentario = &quot;&lt;script&gt;alert('hack');&lt;/script&gt;&quot;
+</code></pre>
+
+
+</div>
+
+<p>Plantilla:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">&lt;p&gt;{{ comentario }}&lt;/p&gt;
+</code></pre>
+
+
+</div>
+
+<p>Resultado seguro no navegador:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;script&gt;alert('hack');&lt;/script&gt;
+</code></pre>
+
+
+</div>
+
+<blockquote>
+<p>Amósase como texto, non se executa</p>
+</blockquote>
+<p><a id="detalle-18-06"></a></p>
+<h4 id="variabeis-especiais-de-flask">Variábeis especiais de Flask</h4>
+<p>Ademais das que pasamos manualmente, algunhas variables <strong>globais</strong> de Flask están dispoñibles nas plantillas:</p>
+<ul>
+<li>config – configuración da aplicación.</li>
+<li>request – obxecto da petición actual.</li>
+<li>session – datos de sesión do usuario.</li>
+<li>g – espazo de almacenamento temporal para a petición.</li>
+</ul>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;p&gt;Método HTTP: {{ request.method }}&lt;/p&gt;
+&lt;p&gt;Ruta solicitada: {{ request.path }}&lt;/p&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-19"></a></p>
+<h2 id="revision-html-css-js">Revisión HTML + CSS + JS</h2>
+<p><a id="detalle-19-01"></a></p>
+<h4 id="html">HTML</h4>
+<p><a href="https://www.w3schools.com/html/default.asp" class="not-prose my-4 flex items-center gap-3 px-4 py-3 rounded-xl border no-underline transition-all group" rel="noopener noreferrer" style="border-color: var(--color-book-bg-strong);" target="_blank"><span class="shrink-0 flex items-center justify-center w-10 h-10 rounded-lg" style="background-color: var(--color-book-bg); color: var(--color-book);"></span><span class="min-w-0 flex-1"><span class="block truncate text-sm font-medium text-gray-800 dark:text-gray-200">w3schools.com</span><span class="block truncate text-xs text-gray-400 dark:text-gray-500">https://www.w3schools.com/html/default.asp</span></span></a></p>
+<p><a id="detalle-19-02"></a></p>
+<h4 id="css">CSS</h4>
+<p><a href="https://www.w3schools.com/css/default.asp" class="not-prose my-4 flex items-center gap-3 px-4 py-3 rounded-xl border no-underline transition-all group" rel="noopener noreferrer" style="border-color: var(--color-book-bg-strong);" target="_blank"><span class="shrink-0 flex items-center justify-center w-10 h-10 rounded-lg" style="background-color: var(--color-book-bg); color: var(--color-book);"></span><span class="min-w-0 flex-1"><span class="block truncate text-sm font-medium text-gray-800 dark:text-gray-200">w3schools.com</span><span class="block truncate text-xs text-gray-400 dark:text-gray-500">https://www.w3schools.com/css/default.asp</span></span></a></p>
+<p><a id="detalle-19-03"></a></p>
+<h4 id="javascript">JavaScript</h4>
+<p><a href="https://www.w3schools.com/js/default.asp" class="not-prose my-4 flex items-center gap-3 px-4 py-3 rounded-xl border no-underline transition-all group" rel="noopener noreferrer" style="border-color: var(--color-book-bg-strong);" target="_blank"><span class="shrink-0 flex items-center justify-center w-10 h-10 rounded-lg" style="background-color: var(--color-book-bg); color: var(--color-book);"></span><span class="min-w-0 flex-1"><span class="block truncate text-sm font-medium text-gray-800 dark:text-gray-200">w3schools.com</span><span class="block truncate text-xs text-gray-400 dark:text-gray-500">https://www.w3schools.com/js/default.asp</span></span></a></p>
+<p><a id="seccion-20"></a></p>
+<h1 id="programacion-web-flask-ii">Programación web - Flask II</h1>
+<p><a id="seccion-21"></a></p>
+<h2 id="recursos-estaticos">Recursos estáticos</h2>
+<p>En unha aplicación web chamamos <strong>recursos estáticos</strong> aos ficheiros que o servidor envía sen modificacións cada vez que o navegador os solicita.</p>
+<p>Son, por exemplo:</p>
+<ul>
+<li>Follas de estilo CSS</li>
+<li>Ficheiros JavaScript</li>
+<li>Imaxes (logo, iconos, banners)</li>
+<li>Fontes, vídeos ou outros ficheiros de medios</li>
+</ul>
+<p>Estes ficheiros <strong>non cambian dinámicamente</strong> con cada petición (a diferenza do HTML xerado por Jinja2).</p>
+<p><a id="detalle-21-01"></a></p>
+<h3 id="carpeta-static">Carpeta static/</h3>
+<p>Flask busca por defecto os ficheiros estáticos nun directorio chamado static na raíz do proxecto:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-text">mi_proyecto/
+├─ app.py
+├─ templates/
+│   └─ index.html
+└─ static/
+    ├─ css/
+    │   └─ estilo.css
+    ├─ js/
+    │   └─ app.js
+    └─ img/
+        └─ logo.png
+</code></pre>
+
+
+</div>
+
+<blockquote>
+<p>Podes crear subcarpetas dentro de static para manter o proxecto ordenado (css, js, img, etc.).</p>
+</blockquote>
+<p>Se se quere cambiar o nome ou a ubicación desta carpeta, ao crear a aplicación se pode usar:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python" runnable="" source="app = Flask(__name__, static_folder='mi_static')">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">app = Flask(__name__, static_folder='mi_static')
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-22"></a></p>
+<h3 id="css-bootstrap-e-mais">CSS, Bootstrap e máis</h3>
+<p>Cando desenvolvemos unha <strong>aplicación web</strong> con Flask, non só precisamos lóxica no servidor: tamén queremos que a interface sexa atractiva, responsiva e fácil de usar.</p>
+<p>Para iso recurrimos a estilos <strong>CSS</strong> propios e a <strong>librerías</strong> de frontend como Bootstrap, Tailwind, Bulma ou outras.</p>
+<p>Neste post veremos como organizar e usar estes recursos estáticos en Flask, e como integrar librerías externas para dar estilo ás nosas plantillas.</p>
+<p><a id="detalle-22-01"></a></p>
+<h3 id="estilos-propios-css">Estilos propios (CSS)</h3>
+<ol>
+<li>Crea a túa folla de estilos en <code>static/css/style.css</code>.</li>
+<li>Inclúyela na plantilla base:</li>
+</ol>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;{{ url_for('static', filename='css/style.css') }}&quot;&gt;
+</code></pre>
+
+
+</div>
+
+<blockquote>
+<p>Agora podes escribir as túas propias regras CSS e aplicalas a todas as páxinas.</p>
+</blockquote>
+<p><a id="detalle-22-02"></a></p>
+<h3 id="librerias-de-estilos">Librerías de estilos</h3>
+<p><a id="detalle-22-03"></a></p>
+<h4 id="bootstrap">Bootstrap</h4>
+<p><a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" rel="noopener noreferrer" target="_blank">Bootstrap</a> é a librería máis popular para crear sitios responsive rapidamente.</p>
+<p><sub><strong><em>Opción 1 – CDN</em></strong></sub> <sub></sub> <sub><strong>(recomendada)</strong></sub></p>
+<p>En <code>base.html</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot; integrity=&quot;sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB&quot; crossorigin=&quot;anonymous&quot;&gt;
+
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js&quot; integrity=&quot;sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+
+</div>
+
+<p><sub><strong><em>Opción 2 – Local</em></strong></sub></p>
+<ol>
+<li>Descarga Bootstrap e gárdalo en <code>static/bootstrap/</code>.</li>
+<li>Enlaza con <code>url_for('static', filename='bootstrap/css/bootstrap.min.css')</code>.</li>
+</ol>
+<p><a id="detalle-22-04"></a></p>
+<h4 id="bulma-cdn">Bulma (CDN)</h4>
+<p><a href="https://bulma.io/" rel="noopener noreferrer" target="_blank">Bulma</a> é un framework CSS ligero e baseado en Flexbox.</p>
+<p>En <code>base.html</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;link
+  rel=&quot;stylesheet&quot;
+  href=&quot;https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css&quot;
+&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-22-05"></a></p>
+<h4 id="tailwind-css-cdn-para-desenvolvemento">Tailwind CSS (CDN para desenvolvemento)</h4>
+<p><a href="https://tailwindcss.com/" rel="noopener noreferrer" target="_blank">Tailwind</a> é “utility-first”, baseado en clases utilitarias.</p>
+<p>En base.html:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-22-06"></a></p>
+<h4 id="materialize-cdn">Materialize (CDN)</h4>
+<p><a href="https://materializecss.com/" rel="noopener noreferrer" target="_blank">Materialize</a> implementa Material Design de Google.</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css&quot;&gt;
+
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-22-07"></a></p>
+<h3 id="librerias-de-iconos">Librerías de iconos</h3>
+<p><a id="detalle-22-08"></a></p>
+<h4 id="bootstrap-icons">Bootstrap Icons</h4>
+<p>Conxunto oficial de iconos en SVG do equipo de Bootstrap.</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;link 
+    rel=&quot;stylesheet&quot; 
+    href=&quot;https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css&quot; 
+    integrity=&quot;sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD&quot; 
+    crossorigin=&quot;anonymous&quot;&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-22-09"></a></p>
+<h4 id="font-awesome-cdn">Font Awesome (CDN)</h4>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;link
+  rel=&quot;stylesheet&quot;
+  href=&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css&quot;
+  integrity=&quot;sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==&quot;
+  crossorigin=&quot;anonymous&quot;&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-22-10"></a></p>
+<h4 id="material-icons-google">Material Icons (Google)</h4>
+<p>Iconos de Material Design de Google, en formato fonte ou SVG.</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/material-icons@1.13.14/iconfont/material-icons.min.css&quot;&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-22-11"></a></p>
+<h4 id="feather-icons">Feather Icons</h4>
+<p>Iconos minimalistas en SVG.</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.2/feather.min.js&quot; integrity=&quot;sha512-zMm7+ZQ8AZr1r3W8Z8lDATkH05QG5Gm2xc6MlsCdBz9l6oE8Y7IXByMgSm/rdRQrhuHt99HAYfMljBOEZ68q5A==&quot; crossorigin=&quot;anonymous&quot; referrerpolicy=&quot;no-referrer&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+
+</div>
+
+<div class="not-prose my-5 rounded-xl border overflow-hidden bg-blue-50/60 dark:bg-blue-950/20 border-blue-200 dark:border-blue-900/60" hint="info">
+
+<div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-blue-200 dark:border-blue-900/60 bg-blue-100/60 dark:bg-blue-900/20">
+
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">Como utilizalos nas plantillas</span>
+
+</div>
+
+<div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
+
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">1&lt;!-- Bootstrap Icons --&gt;
+2&lt;button class=&quot;btn btn-primary&quot;&gt;
+3  &lt;i class=&quot;bi bi-cloud-download&quot;&gt;&lt;/i&gt; Descargar
+4&lt;/button&gt;
+5
+6&lt;!-- Font Awesome --&gt;
+7&lt;button class=&quot;btn btn-danger&quot;&gt;
+8  &lt;i class=&quot;fa-solid fa-trash&quot;&gt;&lt;/i&gt; Eliminar
+9&lt;/button&gt;
+</code></pre>
+
+
+</div>
+
+</div>
+
+</div>
+
+<p><a id="detalle-22-12"></a></p>
+<h3 id="google-fonts">Google Fonts</h3>
+<p>Para engadir tipografías:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;link
+  rel=&quot;stylesheet&quot;
+  href=&quot;https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap&quot;&gt;
+</code></pre>
+
+
+</div>
+
+<p>En o teu CSS propio:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="css">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">css</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-css">body {
+    font-family: 'Roboto', sans-serif;
+}
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-23"></a></p>
+<h2 id="uso-de-url_for">Uso de url_for</h2>
+<p>En unha aplicación Flask, <strong><code>url_for</code></strong> é a forma recomendada de xerar <strong>ligazóns internas</strong> de maneira dinámica.</p>
+<p>En vez de escribir a URL «a man», indica o <strong>nome da función vista</strong> e Flask constrúe a ruta correcta.</p>
+<p><a id="detalle-23-01"></a></p>
+<h4 id="ventajas-de-usar-url_for">Ventajas de usar <code>url_for</code></h4>
+<ul>
+<li>Evita ligazóns rotas: se cambía a ruta en @app.route, as plantillas non precisan cambios.</li>
+<li>Admite parámetros dinámicos: permite pasar argumentos para crear URLs con variables.</li>
+<li>Funciona igual en Python e en plantillas Jinja2.</li>
+</ul>
+<p><a id="detalle-23-02"></a></p>
+<h3 id="uso-de-url_for-en-as-plantillas">Uso de url_for en as plantillas</h3>
+<p><a id="detalle-23-03"></a></p>
+<h4 id="en-as-vistas">En as vistas</h4>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1from flask import Flask, url_for
+2app = Flask(__name__)
+3
+4@app.route('/')
+5def index():
+6    return 'Inicio'
+7
+8@app.route('/usuario/&lt;nombre&gt;/')
+9def usuario(nombre):
+10    return f&quot;Hola {nombre}!&quot;
+11
+12with app.test_request_context():
+13    print(url_for('index'))              #  /
+14    print(url_for('usuario', nombre='Ana'))  # /usuario/Ana/
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-23-04"></a></p>
+<h4 id="en-as-plantillas">En as plantillas</h4>
+<p>Dentro dunha plantilla Jinja2, a sintaxe é idéntica:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">&lt;a href=&quot;{{ url_for('index') }}&quot;&gt;Inicio&lt;/a&gt;
+&lt;a href=&quot;{{ url_for('usuario', nombre='Ana') }}&quot;&gt;Saludar a Ana&lt;/a&gt;
+</code></pre>
+
+
+</div>
+
+<ul>
+<li><code>index</code> e <code>usuario</code> son <strong>nomes das funcións vista</strong>, non as rutas.</li>
+<li>Flask xerarará automaticamente as URLs correctas.</li>
+</ul>
+<p><a id="detalle-23-05"></a></p>
+<h4 id="parametros-dinamicos">Parámetros dinámicos</h4>
+<p>Se a ruta definida na vista inclúe variables, pasa como argumentos con nome:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route('/producto/&lt;int:id&gt;/')
+def producto(id):
+    # ...
+    pass
+</code></pre>
+
+
+</div>
+
+<p>En a plantilla:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">&lt;a href=&quot;{{ url_for('producto', id=42) }}&quot;&gt;Ver producto 42&lt;/a&gt;
+</code></pre>
+
+
+</div>
+
+<p>Resultado en o HTML:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;a href=&quot;/producto/42/&quot;&gt;Ver producto 42&lt;/a&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-23-06"></a></p>
+<h4 id="con-query-strings">Con query strings</h4>
+<p>A diferenza dos parámetros de <em>path</em> anteriores que identifican recursos específicos de forma obrigatoria, <strong>formando parte integral da URL</strong> para localizar un recurso. Os parámetros de <em>query</em> son información adicional, opcional e separada da ruta, usados para filtrar, ordenar ou paginar os resultados e non son parte do nome do recurso.</p>
+<div class="not-prose my-5 rounded-xl border overflow-hidden bg-green-50/60 dark:bg-green-950/20 border-green-200 dark:border-green-900/60" hint="success">
+
+<div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-green-200 dark:border-green-900/60 bg-green-100/60 dark:bg-green-900/20">
+
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">Path vs Query</span>
+
+</div>
+
+<div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
+
+Flask sabe distinguir entre meter un parámetro no *path* en vez de na *query* porque os *path params* están definidos explícitamente no decorador da ruta, polo que o resto convertese automaticamente en *query params*.
+
+</div>
+
+</div>
+
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">&lt;a href=&quot;{{ url_for('buscar', q='flask', page=2) }}&quot;&gt;Buscar Flask&lt;/a&gt;
+</code></pre>
+
+
+</div>
+
+<p>Genera:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-text">/buscar?q=flask&amp;page=2
+</code></pre>
+
+
+</div>
+
+<p>E no código python podemos facer o seguinte:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route('/buscar/')
+def buscar():
+    q = request.args.get(q')
+    page = request.args.get('page')
+    ...
+</code></pre>
+
+
+</div>
+
+<div class="not-prose my-5 rounded-xl border overflow-hidden bg-amber-50/60 dark:bg-amber-950/20 border-amber-200 dark:border-amber-900/60" hint="warning">
+
+<div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-amber-200 dark:border-amber-900/60 bg-amber-100/60 dark:bg-amber-900/20">
+
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">Cando usar cada un...</span>
+
+</div>
+
+<div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
+
+- Usa parámetros de path cando o parámetro é esencial para identificar o recurso, como en `/usuarios/un_id`.
+- Usa parámetros de query para información adicional que non é parte da identidade do recurso, como filtros (`?ciudad=Madrid`) ou paginación (`?pagina=2`).
+
+</div>
+
+</div>
+
+<p>Cando usar cada un</p>
+<ul>
+<li>Usa parámetros de path cando o parámetro é esencial para identificar o recurso, como en <code>/usuarios/un_id</code>.</li>
+<li>Usa parámetros de query para información adicional que non é parte da identidade do recurso, como filtros (<code>?ciudad=Madrid</code>) ou paginación (<code>?pagina=2</code>).</li>
+</ul>
+<p><a id="detalle-23-07"></a></p>
+<h3 id="uso-en-recursos-estaticos">Uso en recursos estáticos</h3>
+<p><code>url_for</code> é moi útil para acceder a ficheiros da carpeta <code>static/</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;{{ url_for('static', filename='css/estilo.css') }}&quot;&gt;
+&lt;script src=&quot;{{ url_for('static', filename='js/app.js') }}&quot;&gt;&lt;/script&gt;
+&lt;img src=&quot;{{ url_for('static', filename='img/logo.png') }}&quot; alt=&quot;Logo&quot;&gt;
+</code></pre>
+
+
+</div>
+
+<ul>
+<li>filename é a ruta relativa dentro de static.</li>
+</ul>
+<p><a id="detalle-23-08"></a></p>
+<h3 id="exemplo-completo">Exemplo completo</h3>
+<p>Vista:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1@app.route('/')
+2def inicio():
+3    return render_template('inicio.html')
+4
+5@app.route('/usuario')
+6def usuario():
+7    name = request.args.get('nombre')
+8    return render_template('usuario.html', name=name)
+</code></pre>
+
+
+</div>
+
+<p>Plantilla <code>inicio.html</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">1&lt;!DOCTYPE html&gt;
+2&lt;html lang=&quot;es&quot;&gt;
+3&lt;head&gt;
+4  &lt;meta charset=&quot;UTF-8&quot;&gt;
+5  &lt;title&gt;Ejemplo url_for&lt;/title&gt;
+6  &lt;link rel=&quot;stylesheet&quot; href=&quot;{{ url_for('static', filename='css/main.css') }}&quot;&gt;
+7&lt;/head&gt;
+8&lt;body&gt;
+9  &lt;nav&gt;
+10    &lt;a href=&quot;{{ url_for('inicio') }}&quot;&gt;Inicio&lt;/a&gt;
+11    &lt;a href=&quot;{{ url_for('usuario', nombre='Carlos') }}&quot;&gt;Usuario&lt;/a&gt;
+12  &lt;/nav&gt;
+13&lt;/body&gt;
+14&lt;/html&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-24"></a></p>
+<h2 id="cargar-inicial-de-datos">Cargar inicial de datos</h2>
+<p>En moitas <strong>aplicacións web</strong> necesitamos manexar datos que non cambian con cada petición: unha lista de produtos, unha configuración, etc... (Sempre e cando non sexa necesario empregar unha BBDD)</p>
+<p>Se gardamos esa información nun arquivo JSON, a forma máis eficiente de traballar con ela é <strong>ler</strong> o arquivo <strong>unha soa vez</strong>, ao arrancar a aplicación, e manter os datos en memoria. Así non teremos que abrir e procesar o arquivo en cada visita do usuario, o que aforra tempo e recursos.</p>
+<p><a id="detalle-24-01"></a></p>
+<h4 id="estructura-de-proxecto">Estructura de proxecto</h4>
+<p>Normalmente, este tipo de datos estáticos incluímos nunha carpeta denominada <em>data.</em> Quedando de la seguinte forma unha posible estrutura da aplicación.</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-text">├─ venv
+├─ requirements.txt
+├─ app
+    └─ main.py
+    └─ templates/  
+├─ data/
+    └─ data.json
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-24-02"></a></p>
+<h4 id="cargar-os-datos-ao-inicio">Cargar os datos ao inicio</h4>
+<p>A idea é <strong>ler</strong> o arquivo <strong>unha soa</strong> vez cando Flask <strong>arranca</strong>.</p>
+<p>Podemos facelo ao comezo de <code>main.py</code></p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="flex items-center gap-2 min-w-0"><span class="text-xs font-mono font-semibold truncate" code-title="" style="color: var(--color-book);">main.py</span><span class="shrink-0 text-[0.65rem] font-mono uppercase tracking-wide text-gray-400 dark:text-gray-500">python</span></span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1from flask import Flask
+2import json
+3from pathlib import Path
+4
+5app = Flask(__name__)
+6
+7# Leemos o JSON unha soa vez ao iniciar a aplicación
+8with open(Path(&quot;data/data.json&quot;), &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+9    DATA = json.load(f)
+</code></pre>
+
+
+</div>
+
+<p>Neste momento:</p>
+<ul>
+<li>DATA é unha variable global formada de estruturas de datos en Python (list, dicts...).</li>
+<li>A lectura execútase cando se importa <code>main.py</code>, é dicir, unha vez ao arrancar o servidor.</li>
+<li>Cada petición que chegue poderá acceder a esta variable directamente, sen volver a abrir o arquivo.</li>
+</ul>
+<p><a id="detalle-24-03"></a></p>
+<h4 id="uso-dos-datos-nas-vistas">Uso dos datos nas vistas</h4>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="flex items-center gap-2 min-w-0"><span class="text-xs font-mono font-semibold truncate" code-title="" style="color: var(--color-book);">main.py</span><span class="shrink-0 text-[0.65rem] font-mono uppercase tracking-wide text-gray-400 dark:text-gray-500">python</span></span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1from flask import jsonify
+2
+3# Carga de datos do ficheiro
+4...
+5
+6@app.route(&quot;/&quot;)
+7def home():
+8    return jsonify(DATA)
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-24-04"></a></p>
+<h4 id="gardar-en-appconfig">Gardar en app.config</h4>
+<p>En vez de declarar unha variable global onde almacenamos o que haxa no noso ficheiro json de datos, podemos manter os datos dentro da configuración da aplicación da seguinte forma:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">with open(&quot;data/data.json&quot;, encoding=&quot;utf-8&quot;) as f:
+    app.config[&quot;data&quot;] = json.load(f)
+</code></pre>
+
+
+</div>
+
+<p>E nas vistas podemos acceder a eses datos tal que así:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1from flask import current_app
+2
+3# Carga de datos do ficheiro
+4...
+5
+6@app.route(&quot;/&quot;)
+7def home():
+8    datos = current_app.config[&quot;data&quot;]
+9    ...
+</code></pre>
+
+
+</div>
+
+<p>Nota: Non se traduciron os nomes de variables, funcións e similares, así como as URLs e a estrutura Markdown, como se solicitou.</p>
+<p><a id="seccion-25"></a></p>
+<h2 id="plantillas-jinja-ii">Plantillas - Jinja II</h2>
+<p><a id="detalle-25-01"></a></p>
+<h3 id="que-e-jinja2">Que é Jinja2?</h3>
+<p><strong>Jinja2</strong> é o motor de plantillas que utiliza <strong>Flask</strong> para xerar <strong>HTML dinámico</strong>.</p>
+<blockquote>
+<p>Cando instalamos Flask, Jinja2 se instala automaticamente como dependencia.</p>
+</blockquote>
+<p>Documentación oficial: <a href="https://jinja.palletsprojects.com" rel="noopener noreferrer" target="_blank">https://jinja.palletsprojects.com</a></p>
+<p>Idea clave: Unha plantilla Jinja é un arquivo HTML cunha sintaxe especial que permite:</p>
+<ul>
+<li>Inserir variables.</li>
+<li>Executar bucles e condicións.</li>
+<li>Reutilizar estruturas mediante herdanza.</li>
+</ul>
+<p><a id="seccion-26"></a></p>
+<h3 id="herencia">Herencia</h3>
+<p>A <strong>herencia</strong> <strong>de</strong> <strong>plantillas</strong> é unha das características máis potentes de Jinja2.</p>
+<p>Permite definir unha estrutura base común (cabeceira, menús, pé de páxina, etc.) e que as demais plantillas “hereden” dela, <strong>sobrescribindo</strong> só as partes que cambian.</p>
+<p><a id="detalle-26-01"></a></p>
+<h4 id="ventajas-principais">Ventajas principais</h4>
+<ul>
+<li>Reutilización: evitas repetir o mesmo HTML (header, footer, scripts).</li>
+<li>Mantenimiento: actualizas o deseño nun só ficheiro e se reflicte en todas as páxinas.</li>
+<li>Consistencia: todas as páxinas comparten o mesmo estilo e estrutura.</li>
+</ul>
+<p><a id="detalle-26-02"></a></p>
+<h3 id="estructura-de-carpetas">Estructura de carpetas</h3>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-text">mi_proyecto/
+├─ app.py
+└─ templates/
+   ├─ base.html
+   ├─ index.html
+   ├─ contacto.html
+   └─ ...
+</code></pre>
+
+
+</div>
+
+<ul>
+<li><code>base.html</code> → Plantilla madre con o esqueleto xeral do sitio.</li>
+<li>As demais (index, contacto, etc.) → Plantillas fillas que herdan de <code>base.html</code>.</li>
+</ul>
+<p><a id="detalle-26-03"></a></p>
+<h3 id="creacion-da-plantilla-base">Creación da plantilla base</h3>
+<p>Exemplo de <code>base.html</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">1&lt;!DOCTYPE html&gt;
+2&lt;html lang=&quot;es&quot;&gt;
+3&lt;head&gt;
+4  &lt;meta charset=&quot;utf-8&quot;&gt;
+5  &lt;title&gt;{% block title %}Mi sitio{% endblock %}&lt;/title&gt;
+6  &lt;link rel=&quot;stylesheet&quot; href=&quot;{{ url_for('static', filename='css/style.css') }}&quot;&gt;
+7&lt;/head&gt;
+8&lt;body&gt;
+9  &lt;header&gt;
+10    &lt;h1&gt;Mi sitio web&lt;/h1&gt;
+11    &lt;nav&gt;
+12      &lt;a href=&quot;{{ url_for('index') }}&quot;&gt;Inicio&lt;/a&gt;
+13      &lt;a href=&quot;{{ url_for('contacto') }}&quot;&gt;Contacto&lt;/a&gt;
+14    &lt;/nav&gt;
+15  &lt;/header&gt;
+16
+17  &lt;main&gt;
+18    {% block content %}{% endblock %}
+19  &lt;/main&gt;
+20
+21  &lt;footer&gt;
+22    &amp;copy; 2025 – Mi sitio
+23  &lt;/footer&gt;
+24&lt;/body&gt;
+25&lt;/html&gt;
+</code></pre>
+
+
+</div>
+
+<ul>
+<li><code>{% block nombre %}{% endblock %}</code></li>
+</ul>
+<p>Define un bloque que as plantillas fillas poden sobrescribir.</p>
+<ul>
+<li>Aquí creamos os bloques <code>title</code> e <code>content</code>.</li>
+</ul>
+<p><a id="detalle-26-04"></a></p>
+<h4 id="plantillas-fillas">Plantillas fillas</h4>
+<p>Unha plantilla filla estende da base con <code>{% extends "base.html" %}</code> e define o seu contido nos bloques:</p>
+<p>Plantilla: <code>index.html</code></p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">1{% extends &quot;base.html&quot; %}
+2
+3{% block title %}Inicio{% endblock %}
+4
+5{% block content %}
+6  &lt;h2&gt;Página principal&lt;/h2&gt;
+7  &lt;p&gt;Bienvenido a mi web con Flask y Jinja2.&lt;/p&gt;
+8{% endblock %}
+</code></pre>
+
+
+</div>
+
+<p>Plantilla: <code>contacto.html</code></p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">1{% extends &quot;base.html&quot; %}
+2
+3{% block title %}Contacto{% endblock %}
+4
+5{% block content %}
+6  &lt;h2&gt;Contáctanos&lt;/h2&gt;
+7  &lt;form&gt;
+8    &lt;!-- formulario --&gt;
+9  &lt;/form&gt;
+10{% endblock %}
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-26-05"></a></p>
+<h4 id="vista-en-flask">Vista en Flask</h4>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1from flask import Flask, render_template
+2app = Flask(__name__)
+3
+4@app.route('/')
+5def index():
+6    return render_template('index.html')
+7
+8@app.route('/contacto/')
+9def contacto():
+10    return render_template('contacto.html')
+</code></pre>
+
+
+</div>
+
+<p>Cando o usuario visita <code>/</code>, Flask:</p>
+<ol>
+<li>Carga <code>index.html</code>.</li>
+<li>Inserta o contido dos seus bloques en <code>base.html</code>.</li>
+<li>Devuelve o HTML final ao navegador.</li>
+</ol>
+<p><a id="detalle-26-06"></a></p>
+<h3 id="bloques-anidados-e-extra">Bloques anidados e extra</h3>
+<p>Pódense ter varios bloques: scripts, estilos, sidebar, etc.</p>
+<p>Na filla podes:</p>
+<ul>
+<li>Sobrescribir completamente o bloque.</li>
+<li>Extenderlo coa variable <code>{{ super() }}</code> para manter o contido orixinal e engadir máis.</li>
+</ul>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">{% block scripts %}
+  {{ super() }}
+  &lt;script src=&quot;{{ url_for('static', filename='js/pagina.js') }}&quot;&gt;&lt;/script&gt;
+{% endblock %}
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-26-07"></a></p>
+<h3 id="herencia-multiple-e-anidada">Herencia múltiple e anidada</h3>
+<p>Unha plantilla filla pode ser a súa vez base de outras, creando varios niveis de herencia:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-text">base.html
+└─ dashboard_base.html
+    ├─ usuarios.html
+    └─ productos.html
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-27"></a></p>
+<h3 id="condiciones">Condiciones</h3>
+<p>As condicións permiten que unha plantilla muestre ou oculte contido segundo o valor dunha variable ou o resultado dunha <strong>expresión lóxica</strong>.</p>
+<p>A sintaxe é moi semellante á de Python, pero usando as etiquetas de <strong>Jinja2</strong>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">1{% if condicion %}
+2    &lt;!-- contido se a condición é verdadeira --&gt;
+3{% elif outra_condicion %}
+4    &lt;!-- contido alternativo --&gt;
+5{% else %}
+6    &lt;!-- contido se nada anterior se cumpra --&gt;
+7{% endif %}
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-27-01"></a></p>
+<h3 id="uso-basico">Uso básico</h3>
+<p>Exemplo na vista Flask:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route('/usuario/&lt;nome&gt;/')
+def usuario(nome):
+    return render_template('condicional.html', nome=nome)
+</code></pre>
+
+
+</div>
+
+<p>Plantilla <code>condicional.html</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">{% if nome %}
+    &lt;h1&gt;Ola, {{ nome }}!&lt;/h1&gt;
+{% else %}
+    &lt;h1&gt;Ola, visitante anónimo&lt;/h1&gt;
+{% endif %}
+</code></pre>
+
+
+</div>
+
+<blockquote>
+<p>Se a URL é /usuario/Ana → Ola, Ana!</p>
+<p>Se non se pasa nome (ou é unha cadea baleira) → Ola, visitante anónimo.</p>
+</blockquote>
+<p><a id="detalle-27-02"></a></p>
+<h3 id="comparacions-e-operadores-loxicos">Comparacións e operadores lóxicos</h3>
+<table>
+<thead>
+<tr>
+<th>Operador</th>
+<th>Significado</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>==</code></td>
+<td>Igual a</td>
+<td><code>{% if idade == 18 %}</code></td>
+</tr>
+<tr>
+<td><code>!=</code></td>
+<td>Diferente de</td>
+<td><code>{% if cor != 'vermello' %}</code></td>
+</tr>
+<tr>
+<td><code>&gt;</code> <code>&lt;</code></td>
+<td>Maior / menor que</td>
+<td><code>{% if prezo &gt; 100 %}</code></td>
+</tr>
+<tr>
+<td><code>&gt;=</code> <code>&lt;=</code></td>
+<td>Maior ou igual / Menor ou igual</td>
+<td><code>{% if cantidade &gt;= 10 %}</code></td>
+</tr>
+<tr>
+<td><code>and</code></td>
+<td>E lóxico</td>
+<td><code>{% if activo and premium %}</code></td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td>Ou lóxico</td>
+<td><code>{% if admin or editor %}</code></td>
+</tr>
+<tr>
+<td><code>not</code></td>
+<td>Negación</td>
+<td><code>{% if not usuario %}</code></td>
+</tr>
+<tr>
+<td><code>in</code></td>
+<td>Pertence a colección</td>
+<td><code>{% if 'vermello' in cores %}</code></td>
+</tr>
+</tbody>
+</table>
+<p><a id="detalle-27-03"></a></p>
+<h3 id="verificar-existencia-de-variables">Verificar existencia de variables</h3>
+<p>Se a variable non existe ou é <strong>None</strong>, a condición considérase falsa:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">{% if pais %}
+   País: {{ pais }}
+{% else %}
+   País non especificado
+{% endif %}
+</code></pre>
+
+
+</div>
+
+<p>Podemos combinalo co filtro <code>default</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">&lt;p&gt;País: {{ pais | default('Descoñecido') }}&lt;/p&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-27-04"></a></p>
+<h3 id="probas-tests-de-jinja2">Probas (tests) de Jinja2</h3>
+<table>
+<thead>
+<tr>
+<th>Proba</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>defined</code> / <code>undefined</code></td>
+<td><code>{% if variable is defined %}</code></td>
+</tr>
+<tr>
+<td><code>none</code></td>
+<td><code>{% if variable is none %}</code></td>
+</tr>
+<tr>
+<td><code>odd</code> / <code>even</code></td>
+<td><code>{% if numero is even %}</code></td>
+</tr>
+<tr>
+<td><code>divisibleby(n)</code></td>
+<td><code>{% if numero is divisibleby 3 %}</code></td>
+</tr>
+<tr>
+<td><code>string</code> / <code>number</code></td>
+<td><code>{% if dato is string %}</code></td>
+</tr>
+<tr>
+<td><code>sequence</code></td>
+<td><code>{% if lista is sequence %}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Exemplo:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">{% if idade is divisibleby 2 %}
+    &lt;p&gt;A idade é par&lt;/p&gt;
+{% else %}
+    &lt;p&gt;A idade é impar&lt;/p&gt;
+{% endif %}
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-27-05"></a></p>
+<h3 id="exemplo-completo_1">Exemplo completo</h3>
+<p>Vista:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1@app.route('/produtos/')
+2def produtos():
+3    items = [
+4        {&quot;nome&quot;: &quot;Portátil&quot;, &quot;prezo&quot;: 800},
+5        {&quot;nome&quot;: &quot;Ratón&quot;, &quot;prezo&quot;: 20},
+6        {&quot;nome&quot;: &quot;Teclado&quot;, &quot;prezo&quot;: 35}
+7    ]
+8    return render_template('produtos.html', produtos=items, oferta=True)
+</code></pre>
+
+
+</div>
+
+<p>Plantilla <code>produtos.html</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">1&lt;h1&gt;Lista de produtos&lt;/h1&gt;
+2&lt;ul&gt;
+3  {% for p in produtos %}
+4    &lt;li&gt;
+5      {{ p.nome }} - {{ p.prezo }} €
+6      {% if p.prezo &gt; 100 %}
+7          &lt;strong&gt;(Caro)&lt;/strong&gt;
+8      {% else %}
+9          (Económico)
+10      {% endif %}
+11    &lt;/li&gt;
+12  {% endfor %}
+13&lt;/ul&gt;
+14
+15{% if oferta %}
+16    &lt;p&gt;¡Hoxe todos os produtos teñen un 10% de descuento!&lt;/p&gt;
+17{% endif %}
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-28"></a></p>
+<h3 id="bucles">Bucles</h3>
+<p>En Jinja2 podemos recorrer <strong>listas</strong>, <strong>tuplas</strong>, <strong>diccionarios</strong> e <strong>outros iterables</strong> utilizando a sentencia de control <code>{% for ... %}</code>.</p>
+<p>Isto permite xerar HTML repetitivo de forma dinámica: táboas, listas de elementos, menús, etc.</p>
+<p><a id="detalle-28-01"></a></p>
+<h3 id="sintaxe-basica">Sintaxe básica</h3>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">{% for elemento in coleccion %}
+   {{ elemento }}
+{% endfor %}
+</code></pre>
+
+
+</div>
+
+<ul>
+<li><strong><em>elemento</em></strong> é a variable de iteración.</li>
+<li><strong><em>colección</em></strong> é unha lista, tupla, conxunto, diccionario ou obxecto iterable que tes pasado á plantilla.</li>
+</ul>
+<p>Ejemplo:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route('/colores/')
+def colores():
+    lista = [&quot;rojo&quot;, &quot;verde&quot;, &quot;azul&quot;]
+    return render_template(&quot;colores.html&quot;, colores=lista)
+</code></pre>
+
+
+</div>
+
+<p>Plantilla <code>colores.html</code></p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">&lt;ul&gt;
+  {% for color in colores %}
+    &lt;li&gt;{{ color }}&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+</code></pre>
+
+
+</div>
+
+<p>Saída:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li&gt;rojo&lt;/li&gt;
+  &lt;li&gt;verde&lt;/li&gt;
+  &lt;li&gt;azul&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-28-02"></a></p>
+<h3 id="variables-especiais-do-bucle">Variables especiais do bucle</h3>
+<p>Dentro de un bucle Jinja, a variable implícita loop proporciona información útil:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>loop.index</code></td>
+<td>Iteración actual (comeza en 1).</td>
+</tr>
+<tr>
+<td><code>loop.index0</code></td>
+<td>Iteración actual (comeza en 0).</td>
+</tr>
+<tr>
+<td><code>loop.first</code></td>
+<td>True na primeira iteración.</td>
+</tr>
+<tr>
+<td><code>loop.last</code></td>
+<td>True na última iteración.</td>
+</tr>
+<tr>
+<td><code>loop.length</code></td>
+<td>Número total de elementos da colección.</td>
+</tr>
+<tr>
+<td><code>loop.revindex</code></td>
+<td>Nº de elementos restantes (comeza en 1 ao final).</td>
+</tr>
+<tr>
+<td><code>loop.revindex0</code></td>
+<td>Igual ao anterior pero comezando en 0.</td>
+</tr>
+<tr>
+<td><code>loop.cycle(a,b)</code></td>
+<td>Alterna valores en cada iteración (ideal para filas).</td>
+</tr>
+</tbody>
+</table>
+<p>Ejemplo:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">1&lt;ul&gt;
+2  {% for color in colores %}
+3    &lt;li&gt;{{ loop.index }} - {{ color }}
+4        {% if loop.first %}(primer elemento){% endif %}
+5    &lt;/li&gt;
+6  {% endfor %}
+7&lt;/ul&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-28-03"></a></p>
+<h3 id="control-de-espazos-e-saltos-de-lina">Control de espazos e saltos de liña</h3>
+<p>Para evitar que se xeren liñas en branco indeseadas, se pode engadir un guión <code>(-)</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">{% for elem in lista -%}
+   &lt;li&gt;{{ elem }}&lt;/li&gt;
+{%- endfor %}
+</code></pre>
+
+
+</div>
+
+<blockquote>
+<p>O guión suprime o salto de liña que normalmente engade Jinja2.</p>
+</blockquote>
+<p><a id="detalle-28-04"></a></p>
+<h3 id="bucles-anidados">Bucles anidados</h3>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">1&lt;ul&gt;
+2  {% for fila in matriz %}
+3    &lt;li&gt;
+4      {% for celda in fila %}
+5        [{{ celda }}]
+6      {% endfor %}
+7    &lt;/li&gt;
+8  {% endfor %}
+9&lt;/ul&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-28-05"></a></p>
+<h3 id="recorrer-diccionarios">Recorrer diccionarios</h3>
+<p>Cando a colección é un diccionario, podes acceder a <strong>chaves</strong> e <strong>valores</strong>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route('/usuarios/')
+def usuarios():
+    data = {&quot;Ana&quot;: 25, &quot;Luis&quot;: 30}
+    return render_template(&quot;usuarios.html&quot;, usuarios=data)
+</code></pre>
+
+
+</div>
+
+<p>Plantilla:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">&lt;ul&gt;
+  {% for nombre, edad in usuarios.items() %}
+    &lt;li&gt;{{ nombre }}: {{ edad }} anos&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-28-06"></a></p>
+<h3 id="uso-de-filtros-dentro-do-bucle">Uso de filtros dentro do bucle</h3>
+<p>Podes aplicar filtros mentres iteras:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">&lt;ul&gt;
+  {% for nombre in nombres|sort %}
+    &lt;li&gt;{{ nombre|capitalize }}&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-28-07"></a></p>
+<h3 id="romper-ou-continuar-o-bucle">Romper ou continuar o bucle</h3>
+<p>Jinja2 ofrece break e continue (desde versións recentes):</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">1{% for n in numeros %}
+2    {% if n == 0 %}
+3        {% continue %}
+4    {% endif %}
+5    {% if n &gt; 10 %}
+6        {% break %}
+7    {% endif %}
+8    &lt;p&gt;{{ n }}&lt;/p&gt;
+9{% endfor %}
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-28-08"></a></p>
+<h3 id="condicionais-dentro-de-bucles">Condicionais dentro de bucles</h3>
+<p>Pódese combinar if con for para filtrar datos:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">1&lt;ul&gt;
+2  {% for n in numeros %}
+3    {% if n &gt; 5 %}
+4       &lt;li&gt;{{ n }}&lt;/li&gt;
+5    {% endif %}
+6  {% endfor %}
+7&lt;/ul&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-28-09"></a></p>
+<h3 id="exemplo-completo_2">Exemplo completo</h3>
+<p>Vista:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1@app.route('/productos/')
+2def productos():
+3    items = [
+4        {&quot;nombre&quot;: &quot;Portátil&quot;, &quot;precio&quot;: 800},
+5        {&quot;nombre&quot;: &quot;Ratón&quot;, &quot;precio&quot;: 20},
+6        {&quot;nombre&quot;: &quot;Teclado&quot;, &quot;precio&quot;: 35}
+7    ]
+8    return render_template(&quot;productos.html&quot;, productos=items)
+</code></pre>
+
+
+</div>
+
+<p>Plantilla <code>productos.html</code></p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">1&lt;table border=&quot;1&quot;&gt;
+2  &lt;tr&gt;&lt;th&gt;#&lt;/th&gt;&lt;th&gt;Producto&lt;/th&gt;&lt;th&gt;Precio&lt;/th&gt;&lt;/tr&gt;
+3  {% for p in productos %}
+4    &lt;tr class=&quot;{{ loop.cycle('fila-par','fila-impar') }}&quot;&gt;
+5      &lt;td&gt;{{ loop.index }}&lt;/td&gt;
+6      &lt;td&gt;{{ p.nombre }}&lt;/td&gt;
+7      &lt;td&gt;{{ p.precio }} €&lt;/td&gt;
+8    &lt;/tr&gt;
+9  {% endfor %}
+10&lt;/table&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-29"></a></p>
+<h3 id="comentarios">Comentarios</h3>
+<p>Os comentarios serven para <strong>anotar</strong> ou <strong>explicar o código</strong> da plantilla sen que esas notas aparezan no HTML final que recibe o navegador.</p>
+<p>Son moi útiles para:</p>
+<ul>
+<li>Documentar partes complexas da plantilla.</li>
+<li>Deixar recordatorios ou instrucións para outros desenvolvedores.</li>
+<li>Desactivar temporalmente fragmentos de código sen borralos.</li>
+</ul>
+<p><a id="detalle-29-01"></a></p>
+<h3 id="sintaxe">Sintaxe</h3>
+<p>A sintaxe de comentario en Jinja2 é:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">{#  Este es un comentario  #}
+</code></pre>
+
+
+</div>
+
+<ul>
+<li>Todo o que estea entre {# e #} ignórase completamente ao renderizar a plantilla.</li>
+<li>O comentario non se envía ao cliente nin aparece no HTML final.</li>
+</ul>
+<p>Exemplo:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">{# Aquí mostramos el nombre del usuario #}
+&lt;p&gt;Bienvenido, {{ usuario }}&lt;/p&gt;
+</code></pre>
+
+
+</div>
+
+<p>No navegador só verás:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-text">&lt;p&gt;Bienvenido, Ana&lt;/p&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-29-02"></a></p>
+<h3 id="comentarios-de-varias-linas">Comentarios de varias liñas</h3>
+<p>Pódense escribir comentarios longos en varias liñas:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">1{#
+2  Este bloque de HTML muestra
+3  la lista de productos disponibles.
+4  Se actualiza automáticamente.
+5#}
+6&lt;ul&gt;
+7  {% for p in productos %}
+8    &lt;li&gt;{{ p }}&lt;/li&gt;
+9  {% endfor %}
+10&lt;/ul&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-29-03"></a></p>
+<h3 id="desactivar-temporalmente-codigo">Desactivar temporalmente código</h3>
+<p>Pódense comentar fragmentos de código Jinja2 para probas:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">{#
+{% if usuario %}
+  &lt;p&gt;Hola, {{ usuario }}&lt;/p&gt;
+{% endif %}
+#}
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-30"></a></p>
+<h2 id="formularios">Formularios</h2>
+<p>Un formulario HTML é a forma máis común de recoller información do usuario nunha páxina web: nome, contrasinal, comentarios, arquivos…</p>
+<p>A estrutura básica é:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">1&lt;form method=&quot;POST&quot; action=&quot;/procesar&quot;&gt;
+2  &lt;label for=&quot;nome&quot;&gt;Nome:&lt;/label&gt;
+3  &lt;input id=&quot;nome&quot; name=&quot;nome&quot; type=&quot;text&quot;&gt;
+4
+5  &lt;label for=&quot;idade&quot;&gt;Idade:&lt;/label&gt;
+6  &lt;input id=&quot;idade&quot; name=&quot;idade&quot; type=&quot;number&quot;&gt;
+7
+8  &lt;button type=&quot;submit&quot;&gt;Enviar&lt;/button&gt;
+9&lt;/form&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-30-01"></a></p>
+<h4 id="elementos-clave">Elementos clave</h4>
+<ul>
+<li>\&lt;form&gt;: o contedor principal.</li>
+<li>method → determina como se envían os datos:<ul>
+<li>GET: engade os datos á URL. Útil en búsquedas.</li>
+<li>POST: manda os datos no corpo da petición. Máis usado en formularios de login, rexistro, etc.</li>
+</ul>
+</li>
+<li>action → a ruta do servidor que recibirá a información (en Flask será unha función).</li>
+<li>Campos:</li>
+<li>\&lt;input&gt;: para datos de texto, números, contrasinais, emails, etc.</li>
+<li>\&lt;textarea&gt;: para textos largos (comentarios).</li>
+<li>\&lt;select&gt;: listas desplegables.</li>
+<li>\&lt;button type="submit"&gt;: botón que envía o formulario.</li>
+<li>Atributos importantes:</li>
+<li>name: a clave coa que o servidor recibirá o valor.</li>
+<li>required: fai que o campo sexa obrigatorio.</li>
+<li>type: define o tipo de dato (text, password, number, email, etc.).</li>
+</ul>
+<p><a id="detalle-30-02"></a></p>
+<h4 id="exemplo-con-validacion-simple-en-html5">Exemplo con validación simple en HTML5</h4>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">1&lt;form method=&quot;POST&quot; action=&quot;/rexistro&quot;&gt;
+2  &lt;label for=&quot;email&quot;&gt;Correo:&lt;/label&gt;
+3  &lt;input id=&quot;email&quot; name=&quot;email&quot; type=&quot;email&quot; required&gt;
+4
+5  &lt;label for=&quot;contrasinal&quot;&gt;Contrasinal:&lt;/label&gt;
+6  &lt;input id=&quot;contrasinal&quot; name=&quot;contrasinal&quot; type=&quot;password&quot; required minlength=&quot;6&quot;&gt;
+7
+8  &lt;button type=&quot;submit&quot;&gt;Rexistrarse&lt;/button&gt;
+9&lt;/form&gt;
+</code></pre>
+
+
+</div>
+
+<p>Neste caso:</p>
+<ul>
+<li>O navegador pedirá que o campo email teña un formato válido.</li>
+<li>O contrasinal debe ter mínimo 6 caracteres.</li>
+</ul>
+<p><a id="seccion-31"></a></p>
+<h3 id="formularios-en-flask">Formularios en Flask</h3>
+<p>Flask nos permite recibir os datos que o usuario introduce nun formulario. Para ello usamos o obxecto request.</p>
+<p><a id="detalle-31-01"></a></p>
+<h4 id="flujo-basico">Flujo básico</h4>
+<ol>
+<li>Creamos unha ruta que mostra o formulario (cunha plantilla HTML).</li>
+<li>Creamos outra ruta que recibe os datos cando o usuario pulsa “Enviar”.</li>
+</ol>
+<p>Ejemplo en <code>main.py</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1from flask import Flask, render_template, request
+2
+3app = Flask(__name__)
+4
+5@app.route(&quot;/formulario&quot;)
+6def formulario():
+7    return render_template(&quot;formulario.html&quot;)
+8
+9@app.route(&quot;/procesar&quot;, methods=[&quot;POST&quot;])
+10def procesar():
+11    nome = request.form[&quot;nome&quot;]
+12    idade = request.form[&quot;idade&quot;]
+13    return f&quot;Hola {nome}, tes {idade} anos&quot;
+</code></pre>
+
+
+</div>
+
+<ul>
+<li><code>@app.route("/formulario")</code>: mostra a páxina co formulario.</li>
+<li><code>@app.route("/procesar", methods=["POST"])</code>: define a ruta que recibirá a información.</li>
+<li><code>request.form["nome"]</code>: accede ao valor do campo name="nome" do formulario.</li>
+<li><code>request.form</code> é como un diccionario con todos os datos enviados mediante POST.</li>
+</ul>
+<p><a id="detalle-31-02"></a></p>
+<h4 id="plantilla-templatesformulariohtml">Plantilla templates/formulario.html</h4>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">1&lt;!DOCTYPE html&gt;
+2&lt;html lang=&quot;gl&quot;&gt;
+3&lt;head&gt;
+4  &lt;meta charset=&quot;UTF-8&quot;&gt;
+5  &lt;title&gt;Formulario&lt;/title&gt;
+6&lt;/head&gt;
+7&lt;body&gt;
+8  &lt;h1&gt;Introduce os teus datos&lt;/h1&gt;
+9  &lt;form method=&quot;POST&quot; action=&quot;/procesar&quot;&gt;
+10    &lt;label for=&quot;nome&quot;&gt;Nome:&lt;/label&gt;
+11    &lt;input id=&quot;nome&quot; name=&quot;nome&quot; type=&quot;text&quot; required&gt;
+12
+13    &lt;label for=&quot;idade&quot;&gt;Idade:&lt;/label&gt;
+14    &lt;input id=&quot;idade&quot; name=&quot;idade&quot; type=&quot;number&quot; required&gt;
+15
+16    &lt;button type=&quot;submit&quot;&gt;Enviar&lt;/button&gt;
+17  &lt;/form&gt;
+18&lt;/body&gt;
+19&lt;/html&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-31-03"></a></p>
+<h4 id="listas-de-valores-checkboxes">Listas de valores (checkboxes)</h4>
+<p>Cando hai varias casillas co mesmo nome, Flask devuelve unha lista:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">1&lt;form method=&quot;POST&quot; action=&quot;/procesar&quot;&gt;
+2  &lt;p&gt;Linguas favoritas:&lt;/p&gt;
+3  &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;linguas&quot; value=&quot;Python&quot;&gt; Python&lt;/label&gt;
+4  &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;linguas&quot; value=&quot;Java&quot;&gt; Java&lt;/label&gt;
+5  &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;linguas&quot; value=&quot;C#&quot;&gt; C#&lt;/label&gt;
+6  &lt;button type=&quot;submit&quot;&gt;Enviar&lt;/button&gt;
+7&lt;/form&gt;
+</code></pre>
+
+
+</div>
+
+<p>En Flask:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route(&quot;/procesar&quot;, methods=[&quot;POST&quot;])
+def procesar():
+    linguas = request.form.getlist(&quot;linguas&quot;)
+    return f&quot;Os teus linguas favoritos son: {', '.join(linguas)}&quot;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-31-04"></a></p>
+<h4 id="datos-con-get">Datos con GET</h4>
+<p>Se o formulario usa method="GET", os valores chegan na URL:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python" runnable="" source="/procesar?nome=Ana&amp;idade=20">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">/procesar?nome=Ana&amp;idade=20
+</code></pre>
+
+
+</div>
+
+<p>E accedemos con <code>request.args</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">@app.route(&quot;/procesar&quot;, methods=[&quot;GET&quot;])
+def procesar_get():
+    nome = request.args.get(&quot;nome&quot;)
+    idade = request.args.get(&quot;idade&quot;)
+    return f&quot;Hola {nome}, tes {idade} anos&quot;
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-32"></a></p>
+<h3 id="validacion-no-servidor">Validación no servidor</h3>
+<p>Aunque o navegador pode facer validacións básicas con <strong>HTML5</strong> (ex. required, type="email", min, max…), non basta con iso.</p>
+<p>O usuario <strong>pode desactivar</strong> <strong>JavaScript</strong> ou enviar peticións falsas. Por iso sempre <strong>debemos comprobar os datos no servidor</strong>.</p>
+<p><a id="detalle-32-01"></a></p>
+<h4 id="comprobar-campos-baleiros">Comprobar campos baleiros</h4>
+<p>Exemplo: un formulario de rexistro pide nome e idade.</p>
+<p>En Flask, comprobamos antes de usalos:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1@app.route(&quot;/procesar&quot;, methods=[&quot;POST&quot;])
+2def procesar():
+3    nome = request.form.get(&quot;nome&quot;, &quot;&quot;).strip()
+4    idade = request.form.get(&quot;idade&quot;, &quot;&quot;)
+5
+6    if not nome:
+7        return &quot;O nome é obrigatorio&quot;, 400
+8    if not idade:
+9        return &quot;A idade é obrigatoria&quot;, 400
+10
+11    return f&quot;Rexistro correcto: {nome} ({idade} anos)&quot;
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-32-02"></a></p>
+<h4 id="validar-tipo-de-dato">Validar tipo de dato</h4>
+<p>Por exemplo, asegurarnos de que idade sexa un número enteiro:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python" runnable="" source="if not idade.isdigit():
+    return &quot;A idade debe ser un número&quot;, 400
+
+idade = int(idade)
+if idade &lt; 0 or idade &gt; 120:
+    return &quot;A idade non é válida&quot;, 400">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1if not idade.isdigit():
+2    return &quot;A idade debe ser un número&quot;, 400
+3
+4idade = int(idade)
+5if idade &lt; 0 or idade &gt; 120:
+6    return &quot;A idade non é válida&quot;, 400
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-32-03"></a></p>
+<h4 id="validar-con-regras-propias">Validar con regras propias</h4>
+<p>Outros casos comúns:</p>
+<ul>
+<li>Emails: que contengan @.</li>
+<li>Contraseñas: mínimo de caracteres.</li>
+<li>Seleccións: que o valor enviado esté nunha lista permitida.</li>
+</ul>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python" runnable="" source="rol = request.form.get(&quot;rol&quot;, &quot;&quot;)
+if rol not in roles_permitidos:
+    return &quot;O rol non é válido&quot;, 400">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">rol = request.form.get(&quot;rol&quot;, &quot;&quot;)
+if rol not in roles_permitidos:
+    return &quot;O rol non é válido&quot;, 400
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-32-04"></a></p>
+<h4 id="devolver-mensaxes-claros">Devolver mensaxes claros</h4>
+<p>En lugar de mostrar un simple “erro”, convén indicar cal é o campo que fallou para que o usuario poida corrixilo.</p>
+<p>Exemplo de resposta con varios erros:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python" runnable="" source="erros = []
+if not nome:
+    erros.append(&quot;O nome é obrigatorio&quot;)
+if not idade.isdigit():
+    erros.append(&quot;A idade debe ser un número&quot;)
+
+if erros:
+    return &quot;&lt;br&gt;&quot;.join(erros), 400">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1erros = []
+2if not nome:
+3    erros.append(&quot;O nome é obrigatorio&quot;)
+4if not idade.isdigit():
+5    erros.append(&quot;A idade debe ser un número&quot;)
+6
+7if erros:
+8    return &quot;&lt;br&gt;&quot;.join(erros), 400
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-33"></a></p>
+<h3 id="erros-nas-plantillas">Erros nas plantillas</h3>
+<p>Cando traballamos con formularios en Flask, o habitual é que o usuario poida cometer erros ao enviar datos: campos baleiros, formatos incorrectos, valores fóra de rango, etc.</p>
+<p>En lugar de mostrar un mensaje xenérico, é máis útil <strong>manter a mesma vista</strong> e <strong>amosar os erros</strong> xusto debaixo do formulario ou de cada campo.</p>
+<p>Por defecto, se devolvemos unha cadea cun erro, o navegador só mostrará ese texto plano:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python" runnable="" source="return &quot;O nome é obrigatorio&quot;, 400">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">return &quot;O nome é obrigatorio&quot;, 400
+</code></pre>
+
+
+</div>
+
+<p><a id="detalle-33-01"></a></p>
+<h3 id="volver-a-renderizar-a-plantilla">Volver a renderizar a plantilla</h3>
+<p>O fluxo sería:</p>
+<ul>
+<li>Validamos os datos no servidor.</li>
+<li>Se hai erros, volvemos a renderizar a mesma plantilla pasando a mensaxe de erro como unha variable (ao igual que calquera outra).</li>
+<li>Así, a plantilla pode amosar o erro sen perder os datos introducidos.</li>
+</ul>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1@app.route(&quot;/login&quot;, methods=[&quot;POST&quot;])
+2def login():
+3    error = None
+4    name = &quot;&quot;
+5    password = &quot;&quot;
+6
+7    if request.method == &quot;POST&quot;:
+8        name = request.form.get(&quot;name&quot;, &quot;&quot;).strip()
+9        password = request.form.get(&quot;password&quot;, &quot;&quot;)
+10
+11        if not name:
+12            error = &quot;O nome é obrigatorio&quot;
+13        elif password != 1234: # Para este exemplo, só consideramos válida a password: 1234 
+14            error = &quot;Credenciais incorrectas&quot;
+15
+16        if error:
+17            # Volvemos ao formulario co erro
+18            return render_template(&quot;login.html&quot;, error=error, name=name, password=password)
+19
+20        # Se todo vai ben → rediriximos a outra ruta
+21        return redirect(url_for(&quot;pagina_principal&quot;, name=name))
+22
+23    return render_template(&quot;login.html&quot;)
+</code></pre>
+
+
+</div>
+
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">1&lt;form method=&quot;POST&quot;&gt;
+2  &lt;label&gt;Nome:&lt;/label&gt;&lt;br&gt;
+3  &lt;input type=&quot;text&quot; name=&quot;name&quot; value=&quot;{{ nome or '' }}&quot;&gt;&lt;br&gt;
+4  
+5  &lt;label&gt;Contraseña:&lt;/label&gt;&lt;br&gt;
+6  &lt;input type=&quot;password&quot; name=&quot;password&quot; value=&quot;{{ password or '' }}&quot;&gt;&lt;br&gt;
+7  
+8  {% if error %}
+9    &lt;p class=&quot;error&quot;&gt;{{ error }}&lt;/p&gt;
+10  {% endif %}
+11  
+12  &lt;button type=&quot;submit&quot;&gt;Enviar&lt;/button&gt;
+13&lt;/form&gt;
+</code></pre>
+
+
+</div>
+
+<p><a id="seccion-34"></a></p>
+<h3 id="seguridade">Seguridade</h3>
+<p>Cando traballamos con formularios en aplicacións web non basta que funcionen: tamén hai que <strong>pensar na seguridade</strong>.</p>
+<p><a id="detalle-34-01"></a></p>
+<h4 id="escape-de-datos">Escape de datos</h4>
+<p>Todo o que o usuario escribe nun formulario podería conter código malicioso (exemplo: <code>&lt;script&gt;alert("hola")&lt;/script&gt;</code>).</p>
+<p>Para evitar que eso se execute na nosa páxina, Flask/Jinja escapan automaticamente o contido das variables para evitar calquera posible ataque.</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-django">&lt;p&gt;{{ comentario }}&lt;/p&gt;
+</code></pre>
+
+
+</div>
+
+<p>Na páxina verase tal cual como texto, <strong>non se execute</strong>.</p>
+<hr />
+<p><a id="detalle-34-02"></a></p>
+<h4 id="csrf-cross-site-request-forgery">CSRF (Cross-Site Request Forgery)</h4>
+<p>É un ataque no que outra web tenta enganar ao usuario para que envíe un formulario á nosa aplicación sen darse conta.</p>
+<p>A defensa básica é usar un <strong>token oculto</strong> no formulario que só o noso servidor coñece.</p>
+<p>En proxectos reais se usa a librería <strong>Flask-WTF</strong>, que engade automaticamente ese token de seguridade.</p>
+<hr />
+<p><a id="detalle-34-03"></a></p>
+<h4 id="validar-sempre-no-servidor">Validar sempre no servidor</h4>
+<p>Non confiar só nas validacións de HTML ou JavaScript. O navegador pode saltarlas, pero o <strong>servidor sempre debe comprobar que os datos son correctos</strong>.</p>
+<hr />
+<p><a id="detalle-34-04"></a></p>
+<h4 id="subida-de-arquivos">Subida de arquivos</h4>
+<p>Se o formulario permite subir ficheiros (<code>&lt;input type="file"&gt;</code>):</p>
+<ul>
+<li>Comprobar a extensión (exemplo: só .jpg, .png, .pdf).</li>
+<li>Poner un límite de tamaño para evitar abusos.</li>
+<li>Gardalos nunha carpeta controlada, nunca en calquera parte do proxecto.</li>
+</ul>
+<p><a id="seccion-35"></a></p>
+<h3 id="subida-de-arquivos_1">Subida de arquivos</h3>
+<p>Moitas veces un formulario non só recolle texto, senón tamén arquivos (exemplo: foto de perfil, documento PDF…). Flask permite facelo de forma sinxela.</p>
+<p><a id="detalle-35-01"></a></p>
+<h4 id="formulario-en-html">Formulario en HTML</h4>
+<p>Para subir arquivos hai que engadir un atributo especial en <code>&lt;form&gt;</code>:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="html">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">html</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-html">&lt;form method=&quot;POST&quot; action=&quot;/subir&quot; enctype=&quot;multipart/form-data&quot;&gt;
+  &lt;label for=&quot;arquivo&quot;&gt;Selecciona un arquivo:&lt;/label&gt;
+  &lt;input id=&quot;arquivo&quot; type=&quot;file&quot; name=&quot;arquivo&quot; required&gt;
+  &lt;button type=&quot;submit&quot;&gt;Subir&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+
+
+</div>
+
+<ul>
+<li>enctype="multipart/form-data" → obrigatorio para que o navegador envíe o arquivo.</li>
+<li>type="file" → mostra o selector de ficheiros.</li>
+<li>name="arquivo" → será a clave que usaremos en Flask.</li>
+</ul>
+<p><a id="detalle-35-02"></a></p>
+<h4 id="recibir-arquivo-en-flask">Recibir arquivo en Flask</h4>
+<p>Na ruta usamos <code>request.files</code> para acceder ao arquivo:</p>
+<div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
+
+<div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
+
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">python</span>
+
+<div class="flex items-center gap-3">
+
+</div>
+
+</div>
+
+
+<pre><code class="language-python">1import os
+2from flask import Flask, request
+3
+4app = Flask(__name__)
+5
+6@app.route(&quot;/subir&quot;, methods=[&quot;POST&quot;])
+7def subir():
+8    arquivo = request.files[&quot;arquivo&quot;]
+9    if arquivo.filename == &quot;&quot;:
+10        return &quot;Non seleccionaches ningún arquivo&quot;, 400
+11
+12    ruta = os.path.join(&quot;uploads&quot;, arquivo.filename)
+13    arquivo.save(ruta)
+14
+15    return f&quot;Arquivo {arquivo.filename} subido con éxito&quot;
+</code></pre>
+
+
+</div>
+
+<div class="not-prose my-5 rounded-xl border overflow-hidden bg-green-50/60 dark:bg-green-950/20 border-green-200 dark:border-green-900/60" hint="success">
+
+<div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-green-200 dark:border-green-900/60 bg-green-100/60 dark:bg-green-900/20">
+
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">**Limitar o tamaño dos arquivos**</span>
+
+</div>
+
+<div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
+
+En Flask podemos limitar o tamaño máximo da seguinte forma
+
+`app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024 # 5 MB`
+
+</div>
+
+</div>
+</body>
+</html>
