@@ -21,6 +21,11 @@ mysql_db.connect()
 app = Flask(__name__)
 TITLE = "FLASK PROJECT"
 
+@app.route('/peticiones/')
+def return_string():
+    url = request.url
+    return f"A URL solicitada é: {url}"
+
 @app.route('/')
 def home():
     return render_template('home.html', main_title = TITLE)

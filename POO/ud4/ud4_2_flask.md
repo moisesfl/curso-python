@@ -363,7 +363,7 @@ Podemos gardar a primeira aplicación nun único ficheiro chamado `main.py`:
 
 <a id="detalle-05-01"></a>
 
-#### Explicación do código
+#### Explicación do código:
 
 <div class="my-6" stepper="">
 
@@ -373,7 +373,7 @@ Podemos gardar a primeira aplicación nun único ficheiro chamado `main.py`:
 
 <div class="mt-3.5 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm ring-4 ring-white dark:ring-neutral-800" style="background-color: var(--color-book);">
 
-1
+
 
 </div>
 
@@ -385,7 +385,7 @@ Podemos gardar a primeira aplicación nun único ficheiro chamado `main.py`:
 
 <div class="min-w-0 flex-1 mb-4 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="1">
 
-**Importación da clase Flask**
+**1. Importación da clase Flask**
 
 Na primeira liña relevante importamos a clase Flask desde a librería do mesmo nome.
 
@@ -399,7 +399,7 @@ Na primeira liña relevante importamos a clase Flask desde a librería do mesmo 
 
 <div class="mt-3.5 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm ring-4 ring-white dark:ring-neutral-800" style="background-color: var(--color-book);">
 
-2
+
 
 </div>
 
@@ -411,7 +411,7 @@ Na primeira liña relevante importamos a clase Flask desde a librería do mesmo 
 
 <div class="min-w-0 flex-1 mb-4 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="2">
 
-**Creación da aplicación**
+**2. Creación da aplicación**
 
 A continuación creamos o obxecto app da clase **Flask**. Este obxecto é a aplicación **WSGI**, que nos permitirá despregar e probar o noso proxecto.
 
@@ -427,7 +427,7 @@ Lle pasamos como argumento `__name__`, que indica o módulo actual.
 
 <div class="mt-3.5 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm ring-4 ring-white dark:ring-neutral-800" style="background-color: var(--color-book);">
 
-3
+
 
 </div>
 
@@ -439,7 +439,7 @@ Lle pasamos como argumento `__name__`, que indica o módulo actual.
 
 <div class="min-w-0 flex-1 mb-4 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="3">
 
-**Decorador @app.route('/')**
+**3. Decorador @app.route('/')**
 
 O decorador da función `hello_world()` define a ruta de acceso.
 
@@ -455,7 +455,7 @@ Neste caso, cando o navegador solicita a URL raíz (/), se executará esa funci�
 
 <div class="mt-3.5 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm ring-4 ring-white dark:ring-neutral-800" style="background-color: var(--color-book);">
 
-4
+
 
 </div>
 
@@ -467,7 +467,7 @@ Neste caso, cando o navegador solicita a URL raíz (/), se executará esa funci�
 
 <div class="min-w-0 flex-1 mb-4 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="4">
 
-**Función `hello_world` (función vista)**
+**4. Función `hello_world` (función vista)**
 
 A función `hello_world()` devolve unha **respuesta HTTP**, neste exemplo unha simple cadea de texto: "Ola, Mundo!".
 
@@ -481,7 +481,7 @@ A función `hello_world()` devolve unha **respuesta HTTP**, neste exemplo unha s
 
 <div class="mt-3.5 w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-sm ring-4 ring-white dark:ring-neutral-800" style="background-color: var(--color-book);">
 
-5
+
 
 </div>
 
@@ -489,7 +489,7 @@ A función `hello_world()` devolve unha **respuesta HTTP**, neste exemplo unha s
 
 <div class="min-w-0 flex-1 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="5">
 
-**Ejecución do servidor de desenvolvemento**
+**5. Ejecución do servidor de desenvolvemento**
 
 A sección `if __name__ == '__main__':` indica que, se executamos este ficheiro directamente, se iniciará o servidor de desenvolvemento de Flask con:
 
@@ -914,7 +914,7 @@ URL de exemplo: <a href="http://IP:8080/artigos/6" rel="noopener noreferrer" tar
 2@app.route("/ola/<string:nome>/")
 3@app.route("/ola/<string:nome>/<int:idade>/")
 4def ola(nome=None, idade=None):
-5    se nome e idade:
+5    if nome e idade:
 6        return f"Ola, {nome}, tes {idade} anos."
 7    elif nome:
 8        return f"Ola, {nome}"
@@ -2524,7 +2524,7 @@ En vez de escribir a URL «a man», indica o **nome da función vista** e Flask 
 
 <a id="detalle-23-01"></a>
 
-#### Ventajas de usar `url_for`
+#### Vantaxes de usar `url_for`
 
 - Evita ligazóns rotas: se cambía a ruta en @app.route, as plantillas non precisan cambios.
 - Admite parámetros dinámicos: permite pasar argumentos para crear URLs con variables.
@@ -2536,7 +2536,7 @@ En vez de escribir a URL «a man», indica o **nome da función vista** e Flask 
 
 <a id="detalle-23-03"></a>
 
-#### En as vistas
+#### Nas vistas
 
 <div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python">
 
@@ -2571,7 +2571,7 @@ En vez de escribir a URL «a man», indica o **nome da función vista** e Flask 
 
 <a id="detalle-23-04"></a>
 
-#### En as plantillas
+#### Nas plantillas
 
 Dentro dunha plantilla Jinja2, a sintaxe é idéntica:
 
@@ -2624,7 +2624,7 @@ def producto(id):
 
 </div>
 
-En a plantilla:
+Na plantilla:
 
 <div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="django">
 

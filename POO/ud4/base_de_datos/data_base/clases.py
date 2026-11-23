@@ -184,20 +184,23 @@ class SQLiteDatabase(Database):
             print(f"Error inesperado al conectar con SQLite: {error}")
             return None
 
-    def create(self, data):
+    def create(self, data: Alumno):
 
         try:
+            if not isinstance(data, Alumno):
+                raise ValueError ("Dato no válido")
+            
             if self.connection is None:
                 raise RuntimeError("No existe una conexión con SQLite.")
 
             cursor = self.connection.cursor()
 
             sql = """
-                INSERT INTO usuarios (nombre, email)
+                INSERT INTO alumnos (nombre, email)
                 VALUES (?, ?)
             """
 
-            cursor.execute(sql, (data["nombre"], data["email"]))
+            cursor.execute(sql, (data.nombre, data.email))
 
             self.connection.commit()
 
@@ -220,7 +223,7 @@ class SQLiteDatabase(Database):
 
             cursor = self.connection.cursor()
 
-            sql = "SELECT * FROM usuarios WHERE id = ?"
+            sql = "SELECT * FROM alumnos WHERE id = ?"
 
             cursor.execute(sql, (record_id,))
 
@@ -276,7 +279,7 @@ class SQLiteDatabase(Database):
 
             cursor = self.connection.cursor()
 
-            sql = "DELETE FROM usuarios WHERE id = ?"
+            sql = "DELETE FROM alumnos WHERE id = ?"
 
             cursor.execute(sql, (record_id,))
 

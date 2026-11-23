@@ -6,14 +6,14 @@ from data_base import *
 
 if __name__ == "__main__":
     
-    #mysql
+    ####mysql###
 
     mysql_db = MySQLDatabase("root", "", "clase")
     mysql_db.connect()
 
 
     # Crear usuario
-    alumno = Alumno("juan", "sdf@a.com")
+    alumno = Alumno("juanjoo", "sdf@a.com")
 
     #Guardar el usuario
     #mysql_db.create(alumno)
@@ -21,7 +21,8 @@ if __name__ == "__main__":
 
     mysql_db.delete(7)
 
-    #sqlite
+    ###sqlite###
+
     sqlite_db = SQLiteDatabase("clase")
     sqlite_db.connect()
 
@@ -50,6 +51,11 @@ if __name__ == "__main__":
     #         departamento TEXT,
     #         salario REAL
     #     """)
+
+    sqlite_db.create(alumno)
+
+    print (sqlite_db.read(4))
+    #print (sqlite_db.delete(3))
 
 
 
