@@ -1,5 +1,3 @@
-from ast import Delete
-
 import mysql
 from data_base import *
 
@@ -59,30 +57,20 @@ if __name__ == "__main__":
 
 
 
+#SQL script to create the 'clase' table in MySQL and tables:
+'''
+-- Crear la base de datos 'clase' si no existe
+CREATE DATABASE IF NOT EXISTS clase 
+CHARACTER SET utf8mb4 
+COLLATE utf8mb4_unicode_ci;
 
+-- Seleccionar la base de datos 'clase'
+USE clase;
 
-    # # Leer usuario
-    # resultado = db.read(nuevo_id)
-
-    # print("Usuario:", resultado)
-
-    # # Actualizar usuario
-    # usuario["nombre"] = "Ana García"
-
-    # db.update(nuevo_id, usuario)
-
-    # print("Usuario actualizado:", db.read(nuevo_id))
-
-    # # Eliminar usuario
-    # db.delete(nuevo_id)
-
-    # print("Usuario eliminado:", db.read(nuevo_id))
-
-
-    # # Utilizar SQLite
-    # db = SQLiteDatabase("usuarios.db")
-    # db.connect()
-
-    # gestionar_usuarios(db)
-
-    # db.connection.close()
+-- Crear la tabla 'alumnos'
+CREATE TABLE IF NOT EXISTS alumnos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(150)
+);
+'''

@@ -1,0 +1,15 @@
+<h1>Subir arquivo</h1>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<form action="{{ url_for('subir') }}" 
+      method="POST" 
+      enctype="multipart/form-data">
+
+    <input type="file" name="arquivo">
+
+    <button type="submit">Subir arquivo</button>
+
+</form>

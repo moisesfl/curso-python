@@ -42,10 +42,6 @@
 
 # Programación web - Flask I
 
-<figure class="my-6">
-![Imaxe 25](https://python-poo-edu.rdpzi.com/docs/python-poo/gl/.gitbook/assets/image%20%2825%29.png)
-</figure>
-
 Para realizar aplicacións con Python e algunhas outras linguas é necesario utilizar frameworks como por exemplo **Flask**. Estes utilizan un concepto coñecido como **WSGI** (Web Server Gateway Interfaz).
 
 <div class="not-prose my-5 rounded-xl border overflow-hidden bg-green-50/60 dark:bg-green-950/20 border-green-200 dark:border-green-900/60" hint="success">
@@ -3151,7 +3147,7 @@ Plantilla: `index.html`
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3178,7 +3174,7 @@ Plantilla: `contacto.html`
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3359,7 +3355,7 @@ Plantilla `condicional.html`:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3406,7 +3402,7 @@ Se a variable non existe ou é **None**, a condición considérase falsa:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3463,7 +3459,7 @@ Exemplo:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3518,7 +3514,7 @@ Plantilla `produtos.html`:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3677,7 +3673,7 @@ Ejemplo:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3707,7 +3703,7 @@ Para evitar que se xeren liñas en branco indeseadas, se pode engadir un guión 
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3733,7 +3729,7 @@ Para evitar que se xeren liñas en branco indeseadas, se pode engadir un guión 
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3788,7 +3784,7 @@ Plantilla:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3816,7 +3812,7 @@ Podes aplicar filtros mentres iteras:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3844,7 +3840,7 @@ Jinja2 ofrece break e continue (desde versións recentes):
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3876,7 +3872,7 @@ Pódese combinar if con for para filtrar datos:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3933,7 +3929,7 @@ Plantilla `productos.html`
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3978,7 +3974,7 @@ A sintaxe de comentario en Jinja2 é:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -4044,7 +4040,7 @@ Pódense escribir comentarios longos en varias liñas:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -4077,7 +4073,7 @@ Pódense comentar fragmentos de código Jinja2 para probas:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -4650,7 +4646,7 @@ Para evitar que eso se execute na nosa páxina, Flask/Jinja escapan automaticame
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
