@@ -3560,7 +3560,7 @@ Isto permite xerar HTML repetitivo de forma dinámica: táboas, listas de elemen
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3608,7 +3608,7 @@ Plantilla `colores.html`
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
