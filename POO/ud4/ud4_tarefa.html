@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ud4_tarefa</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Estilos esenciales para que la TABLA sea visible */
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #cbcbcb; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* Estilos para bloques de CÓDIGO */
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border-left: 5px solid #007acc; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d14; }
+        pre code { color: inherit; }
+    </style>
+</head>
+<body>
+    <h1 id="ud04-tarea-entregable-desarrollo-de-una-aplicacion-web-con-flask">UD04 — Tarea entregable: desarrollo de una aplicación web con Flask</h1>
+<hr />
+<h2 id="1-enunciado-general">1. Enunciado general</h2>
+<p><strong>Descripción:</strong></p>
+<p>El alumnado deberá desarrollar una aplicación web para la gestión de tareas pendientes (TO-DO), utilizando Python y el framework Flask.</p>
+<p>Para el desarrollo de la aplicación se tomará como punto de partida el videotutorial disponible en la unidad:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=Z1RJmh_OqeA&amp;t=12s">Flask Tutorial – Full Course for Beginners</a>.</li>
+</ul>
+<p>La aplicación deberá incorporar una serie de modificaciones respecto al videotutorial, poniendo en práctica los conocimientos adquiridos a lo largo de las diferentes unidades del módulo.</p>
+<hr />
+<h2 id="2-requisitos-de-la-aplicacion">2. Requisitos de la aplicación</h2>
+<h3 id="21-funcionalidades">2.1. Funcionalidades</h3>
+<p>La aplicación web deberá permitir:</p>
+<ul>
+<li>Crear nuevas tareas.</li>
+<li>Consultar y visualizar las tareas existentes.</li>
+<li>Modificar tareas.</li>
+<li>Eliminar tareas.</li>
+<li>Almacenar las tareas de forma persistente en una base de datos.</li>
+</ul>
+<h3 id="22-base-de-datos-y-programacion-orientada-a-objetos">2.2. Base de datos y programación orientada a objetos</h3>
+<p>A diferencia del videotutorial, <strong>no se permitirá el uso de la librería SQLAlchemy</strong> para la gestión de la base de datos.</p>
+<p>El alumnado deberá implementar su propio sistema de acceso y gestión de la base de datos, utilizando MySQL o SQLite.</p>
+<p>Para ello, deberá:</p>
+<ul>
+<li>Aplicar los principios de la programación orientada a objetos (POO).</li>
+<li>Implementar las clases necesarias para representar y gestionar los datos de la aplicación.</li>
+<li>Separar la lógica de acceso a la base de datos de la lógica de la aplicación web.</li>
+<li>Crear un paquete Python independiente para la gestión de la base de datos, de forma similar a lo trabajado en los contenidos de la Unidad 2.</li>
+</ul>
+<h3 id="23-diseno-e-interfaz-web">2.3. Diseño e interfaz web</h3>
+<p>La aplicación deberá cumplir los siguientes requisitos:</p>
+<ul>
+<li>La página web tendrá un aspecto personalizado. No se admitirán entregas con un diseño idéntico al del videotutorial.</li>
+<li>La aplicación estará en gallego o castellano.</li>
+<li>La interfaz será intuitiva, organizada y sencilla de utilizar.</li>
+<li>Se utilizarán plantillas HTML (templates) y/o ficheros estáticos (CSS, imágenes, etc.), siguiendo la estructura propia de un proyecto Flask.</li>
+</ul>
+<h3 id="24-calidad-del-codigo">2.4. Calidad del código</h3>
+<ul>
+<li>El código deberá estar organizado y suficientemente comentado de forma explicativa.</li>
+<li>Se utilizarán nombres significativos para las variables, funciones, métodos y clases.</li>
+<li>Se deberán controlar los posibles errores y excepciones que puedan producirse durante la ejecución de la aplicación.</li>
+</ul>
+<h3 id="25-despliegue-de-la-aplicacion">2.5. Despliegue de la aplicación</h3>
+<p>Una vez finalizado el desarrollo, la aplicación deberá desplegarse en una plataforma (por ejemplo PythonAnywhere) que permita acceder a ella a través de Internet.</p>
+<p>El alumnado deberá comprobar que la aplicación desplegada funciona correctamente y que todas sus funcionalidades están disponibles.</p>
+<hr />
+<h2 id="3-consideraciones-importantes">3. Consideraciones importantes</h2>
+<ul>
+<li>El videotutorial servirá como punto de partida, pero el alumnado deberá adaptar y modificar la aplicación de acuerdo con los requisitos establecidos en esta tarea.</li>
+<li>El alumnado deberá ser capaz de explicar y justificar el funcionamiento del código desarrollado.</li>
+<li>Los trabajos en los que se acredite que el código ha sido copiado o generado mediante inteligencia artificial, incumpliendo las normas de la tarea, serán calificados con un 0.</li>
+<li>El docente podrá solicitar una demostración del funcionamiento de la aplicación, una explicación de determinadas partes del código o la realización de pequeñas modificaciones sobre el mismo.</li>
+</ul>
+<hr />
+<h2 id="4-entrega">4. Entrega</h2>
+<h3 id="41-elementos-que-se-deben-entregar">4.1. Elementos que se deben entregar</h3>
+<ul>
+<li>Proyecto en un repositorio de GitHub.</li>
+<li>Fichero ZIP con el proyecto completo.</li>
+<li>Enlace a la aplicación web desplegada.</li>
+</ul>
+<p>El proyecto deberá incluir un fichero <code>README.md</code> en el que se describan, como mínimo, los siguientes aspectos:</p>
+<ul>
+<li>Descripción y funcionalidades de la aplicación.</li>
+<li>Tecnologías utilizadas.</li>
+<li>Estructura del proyecto.</li>
+<li>Instrucciones de instalación y ejecución.</li>
+<li>Instrucciones para la configuración de la base de datos.</li>
+</ul>
+<p>También se deberá incluir un fichero <code>requirements.txt</code> con las dependencias necesarias para ejecutar la aplicación.</p>
+<h3 id="42-formato-de-la-entrega-mediante-fichero-zip">4.2. Formato de la entrega mediante fichero ZIP</h3>
+<p>El formato del nombre del fichero ZIP será el siguiente:</p>
+<p><code>apelido1_apelido2_nome_UD04_tarefa.zip</code></p>
+<p>No será necesario incluir el entorno virtual (<code>.venv</code>) ni los ficheros temporales generados durante el desarrollo.</p>
+<h3 id="43-como-compartir-el-proyecto-en-github">4.3. Cómo compartir el proyecto en GitHub</h3>
+<p>El alumnado deberá asegurarse de que el docente dispone de acceso al repositorio de GitHub para su revisión y evaluación.</p>
+<ol>
+<li>
+<p>Crear un fichero de texto que contenga el enlace al repositorio de GitHub.</p>
+</li>
+<li>
+<p>Nombrar el fichero de la siguiente manera:</p>
+<p><code>apelido1_apelido2_nome_UD04_tarefa_git.txt</code></p>
+</li>
+<li>
+<p>Adjuntar dicho fichero en la entrega.</p>
+</li>
+</ol>
+<h3 id="44-enlace-a-la-aplicacion-desplegada">4.4. Enlace a la aplicación desplegada</h3>
+<ol>
+<li>
+<p>Crear un fichero de texto que contenga el enlace a la aplicación web desplegada.</p>
+</li>
+<li>
+<p>Nombrar el fichero de la siguiente manera:</p>
+<p><code>apelido1_apelido2_nome_UD04_tarefa_despregue.txt</code></p>
+</li>
+<li>
+<p>Adjuntar dicho fichero en la entrega.</p>
+</li>
+</ol>
+</body>
+</html>

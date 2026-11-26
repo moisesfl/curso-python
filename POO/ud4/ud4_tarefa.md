@@ -1,4 +1,4 @@
-# UD04 — Tarea evaluable: desarrollo de una aplicación web con Flask
+# UD04 — Tarea entregable: desarrollo de una aplicación web con Flask
 
 ---
 
@@ -6,7 +6,7 @@
 
 **Descripción:**
 
-El alumnado deberá desarrollar una aplicación web para la gestión de tareas pendientes (TO-DO), utilizando el lenguaje de programación Python y el framework Flask.
+El alumnado deberá desarrollar una aplicación web para la gestión de tareas pendientes (TO-DO), utilizando Python y el framework Flask.
 
 Para el desarrollo de la aplicación se tomará como punto de partida el videotutorial disponible en la unidad:
 
@@ -18,7 +18,7 @@ La aplicación deberá incorporar una serie de modificaciones respecto al videot
 
 ## 2. Requisitos de la aplicación
 
-  ### 2.1. Funcionalidades
+### 2.1. Funcionalidades
 
   La aplicación web deberá permitir:
 
@@ -28,7 +28,7 @@ La aplicación deberá incorporar una serie de modificaciones respecto al videot
   - Eliminar tareas.
   - Almacenar las tareas de forma persistente en una base de datos.
 
-  ### 2.2. Base de datos y programación orientada a objetos
+### 2.2. Base de datos y programación orientada a objetos
 
   A diferencia del videotutorial, **no se permitirá el uso de la librería SQLAlchemy** para la gestión de la base de datos.
 
@@ -41,7 +41,7 @@ La aplicación deberá incorporar una serie de modificaciones respecto al videot
   - Separar la lógica de acceso a la base de datos de la lógica de la aplicación web.
   - Crear un paquete Python independiente para la gestión de la base de datos, de forma similar a lo trabajado en los contenidos de la Unidad 2.
 
-  ### 2.3. Diseño e interfaz web
+### 2.3. Diseño e interfaz web
 
   La aplicación deberá cumplir los siguientes requisitos:
 
@@ -50,13 +50,13 @@ La aplicación deberá incorporar una serie de modificaciones respecto al videot
   - La interfaz será intuitiva, organizada y sencilla de utilizar.
   - Se utilizarán plantillas HTML (templates) y/o ficheros estáticos (CSS, imágenes, etc.), siguiendo la estructura propia de un proyecto Flask.
 
-  ### 2.4. Calidad del código
+### 2.4. Calidad del código
 
   - El código deberá estar organizado y suficientemente comentado de forma explicativa.
   - Se utilizarán nombres significativos para las variables, funciones, métodos y clases.
   - Se deberán controlar los posibles errores y excepciones que puedan producirse durante la ejecución de la aplicación.
 
-  ### 2.5. Despliegue de la aplicación
+### 2.5. Despliegue de la aplicación
 
   Una vez finalizado el desarrollo, la aplicación deberá desplegarse en una plataforma (por ejemplo PythonAnywhere) que permita acceder a ella a través de Internet.
 
@@ -75,7 +75,7 @@ La aplicación deberá incorporar una serie de modificaciones respecto al videot
 
 ## 4. Entrega
 
-  ### 4.1. Elementos que se deben entregar
+### 4.1. Elementos que se deben entregar
 
   - Proyecto en un repositorio de GitHub.
   - Fichero ZIP con el proyecto completo.
@@ -91,7 +91,7 @@ La aplicación deberá incorporar una serie de modificaciones respecto al videot
 
   También se deberá incluir un fichero `requirements.txt` con las dependencias necesarias para ejecutar la aplicación.
 
-  ### 4.2. Formato de la entrega mediante fichero ZIP
+### 4.2. Formato de la entrega mediante fichero ZIP
 
   El formato del nombre del fichero ZIP será el siguiente:
 
@@ -99,7 +99,7 @@ La aplicación deberá incorporar una serie de modificaciones respecto al videot
 
   No será necesario incluir el entorno virtual (`.venv`) ni los ficheros temporales generados durante el desarrollo.
 
-  ### 4.3. Cómo compartir el proyecto en GitHub
+### 4.3. Cómo compartir el proyecto en GitHub
 
   El alumnado deberá asegurarse de que el docente dispone de acceso al repositorio de GitHub para su revisión y evaluación.
 
@@ -111,7 +111,7 @@ La aplicación deberá incorporar una serie de modificaciones respecto al videot
 
   3. Adjuntar dicho fichero en la entrega.
 
-  ### 4.4. Enlace a la aplicación desplegada
+### 4.4. Enlace a la aplicación desplegada
 
   1. Crear un fichero de texto que contenga el enlace a la aplicación web desplegada.
 
