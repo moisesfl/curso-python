@@ -54,7 +54,7 @@ Para realizar aplicacións con Python e algunhas outras linguas é necesario uti
 
 <div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
 
-Un servidor web non sabe ou non ten forma de executar aplicacións en Python. Por iso se creou **WSGI**. Esta é unha especificación de como se comunica un servidor web cunha aplicación web escrita en Python. Este estándar está descrito en detalle na especificación **PEP 3333**.
+Un servidor web non sabe ou non ten forma de executar aplicacións en Python. Por iso se creou <strong>WSGI</strong>. Esta é unha especificación de como se comunica un servidor web cunha aplicación web escrita en Python. Este estándar está descrito en detalle na especificación <strong>PEP 3333</strong>.
 
 </div>
 
@@ -84,9 +84,6 @@ Vamos a realizar a instalación de **Flask** utilizando a ferramenta **pip** nun
 
 Un contorno virtual de Python é un ambiente creado co obxectivo de illar recursos como librerías e contorno de execución, do sistema principal e de outros contornos virtuais. Isto significa que nun mesmo sistema é posible ter instaladas múltiples versións dunha mesma librería sen crear ningún tipo de conflito.
 
-<figure class="my-6">
-![Imaxe 26](https://python-poo-edu.rdpzi.com/docs/python-poo/gl/.gitbook/assets/image%20%2826%29.png)
-</figure>
 
 Para crear un contorno virtual executamos o seguinte comando:
 
@@ -112,7 +109,7 @@ python -m venv venv
 
 <div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-amber-200 dark:border-amber-900/60 bg-amber-100/60 dark:bg-amber-900/20">
 
-<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">**Nome do contorno virtual**</span>
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title=""><strong>Nome do contorno virtual</strong></span>
 
 </div>
 
@@ -132,7 +129,7 @@ Podemos chamar como queiramos á carpeta do contorno virtual, pero os nomes mái
 
 <div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-red-200 dark:border-red-900/60 bg-red-100/60 dark:bg-red-900/20">
 
-<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">**Importante**</span>
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title=""><strong>Importante</strong></span>
 
 </div>
 
@@ -205,7 +202,7 @@ Se queremos desactivalo, tan só temos que executar o seguinte comando:
 
 <div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
 
-Se o non temos permisos da máquina para executar o "activate". Os comandos de **python** e **pip** que queiramos executar no noso proxecto deberán ser empregando os executables que están dentro do `venv` . Exemplo:
+Se o non temos permisos da máquina para executar o "activate". Os comandos de <strong>python</strong> e <strong>pip</strong> que queiramos executar no noso proxecto deberán ser empregando os executables que están dentro do `venv` . Exemplo:
 
 - `.\venv\Scripts\pip install Flask` en vez de `pip install Flask`
 - `.\venv\Scripts\pip freeze` en vez de `pip freeze`
@@ -381,7 +378,7 @@ Podemos gardar a primeira aplicación nun único ficheiro chamado `main.py`:
 
 <div class="min-w-0 flex-1 mb-4 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="1">
 
-**1. Importación da clase Flask**
+<strong>1. Importación da clase Flask</strong>
 
 Na primeira liña relevante importamos a clase Flask desde a librería do mesmo nome.
 
@@ -407,9 +404,9 @@ Na primeira liña relevante importamos a clase Flask desde a librería do mesmo 
 
 <div class="min-w-0 flex-1 mb-4 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="2">
 
-**2. Creación da aplicación**
+<strong>2. Creación da aplicación</strong>
 
-A continuación creamos o obxecto app da clase **Flask**. Este obxecto é a aplicación **WSGI**, que nos permitirá despregar e probar o noso proxecto.
+A continuación creamos o obxecto app da clase <strong>Flask</strong>. Este obxecto é a aplicación <strong>WSGI</strong>, que nos permitirá despregar e probar o noso proxecto.
 
 Lle pasamos como argumento `__name__`, que indica o módulo actual.
 
@@ -435,7 +432,7 @@ Lle pasamos como argumento `__name__`, que indica o módulo actual.
 
 <div class="min-w-0 flex-1 mb-4 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="3">
 
-**3. Decorador @app.route('/')**
+<strong>3. Decorador @app.route('/')</strong>
 
 O decorador da función `hello_world()` define a ruta de acceso.
 
@@ -463,9 +460,9 @@ Neste caso, cando o navegador solicita a URL raíz (/), se executará esa funci�
 
 <div class="min-w-0 flex-1 mb-4 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="4">
 
-**4. Función `hello_world` (función vista)**
+<strong>4. Función <code>hello_world</code> (función vista)</strong>
 
-A función `hello_world()` devolve unha **respuesta HTTP**, neste exemplo unha simple cadea de texto: "Ola, Mundo!".
+A función `hello_world()` devolve unha <strong>respuesta HTTP</strong>, neste exemplo unha simple cadea de texto: "Ola, Mundo!".
 
 </div>
 
@@ -485,7 +482,7 @@ A función `hello_world()` devolve unha **respuesta HTTP**, neste exemplo unha s
 
 <div class="min-w-0 flex-1 rounded-xl border px-5 py-4 bg-gray-50 dark:bg-white/3 border-gray-200 dark:border-neutral-700 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 transition-colors" data-step="5">
 
-**5. Ejecución do servidor de desenvolvemento**
+<strong>5. Ejecución do servidor de desenvolvemento</strong>
 
 A sección `if __name__ == '__main__':` indica que, se executamos este ficheiro directamente, se iniciará o servidor de desenvolvemento de Flask con:
 
@@ -502,15 +499,15 @@ A sección `if __name__ == '__main__':` indica que, se executamos este ficheiro 
 
 <div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-green-200 dark:border-green-900/60 bg-green-100/60 dark:bg-green-900/20">
 
-<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">**Decorador**</span>
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title=""><strong>Decorador</strong></span>
 
 </div>
 
 <div class="px-5 py-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul_ul]:list-[circle] [&_ul_ul]:my-1 [&_ol_ol]:my-1 [&_ul_ol]:my-1 [&_ol_ul]:my-1 [&_li]:my-1 [&_li]:pl-1 [&_li]:marker:text-gray-400 dark:[&_li]:marker:text-gray-500 [&_strong]:font-semibold [&_strong]:text-gray-900 dark:[&_strong]:text-gray-100 [&_em]:italic [&_a]:font-medium [&_a]:underline [&_a.not-prose]:no-underline [&_code]:bg-black/[0.07] dark:[&_code]:bg-white/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-gray-800 dark:[&_code]:text-gray-200" hint-body="">
 
-Un **decorador** non é máis que unha función (función a) que toma como parámetro unha función (función b) e devolve outra función (función c).
+Un <strong>decorador</strong> non é máis que unha función (función a) que toma como parámetro unha función (función b) e devolve outra función (función c).
 
-Ao **decorar** unha función, estamos indicando que queremos modificar o comportamento dunha función xa existente, pero sen ter que modificar o seu código. Isto é moi útil cando queremos estender novas funcionalidades a dita función. Para decorar unha función só é necesario indicar o decorador co prefixo “@” na liña anterior á función a decorar.
+Ao <strong>decorar</strong> unha función, estamos indicando que queremos modificar o comportamento dunha función xa existente, pero sen ter que modificar o seu código. Isto é moi útil cando queremos estender novas funcionalidades a dita función. Para decorar unha función só é necesario indicar o decorador co prefixo “@” na liña anterior á función a decorar.
 
 <div class="not-prose group relative my-4 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 text-sm" code-block="" data-language="python" runnable="" source="@decorador
 def función_decorada():
@@ -930,7 +927,7 @@ URL de exemplo: <a href="http://IP:8080/artigos/6" rel="noopener noreferrer" tar
 
 <div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-green-200 dark:border-green-900/60 bg-green-100/60 dark:bg-green-900/20">
 
-<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">**Unha mesma función pode atender varias rutas.**</span>
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title=""><strong>Unha mesma función pode atender varias rutas.</strong></span>
 
 </div>
 
@@ -1336,7 +1333,7 @@ from flask import Flask, request
 
 <div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-amber-200 dark:border-amber-900/60 bg-amber-100/60 dark:bg-amber-900/20">
 
-<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">**Parámetros GET**</span>
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title=""><strong>Parámetros GET</strong></span>
 
 </div>
 
@@ -1856,7 +1853,7 @@ En `datos.html`
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -1998,7 +1995,7 @@ Plantilla:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -2206,7 +2203,7 @@ Neste post veremos como organizar e usar estes recursos estáticos en Flask, e c
 
 <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" rel="noopener noreferrer" target="_blank">Bootstrap</a> é a librería máis popular para crear sitios responsive rapidamente.
 
-<sub>***Opción 1 – CDN***</sub> <sub></sub> <sub>**(recomendada)**</sub>
+<sub><strong><em>Opción 1 – CDN</em></strong></sub> <sub></sub> <sub><strong>(recomendada)</strong></sub>
 
 En `base.html`:
 
@@ -2230,7 +2227,7 @@ En `base.html`:
 
 </div>
 
-<sub>***Opción 2 – Local***</sub>
+<sub><strong><em>Opción 2 – Local</em></strong></sub>
 
 1.  Descarga Bootstrap e gárdalo en `static/bootstrap/`.
 2.  Enlaza con `url_for('static', filename='bootstrap/css/bootstrap.min.css')`.
@@ -2575,7 +2572,7 @@ Dentro dunha plantilla Jinja2, a sintaxe é idéntica:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -2626,7 +2623,7 @@ Na plantilla:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -2686,7 +2683,7 @@ Flask sabe distinguir entre meter un parámetro no *path* en vez de na *query* p
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3249,7 +3246,7 @@ Na filla podes:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3303,7 +3300,7 @@ A sintaxe é moi semellante á de Python, pero usando as etiquetas de **Jinja2**
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3426,7 +3423,7 @@ Podemos combinalo co filtro `default`:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -3997,7 +3994,7 @@ Exemplo:
 
 <div class="flex items-center justify-between px-4 py-2 border-b border-black/10 dark:border-white/10" style="background-color: var(--color-book-bg);">
 
-<span class="text-xs font-mono font-semibold" style="color: var(--color-book);">django</span>
+<span class="text-xs font-mono font-semibold" style="color: var(--color-book);"></span>
 
 <div class="flex items-center gap-3">
 
@@ -4774,7 +4771,7 @@ Na ruta usamos `request.files` para acceder ao arquivo:
 
 <div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-green-200 dark:border-green-900/60 bg-green-100/60 dark:bg-green-900/20">
 
-<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title="">**Limitar o tamaño dos arquivos**</span>
+<span class="shrink-0 w-5 h-5"></span><span class="text-[0.95rem] font-semibold text-gray-800 dark:text-gray-100 leading-snug" hint-title=""><strong>Limitar o tamaño dos arquivos</strong></span>
 
 </div>
 
